@@ -1,0 +1,161 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { toast } from 'react-hot-toast';
+import { approveTask, createTask, getUserTasks, submitTask } from '../../services/taskServices';
+
+const initialState = {
+  task: null,
+  tasks: [],
+  isError: false,
+  isSuccess: false,
+  isLoading: false,
+  message: "" 
+}
+
+// Creat New Task
+export const createNewTask = createAsyncThunk(
+  "create/createNewTask",
+  async (taskData, thunkAPI) => {
+    try {
+      return await createTask(taskData)
+    } catch (error) {
+      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// Get User Tasks
+export const handleGetUserTasks = createAsyncThunk(
+  "get/handleGetUserTasks",
+  async(__, thunkAPI) => {
+      try {
+        return await getUserTasks()
+      } catch(error) {
+          const message = 
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+          return thunkAPI.rejectWithValue(message)
+      }
+      } 
+  )
+
+  // Submit Task
+export const handleSubmitTask = createAsyncThunk(
+  "create/handlesubmitTask",
+  async (taskData, thunkAPI) => {
+    try {
+      return await submitTask(taskData)
+    } catch (error) {
+      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// Approve Task
+export const handleApproveTask = createAsyncThunk(
+  "create/handleapproveTask",
+  async (taskData, thunkAPI) => {
+    try {
+      return await approveTask(taskData)
+    } catch (error) {
+      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+const taskSlice = createSlice({
+  name: 'task',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+
+          // Create New Task
+          .addCase(createNewTask.pending, (state) => {
+            state.isLoading = true
+          })
+          .addCase(createNewTask.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;
+            //console.log(action.payload)
+            state.task = action.payload
+            state.tasks.push(action.payload);
+            toast.success("Task Created Successfully")
+          })
+          .addCase(createNewTask.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload;
+            toast.error(action.payload) 
+          })
+
+          // Get User Tasks
+          .addCase(handleGetUserTasks.pending, (state) => {
+            state.isLoading = true
+          })
+          .addCase(handleGetUserTasks.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;
+            state.tasks = action.payload
+          })
+          .addCase(handleGetUserTasks.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload;
+            toast.error(action.payload) 
+          })
+
+          // Submit Task
+          .addCase(handleSubmitTask.pending, (state) => {
+            state.isLoading = true
+          })
+          .addCase(handleSubmitTask.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;
+            //console.log(action.payload)
+            state.task = action.payload
+            state.tasks.push(action.payload);
+            toast.success("Task Created Successfully")
+          })
+          .addCase(handleSubmitTask.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload;
+            toast.error(action.payload) 
+          })
+
+          // Approve Task
+          .addCase(handleApproveTask.pending, (state) => {
+            state.isLoading = true
+          })
+          .addCase(handleApproveTask.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;
+            //console.log(action.payload)
+            state.task = action.payload
+            state.tasks.push(action.payload);
+            toast.success("Task Created Successfully")
+          })
+          .addCase(handleApproveTask.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload;
+            toast.error(action.payload) 
+          })
+        }
+});
+
+export const {} = taskSlice.actions
+export const selectTask = (state) => state.task.task
+export const selectTasks = (state) => state.task.tasks
+export const selectIsLoading = (state) => state.task.isLoading;
+export const selectIsError = (state) => state.task.isError;
+
+
+
+export default taskSlice.reducer

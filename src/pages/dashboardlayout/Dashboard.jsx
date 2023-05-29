@@ -1,0 +1,82 @@
+import React from 'react'
+import SidebarLeft from './SidebarLeft'
+import SidebarRight from './SidebarRight'
+import about from '../../assets/about.png'
+import Wallet from '../../components/dashboard/Wallet'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectUsername, selectUser, SET_USER, SET_USERNAME } from '../../redux/slices/authSlice'
+import { ProfileComplete, ProfileInComplete } from '../../components/protect/profileSetupCheck'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser'
+import { getUser } from '../../services/authServices'
+
+const Dashboard = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [profile, setProfile] = useState(null)
+  const username = useSelector(selectUsername)
+  const user = useSelector(selectUser)
+  useRedirectLoggedOutUser('/')
+
+  useEffect(() => {
+      async function getUserData() {
+        if (!user.email) {
+        const data = await getUser()
+        setProfile(data)
+        await dispatch(SET_USER(data))
+       dispatch(SET_USERNAME(data.username))
+        }
+      }
+    getUserData()
+  }, [dispatch])
+  
+
+  return (
+    <div className='w-full h-fit'>
+        <div className='justify-between mx-auto mr-3'>
+            <div className='hero__section flex flex-col w-full h-fit px-5 py-[3rem] border border-gray-200 md:flex-row'>
+              <div className='left flex-1 w-full'>
+                <div className='w-full flex flex-col justify-center items-center'>
+                  <img src={about} alt=""  className='w-[150px] border p-[1rem] rounded-full'/>
+                  <p className='mt-1'>Welcome, {user.fullname ? user.fullname : username}</p>
+                  <small className='mb-5'>@{username}</small>
+
+                  <div className='flex gap-2'>
+                    <button onClick={() => (navigate('/dashboard/earn'))} className='flex-1 bg-secondary text-primary px-10 py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Earn</button>
+                    <button onClick={() => (navigate('/dashboard/advertise'))} className='flex-1 bg-tertiary text-primary px-6 py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Advertise</button>
+                  </div>
+                </div>
+              </div>
+
+              <div className='right flex-1 w-full mt-6'>
+                <Wallet />
+              </div>
+            </div>
+
+        <ProfileInComplete>
+        <div className='w-full flex flex-col justify-center items-center h-fit my-5 px-5 py-[3rem] border border-tertiary'>
+              <small className='px-[2rem] text-[15px] text-gray-600 text-center'>Welcome, <span className='text-tertiary'>@{username}</span>. Your account setup is incomple click below to completely set up your belocated account so you can start fulfilling tasks and making or set up ad campaigns to promote your product or services.</small>
+
+              <div className='w-fit text-[10px] bg-green-700 text-gray-100 px-3 py-3 mt-5 rounded-2xl'>180 tasks posted today for you to perform and make money</div>
+
+              <button onClick={() => (navigate(`/dashboard/profile/`))} className='bg-tertiary text-gray-100 px-6 py-3 mt-5'>Complete Profile Setup</button>
+            </div>
+        </ProfileInComplete>
+
+        <ProfileComplete>
+            <div className='w-full flex flex-col justify-center items-center h-fit my-5 px-5 py-[3rem] border border-gray-200'>
+              <small className='px-[2rem] text-[15px] text-gray-600 text-center'>Welcome, <span className='text-secondary'>@{username}</span>. Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam perspiciatis voluptatum mollitia animi quas id possimus rem qui esse maxime.</small>
+
+              <div className='w-fit text-[10px] bg-green-700 text-gray-100 px-3 py-3 mt-5 rounded-2xl'>180 tasks posted today for you to perform and make money</div>
+
+              <button onClick={() => (navigate('/dashboard/earn'))} className='bg-transparent border border-gray-300 px-6 py-3 mt-5'>Perform Tasks & Earn</button>
+            </div>
+          </ProfileComplete>
+        </div>
+    </div>
+  )
+}
+
+export default Dashboard
