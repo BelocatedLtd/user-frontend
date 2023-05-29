@@ -9,12 +9,14 @@ import { selectUser } from '../redux/slices/authSlice'
 import { fundUserWallet, selectUserWallet } from '../redux/slices/walletSlice'
 import { BsFillArrowRightCircleFill } from 'react-icons/bs'
 import { fundWallet } from '../services/walletServices'
+import { LoaderIcon } from 'react-hot-toast'
 
 const FundWallet = ({toggleFLWFunding, fundingAmount}) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const user = useSelector(selectUser)
     const wallet = useSelector(selectUserWallet)
+    const [isLoading, setisLoading] = useState(false)
 
     // const handlePayment = async (e) => {
     //     e.preventDefault()
@@ -34,7 +36,7 @@ const FundWallet = ({toggleFLWFunding, fundingAmount}) => {
     //     //const response = await fundWallet(trxData)
     // }
 
-    const payment__key = process.env.FLUTTER_PUBLIC_KEY
+    const payment__key = process?.env?.FLUTTER_PUBLIC_KEY
 
       // Fund wallet using flutterwave
       const config = {
@@ -59,6 +61,7 @@ const FundWallet = ({toggleFLWFunding, fundingAmount}) => {
         ...config,
         text: 'Fund Wallet',
         callback: async (response) => {
+          setisLoading(true)
             //if (response.status === 'completed'  && response.charge_response_message === 'Approved Successful') {
                 const trxData = {
                     userId: user.id,
@@ -69,9 +72,9 @@ const FundWallet = ({toggleFLWFunding, fundingAmount}) => {
                     paymentRef: response.flw_ref,
                     status: response.charge_response_message
                 }
-
-                
                 await dispatch(fundUserWallet(trxData))
+
+                setisLoading(false)
             
           closePaymentModal()
         },
@@ -100,8 +103,7 @@ const FundWallet = ({toggleFLWFunding, fundingAmount}) => {
                            
                             <p className='bg-red-400 text-primary p-5 my-3'>Click the button below to fund your wallet now. On completion, fund gets added to your wallet immediately</p>
 
-                            {/* <button onClick={handlePayment}>Pay</button> */}
-                            <FlutterWaveButton {...fwConfig}  className='px-6 py-2 bg-secondary text-primary hover:bg-gray-800' />
+                            <button className='px-6 py-2 bg-secondary text-primary hover:bg-gray-800'><FlutterWaveButton {...fwConfig}   />{isLoading && <LoaderIcon />}</button>
                         </div>
                     </div>
                 </div>
