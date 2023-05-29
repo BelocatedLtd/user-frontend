@@ -36,11 +36,10 @@ const FundWallet = ({toggleFLWFunding, fundingAmount}) => {
     //     //const response = await fundWallet(trxData)
     // }
 
-    const payment__key = process?.env?.FLUTTER_PUBLIC_KEY
 
       // Fund wallet using flutterwave
       const config = {
-        public_key: payment__key,
+        public_key: import.meta.env.VITE_FLUTTER_PUBLIC_KEY,
         tx_ref: Date.now(),
         amount: fundingAmount.fundingAmount,
         currency: 'NGN',

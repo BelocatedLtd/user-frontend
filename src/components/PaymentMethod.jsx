@@ -9,12 +9,10 @@ import { useSelector } from 'react-redux'
 import { selectUser } from '../redux/slices/authSlice'
 import { fundUserWallet, getUserWallet, selectUserWallet } from '../redux/slices/walletSlice'
 import { useEffect } from 'react'
-//import { createAdvert  } from '../services/advertService'
 import { createNewAdvert, selectIsLoading, selectIsSuccess, selectIsError } from '../redux/slices/advertSlice'
 import { CheckmarkIcon, LoaderIcon } from 'react-hot-toast'
 import Loader from './loader/Loader'
 
-const payment__key = process?.env?.FLUTTER_PUBLIC_KEY
 
 const PaymentMethod = ({togglePaymentSelect, formData}) => {
     const dispatch = useDispatch()
@@ -75,7 +73,7 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
 
 // Fund wallet using flutterwave
     const config = {
-        public_key: payment__key,
+        public_key: import.meta.env.VITE_FLUTTER_PUBLIC_KEY,
         tx_ref: Date.now(),
         amount: expBudget,
         currency: 'NGN',
@@ -91,10 +89,15 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
         },
     };
 
+    // const handleclick = () => {
+    //     console.log(payment__key )
+    // }
+
     const fwConfig = {
         ...config,
         text: 'Fund Wallet',
-        callback: async (response) => {
+       callback: async (response) => {
+        
                 const trxData = {
                     userId: user.id,
                     email: response?.customer?.email,
@@ -106,12 +109,14 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
                 }
 
                 await dispatch(fundUserWallet(trxData))
-        closePaymentModal()
-        },
-        onClose: () => {
-            navigate(-1)
-        },
-    };
+
+            
+       closePaymentModal()
+       },
+       onClose: () => {
+           navigate(-1)
+       },
+   };
    
 
     return ReactDOM.createPortal(
@@ -133,6 +138,7 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
                     <div className='flex flex-col justify-center'>
                         <p className='bg-red-400 text-primary p-5 my-3'>Your wallet is insufficient to perform this transaction. Click the button below to fund your wallet now</p>
                         <FlutterWaveButton {...fwConfig}  className='px-6 py-2 bg-secondary text-primary' />
+                        {/* <button onClick={handleclick}>Pay</button> */}
                     </div>
                     }
                     {canPay && 

@@ -11,6 +11,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser'
 import { getUser } from '../../services/authServices'
+import { toast } from 'react-hot-toast'
 
 const Dashboard = () => {
   const navigate = useNavigate()
@@ -31,6 +32,15 @@ const Dashboard = () => {
       }
     getUserData()
   }, [dispatch])
+
+  const handleAdvertise = (e) => {
+    e.preventDefault()
+    if (!user.phone || !user.location || !user.community || !user.gender) {
+      toast.error("Please, complete your profile before you can create Adverts")
+    }
+    if (user.phone && user.location && user.community && user.gender)
+    navigate('/dashboard/advertise')
+  }
   
 
   return (
@@ -45,7 +55,7 @@ const Dashboard = () => {
 
                   <div className='flex gap-2'>
                     <button onClick={() => (navigate('/dashboard/earn'))} className='flex-1 bg-secondary text-primary px-10 py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Earn</button>
-                    <button onClick={() => (navigate('/dashboard/advertise'))} className='flex-1 bg-tertiary text-primary px-6 py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Advertise</button>
+                    <button onClick={handleAdvertise} className='flex-1 bg-tertiary text-primary px-6 py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Advertise</button>
                   </div>
                 </div>
               </div>

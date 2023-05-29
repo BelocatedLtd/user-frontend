@@ -121,10 +121,10 @@ const AdminDashboard = () => {
 
       </div>
 
-    {tableSwitch === "Adverts" && (<Adverts adverts={adverts}/>)}
-    {tableSwitch === "Users" && (<Users users={users}/>)}
-    {tableSwitch === "Tasks" && (<Tasks tasks={tasks}/>)}
-    {tableSwitch === "Transactions" && (<Transactions transactions={transactions}/>)}
+    {tableSwitch === "Adverts" && (<Adverts />)}
+    {tableSwitch === "Users" && (<Users />)}
+    {tableSwitch === "Tasks" && (<Tasks />)}
+    {tableSwitch === "Transactions" && (<Transactions />)}
       
     </div>
   )
