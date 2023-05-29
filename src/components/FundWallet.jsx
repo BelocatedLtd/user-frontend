@@ -34,7 +34,7 @@ const FundWallet = ({toggleFLWFunding, fundingAmount}) => {
     //     //const response = await fundWallet(trxData)
     // }
 
-    const payment__key = 'FLWPUBK_TEST-74488d6058ee87f764b738244d52ab95-X'
+    const payment__key = process.env.FLUTTER_PUBLIC_KEY
 
       // Fund wallet using flutterwave
       const config = {
