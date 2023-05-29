@@ -35,7 +35,7 @@ import TaskPerform from "./pages/dashboardlayout/userPages/TaskPerform";
 import TaskList from "./pages/dashboardlayout/userPages/TaskList";
 import TaskSubmit from "./pages/dashboardlayout/userPages/TaskSubmit";
 import Error404Page from "./pages/mainlayout/Error404Page";
-import AdminDashboard from "./pages/dashboardlayout/adminPages/adminDashboard";
+import AdminDashboard from "./pages/dashboardlayout/adminPages/AdminDashboard";
 import Users from "./pages/dashboardlayout/adminPages/Users";
 import Adverts from "./pages/dashboardlayout/adminPages/Adverts";
 import Tasks from "./pages/dashboardlayout/adminPages/Tasks";
