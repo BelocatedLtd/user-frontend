@@ -13,7 +13,7 @@ import { useEffect } from 'react'
 import { selectUserId } from '../../../redux/slices/authSlice'
 import { CheckmarkIcon, LoaderIcon } from 'react-hot-toast'
 
-const TaskPerform = ({taskId, taskSubmitData, mediaUrl, imagePreview, handleOnSubmit, handleInputChange, handleImageChange}) => {
+const TaskPerform = ({taskId, taskSubmitData, mediaUrl, imagePreview, handleOnSubmit, handleInputChange, handleImageChange, isLoading, isError}) => {
   const userId = useSelector(selectUserId)
   const tasks = useSelector(selectTasks)
   const [icon, setIcon] = useState('')
@@ -51,7 +51,7 @@ const TaskPerform = ({taskId, taskSubmitData, mediaUrl, imagePreview, handleOnSu
       </div>
 
       <div className='px-8 mt-8'>
-            <div className='flex items-center justify-between bg-gray-50 p-6 mb-[2rem]'>
+            <div className='flex items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
                 <div className='flex gap-2 items-center'>
                     <img src={icon} alt={newTask?.platform} />
                     <div className='flex flex-col gap-3'>
@@ -94,10 +94,10 @@ const TaskPerform = ({taskId, taskSubmitData, mediaUrl, imagePreview, handleOnSu
                 <div className='w-full h-full flex flex-col pt-[1rem] items-center border-gray-200'>
                   <label htmlFor="upload proof of work" className='text-gray-500 font-bold text-center mb-[1rem]'>Upload Proof of work</label>
                       {imagePreview != null ? (
-                        <img src={imagePreview} alt="Media file" className='w-full h-full object-cover rounded-2xl mb-2'/>
+                        <img src={imagePreview} alt="Media file" className='w-full h-full object-cover rounded-2xl mb-2 border border-gray-200'/>
                       ) : (<p className='mb-2 text-sm text-gray-300 font-bold'>No Screenshot Uploaded Yet</p>)}
 
-                      <input type="file" name="mediaUrl" placeholder='Upload Image' onChange={(e) => handleImageChange(e)} className='w-[100px] p-3 shadow-inner rounded-2xl bg-gray-50 md:w-[300px]'/>
+                      <input type="file" name="mediaUrl"  placeholder='Upload Image' onChange={(e) => handleImageChange(e)} className='w-[100px] p-3 shadow-inner rounded-2xl bg-gray-50 md:w-[300px]'/>
                 </div>
 
                 {/* Social Account Link */}
@@ -106,7 +106,7 @@ const TaskPerform = ({taskId, taskSubmitData, mediaUrl, imagePreview, handleOnSu
                   <input type="text" name="userSocialName" placeholder='Enter your social media username' value={taskSubmitData?.userSocialName} onChange={handleInputChange} className='py-6 px-6 text-gray-800 bg-gray-200 rounded-2xl'/>
                 </div>
 
-                <button type="submit" className='w-full bg-secondary text-gray-100 py-3 px-6 mt-5 rounded-full'>Submit</button>
+                <button type="submit" className='flex items-center gap-2 w-full bg-secondary text-gray-100 py-3 px-6 mt-5 rounded-full'>Submit {isLoading && <LoaderIcon />}</button>
               </form>
             </div>
         </div>

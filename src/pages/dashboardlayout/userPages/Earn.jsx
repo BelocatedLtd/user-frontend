@@ -4,40 +4,70 @@ import { useNavigate } from 'react-router-dom'
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
 import { socialMenu } from '../../../components/data/SocialData'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleGetUserAdverts, selectAdverts, selectIsLoading } from '../../../redux/slices/advertSlice'
+import { handleGetALLUserAdverts, handleGetUserAdverts, selectAdverts, selectAllAdverts, selectIsLoading } from '../../../redux/slices/advertSlice'
 import { useState } from 'react'
 import Loader from '../../../components/loader/Loader'
 import { SET_USER, SET_USERNAME, selectUser } from '../../../redux/slices/authSlice'
 import { getUser } from '../../../services/authServices'
+import socialPlatforms from '../../../components/data/assets'
+import { toast } from 'react-hot-toast'
 
 
 const Earn = () => {
     const navigate = useNavigate()
-    const adverts = useSelector(selectAdverts)
+    const adverts = useSelector(selectAllAdverts)
     const dispatch = useDispatch(selectAdverts)
     const isLoading = useSelector(selectIsLoading)
     const [platform, setPlatform] = useState('')
+    const [services, setServices] = useState()
+    const [toggleServices, setToggleServices] = useState(false)
+    const [selectedPlatformObject, setSelectedPlatformObject] = useState()
     const user = useSelector(selectUser)
+    const [finalFilteredTasks, setFinalFilteredTasks] = useState([])
+    const [selectedPlatformAds, setSelectedPlatformAds] = useState()
+    const [platformName, setPlatformName] = useState("")
     useRedirectLoggedOutUser('/login')
 
 
 useEffect(() => {
     const handleGetTasks = async() => {
-        await dispatch(handleGetUserAdverts())
+        await dispatch(handleGetALLUserAdverts())
     }
     handleGetTasks()
 }, [dispatch])
 
     const handleSelect = (e, platform) => { 
         e.preventDefault(e)
+
+         setPlatformName(platform)
+
+        //Filtered out only the ads that's relevant to the platform user clicked
         const filteredAdverts = adverts?.filter(advert => advert?.platform === platform);
-        navigate(`/dashboard/taskearn/${platform}`, { state:{ filteredAdverts } });
+        setSelectedPlatformAds(filteredAdverts)
+
+        //Function to toggle to services list open and close
+        setToggleServices(!toggleServices)
+        
+       
+        //Extracts all the object containing services relevant to the platform the user picked
+        const servicesList = socialPlatforms?.find(object => object?.assetplatform === platform)
+        setSelectedPlatformObject(servicesList)
+   
     }
+
+    const handleSelectAsset = (e, asset) => {
+        e.preventDefault(e)
+
+        const filteredServiceAdvert = selectedPlatformAds?.filter(advert => advert?.asset === asset)
+        navigate(`/dashboard/taskearn/${platformName}`, { state:{ filteredServiceAdvert, asset } });
+
+   
+}
 
   return (
     <div className='w-full h-fit'>
         {isLoading && <Loader />}
-        {adverts === [] && <Loader />}
+        {/* {adverts === [] && <Loader />} */}
 
         <div className='justify-between mx-auto mr-5'>
             <div className='flex items-center gap-3 border-b border-gray-200 pb-6'>
@@ -53,8 +83,9 @@ useEffect(() => {
             </div>
 
             <div className='flex flex-col gap-[3rem] items-center justify-center mt-[1rem] px-3 py-5'>
-                {socialMenu.map(menu => (
-                <div className='flex items-center gap-5' key={menu?.value}>
+                {socialMenu.map((menu, index) => (
+                <div  key={index} className='shadow-lg p-5'>
+                 <div className='flex items-center gap-5' key={index}>
                     <div className='flex flex-col'>
                         <div className='flex items-center justify-center w-[100px] h-[100px] bg-gray-50 rounded-t-xl rounded-b-2xl'>
                             <img src={menu?.icon} alt="" className='object-cover rounded-full p-2'/>
@@ -74,6 +105,26 @@ useEffect(() => {
                         </div>
                         <p className='font-normal text-[14px] text-gray-700 mt-3'>{menu?.desc}</p>
                     </div>
+                 </div>
+
+                
+                {selectedPlatformObject?.assetplatform === menu.value && toggleServices ? (
+                    <div className='w-full h-fit'>
+                    {selectedPlatformObject?.assets?.map( service => 
+                        <ul className='flex items-center gap-3'>
+                            <li className='flex items-center gap-3 border-b border-gray-50 py-3 '>
+                            <div onClick={e => handleSelectAsset(e, service?.asset)} className='flex items-center gap-3'>
+                                {service.asset}
+                                <button className='bg-gray-200 p-2 border border-gray-200 rounded-full'>{selectedPlatformAds?.filter(advert => advert?.asset === service?.asset).length}</button>
+                            </div>
+                            
+
+                            </li>
+                        </ul>
+                    )}
+                    </div>
+                ) : ""
+                }
                 </div>
                 ))}
             </div>

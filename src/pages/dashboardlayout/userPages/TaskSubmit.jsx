@@ -4,8 +4,8 @@ import TaskPerform from './TaskPerform'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleSubmitTask, selectTasks } from '../../../redux/slices/taskSlice'
-import { selectUserId } from '../../../redux/slices/authSlice'
+import { handleSubmitTask, selectTasks, selectIsLoading, selectIsError } from '../../../redux/slices/taskSlice'
+import { selectUser, selectUserId } from '../../../redux/slices/authSlice'
 import { useEffect } from 'react'
 
 const initialState = {
@@ -16,7 +16,10 @@ const TaskSubmit = () => {
     const dispatch = useDispatch()
     const userId = useSelector(selectUserId)
     const [taskSubmitData, setTaskSubmitData] = useState(initialState)
+    const isLoading = useSelector(selectIsLoading)
+    const isError = useSelector(selectIsError)
     const navigate = useNavigate
+    const user = useSelector(selectUser)
     const [mediaUrl, setMediaUrl] = useState(null)
     const [imagePreview, setImagePreview] = useState(null)
     const { taskId } = useParams()
@@ -27,9 +30,16 @@ const TaskSubmit = () => {
     const { userSocialName } = taskSubmitData
 
     useEffect(() => {
-      setTask(tasks?.find(obj => obj._id === taskId))
+      if (!user.email || !tasks) {
+        navigate(-1)
+      }
+      }, [])
+    
 
+    useEffect(() => {
+      setTask(tasks?.find(obj => obj._id === taskId))
     }, [])
+
 
     //Handle Input
     const handleInputChange = (e) => {
@@ -47,16 +57,11 @@ const TaskSubmit = () => {
     const handleOnSubmit = async (e) => {
       e.preventDefault()
   
-      if (
-        !userSocialName ||
-        !mediaUrl
-        ) {
+      if ( !userSocialName || !mediaUrl) {
         return toast.error("Make Sure All Fields Filled before you can submit")
       }
   
-      if (
-        !mediaUrl
-        ) {
+      if (!mediaUrl) {
         return toast.error("Please upload an screenshot")
       }
   
@@ -71,11 +76,15 @@ const TaskSubmit = () => {
           status: "Submitted"
         }
 
+        
+
         const response = await dispatch(handleSubmitTask(taskData))
 
-        if (response.payload) {
-          navigate(`dashboard/tasks/${task.taskPerformerId}`)
-        }
+        console.log(response.payload)
+
+        // if (response.payload) {
+        //   navigate(`dashboard/tasks/${task.taskPerformerId}`)
+        // }
 
 
           
@@ -87,6 +96,8 @@ const TaskSubmit = () => {
     <div className='w-full h-fit'>
         <TaskPerform 
             taskId = {taskId}
+            isLoading = {isLoading}
+            isError = {isError}
             taskSubmitData = {taskSubmitData}
             mediaUrl={mediaUrl}
             imagePreview={imagePreview}

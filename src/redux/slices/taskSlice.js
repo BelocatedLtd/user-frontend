@@ -119,7 +119,7 @@ const taskSlice = createSlice({
             //console.log(action.payload)
             state.task = action.payload
             state.tasks.push(action.payload);
-            toast.success("Task Created Successfully")
+            toast.success("Task Submitted Successfully")
           })
           .addCase(handleSubmitTask.rejected, (state, action) => {
             state.isLoading = false;

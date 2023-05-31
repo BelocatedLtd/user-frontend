@@ -12,3 +12,9 @@ export const getUserAdverts = async() => {
        const response = await axios.get(`${BACKEND_URL}/api/adverts`)
       return response.data      
 }
+
+// Get All User Adverts
+export const getAllUserAdverts = async() => {
+    const response = await axios.get(`${BACKEND_URL}/api/adverts/all`)
+   return response.data      
+}

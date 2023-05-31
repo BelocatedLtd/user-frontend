@@ -19,13 +19,13 @@ const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adAsset, 
     }, [])
 
     useEffect(() => {
-        if(status == 'pending') {
+        if(status == 'Pending') {
             return setPayBtn('Pay Now')
             }
-            if(status == 'running') {
+            if(status == 'Running' || status == 'Allocating') {
                 return setPayBtn('Monitor Campaign')
             }
-            if(status == 'rejected') {
+            if(status == 'Rejected') {
                 return setPayBtn('Edit Campaign')
             }
     }, [status, payBtn])

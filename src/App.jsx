@@ -44,7 +44,7 @@ import Supportmessages from "./pages/dashboardlayout/adminPages/Supportmessages"
 import AccountSettings from "./pages/dashboardlayout/adminPages/AccountSettings";
 import VerifyOTP from "./pages/authLayout/VerifyOTP";
 
-axios.defaults.withCredentials = true
+axios.defaults.withCredentials = true 
 
 function App() {
   const dispatch = useDispatch();
@@ -60,6 +60,7 @@ function App() {
   return (
     <BrowserRouter>
       <Toaster/>
+      
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />}/>
@@ -108,7 +109,7 @@ function App() {
 
          {/* Dashboard Task Earn route */}
       <Route 
-        path="/dashboard/taskearn/:platform" 
+        path="/dashboard/taskearn/:platformName" 
         element={
           <SidebarLeft>
             <DashLayout>
@@ -340,6 +341,7 @@ function App() {
     
     
       </Routes>
+      
     </BrowserRouter>
   )
 }

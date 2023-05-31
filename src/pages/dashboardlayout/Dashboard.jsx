@@ -33,12 +33,17 @@ const Dashboard = () => {
     getUserData()
   }, [dispatch])
 
-  const handleAdvertise = (e) => {
+  const handleEarn = (e) => {
     e.preventDefault()
     if (!user.phone || !user.location || !user.community || !user.gender) {
       toast.error("Please, complete your profile before you can create Adverts")
     }
     if (user.phone && user.location && user.community && user.gender)
+    (navigate('/dashboard/earn'))
+  }
+
+  const handleAdvertise = (e) => {
+    e.preventDefault()
     navigate('/dashboard/advertise')
   }
   
@@ -54,7 +59,7 @@ const Dashboard = () => {
                   <small className='mb-5'>@{username}</small>
 
                   <div className='flex gap-2'>
-                    <button onClick={() => (navigate('/dashboard/earn'))} className='flex-1 bg-secondary text-primary px-10 py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Earn</button>
+                    <button onClick={handleEarn} className='flex-1 bg-secondary text-primary px-10 py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Earn</button>
                     <button onClick={handleAdvertise} className='flex-1 bg-tertiary text-primary px-6 py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Advertise</button>
                   </div>
                 </div>

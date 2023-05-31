@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaUserCog, FaUsers } from 'react-icons/fa'
 import Adverts from './Adverts'
-import { handleGetUserAdverts, selectAdverts } from '../../../redux/slices/advertSlice';
+import { handleGetALLUserAdverts, selectAdverts, selectAllAdverts } from '../../../redux/slices/advertSlice';
 import { handleGetAllUser, selectUsers } from '../../../redux/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleGetUserTransactions, selectTransactions } from '../../../redux/slices/transactionSlice';
@@ -15,12 +15,15 @@ import Users from './Users';
 import Tasks from './Tasks';
 import Transactions from './Transactions';
 import { LoaderIcon } from 'react-hot-toast';
+import Widgets from '../../../components/adminComponents/Widgets';
+import Chart from '../../../components/adminComponents/Chart';
+import FeaturedChart from '../../../components/adminComponents/FeaturedChart';
 
 
 
 const AdminDashboard = () => {
     const dispatch = useDispatch()
-    const adverts = useSelector(selectAdverts)
+    const adverts = useSelector(selectAllAdverts)
     //const isLoading = useSelector(selectIsLoading)
     const user = useSelector(selectUser)
     const users = useSelector(selectUsers)
@@ -29,31 +32,13 @@ const AdminDashboard = () => {
     const [tableSwitch, setTableSwitch] = useState('users')
     useRedirectLoggedOutUser('/')
 
-    // const changeTable = (e, params) => {
-    //     e.preventDefault()
-    //     if (params === "Users") {
-    //         setTableSwitch("Users")
-    //     }
-    //     if (params === "Tasks") {
-    //         setTableSwitch("Tasks")
-    //     }
-    //     if (params === "Transactions") {
-    //         setTableSwitch("Transactions")
-    //     }
-    //     if (params === "Adverts") {
-    //         setTableSwitch("Adverts")
-    //     }
-    // }
 
-    
-
-    
-        const handleClick = (table) => {
-            if (table !== tableSwitch) {
-                setTableSwitch(table)
+        // const handleClick = (table) => {
+        //     if (table !== tableSwitch) {
+        //         setTableSwitch(table)
                 
-            }
-        }
+        //     }
+        // }
      
  
     
@@ -63,7 +48,7 @@ const AdminDashboard = () => {
     useEffect(() => {
         async function getUserData() {
             await dispatch(handleGetAllUser())
-            await dispatch(handleGetUserAdverts())
+            await dispatch(handleGetALLUserAdverts())
             await dispatch(handleGetUserTransactions())
             await dispatch(handleGetUserTasks())
           if (!user.email) {
@@ -84,44 +69,23 @@ const AdminDashboard = () => {
 
   return (
     <div className='w-full h-fit flex flex-col'>
-      <div className='flex flex-wrap justify-around items-center justify-center gap-5 px-3 py-5 md:flex-row'>
+      
 
-      <div onClick={() => handleClick('users')} className='w-[250px] h-[150px] bg-secondary   flex justify-center items-center gap-5 rounded-xl drop-shadow-2xl'>
-          <FaUserCog className='text-gray-200 text-5xl bg-btn rounded-xl p-3'/>
-          <div className='flex flex-col text-gray-200'>
-          <h3 className='text-3xl font-bold mb-1'>{users?.length}</h3>
-          {/* {isLoading ? <LoaderIcon /> : users.length} */}
-            <p>Users</p>
-          </div>
-        </div>
-
-        <div onClick={() => handleClick('adverts')} className='w-[250px] h-[150px] bg-secondary  flex justify-center items-center gap-5 rounded-xl drop-shadow-2xl'>
-          <FaUsers className='text-gray-200 text-5xl bg-btn border border-primary_bg rounded-xl p-3'/>
-          <div className='flex flex-col text-gray-200'>
-            <h3 className='text-3xl font-bold mb-1'>{adverts?.length}</h3>
-            <p>Adverts</p>
-          </div>
-        </div>
-
-        <div onClick={() => handleClick('tasks')} className='w-[250px] h-[150px] bg-secondary   flex justify-center items-center gap-5 rounded-xl drop-shadow-2xl'>
-          <FaUserCog className='text-gray-200 text-5xl bg-btn rounded-xl p-3'/>
-          <div className='flex flex-col text-gray-200'>
-          <h3 className='text-3xl font-bold mb-1'>{tasks?.length}</h3>
-            <p>Tasks</p>
-          </div>
-        </div>
-
-        <div onClick={() => handleClick('transactions')} className='w-[250px] h-[150px] bg-secondary  flex justify-center items-center gap-5 rounded-xl drop-shadow-2xl'>
-          <FaUserCog className='text-gray-200 text-5xl bg-btn rounded-xl p-3'/>
-          <div className='flex flex-col text-gray-200'>
-          <h3 className='text-3xl font-bold mb-1'>{transactions?.length}</h3>
-            <p>Transactions</p>
-          </div>
-        </div>
-
+      <div className='widgets flex p-[20px] gap-[20px]'>
+        <Widgets type="users" totalUsers={users}/>
+        <Widgets type="adverts" totalAdverts={adverts} />
+        <Widgets type="transactions" totalTrx={transactions}/>
+        <Widgets type="tasks" totalTasks={tasks}/>
       </div>
 
-    {tableSwitch === "Adverts" && (<Adverts />)}
+      <div className='charts flex w-full px-[20px] py-[5px] gap-[20px]'>
+        <FeaturedChart />
+        <Chart />
+      </div>
+
+
+
+    {tableSwitch === "Adverts" && (<Adverts adverts={adverts}/>)}
     {tableSwitch === "Users" && (<Users />)}
     {tableSwitch === "Tasks" && (<Tasks />)}
     {tableSwitch === "Transactions" && (<Transactions />)}
