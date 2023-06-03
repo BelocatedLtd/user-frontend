@@ -1,11 +1,12 @@
 import React from 'react'
+import ActivityFeed from './ActivityFeed'
 
 const Jumbotron = () => {
   return (
     <section className='w-full h-[85vh] flex flex-col items-center my-[8rem]'>
         <div className='container flex flex-col items-center'>
-            <h1 className='w-[80%] text-center text-[2.5rem] text-gray-800 font-extrabold'>Make <span className='text-tertiary'>Money</span> Daily by Completing Simple & Profitable <span className='text-secondary'>Tasks</span> on Your Social Media</h1>
-            <p className='w-[60%] text-[1.5rem] text-center font-medium text-gray-600 mt-3'>Earn daily income by reselling products, posting adverts and performing simple social tasks for top businesses and brands on your social media account</p>
+            <h1 className='w-[80%] text-center text-[2.5rem] text-gray-800 font-extrabold'>Make <span className='text-tertiary'>Money</span> Daily by Completing Simple & Profitable <span className='text-secondary'>Tasks</span> on Your Media Platforms</h1>
+            <p className='w-[60%] text-[1.5rem] text-center font-medium text-gray-600 mt-3'>Get paid for carrying out media activities you would usually do daily for free. With belocated you can now invest your time and resources by earning for every successful task executed</p>
         </div>
 
         <button onClick className='bg-tertiary text-primary font-bold px-10 py-3 mt-[5rem] rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Get Started</button>

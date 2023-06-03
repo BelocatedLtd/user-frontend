@@ -11,7 +11,7 @@ export const Home = () => {
       <Jumbotron />
       <About />
       <MembersTab />
-      <HowItWorks />
+      {/* <HowItWorks /> */}
       <SubFooter />
     </div>
   )
