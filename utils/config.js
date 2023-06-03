@@ -1,1 +1,1 @@
-export const DEV_ENV = "production"
+export const DEV_ENV = "development"

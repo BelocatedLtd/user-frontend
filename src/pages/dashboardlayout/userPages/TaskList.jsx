@@ -48,7 +48,7 @@ const TaskList = () => {
 
             <div className='px-8 mt-8'>
          {tasks?.map(task => (
-            <div className='flex items-center justify-between bg-gray-50 p-6 mb-[2rem]'>
+            <div className='flex items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
                 <div className='flex gap-2 items-center'>
                     <img src={task.platform} alt={task.platform} />
                     <div className=''>

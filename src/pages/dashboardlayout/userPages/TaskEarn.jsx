@@ -12,7 +12,7 @@ import socialPlatforms from '../../../components/data/assets'
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
-import { createNewTask, selectIsError, selectIsLoading, selectTasks } from '../../../redux/slices/taskSlice'
+import { createNewTask, handleGetUserTasks, selectIsError, selectIsLoading, selectTasks } from '../../../redux/slices/taskSlice'
 
 const TaskEarn = () => {
     const navigate = useNavigate()
@@ -25,6 +25,7 @@ const TaskEarn = () => {
     const [icon, setIcon] = useState(null)
     const [newTask, setNewTask] = useState()
     const [taskSubmitted, setTaskSubmitted] = useState(false)
+    const [istaskCreated, setIsTaskCreated] = useState(false)
     const [mappedTaskId, setMappedTaskId] = useState()
     const tasks = useSelector(selectTasks)
     const {platformName} = useParams();
@@ -32,10 +33,17 @@ const TaskEarn = () => {
     const { filteredServiceAdvert, asset } = location.state || {};
     const [finalFilteredTasks, setFinalFilteredTasks] = useState([])
 
+    const getAllTasks = async() => {
+        await dispatch(handleGetUserTasks())
+    }
+
     useEffect(() => {
         if (user.email === "") {
           navigate(`/dashboard/${username}`)
         }
+
+        getAllTasks()
+        
   }, [dispatch, user.email])
 
 
@@ -62,67 +70,65 @@ const TaskEarn = () => {
         //Setting the filtered ads to a state called finalFilteredTasks
        setFinalFilteredTasks(filteredTasks)
     }, [])
+
+    
+
+    const checkTaskExistence = (advert_Id) => {
+       const existingTask = tasks?.find((task) => 
+            task.taskPerformerId === userId && task.advertId === advert_Id)
+            if (existingTask) {
+               return ( <button onClick={() => goToTaskPage(existingTask._id)} className='flex items-center gap-1 text-primary py-2 px-5 rounded-2xl bg-secondary'>Task Already Created, click to view</button>);
+            } else {
+                return ( <button onClick={() => handleSelect(advert_Id)} className='flex items-center gap-1 text-primary py-2 px-5 rounded-2xl bg-tertiary'>Create Task</button>);
+            } 
+    }
+
+
+    const goToTaskPage = (existingTaskId) => {
+        navigate(`/dashboard/submittask/${existingTaskId}`)
+    }
+
+    
     
 
     //Handling click even on the button to perform task, this button should not create a new task if the user had already created a task for this ad
-    const handleSelect = async(e, advert_Id) => {
-        e.preventDefault()
+    const handleSelect = async(advert_Id) => {
+        // Extracting the information for this Advert that will be converted to task for this user and also checking if Advert is still in existence amd paid for
+        const taskToPerform = finalFilteredTasks?.find(advert => advert._id === advert_Id);
 
-        console.log(advert_Id)
-
-        // Extracting the exact Ad that was clicked by user and checking if user has already applied to perform this task
-        const taskCreatedAlreadyByUser = tasks?.find(task => 
-            task.taskPerformerId === userId && task.advertId === advert_Id
-            );
-
-        // Happens if task has already being created by user 
-        if (taskCreatedAlreadyByUser) {
-            toast.error("You have already created a task for this Advert, Please perform the task and submit")
-            setTaskSubmitted(true)
-            console.log(taskCreatedAlreadyByUser)
-            //navigate(`/dashboard/submittask/${taskCreatedAlreadyByUser._id}`)
-        }
-
-        // Happens if user has not applied to perform this task
-        if (!taskCreatedAlreadyByUser) {
-            setTaskSubmitted(false)
-
-            // Extracting the information for this Advert that will be converted to task for this user and also checking if Advert is still in existence amd paid for
-            const taskToPerform = finalFilteredTasks?.find(advert => advert._id === advert_Id);
-
-            // Happens if advert meets all criteria to be performed as task
+        // Happens if advert meets all criteria to be performed as task
             if (taskToPerform) {
-
-                // Creating task data 
-                const taskData = {
-                    advertId: taskToPerform._id,
-                    advertiserId: taskToPerform.userId,
-                    taskPerformerId: userId,
-                    title: `${taskToPerform.desiredROI} ${taskToPerform.asset} on ${taskToPerform.platform}`,
-                    platform: taskToPerform.platform,
-                    asset: taskToPerform.asset,
-                    desiredROI: taskToPerform.desiredROI,
-                    toEarn: taskToPerform.toEarn ? taskToPerform.toEarn : 4,
-                    gender: taskToPerform.gender,
-                    location: taskToPerform.location,
-                    community: taskToPerform.community,
-                    religion: taskToPerform.religion,
-                    caption: taskToPerform.caption,
-                    socialPageLink: taskToPerform.socialPageLink,
-                    // proofOfWorkMediaURL: '',
-                    // nameOnSocialPlatform: '',
+                    // Creating task data 
+                    const taskData = {
+                        advertId: taskToPerform._id,
+                        advertiserId: taskToPerform.userId,
+                        taskPerformerId: userId,
+                        title: `${taskToPerform.desiredROI} ${taskToPerform.asset} on ${taskToPerform.platform}`,
+                        platform: taskToPerform.platform,
+                        asset: taskToPerform.asset,
+                        desiredROI: taskToPerform.desiredROI,
+                        toEarn: taskToPerform.toEarn ? taskToPerform.toEarn : 4,
+                        gender: taskToPerform.gender,
+                        location: taskToPerform.location,
+                        community: taskToPerform.community,
+                        religion: taskToPerform.religion,
+                        caption: taskToPerform.caption,
+                        socialPageLink: taskToPerform.socialPageLink,
+                    }
+                        const response = await dispatch(createNewTask(taskData))
+                        setNewTask(response.payload)
+                        console.log(response.payload)
+                        navigate(`/dashboard/submittask/${response?.payload?._id}`)
                 }
-                    const response = await dispatch(createNewTask(taskData))
-                    setNewTask(response.payload)
-                    console.log(response.payload)
-                    //navigate(`/dashboard/submittask/${response?.payload?._id}`)
-            }
+    
+                if (!taskToPerform) {
+                    toast.error ("Sorry, cannot find advert, so task cannot be created")
+                }
+    } 
+         
+        
+    
 
-            if (!taskToPerform) {
-                toast.error ("Sorry, cannot find advert, so task cannot be created")
-            }
-        }   
-    }
 
   return (
     <div className='w-full h-fit'>
@@ -161,12 +167,14 @@ const TaskEarn = () => {
                     </div>
                 </div>
                 <div>
-                    <button onClick={e => handleSelect(e, task._id)} className={`flex items-center gap-1 text-primary py-2 px-5 rounded-2xl ${tasks?.find(task =>  task.taskPerformerId === userId && task.advertId === task._id) && 'bg-red-600'} ${!tasks?.find(task =>  task.taskPerformerId === userId && task.advertId === task._id) && 'bg-secondary'}`}>
+                    {/* <button onClick={e => handleSelect(e, task._id)} className={``}>
                         {tasks?.find(task =>  task.taskPerformerId === userId && task.advertId === task._id) && "Task Submitted"}
 
                         {!tasks?.find(task =>  task.taskPerformerId === userId && task.advertId === task._id) && "Perform Task"}
                         <span>{isLoading && <LoaderIcon />}</span>
-                        </button>
+                        </button> */}
+
+                        {checkTaskExistence(task._id)}
                 </div>
             </div>
         ))}

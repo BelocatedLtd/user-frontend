@@ -18,6 +18,9 @@ import { LoaderIcon } from 'react-hot-toast';
 import Widgets from '../../../components/adminComponents/Widgets';
 import Chart from '../../../components/adminComponents/Chart';
 import FeaturedChart from '../../../components/adminComponents/FeaturedChart';
+import List from './List';
+import ListItems from './ListItems';
+import ActivityFeed from '../../../components/ActivityFeed';
 
 
 
@@ -80,15 +83,27 @@ const AdminDashboard = () => {
 
       <div className='charts flex w-full px-[20px] py-[5px] gap-[20px]'>
         <FeaturedChart />
-        <Chart />
+        <ActivityFeed />
+      </div>
+
+      <div className='listContainer shadow-lg m-[20px]'>
+        <div className="listTitle font-semibold text-gray-600 m-[15px]">
+          Latest Users
+        </div>
+        {/* <List /> */}
+
+        <Adverts adverts={adverts}/>
+        <Users users={users}/>
+        
+
       </div>
 
 
 
-    {tableSwitch === "Adverts" && (<Adverts adverts={adverts}/>)}
+    {/* {tableSwitch === "Adverts" && (<Adverts adverts={adverts}/>)}
     {tableSwitch === "Users" && (<Users />)}
     {tableSwitch === "Tasks" && (<Tasks />)}
-    {tableSwitch === "Transactions" && (<Transactions />)}
+    {tableSwitch === "Transactions" && (<Transactions />)} */}
       
     </div>
   )

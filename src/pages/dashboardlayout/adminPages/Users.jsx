@@ -2,43 +2,18 @@ import React from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 
 const Users = ({users}) => {
-     //const adverts = useSelector(selectAdverts)
-    
-
-//   const customStyles = {
-//     headCells: {
-//       style: {
-//         backgroundColor: '#18141E',
-//         color: '#f4f4f4',
-//         fontSize: '15px'
-//       }
-//     },
-//   }
-
-//   const handleButtonClick = (e, artisanId) => {
-//     e.preventDefault();
-//     navigate(`/dashboard/artisan/${artisanId}`)
-//   }
 
 const columns = [
-    { field: 'fullname', headerName: 'Name', width: 200 },
+    { field: 'fullname', headerName: 'Name', width: 150 },
     { field: 'username', headerName: 'Username', width: 150 },
     { field: 'email', headerName: 'Email', width: 150 },
-    { field: 'phone', headerName: 'Phone', type: 'String', width: 150 },
-   // { field: 'adsCreated', headerName: 'Ads Created', type: 'number', width: 150 },
-   // { field: 'taskOngoing', headerName: 'Tasks Ongoing', type: 'number', width: 150 },
-   // { field: 'taskCompleted', headerName: 'Tasks Completed', type: 'number', width: 150 },
-    { field: 'status', headerName: 'Status', type: 'string', width: 150 },
-    // { field: 'fullName', headerName: 'Full name', description: 'This column', sortable: false, width: 160,
-    //   valueGetter: (params) =>
-    //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-    // },
+    {field: "gender", headerName: "Gender", width: 70},
+    {field: "location", headerName: "Location", width: 100},
+    { field: 'phone', headerName: 'Phone', type: 'String', width: 100 },
+     { field: 'adsCreated', headerName: 'Ads Created', type: 'number', width: 100 },
+   { field: 'taskOngoing', headerName: 'Tasks Ongoing', type: 'number', width: 120 },
+   { field: 'taskCompleted', headerName: 'Tasks Completed', type: 'number', width: 120 },
   ];
-
-  
-
-
-
 
 
   return (

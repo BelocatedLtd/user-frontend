@@ -43,6 +43,10 @@ import Transactions from "./pages/dashboardlayout/adminPages/Transactions";
 import Supportmessages from "./pages/dashboardlayout/adminPages/Supportmessages";
 import AccountSettings from "./pages/dashboardlayout/adminPages/AccountSettings";
 import VerifyOTP from "./pages/authLayout/VerifyOTP";
+import AdvertSingle from "./pages/dashboardlayout/adminPages/AdvertSingle";
+import UserSingle from "./pages/dashboardlayout/adminPages/UserSingle";
+import TaskSingle from "./pages/dashboardlayout/adminPages/TaskSingle";
+
 
 axios.defaults.withCredentials = true 
 
@@ -279,6 +283,18 @@ function App() {
         }
         />
 
+        {/* Admin Users Single*/}
+      <Route 
+        path="/admin/dashboard/users/:id" 
+        element={
+          <SidebarLeft>
+            <DashLayout>
+              <UserSingle />
+            </DashLayout>
+          </SidebarLeft>
+        }
+        />
+
         {/* Admin Adverts*/}
       <Route 
         path="/admin/dashboard/adverts/:username" 
@@ -286,6 +302,18 @@ function App() {
           <SidebarLeft>
             <DashLayout>
               <Adverts />
+            </DashLayout>
+          </SidebarLeft>
+        }
+        />
+
+         {/* Admin Adverts Single*/}
+      <Route 
+        path="/admin/dashboard/adverts/:id" 
+        element={
+          <SidebarLeft>
+            <DashLayout>
+              <AdvertSingle />
             </DashLayout>
           </SidebarLeft>
         }
@@ -303,6 +331,18 @@ function App() {
         }
         />
 
+        {/* Admin Tasks Single*/}
+      <Route 
+        path="/admin/dashboard/adverts/:id" 
+        element={
+          <SidebarLeft>
+            <DashLayout>
+              <TaskSingle />
+            </DashLayout>
+          </SidebarLeft>
+        }
+        />
+
         {/* Admin Transactions*/}
       <Route 
         path="/admin/dashboard/transactions/:username" 
@@ -310,6 +350,18 @@ function App() {
           <SidebarLeft>
             <DashLayout>
               <Transactions />
+            </DashLayout>
+          </SidebarLeft>
+        }
+        />
+
+        {/* Admin transactions Single*/}
+      <Route 
+        path="/admin/dashboard/adverts/:id" 
+        element={
+          <SidebarLeft>
+            <DashLayout>
+              <AdvertSingle />
             </DashLayout>
           </SidebarLeft>
         }

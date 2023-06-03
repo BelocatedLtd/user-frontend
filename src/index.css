@@ -203,12 +203,34 @@ button {
   }
 
 
+.running {
+  background-color: rgba(0, 128, 0, 0.05);
+  color: green;
+}
 
+.pending {
+  background-color: rgba(0, 217, 0, 0.05);
+  color: yellow;
+}
 
+.rejected {
+  background-color: rgba(0, 217, 0, 0.05);
+  color: red;
+}
 
+.allocating {
+  background-color: rgba(0, 217, 0, 0.05);
+  color: skyblue;
+}
 
-  .widget__boxshadow {
-    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0 0.47) !important;
-    box-shadow: 2px 4px 10px 1px rgba(201,201,201 0.47) !important;
-  }
+.completed {
+  background-color: rgba(0, 217, 0, 0.05);
+  color: blue;
+}
+
+.cellAction {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 

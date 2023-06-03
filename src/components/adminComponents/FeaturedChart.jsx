@@ -8,7 +8,7 @@ import { useState } from 'react'
 const FeaturedChart = () => {
     const [target, setTarget] = useState(50000)
   return (
-    <div className='flex-2 shadow-lg p-[10px]'>
+    <div className='flex-3 w-full shadow-lg p-[10px]'>
         <div className="top flex items-center justify-between text-gray-500">
             <h1 className='title text-[16px] font-semibold'>Total Revenue</h1>
             <BsThreeDotsVertical size={20}/>
@@ -24,26 +24,34 @@ const FeaturedChart = () => {
 
             <div className="summary w-[100%] flex items-center justify-between">
                 <div className="item text-center">
-                    <div className="itemTitle text-[14px] text-gray-600">Target</div>
+                    <div className="itemTitle text-[14px] text-gray-600">Last Year</div>
                     <div className={`itemResult flex text-center mt-[10px] text-[14px] ${target >= 50000 && ('text-green-500')} ${target <= 0 && ('text-red-500')}`}>
-                    {target > 12000 && <IoIosArrowUp size={20}/>}
-                    {target < 12000 && <IoIosArrowDown size={20}/>}
+                    {target > 12000 && <IoIosArrowUp size={15}/>}
+                    {target < 12000 && <IoIosArrowDown size={15}/>}
                         <div className="resultAmount">₦60.6k</div>
                     </div>
                 </div>
                 <div className="item text-center">
-                    <div className="itemTitle text-[14px] text-gray-600">Target</div>
+                    <div className="itemTitle text-[14px] text-gray-600">Last Months</div>
                     <div className={`itemResult flex text-center mt-[10px] text-[14px] ${target >= 50000 && ('text-green-500')} ${target <= 0 && ('text-red-500')}`}>
-                    {target > 12000 && <IoIosArrowUp size={20}/>}
-                    {target < 50000 && <IoIosArrowDown size={20}/>}
+                    {target > 12000 && <IoIosArrowUp size={15}/>}
+                    {target < 50000 && <IoIosArrowDown size={15}/>}
                         <div className="resultAmount">₦60.6k</div>
                     </div>
                 </div>
                 <div className="item text-center">
-                    <div className="itemTitle text-[14px] text-gray-600">Target</div>
+                    <div className="itemTitle text-[14px] text-gray-600">Last Week</div>
                     <div className={`itemResult flex text-center mt-[10px] text-[14px] ${target >= 50000 && ('text-green-500')} ${target <= 0 && ('text-red-500')}`}>
-                    {target > 12000 && <IoIosArrowUp size={20}/>}
-                    {target < 50000 && <IoIosArrowDown size={20}/>}
+                    {target > 12000 && <IoIosArrowUp size={15}/>}
+                    {target < 50000 && <IoIosArrowDown size={15}/>}
+                        <div className="resultAmount">₦60.6k</div>
+                    </div>
+                </div>
+                <div className="item text-center">
+                    <div className="itemTitle text-[14px] text-gray-600">Yesterday</div>
+                    <div className={`itemResult flex text-center mt-[10px] text-[14px] ${target >= 50000 && ('text-green-500')} ${target <= 0 && ('text-red-500')}`}>
+                    {target > 12000 && <IoIosArrowUp size={15}/>}
+                    {target < 50000 && <IoIosArrowDown size={15}/>}
                         <div className="resultAmount">₦60.6k</div>
                     </div>
                 </div>
