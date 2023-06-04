@@ -54,15 +54,15 @@ const CampaignStats = () => {
             key={item._id}
             socialIcon={item.platform} 
             date={item.createdAt} 
-            title={`Buy ${item.desiredROI} ${item.platform} ${item.asset}`}
-            adperPostAmt="N4 Per Ad"
+            title={`Buy ${item.desiredROI} ${item.platform} ${item.service}`}
+            adperPostAmt={`N${item.costPerTask} Per Ad`}
             roi={item.desiredROI}
             adBudget={item.adAmount}
-            adAsset={item.asset}
+            adService={item.service}
             status={item.status}
             adDesc={item.caption}
-            location={item.location}
-            community={item.community}
+            state={item.state}
+            lga={item.lga}
             religion={item.religion}
           />
         ))}

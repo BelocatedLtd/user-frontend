@@ -165,7 +165,7 @@ function App() {
 
         {/* Dashboard Ad buy route */}
       <Route 
-        path="/dashboard/adbuy/:param" 
+        path="/dashboard/adbuy/:platformName" 
         element={
           <SidebarLeft>
             <DashLayout>

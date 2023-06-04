@@ -60,8 +60,8 @@ const TaskEarn = () => {
 
         //Filter all ads to get the ones this user is qualified to perform
         const filteredTasks = filteredServiceAdvert?.filter(advert => {
-            const locationMatch = advert.location === user.location || advert.location === 'All'; 
-            const communityMatch = advert.community === user.community || advert.community === 'All';
+            const locationMatch = advert.state === user.location || advert.state === 'All'; 
+            const communityMatch = advert.lga === user.community || advert.lga === 'All';
             const genderMatch = advert.gender === user.gender || advert.gender === 'All'; 
             
             return locationMatch && communityMatch && genderMatch;
@@ -103,15 +103,14 @@ const TaskEarn = () => {
                         advertId: taskToPerform._id,
                         advertiserId: taskToPerform.userId,
                         taskPerformerId: userId,
-                        title: `${taskToPerform.desiredROI} ${taskToPerform.asset} on ${taskToPerform.platform}`,
+                        title: `${taskToPerform.desiredROI} ${taskToPerform.service} on ${taskToPerform.platform}`,
                         platform: taskToPerform.platform,
-                        asset: taskToPerform.asset,
+                        service: taskToPerform.service,
                         desiredROI: taskToPerform.desiredROI,
                         toEarn: taskToPerform.toEarn ? taskToPerform.toEarn : 4,
                         gender: taskToPerform.gender,
-                        location: taskToPerform.location,
-                        community: taskToPerform.community,
-                        religion: taskToPerform.religion,
+                        state: taskToPerform.state,
+                        lga: taskToPerform.lga,
                         caption: taskToPerform.caption,
                         socialPageLink: taskToPerform.socialPageLink,
                     }
@@ -142,38 +141,31 @@ const TaskEarn = () => {
             </div>
 
             <div className='flex items-center gap-3 border-b border-gray-200'>
-                <p className='font-normal text-[14px] text-gray-700 p-6'>You can earn consistently by posting adverts of various businesses and top brands on your social media accounts and performing simple social media tasks. There are <span className='text-tertiary font-bold'>({finalFilteredTasks.length})</span> {asset} tasks you are qualified to perform on {platformName}. To get started, simply click on any of the earning options shown below:</p>
+                <p className='font-normal text-[14px] text-gray-700 p-6'>You can earn consistently by posting adverts of various businesses and top brands on your social media accounts and performing simple social media tasks. There are <span className='text-tertiary font-bold'>({finalFilteredTasks.length})</span> {service} tasks you are qualified to perform on {platformName}. To get started, simply click on any of the earning options shown below:</p>
             </div>
         </div>
 
         <div className='px-8 mt-8'>
-         {finalFilteredTasks?.map(task => (
-            <div className='flex items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
+         {finalFilteredTasks?.map((task, index) => (
+            <div key={index} className='flex items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
                 <div className='flex gap-2 items-center'>
                     <img src={icon} alt={platformName} />
                     <div className=''>
                         <small>{task.createdAt}</small>
-                        <h1 className='text-[18px] font-bold my-[-5px] p-0'>{`${task.desiredROI} ${task.asset} on ${task.platform}`}</h1>
-                        <small className='text-gray-400 text-[9px]'>To Earn: {task.toEarn ? task.toEarn : "₦3"} Per {task.asset}</small>
+                        <h1 className='text-[18px] font-bold my-[-5px] p-0'>{`${task.desiredROI} ${task.service} on ${task.platform}`}</h1>
+                        <small className='text-gray-400 text-[9px]'>To Earn: {task.toEarn ? task.toEarn : "₦3"} Per {task.service}</small>
 
                         <p className='text-gray-500 text-[15px]'>{task.caption}</p>
 
                         <div>
                         <ul className='flex gap-3'>
-                            <li>State: {task.location}</li>
-                            <li>Community: {task.community}</li>
+                            <li>State: {task.state}</li>
+                            <li>LGA: {task.lga}</li>
                         </ul>
                     </div>
                     </div>
                 </div>
                 <div>
-                    {/* <button onClick={e => handleSelect(e, task._id)} className={``}>
-                        {tasks?.find(task =>  task.taskPerformerId === userId && task.advertId === task._id) && "Task Submitted"}
-
-                        {!tasks?.find(task =>  task.taskPerformerId === userId && task.advertId === task._id) && "Perform Task"}
-                        <span>{isLoading && <LoaderIcon />}</span>
-                        </button> */}
-
                         {checkTaskExistence(task._id)}
                 </div>
             </div>

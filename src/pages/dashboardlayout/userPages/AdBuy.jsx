@@ -1,41 +1,33 @@
 import React, { useEffect } from 'react'
 import AdBuyForm from '../../../components/forms/AdBuyForm'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import socialPlatforms from '../../../components/data/assets'
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
 
 const initialState = {
-    asset: '',
     roi: '',
     gender: '', 
-    religion: '', 
     socialPageLink: '',
     adText: '', 
-
 }
 
 const AdBuy = () => {
     const navigate = useNavigate()
     const [advert, setAdvert] = useState(initialState)
-    const [platform, setPlatform] = useState('')
     const [mediaUrl, setMediaUrl] = useState({})
     const [imagePreview, setImagePreview] = useState(null)
     const [expBudget, setExpBudget] = useState(0)
     const [costToPay, setCostToPay] = useState()
     const [earnPerTask, setEarnPerTask] = useState()
-    const [theAsset, setTheAsset] = useState('')
-    const [socialAsset, setSocialAsset] = useState(null)
-    const { param } = useParams()
+    const {platformName} = useParams();
+    const location = useLocation();
+    const { selectedPlatformObject, service } = location.state || {};
+    const [socialService, setSocialService] = useState(null)
     
 
-
-    useEffect(() => {
-        setPlatform(param)
-    }, [param])
-
-    const {asset, roi, gender, religion, socialPageLink, adText } = advert
+    const {roi, gender, socialPageLink, adText } = advert
 
     const handleInputChange = (e) => {
         const {name, value } = e.target;
@@ -53,10 +45,9 @@ const AdBuy = () => {
         e.preventDefault()
     
         if (
-          !asset ||
+          !service ||
           !roi ||
           !gender ||
-          !religion || 
           !adText ||
           !mediaUrl
           ) {
@@ -70,26 +61,20 @@ const AdBuy = () => {
         }
     }
 
-    useEffect(() => {
-      const sortPlatform = () => {
-        const selectedPlatform = socialPlatforms?.find((item) => item.assetplatform == platform);
-        setSocialAsset(selectedPlatform?.assets) 
-      }
-      sortPlatform()
-    }, [platform, socialPlatforms])
 
     useEffect(() => {
-      const selectedAsset = socialAsset?.find((item) => item?.asset == advert?.asset);
-      setEarnPerTask(selectedAsset?.amountForTask)
-      setExpBudget(selectedAsset?.CostToOrder * advert?.roi)
-      setCostToPay(selectedAsset?.CostToOrder)
-    }, [advert.asset, advert.roi]) 
+      const selectedService = selectedPlatformObject.assets?.find((item) => item?.asset == service);
+      setEarnPerTask(selectedService?.amountForTask)
+      setExpBudget(selectedService?.CostToOrder * advert?.roi)
+      setCostToPay(selectedService?.CostToOrder)
+    }, [service, advert.roi]) 
 
 
   return (
     <div>
        <AdBuyForm 
-       platform={platform}
+       platform={platformName}
+       service={service}
        advert={advert} 
        mediaUrl={mediaUrl}
        imagePreview={imagePreview}
@@ -99,7 +84,7 @@ const AdBuy = () => {
        expBudget= {expBudget}
        costToPay= {costToPay}
        earnPerTask = {earnPerTask}
-       socialAsset= {socialAsset}
+       socialService= {socialService}
        />
     </div>
   )

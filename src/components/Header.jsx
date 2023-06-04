@@ -36,7 +36,7 @@ export const Header = () => {
             <div className='hidden nav__items gap-4 font-bold text-lg text-gray-600 md:flex'>
                 <NavLink to='/'>Home</NavLink>
                 <NavLink to='/about'>About</NavLink>
-                <NavLink to='/#'>More</NavLink>
+                <NavLink to='/more'>More</NavLink>
                 <NavLink to='/contact'>Contact</NavLink>
             </div>
 

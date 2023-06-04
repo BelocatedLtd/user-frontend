@@ -103,7 +103,7 @@ const TaskPerform = ({taskId, taskSubmitData, mediaUrl, imagePreview, handleOnSu
                 {/* Social Account Link */}
                 <div className='flex flex-col mt-[2rem]'>
                   <label htmlFor="social media username" className='text-gray-500 font-bold text-center mb-[1rem]'>Username on Social Media</label>
-                  <input type="text" name="userSocialName" placeholder='Enter your social media username' value={taskSubmitData?.userSocialName} onChange={handleInputChange} className='py-6 px-6 text-gray-800 bg-gray-200 rounded-2xl'/>
+                  <input type="text" name="userSocialName" placeholder='Enter your social media username' onChange={handleInputChange} className='py-6 px-6 text-gray-800 bg-gray-200 rounded-2xl'/>
                 </div>
 
                 <button type="submit" className='flex items-center gap-2 w-full bg-secondary text-gray-100 py-3 px-6 mt-5 rounded-full'>Submit {isLoading && <LoaderIcon />}</button>

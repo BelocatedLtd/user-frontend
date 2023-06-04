@@ -120,7 +120,7 @@ const advertSlice = createSlice({
             state.isSuccess = false;
             state.isError = true;
             state.message = action.payload;
-            toast.error(action.payload) 
+            toast.error(state.message) 
           })
         }
 });

@@ -78,13 +78,13 @@ const TaskSubmit = () => {
 
         
 
-        const response = await dispatch(handleSubmitTask(taskData))
+       const response = await dispatch(handleSubmitTask(taskData))
 
         console.log(response.payload)
 
-        // if (response.payload) {
-        //   navigate(`dashboard/tasks/${task.taskPerformerId}`)
-        // }
+        if (response.payload) {
+          navigate(`dashboard/tasks/${task.taskPerformerId}`)
+        }
 
 
           

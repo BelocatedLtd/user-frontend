@@ -31,7 +31,7 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
     getWallet()
    }, [dispatch, wallet])
 
-   const {platform, asset, desiredROI, costPerTask, earnPerTask, gender, location, community, religion, caption, mediaURL, socialPageLink, expBudget} = formData
+   const {platform, service, desiredROI, costPerTask, earnPerTask, gender, state, lga, caption, mediaURL, socialPageLink, expBudget} = formData
    
 
    useEffect(() => {
@@ -42,19 +42,18 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
     }
    }, [wallet, expBudget])
 
-   const title = `Buy ${desiredROI} ${platform} ${asset}`
+   const title = `Buy ${desiredROI} ${platform} ${service}`
 
    const formDataForPayment = {
     userId: user.id, 
     platform, 
-    asset,
+    service,
     desiredROI, 
     costPerTask,
     earnPerTask,
     gender, 
-    location, 
-    community,
-    religion, 
+    state, 
+    lga,
     caption, 
     mediaURL,
     socialPageLink, 
@@ -132,7 +131,7 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
 
                 <div className=' flex flex-col'>
                     <h3 className='font-bold text-lg text-gray-700'>Pay with your Wallet </h3>
-                    <small className='font-bold mt-2'>Wallet Balance: ₦{wallet.value}</small>
+                    <small className='font-bold mt-2'>Wallet Balance: ₦{wallet?.value}</small>
 
                     {!canPay && 
                     <div className='flex flex-col justify-center'>

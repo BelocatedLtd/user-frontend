@@ -5,7 +5,7 @@ import tiktok from '../../assets/social icons/tiktok.svg'
 import { useState } from 'react'
 import { useEffect } from 'react'
 
-const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adAsset, status, adDesc, location, community, religion }) => {
+const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adService, status, adDesc, state, lga }) => {
     const [icon, setIcon] = useState()
     const [payBtn, setPayBtn] = useState('Pay Now')
 
@@ -32,7 +32,7 @@ const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adAsset, 
     
 
   return (
-    <div className='relative flex w-[95%] h-fit mt-5 mb-[2rem] bg-[#fcfcfc] p-[2rem] rounded-2xl rounded-tr-none md:p-[3rem]'>
+    <div className='relative shadow-lg flex w-[95%] h-fit mt-5 mb-[2rem] bg-[#fcfcfc] p-[2rem] rounded-2xl rounded-tr-none md:p-[3rem]'>
         {/* Close icon to delete ad campaign */}
         {status == 'pending' && 
         <img src={close} alt="close" size={20} className='absolute top-[-0.4rem] right-[-0.4rem] text-tertiary w-[28px] h-[28px]' />}
@@ -67,8 +67,8 @@ const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adAsset, 
 
             <div className='flex flex-col'>
             <div>
-                <label className='font-extrabold text-[12px]  text-gray-700 mr-1 md:text-[14px] md:font-bold'>Ad Asset:</label>
-                <small className='text-gray-500 font-bold'>{adAsset}</small> 
+                <label className='font-extrabold text-[12px]  text-gray-700 mr-1 md:text-[14px] md:font-bold'>Ad Service:</label>
+                <small className='text-gray-500 font-bold'>{adService}</small> 
             </div>
             
 

@@ -8,11 +8,15 @@ import { getUser } from '../../../services/authServices'
 import { SET_USER, SET_USERNAME, selectUser } from '../../../redux/slices/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
+import socialPlatforms from '../../../components/data/assets'
 
 const Advertise = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const user = useSelector(selectUser)
+    const [platformName, setPlatformName] = useState("")
+    const [toggleServices, setToggleServices] = useState(false)
+    const [selectedPlatformObject, setSelectedPlatformObject] = useState()
     useRedirectLoggedOutUser('/login')
 
     useEffect(() => {
@@ -26,10 +30,26 @@ const Advertise = () => {
       getUserData()
     }, [dispatch])
 
-    const handleSelect = (e, param) => {
+    const handleSelect = (e, platform) => {
         e.preventDefault(e)
-        navigate(`/dashboard/adbuy/${param}`)
+
+        setPlatformName(platform)
+
+        //Function to toggle to services list open and close
+        setToggleServices(!toggleServices)
+        //navigate(`/dashboard/adbuy/${param}`)
+
+        //Extracts all the object containing services relevant to the platform the user picked
+        const servicesList = socialPlatforms?.find(object => object?.assetplatform === platform)
+        setSelectedPlatformObject(servicesList)
     }
+
+    const handleSelectService = (e, service) => {
+        e.preventDefault(e)
+
+        navigate(`/dashboard/adbuy/${platformName}`, { state:{ selectedPlatformObject, service } });
+
+}
     
   return (
     <div className='w-full h-fit'>
@@ -47,8 +67,9 @@ const Advertise = () => {
             </div>
 
             <div className='flex flex-col gap-[3rem] items-center justify-center mt-[1rem] px-3 py-5'>
-                {socialMenu.map(menu => (
-                <div className='flex items-center gap-5' key={menu.value}>
+                {socialMenu.map((menu, index) => (
+                <div  key={index} className='shadow-lg p-5'>
+                <div className='flex items-center gap-5'>
                     <div className='flex flex-col'>
                         <div className='flex items-center justify-center w-[100px] h-[100px] bg-gray-50 rounded-t-xl rounded-b-2xl'>
                             <img src={menu.icon} alt="" className='object-cover rounded-full p-2'/>
@@ -61,6 +82,25 @@ const Advertise = () => {
                         <p className='border-b border-gray-100 pb-3 text-[14px] text-gray-500 font-semibold'><span className='font-extrabold'>Pricing:</span> Starts at ₦{menu.price}/Task Performed</p>
                         <p className='font-normal text-[14px] text-gray-700 mt-3'>{menu.desc}</p>
                     </div>
+                </div>
+                
+
+                    {selectedPlatformObject?.assetplatform === menu.value && toggleServices ? (
+                    <div className='w-full h-fit'>
+                    {selectedPlatformObject?.assets?.map( (service, index) => 
+                        <ul key={index} className='flex items-center gap-3'>
+                            <li className='flex items-center gap-3 border-b border-gray-50 py-3 '>
+                            <div onClick={e => handleSelectService(e, service?.asset)} className='flex items-center gap-3'>
+                                {service.asset}
+                            </div>
+                            
+
+                            </li>
+                        </ul>
+                    )}
+                    </div>
+                ) : ""
+                }
                 </div>
                 ))}
             </div>

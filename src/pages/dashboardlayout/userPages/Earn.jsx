@@ -18,8 +18,6 @@ const Earn = () => {
     const adverts = useSelector(selectAllAdverts)
     const dispatch = useDispatch(selectAdverts)
     const isLoading = useSelector(selectIsLoading)
-    const [platform, setPlatform] = useState('')
-    const [services, setServices] = useState()
     const [toggleServices, setToggleServices] = useState(false)
     const [selectedPlatformObject, setSelectedPlatformObject] = useState()
     const user = useSelector(selectUser)
@@ -58,10 +56,9 @@ useEffect(() => {
     const handleSelectAsset = (e, asset) => {
         e.preventDefault(e)
 
-        const filteredServiceAdvert = selectedPlatformAds?.filter(advert => advert?.asset === asset)
+        const filteredServiceAdvert = selectedPlatformAds?.filter(advert => advert?.service === asset)
         navigate(`/dashboard/taskearn/${platformName}`, { state:{ filteredServiceAdvert, asset } });
 
-   
 }
 
   return (
@@ -110,15 +107,13 @@ useEffect(() => {
                 
                 {selectedPlatformObject?.assetplatform === menu.value && toggleServices ? (
                     <div className='w-full h-fit'>
-                    {selectedPlatformObject?.assets?.map( service => 
+                    {selectedPlatformObject?.assets?.map( (service, index) => 
                         <ul className='flex items-center gap-3'>
-                            <li className='flex items-center gap-3 border-b border-gray-50 py-3 '>
+                            <li key={index} className='flex items-center gap-3 border-b border-gray-50 py-3'>
                             <div onClick={e => handleSelectAsset(e, service?.asset)} className='flex items-center gap-3'>
                                 {service.asset}
-                                <button className='bg-gray-200 p-2 border border-gray-200 rounded-full'>{selectedPlatformAds?.filter(advert => advert?.asset === service?.asset).length}</button>
+                                <button className='bg-gray-200 p-2 border border-gray-200 rounded-full'>{selectedPlatformAds?.filter(advert => advert?.service === service?.asset).length}</button>
                             </div>
-                            
-
                             </li>
                         </ul>
                     )}
