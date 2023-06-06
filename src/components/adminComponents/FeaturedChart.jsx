@@ -8,7 +8,7 @@ import { useState } from 'react'
 const FeaturedChart = () => {
     const [target, setTarget] = useState(50000)
   return (
-    <div className='flex-3 w-full shadow-lg p-[10px]'>
+    <div className='flex-3 w-[400px] shadow-lg p-[10px]'>
         <div className="top flex items-center justify-between text-gray-500">
             <h1 className='title text-[16px] font-semibold'>Total Revenue</h1>
             <BsThreeDotsVertical size={20}/>

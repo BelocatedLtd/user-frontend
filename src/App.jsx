@@ -46,6 +46,7 @@ import VerifyOTP from "./pages/authLayout/VerifyOTP";
 import AdvertSingle from "./pages/dashboardlayout/adminPages/AdvertSingle";
 import UserSingle from "./pages/dashboardlayout/adminPages/UserSingle";
 import TaskSingle from "./pages/dashboardlayout/adminPages/TaskSingle";
+import VerifyEmail from "./pages/authLayout/VerifyEmail";
 
 
 axios.defaults.withCredentials = true 
@@ -73,6 +74,7 @@ function App() {
           <Route path="/*" element={<Error404Page />}/>
           <Route path="/retrieve-pass" element={<RetrievePassword />}/>
           <Route path="/verify" element={<VerifyOTP />}/>
+          <Route path="/verify-email" element={<VerifyEmail />}/>
         </Route>
 
         <Route path="/" element={<AuthLayout />}>

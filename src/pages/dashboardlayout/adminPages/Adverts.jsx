@@ -34,7 +34,7 @@ const columns = [
     } },
 
     { field: 'platform', headerName: 'Platform', width: 150 },
-    { field: 'asset', headerName: 'Asset', width: 150 },
+    { field: 'service', headerName: 'Service', width: 150 },
     { field: 'desiredROI', headerName: 'Desired ROI', type: 'number', width: 100 },
     { field: 'adAmount', headerName: 'Ad Amount', type: 'number', width: 150 },
     { field: 'tasks', headerName: 'Tasks', type: 'number', width: 120 },
@@ -64,10 +64,9 @@ const columns = [
             <DataGrid
             rows={adverts}
             getRowId={(advert) => advert?._id}
-            columns={columns.concat(actionColumn)}
+            columns={columns?.concat(actionColumn)}
             pageSize={5}
             rowsPerPageOptions={[5]}
-            
             checkboxSelection
              />
         </div>

@@ -75,7 +75,6 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
     const togglePaymentSelect = (e) => {
       e.preventDefault()
 
-      console.log(formData)
 
       if (!service || !advert.roi || !advert.gender || !selectedState || !selectedCommunity || !expBudget ) {
         toast.error("Some required fields are empty, please fill in all the fields")
@@ -83,6 +82,8 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
        setSelectPaymentBtn(!selectPaymentBtn)
       }
   }
+
+  console.log(service)
 
   
 
@@ -172,8 +173,8 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
 
                           {hideInputFields ? "" : (
                           <div className='flex flex-col mt-3 mb-1'>
-                              <label htmlFor="badText" className='text-left mt-4 mb-1 ml-1'>Caption</label>
-                              <textarea type="textarea" cols="80" rows="10" placeholder='adText' name='adText' value={advert.adText} onChange={handleInputChange} className='shadow-inner bg-transparent border border-gray-200 rounded-xl p-3 mb-1 w-[100%]'/>
+                              <label htmlFor="badText" className='text-left mt-4 mb-1 ml-1'>{service == "Comment" ? "Comment" : "Caption"}</label>
+                              <textarea type="textarea" cols="80" rows="10" name='adText' value={advert.adText} onChange={handleInputChange} className='shadow-inner bg-transparent border border-gray-200 rounded-xl p-3 mb-1 w-[100%]'/>
                           </div>
                           )}
                   </div>

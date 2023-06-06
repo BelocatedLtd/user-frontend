@@ -10,6 +10,7 @@ import { SET_LOGIN, SET_USER, SET_USERNAME } from '../../redux/slices/authSlice'
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../components/loader/Loader';
 import RetrievePassword from './RetrievePassword';
+import VerifyEmail from './VerifyEmail';
 
 
 const initialState = {
@@ -20,18 +21,21 @@ const initialState = {
 const Register = ({handleRegister, setRegBtn, regBtn}) => {
   const navigate = useNavigate()
   const [RetrievePassword, setRetreivePassword] = useState(false)
+  const [toggleVerifyEmail, setToggleVerifyEmail] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
   const [values, setValues] = useState(initialState)
   const dispatch = useDispatch()
 
     const {username, email, password, password2 } = values
 
     const handleInputChange = (e) => {
+      e.preventDefault()
         const {name, value } = e.target;
         setValues({ ...values, [name]: value })
       }
 
-    const handleOnSubmit = async (e) => {
+    const toggleEmailVerifyModal = async (e) => {
     e.preventDefault()
 
       if (!username || !email || !password || !password2) {
@@ -54,36 +58,28 @@ const Register = ({handleRegister, setRegBtn, regBtn}) => {
 
       setIsLoading(true)
       try {
-       const response = await createNewUser(formData)
-       if(response.token) {
-          await dispatch(SET_LOGIN(true))
-          await dispatch(SET_USERNAME(response.username))
-          await dispatch(SET_USER(response))
-          const username = response.username
-
-          navigate(`/dashboard/${username}`)
-       }
+      const response = await createNewUser(formData)
+        if(response) {
+          toast.success("Email Sent")
+          navigate('/verify-email', { state:{ formData } })
+          setRegBtn(!regBtn) 
+        }
         setIsLoading(false)
      } catch (error) {
         setIsLoading(false)
-       toast.error("Failed to register")
-        navigate('/*')
+        setIsError(true)
+       toast.error(error)
      }
     }
 
     const handleRetrievePass = (e) => {
       e.preventDefault()
-      
-      setRegBtn(!regBtn) 
-      navigate('/retrieve-pass')
-      
     }
 
 
   return ReactDOM.createPortal(
     <div className='wrapper'>
       {isLoading && <Loader />}
-      {/* {RetrievePassword && <RetrievePassword />} */}
         <div className='relative modal w-[400px] h-[600px] bg-primary'>
           <img src={close} alt="close" onClick={handleRegister} size={40} className='absolute top-[-1rem] right-[-1rem] text-tertiary' />
           <div className='modal__header__text flex flex-col items-center mt-[3rem] mb-[1.7rem]'>
@@ -92,22 +88,22 @@ const Register = ({handleRegister, setRegBtn, regBtn}) => {
           </div>
 
         <div className='w-full h-fit px-[2rem] md:w-full'>
-            <form onSubmit={handleOnSubmit} className=''>
+            <form onSubmit={toggleEmailVerifyModal} className=''>
                 <label htmlFor="username" className='mr-[1rem]'>Username</label>
-                <input type="username" name="username" onChange={handleInputChange} className='w-full  mb-[1rem] shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl' />
+                <input type="username" name="username" onChange={handleInputChange} className={`w-full  mb-[1rem] shadow-inner p-3 bg-transparent border ${isError ? 'border-red-400' : 'border-gray-200'} rounded-xl`} />
 
                 <label htmlFor="email" className='mr-[1rem]'>Email</label>
-                <input type="email" name="email" onChange={handleInputChange} className='w-full  mb-[1rem] shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl' />
+                <input type="email" name="email" onChange={handleInputChange} className={`w-full  mb-[1rem] shadow-inner p-3 bg-transparent border ${isError ? 'border-red-400' : 'border-gray-200'} rounded-xl`}/>
 
                 <div className='password__group flex gap-2'>
                   <div className='flex flex-col'>
                   <label htmlFor="password" className='mr-[1rem]'>Enter Password</label>
-                  <input type="password" name="password" onChange={handleInputChange} className='w-full mt-[0.5rem] mb-[1rem] shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl' />
+                  <input type="password" name="password" onChange={handleInputChange} className={`w-full  mb-[1rem] shadow-inner p-3 bg-transparent border ${isError ? 'border-red-400' : 'border-gray-200'} rounded-xl`}/>
                   </div>
                   
                   <div className='flex flex-col'>
                   <label htmlFor="password" className='mr-[1rem]'>Confirm Password</label>
-                  <input type="password" name="password2" onChange={handleInputChange} className='w-full mt-[0.5rem] shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl' />
+                  <input type="password" name="password2" onChange={handleInputChange} className={`w-full  mb-[1rem] shadow-inner p-3 bg-transparent border ${isError ? 'border-red-400' : 'border-gray-200'} rounded-xl`}/>
                   </div>
                 </div>
 

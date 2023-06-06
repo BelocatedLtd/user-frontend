@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { SET_LOGIN, SET_USER, SET_USERNAME } from '../../redux/slices/authSlice'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-hot-toast'
-import { loginUser } from '../../services/authServices'
+import { loginUser, resendVerificationEmail } from '../../services/authServices'
 import Loader from '../../components/loader/Loader'
 
 const initialState = {
@@ -40,29 +40,40 @@ const Login = ({handleLogin, loginBtn, setLoginBtn}) => {
     }
 
     setIsLoading(true)
-    try {
-      const response = await loginUser(formData)
-      if(response.token) {
-        await dispatch(SET_LOGIN(true))
-        await dispatch(SET_USERNAME(response.username))
-        await dispatch(SET_USER(response))
-        const username = response.username
+   
+    const response = await loginUser(formData)
 
-        if (response.accountType === "User") {
-          navigate(`/dashboard/${username}`)
-        } else if (response.accountType === "Admin") {
-          navigate(`/admin/dashboard/${username}`)
-        }
-     } else {
-      navigate('/')
-      toast.error("Cannot Login User")
-     }
     setIsLoading(false)
-  } catch (error) {
+    if(response.isEmailVerified === false) {
+      
+      toast.error('Account not verified')
+      const emailResponse = await resendVerificationEmail(formData)
+      if (emailResponse) {
+        navigate('/verify-email', { state:{ formData } })
+        setLoginBtn(!loginBtn)
+      }
+
+      if (!emailResponse) {
+        toast.error("User not verified, but still unable to send verification email")
+      }
+      
+        
+    }
+        
+    if(response.isEmailVerified === true) {
+      await dispatch(SET_LOGIN(true))
+      await dispatch(SET_USERNAME(response.username))
+      await dispatch(SET_USER(response))
+      const username = response.username
+      if (response.accountType === "User") {
+        navigate(`/dashboard/${username}`)
+      } else if (response.accountType === "Admin") {
+        navigate(`/admin/dashboard/${username}`)
+      }
+      setIsLoading(false)
+    }
+
     setIsLoading(false)
-    toast.error("Failed to login")
-    navigate('/*')
-  }
   }
 
   const handleRetrievePass = (e) => {
