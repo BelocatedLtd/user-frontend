@@ -60,7 +60,7 @@ const Register = ({handleRegister, setRegBtn, regBtn}) => {
       try {
       const response = await createNewUser(formData)
         if(response) {
-          toast.success("Email Sent")
+          toast.success(response)
           navigate('/verify-email', { state:{ formData } })
           setRegBtn(!regBtn) 
         }
