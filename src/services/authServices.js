@@ -108,7 +108,7 @@ export const changeUserPassword = async(data) => {
 //Resend Verification Email
 export const resendVerificationEmail = async(email) => {
     try {
-        const response = await axios.post(`${BACKEND_URL}/api/user/authverification`, email)
+        const response = await axios.post(`${BACKEND_URL}/api/user/authverification/${email}`)
         return response.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

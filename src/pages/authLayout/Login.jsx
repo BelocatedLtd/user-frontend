@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SET_LOGIN, SET_USER, SET_USERNAME } from '../../redux/slices/authSlice'
 import { useDispatch } from 'react-redux'
-import { toast } from 'react-hot-toast'
+import { CheckmarkIcon, toast } from 'react-hot-toast'
 import { loginUser, resendVerificationEmail } from '../../services/authServices'
 import Loader from '../../components/loader/Loader'
 
@@ -45,14 +45,27 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
     const response = await loginUser(formData)
 
     if(response.isEmailVerified === false) {
-      toast.error('Account not verified')
-    
-      await resendVerificationEmail(formData)
+      toast.error('Email not verified')
 
-        toast.success('Verification email sent')
+      const emailResponse = resendVerificationEmail(email)
+      .catch((error)=> {
+        toast.error("Failed to send verification email")
+      })
+      .then((res) =>  {
         navigate('/verify-email', { state:{ formData } })
         setLoginBtn(!loginBtn)
-      } 
+        setIsLoading(false)
+      })
+      
+      toast.promise(emailResponse, {
+          loading: 'Sending verification email...',
+          success: <b>Email sent</b>,
+          error: <b>Failed to send email</b>
+        }
+      );
+
+      setIsLoading(false)
+      }
       setIsLoading(false)
 
     
