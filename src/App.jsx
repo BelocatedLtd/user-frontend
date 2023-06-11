@@ -48,6 +48,8 @@ import UserSingle from "./pages/dashboardlayout/adminPages/UserSingle";
 import TaskSingle from "./pages/dashboardlayout/adminPages/TaskSingle";
 import VerifyEmail from "./pages/authLayout/VerifyEmail";
 import EmailVerified from "./pages/authLayout/EmailVerified";
+import PasswordChangeOTP from "./pages/dashboardlayout/userPages/PasswordChangeOTP";
+import ChangePassword from "./pages/dashboardlayout/userPages/settings/ChangePassword";
 
 
 axios.defaults.withCredentials = true 
@@ -239,6 +241,32 @@ function App() {
           <SidebarLeft>
             <DashLayout>
               <PasswordUpdate />
+              <SidebarRight />
+            </DashLayout>
+          </SidebarLeft>
+        }
+        />
+
+        {/* Password OTP Password Route */}
+        <Route 
+        path="/dashboard/password-verify" 
+        element={
+          <SidebarLeft>
+            <DashLayout>
+              <PasswordChangeOTP />
+              <SidebarRight />
+            </DashLayout>
+          </SidebarLeft>
+        }
+        />
+
+        {/* Password Change Route */}
+        <Route 
+        path="/dashboard/password-change" 
+        element={
+          <SidebarLeft>
+            <DashLayout>
+              <ChangePassword />
               <SidebarRight />
             </DashLayout>
           </SidebarLeft>

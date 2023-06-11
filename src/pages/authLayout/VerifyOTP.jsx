@@ -69,26 +69,20 @@ const  VerifyOTP = () => {
         setIsLoading(true)
        const response = await confirmOTP(OTP)
 
-      console.log(response)
-
-       if (response) {
-        const updatedUserDetailes = await updateUserAccountDetails(verificationData)
-
-        console.log(updatedUserDetailes)
-       }
-       
+        if (response) {
+          const updatedUserDetailes = await updateUserAccountDetails(verificationData)
+         
+          if(updatedUserDetailes) {
+              await dispatch(SET_LOGIN(true))
+              await dispatch(SET_USERNAME(updatedUserDetailes.username))
+              await dispatch(SET_USER(updatedUserDetailes))
     
-       if(response) {
-          await dispatch(SET_LOGIN(true))
-          await dispatch(SET_USERNAME(response.username))
-          await dispatch(SET_USER(response))
-
-          navigate('/dashboard/profile/')
-          setIsLoading(false)
-       }
+              navigate('/dashboard/profile/')
+              setIsLoading(false)
+          }
+        }
 
        setIsLoading(false)
-        
      } catch (error) {
         setIsLoading(false)
        toast.error("OTP verification failed")
@@ -120,7 +114,7 @@ const  VerifyOTP = () => {
         {isLoading && <Loader />}
       <div className='flex flex-col justify-center items-center gap-4 mx-auto w-full h-full px-[2rem] md:w-1/2'>
         <div className='mb-5 flex flex-col items-center text-center'>
-            <h2 className='text-sm text-gray-400 font-medium px-6 text-center'><span className='text-tertiary font-extrabold'>Verification</span> Email Sent!</h2>
+            <h2 className='text-sm text-gray-400 font-medium px-6 text-center'><span className='text-tertiary font-extrabold'>Verification</span> OTP Sent!</h2>
             <h3 className='w-[80%] text-xl text-gray-600 font-bold px-6 mt-2'>Please, enter the OTP code sent to your mobile number</h3>
         </div>
         <form onSubmit={handleOnSubmit} className='w-[500px]'>
