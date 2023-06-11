@@ -32,13 +32,13 @@ const Profile = () => {
   return (
     <div className='w-full h-fit mr-[1rem]'>
       {isLoading && <Loader />}
-      <div className='user__data__wrapper flex flex-col w-full h-fit border border-gray-300 rounded-2xl p-6'>
+      <div className='user__data__wrapper flex flex-col w-full h-fit shadow-xl rounded-2xl p-6'>
         {
           !isLoading && profile === null ? (
             <p>Something went wrong, please reload the page...</p>
           ) : (
-            <div className='user__data__group flex flex-col gap-3 w-full'>
-          <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
+            <div className='user__data__group flex flex-col py-[2rem] gap-3 w-full'>
+          <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] pb-5 px-5'>
             <label htmlFor="fullname" className='font-extrabold'>Full Name:</label>
             <p>{profile?.fullname}</p>
           </div>
@@ -52,23 +52,19 @@ const Profile = () => {
           </div>
           <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
             <label htmlFor="username" className='font-extrabold'>Phone Number:</label>
-            <p>+234{profile?.phone}</p>
+            <p>+{profile?.phone}</p>
           </div>
           <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
             <label htmlFor="fullname" className='font-extrabold'>Gender:</label>
             <p>{profile?.gender}</p>
           </div>
           <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
-            <label htmlFor="username" className='font-extrabold'>Location:</label>
+            <label htmlFor="username" className='font-extrabold'>State:</label>
             <p>{profile?.location}</p>
           </div>
           <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
-            <label htmlFor="fullname" className='font-extrabold'>Community:</label>
+            <label htmlFor="fullname" className='font-extrabold'>LGA:</label>
             <p>{profile?.community}</p>
-          </div>
-          <div className='user__data flex items-center gap-1 text-lg py-5 px-5 mx-[2rem]'>
-            <label htmlFor="username" className='font-extrabold'>Religion:</label>
-            <p>{profile?.religion}</p>
           </div>
         </div>
           )

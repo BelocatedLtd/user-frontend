@@ -1,21 +1,31 @@
 import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
 
-const makePayment = (name, phone_number, email, costToPay, title, desc) => {
+const makePayment = (amount, email, phone, fullname, title, desc) => {
     const config = {
-        public_key: process.env.FLUTTER_PUBLIC_KEY,
+        public_key: import.meta.env.VITE_FLUTTER_PUBLIC_KEY,
         tx_ref: Date.now(),
-        amount: costToPay,
+        amount: amount,
         currency: 'NGN',
         payment_options: 'card,mobilemoney,ussd',
         customer: {
-          email,
-          phone_number,
-          name,
+          email: email,
+          phone_number: phone,
+          name: fullname,
         },
         customizations: {
           title: title,
           description: desc,
         },
+      };
+
+      const fwConfig = {
+        ...config,
+        text: 'Fund wallet',
+        callback: (response) => {
+           console.log(response);
+          closePaymentModal() // this will close the modal programmatically
+        },
+        onClose: () => {},
       };
     
      useFlutterwave(config)

@@ -69,6 +69,17 @@ export const updateUser = async (formData) => {
     return response.data
 }
 
+//Update user account details
+export const updateUserAccountDetails = async (verificationData) => {
+    try {
+        const response = await axios.patch(`${BACKEND_URL}/api/user/update/accountdetails`, verificationData) 
+         return response.data
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+    }
+}
+
 
 //Forgot Password
 export const retrieveUserPassword = async() => {
@@ -92,4 +103,41 @@ export const resendVerificationEmail = async(email) => {
          toast.error(message)
     }
 }
+
+//Email Verified
+export const emailVerified = async(token) => {
+    try {
+        const response = await axios.patch(`${BACKEND_URL}/api/user/emailverify/${token}`)
+        return response.data
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+    }
+}
+
+//Send Phone OTP
+export const handlesendingPhoneOTP = async(accountDetailsData) => {
+    try {
+        const response = await axios.post(`${BACKEND_URL}/api/user/verifyphone`, accountDetailsData)
+        if (response.statusText ==="OK") {
+            return response.data
+        }
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+    }
+}
+
+//Phone Verify
+export const confirmOTP = async(OTP) => {
+    try {
+        const response = await axios.patch(`${BACKEND_URL}/api/user/confirmphone/${OTP}`)
+        console.log(response)
+        return response.data
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+    }
+}
+
 

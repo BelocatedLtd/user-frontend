@@ -81,6 +81,8 @@ const FundWallet = ({toggleFLWFunding, fundingAmount}) => {
             navigate(`/dashboard/${user.username}`)
         },
       }
+
+
   
 
         return ReactDOM.createPortal(

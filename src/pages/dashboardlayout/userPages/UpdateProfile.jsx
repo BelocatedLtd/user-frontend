@@ -31,9 +31,6 @@ const UpdateProfile = () => {
 
   const initialState = {
     fullname: user?.fullname,
-    username: user?.username,
-    email: user?.email,
-    phone: user?.phone,
     location: user?.location,
     community: user?.community,
     gender: user?.gender,
@@ -50,9 +47,6 @@ const UpdateProfile = () => {
   const formData = {
     userId: user.id,
     fullname: profile?.fullname,
-    username: user?.username,
-    email: user?.email,
-    phone: profile?.phone,
     location: profile?.location,
     community: profile?.community,
     gender: profile?.gender,

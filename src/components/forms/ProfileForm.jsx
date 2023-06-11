@@ -22,7 +22,7 @@ const ProfileForm = ({profile, email, username, handleProfileUpdate, handleInput
     
   return (
     <div className='w-full h-fit flex flex-col md:flex-row'>
-        <form onSubmit={handleProfileUpdate} className='w-full h-fit p-6 md:border-r border-gray-100 flex flex-1 flex-col text-center'>
+        <form onSubmit={handleProfileUpdate} className='w-full h-fit p-6 shadow-lg flex flex-1 flex-col text-center'>
                 <div className='form__container flex flex-col w-full'>
                   <div className='text__fields'>
                           {/* Field Group */}
@@ -31,30 +31,15 @@ const ProfileForm = ({profile, email, username, handleProfileUpdate, handleInput
                                 <label htmlFor="Product Name " className='text-left'>Full Name</label>
                                 <input type='text' name="fullname" placeholder={profile?.fullname} value={profile.fullname} onChange={handleInputChange} className='w-full shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl' />
                             </div>
-                            <div className='flex flex-col mt-3 mb-3'>
-                                <label htmlFor="Product Name " className='text-left'>Username</label>
-                                <input type='text' name="username" disabled placeholder={username} value={username} onChange={handleInputChange} className='w-full shadow-inner p-3 bg-gray-100 border border-gray-200 rounded-xl text-gray-400' />
-                                <small className='text-[10px] text-left mt-1 text-gray-400'>Go to account settings to change your username</small>
-                            </div>
                           </div>
 
                           {/* Field Group */}
-                          <div className='flex flex-col md:gap-6 w-full md:flex-row border-b border-gray-100 pb-[2rem]'>
-                            <div className='flex flex-col mt-3 mb-3'>
-                                <label htmlFor="Email" className='text-left mb-1 ml-1'>Email</label>
-                                <input type="email" placeholder={email} value={email} name='email' disabled onChange={handleInputChange} className='w-full shadow-inner p-3 bg-gray-100 border border-gray-200 rounded-xl text-gray-400'/>
-                                <small className='text-[10px] text-left mt-1 text-gray-400'>Go to account settings to change your email</small>
-                            </div>
-                            <div className='flex flex-col mt-3 mb-3'>
-                                <label htmlFor="Phone" className='text-left mb-1 ml-1'>Phone Number</label>
-                                <input type="number" placeholder={profile?.phone} value={profile?.phone} name='phone' onChange={handleInputChange} className='w-full shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'/>
-                            </div>
-                          </div>
+                          
 
                           {/* Field Group */}
                           <div className='flex flex-col md:gap-6 w-full md:flex-row pt-[0.8rem]'>
                             <div className='flex flex-col mt-3 mb-3'>
-                              <label htmlFor="location" className='text-left mb-1 ml-1'>Location</label>
+                              <label htmlFor="location" className='text-left mb-1 ml-1'>State</label>
                               {/* <select name="location" id="" placeholder={profile.location} value={profile.location} onChange={handleInputChange} className='shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'>
                                 {nigerianStates?.map((item) => (
                                   <div key={item?.id}>
@@ -75,7 +60,7 @@ const ProfileForm = ({profile, email, username, handleProfileUpdate, handleInput
                             </div>
 
                             <div className='flex flex-col mt-3 mb-3'>
-                              <label htmlFor="community" className='text-left mb-1 ml-1'>Community</label>
+                              <label htmlFor="community" className='text-left mb-1 ml-1'>LGA</label>
                                 <select name="community" id="" placeholder={profile.community} value={profile.community} onChange={handleInputChange} className='shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'>
                                 <option value="">Select a community</option>
                                 {nigerianStates

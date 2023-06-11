@@ -11,13 +11,10 @@ const VerifyEmail = () => {
   const { formData } = location.state || {};
     const [isLoading, setIsLoading] = useState(false)
 
-    const {email, password} = formData || {};
-
-    console.log(email)
+    const {email} = formData || {};
 
     const handleResendEmail = async() => {
         const response = await resendVerificationEmail(email)
-        console.log(response)
     }
 
     return (

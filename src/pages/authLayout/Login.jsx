@@ -15,12 +15,13 @@ const initialState = {
   password: '',
 }
 
-const Login = ({handleLogin, loginBtn, setLoginBtn}) => {
+const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
   const [values, setValues] = useState(initialState)
   const {email, password } = values
+
 
   const handleInputChange = (e) => {
       const {name, value } = e.target;
@@ -43,22 +44,18 @@ const Login = ({handleLogin, loginBtn, setLoginBtn}) => {
    
     const response = await loginUser(formData)
 
-    setIsLoading(false)
     if(response.isEmailVerified === false) {
-      
       toast.error('Account not verified')
-      const emailResponse = await resendVerificationEmail(formData)
-      if (emailResponse) {
+    
+      await resendVerificationEmail(formData)
+
+        toast.success('Verification email sent')
         navigate('/verify-email', { state:{ formData } })
         setLoginBtn(!loginBtn)
-      }
+      } 
+      setIsLoading(false)
 
-      if (!emailResponse) {
-        toast.error("User not verified, but still unable to send verification email")
-      }
-      
-        
-    }
+    
         
     if(response.isEmailVerified === true) {
       await dispatch(SET_LOGIN(true))
