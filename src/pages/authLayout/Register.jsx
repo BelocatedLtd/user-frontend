@@ -20,8 +20,6 @@ const initialState = {
 
 const Register = ({handleRegister, setRegBtn, regBtn}) => {
   const navigate = useNavigate()
-  const [RetrievePassword, setRetreivePassword] = useState(false)
-  const [toggleVerifyEmail, setToggleVerifyEmail] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [values, setValues] = useState(initialState)
@@ -59,16 +57,17 @@ const Register = ({handleRegister, setRegBtn, regBtn}) => {
       setIsLoading(true)
       try {
       const response = await createNewUser(formData)
-        if(response) {
-          toast.success(response)
-          navigate('/verify-email', { state:{ formData } })
-          setRegBtn(!regBtn) 
-        }
+          if (response === "Verification Email Sent Successfully") {
+            toast.success(response)
+            navigate('/verify-email', { state:{ formData } })
+            setRegBtn(!regBtn)
+            setIsLoading(false)
+          }
         setIsLoading(false)
      } catch (error) {
         setIsLoading(false)
         setIsError(true)
-       toast.error(error)
+        toast.error(error)
      }
     }
 

@@ -47,13 +47,14 @@ export const Header = () => {
             </div>
             </ShowOnLogout>
             <ShowOnLogin>
+            {user.accountType === "User" && (
+                    <Link to={`/dashboard/${username}`} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</Link>
+                )}
             <div className='flex gap-2'>
                 {user.accountType === "Admin" && (
                     <Link to={`/admin/dashboard/${username}`} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</Link>
                 )}
-                {user.accountType === "User" && (
-                    <Link to={`/dashboard/${username}`} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</Link>
-                )}
+                
                 <Logout />
             </div>
             </ShowOnLogin>

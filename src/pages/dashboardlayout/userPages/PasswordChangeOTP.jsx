@@ -75,28 +75,28 @@ const PasswordChangeOTP = () => {
         
      } catch (error) {
         setIsLoading(false)
-       toast.error("OTP verification failed")
+       toast.error("OTP verification failed") 
      }
     }
 
     const resendOTP = async () => {
      //e.preventDefault()
      console.log(accountDetailsData)
-    try {
-        setIsLoading(true)
-     const response = await handlesendingPhoneOTP(accountDetailsData)
-     if (response) {
-        toast.success('OTP sent to your phone number')
+    // try {
+    //     setIsLoading(true)
+    //  const response = await handlesendingPhoneOTP(accountDetailsData)
+    //  if (response) {
+    //     toast.success('OTP sent to your phone number')
         
-        setResendBtn(false)
-        setTimer(10)
+    //     setResendBtn(false)
+    //     setTimer(10)
 
-     }
-      setIsLoading(false)
-    } catch (error) {
-      setIsLoading(false)
-      console.log(error)
-    }
+    //  }
+    //   setIsLoading(false)
+    // } catch (error) {
+    //   setIsLoading(false)
+    //   console.log(error)
+    // }
     }
 
     return(
