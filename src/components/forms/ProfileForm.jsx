@@ -40,14 +40,6 @@ const ProfileForm = ({profile, email, username, handleProfileUpdate, handleInput
                           <div className='flex flex-col md:gap-6 w-full md:flex-row pt-[0.8rem]'>
                             <div className='flex flex-col mt-3 mb-3'>
                               <label htmlFor="location" className='text-left mb-1 ml-1'>State</label>
-                              {/* <select name="location" id="" placeholder={profile.location} value={profile.location} onChange={handleInputChange} className='shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'>
-                                {nigerianStates?.map((item) => (
-                                  <div key={item?.id}>
-                                  <option>Select Location</option>
-                                  <option>{item?.state}</option>
-                                  </div>
-                                ))}
-                                </select> */}
 
                                 <select 
                                   className='w-full shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'
@@ -62,7 +54,7 @@ const ProfileForm = ({profile, email, username, handleProfileUpdate, handleInput
                             <div className='flex flex-col mt-3 mb-3'>
                               <label htmlFor="community" className='text-left mb-1 ml-1'>LGA</label>
                                 <select name="community" id="" placeholder={profile.community} value={profile.community} onChange={handleInputChange} className='shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'>
-                                <option value="">Select a community</option>
+                                <option value="">Select a Local Government</option>
                                 {nigerianStates
                                     .find((obj) => obj.state === profile.location)
                                     ?.community.map((city, index) => (

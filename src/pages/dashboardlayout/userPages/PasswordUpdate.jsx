@@ -8,10 +8,13 @@ import { useEffect } from 'react'
 import AccountDetailsSettings from './settings/AccountDetailsSettings'
 import BankDetailsSettings from './settings/BankDetailsSettings'
 import PasswordChange from './settings/PasswordChange'
+import { useParams } from 'react-router-dom'
+import Loader from '../../../components/loader/Loader'
 
 
 const PasswordUpdate = () => {
-  const [isLoading, setIsLoading] = useState()
+  const [isLoading, setIsLoading] = useState(false)
+  const {username} = useParams()
   
 
   const dispatch = useDispatch()
@@ -19,21 +22,21 @@ const PasswordUpdate = () => {
   useRedirectLoggedOutUser('/login')
 
   useEffect(() => {
-    if (!user.email) {
-      setIsLoading(true) 
+    setIsLoading(true)
     async function getUserData() {
       const data = await getUser()
-      setIsLoading(false)
       await dispatch(SET_USER(data))
       await dispatch(SET_USERNAME(data.username))
+      setIsLoading(false)
     }
+    setIsLoading(false)
     getUserData()
-    }
-}, [dispatch, user.email])
+}, [username, dispatch])
 
 
   return (
     <div className='w-full h-fit'>
+      {isLoading && <Loader />}
       <div className='w-[60%] h-fit flex flex-col gap-[5rem] mt-[1rem]'>
 
         {/* Layered Boxes wrapper */}

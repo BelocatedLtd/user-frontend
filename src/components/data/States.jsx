@@ -3,7 +3,7 @@ const nigerianStates = [
             id: 1,
             state: 'All States',
             community: [
-                'All Communities'
+                'All Local Governments'
             ]
         },
         {

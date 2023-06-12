@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Loader from '../../components/loader/Loader';
 import { SET_LOGIN, SET_USER, SET_USERNAME } from '../../redux/slices/authSlice';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { confirmOTP, handlesendingPhoneOTP, updateUserAccountDetails } from '../../services/authServices';
 import { useEffect } from 'react';
 
@@ -13,6 +13,7 @@ const initialState = {
 }
 
 const  VerifyOTP = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
   const [values, setValues] = useState(initialState)
@@ -71,17 +72,16 @@ const  VerifyOTP = () => {
 
         if (response) {
          const updatedUserDetailes = await updateUserAccountDetails(verificationData)
-
-         console.log(updatedUserDetailes)
          
-          // if(updatedUserDetailes) {
-          //     await dispatch(SET_LOGIN(true))
-          //     await dispatch(SET_USERNAME(updatedUserDetailes.username))
-          //     await dispatch(SET_USER(updatedUserDetailes))
+          if(updatedUserDetailes) {
+              await dispatch(SET_USERNAME(updatedUserDetailes.username))
+              await dispatch(SET_USER(updatedUserDetailes))
+
+              const username = updatedUserDetailes?.username
     
-          //     navigate('/dashboard/profile/')
-          //     setIsLoading(false)
-          // }
+              navigate(`/dashboard/profile`)
+              setIsLoading(false)
+          }
         }
 
        setIsLoading(false)
