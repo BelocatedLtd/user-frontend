@@ -70,16 +70,18 @@ const  VerifyOTP = () => {
        const response = await confirmOTP(OTP)
 
         if (response) {
-          const updatedUserDetailes = await updateUserAccountDetails(verificationData)
+         const updatedUserDetailes = await updateUserAccountDetails(verificationData)
+
+         console.log(updatedUserDetailes)
          
-          if(updatedUserDetailes) {
-              await dispatch(SET_LOGIN(true))
-              await dispatch(SET_USERNAME(updatedUserDetailes.username))
-              await dispatch(SET_USER(updatedUserDetailes))
+          // if(updatedUserDetailes) {
+          //     await dispatch(SET_LOGIN(true))
+          //     await dispatch(SET_USERNAME(updatedUserDetailes.username))
+          //     await dispatch(SET_USER(updatedUserDetailes))
     
-              navigate('/dashboard/profile/')
-              setIsLoading(false)
-          }
+          //     navigate('/dashboard/profile/')
+          //     setIsLoading(false)
+          // }
         }
 
        setIsLoading(false)

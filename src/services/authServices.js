@@ -73,7 +73,7 @@ export const updateUser = async (formData) => {
 export const updateUserAccountDetails = async (verificationData) => {
     try {
         const response = await axios.patch(`${BACKEND_URL}/api/user/update/accountdetails`, verificationData) 
-         return response.data
+         return response
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
          toast.error(message)
@@ -144,7 +144,6 @@ export const handlesendingPhoneOTP = async(accountDetailsData) => {
 export const confirmOTP = async(OTP) => {
     try {
         const response = await axios.patch(`${BACKEND_URL}/api/user/confirmphone/${OTP}`)
-        console.log(response)
         return response.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
