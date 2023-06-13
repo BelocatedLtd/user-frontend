@@ -1,12 +1,5 @@
 const nigerianStates = [
         {
-            id: 1,
-            state: 'All States',
-            community: [
-                'All Local Governments'
-            ]
-        },
-        {
             id: 2,
             state: 'Abia State',
             community: [

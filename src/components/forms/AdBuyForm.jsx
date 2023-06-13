@@ -131,7 +131,7 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
                                   name={selectedState}
                                   onChange={handleStateChange}>
                                     <option value="">Select a state</option>
-                                    <option value="All">All</option>
+                                    <option value="All">All States</option>
                                     {nigerianStates?.map((object, index) => (
                                       <option key={index} value={object.state}>{object.state}</option>
                                     ))}
@@ -146,8 +146,8 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
                                 value={selectedCommunity}
                                 name={selectedCommunity}
                                 onChange={handleCommunityChange}>
-                                  <option value="">Select LGA</option>
-                                  <option value="All">All</option>
+                                  <option value="">Select Local Government</option>
+                                  <option value="All">All  Local Governments</option>
                                   {nigerianStates
                                     .find((obj) => obj.state === selectedState)
                                     ?.community.map((city, index) => (
