@@ -1,8 +1,11 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import Logout from '../authLayout/Logout'
+import { MdMenu, MdOutlineCancel } from 'react-icons/md'
 
 const Header = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   return (
     <header className='w-full border-b border-gray-200'>
         <div className='ml-5 py-6 flex justify-between items-center mx-auto md:px-2'>
@@ -24,9 +27,30 @@ const Header = () => {
                 </div>
             </div>
 
-            <div>
-              
+            <div className='relative md:hidden'>
+                <div>
+                    {mobileMenuOpen && <MdOutlineCancel onClick={() => setMobileMenuOpen(!mobileMenuOpen)} size={30} className='text-gray-600' />}
+                    {!mobileMenuOpen && <MdMenu onClick={() => setMobileMenuOpen(!mobileMenuOpen)} size={30} className='text-gray-600' />}
+                </div>
             </div>
+
+            {mobileMenuOpen && (
+            <div className='absolute right-5 top-[5.5rem] p-[1.5rem] shadow rounded-sm'>
+                <div className='flex flex-col justify-center items-center w-[150px] h-fit gap-3 '>
+                    <Link to="/">Home</Link>
+                    <Link to="/about">About</Link>
+                    <Link to="/more">More</Link>
+                    <ShowOnLogin>
+                        <Link to={`/dashboard/${user.username}`} className='text-gray-800 cursor-pointer'>Dashboard
+                        </Link>
+                    </ShowOnLogin>
+                    <ShowOnLogin>
+                        <Link to={'/logout'} className='text-gray-800 cursor-pointer'>Logout
+                        </Link>
+                    </ShowOnLogin>
+                </div>
+            </div>
+            )}
         </div>
     </header>
   )
