@@ -8,7 +8,7 @@ import { emailVerified } from '../../services/authServices'
 import Login from './Login'
 
 const EmailVerified = () => {
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const token = searchParams.get('token');
     const [isLoading, setIsLoading] = useState(false)
     const [formData, setFormData] = useState()

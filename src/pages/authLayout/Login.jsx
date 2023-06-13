@@ -47,6 +47,8 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
     if(response.isEmailVerified === false) {
       toast.error('User Exist but not verified')
 
+
+      //Proceeding to send verification link
       const emailResponse = resendVerificationEmail(email)
       .catch((error)=> {
         toast.error("Failed to send verification email")
