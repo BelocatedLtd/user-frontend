@@ -4,7 +4,7 @@ import  ReactDOM  from 'react-dom'
 import { MdCancel } from 'react-icons/md'
 import { toast } from 'react-hot-toast';
 import { useState } from 'react';
-import { createNewUser } from '../../services/authServices';
+import { createNewUser, resendVerificationEmail } from '../../services/authServices';
 import { useDispatch } from 'react-redux';
 import { SET_LOGIN, SET_USER, SET_USERNAME } from '../../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
@@ -55,22 +55,48 @@ const Register = ({handleRegister, setRegBtn, regBtn}) => {
       }
 
       setIsLoading(true)
-      try {
+      
       const response = await createNewUser(formData)
-          if (response === "Verification Email Sent Successfully") {
-            toast.success(response)
-            navigate('/verify-email', { state:{ formData } })
-            setRegBtn(!regBtn)
-            setIsLoading(false)
+
+      if (!response) {
+        toast.error("Error trying to register user")
+      }
+
+      if (response.message === "Email has already been registered, please login") {
+        toast.error("Email has already been registered, please login")
+        navigate('/login')
+      }
+
+      if (!response._id) {
+        toast.error("user not registered")
+      }
+
+      if (response._id) {
+        toast.success("User Profile Created Successfully, proceeding to verification...")
+        
+        // Start sending email verification link
+        const emailResponse = resendVerificationEmail(email)
+        .catch((error)=> {
+          toast.error("Failed to send verification email")
+          setIsLoading(false)
+        })
+        .then((res) =>  {
+          navigate('/verify-email', { state:{ formData } })
+          setRegBtn(!regBtn)
+          setIsLoading(false)
+        })
+        
+        toast.promise(emailResponse, {
+            loading: 'Sending verification email...',
+            success: <b>Email sent</b>,
+            error: <b>Failed to send email</b>
           }
-        setIsLoading(false)
-     } catch (error) {
-        setIsLoading(false)
-        setIsError(true)
-        toast.error(error)
-     }
+        );
+      }
+      
     }
 
+    // Handle retrieve password
     const handleRetrievePass = (e) => {
       e.preventDefault()
     }
