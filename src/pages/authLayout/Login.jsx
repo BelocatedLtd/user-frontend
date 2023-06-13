@@ -45,7 +45,7 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
     const response = await loginUser(formData)
 
     if(response.isEmailVerified === false) {
-      toast.error('Email not verified')
+      toast.error('User Exist but not verified')
 
       const emailResponse = resendVerificationEmail(email)
       .catch((error)=> {
