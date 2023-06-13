@@ -52,7 +52,7 @@ const Dashboard = () => {
     <div className='w-full h-fit'>
         <div className='justify-between mx-auto mr-3'>
             <div className='hero__section flex flex-col w-full h-fit px-5 py-[3rem] border border-gray-200 md:flex-row'>
-              <div className='left flex-1 w-full'>
+              <div className='hidden left w-full md:flex md:flex-1'>
                 <div className='w-full flex flex-col justify-center items-center'>
                   <img src={about} alt=""  className='w-[150px] border p-[1rem] rounded-full'/>
                   <p className='mt-1'>Welcome, {user.fullname ? user.fullname : username}</p>

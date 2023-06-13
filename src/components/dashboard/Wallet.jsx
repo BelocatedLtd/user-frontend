@@ -41,16 +41,16 @@ const Wallet = () => {
     <div className='w-full h-full flex flex-col justify-between items-center border border-gray-200 rounded-2xl py-6'>
        {selectFundingBtn && <FundingForm toggleFundingSelect={toggleFundingSelect} />}
        {isError && <p className='text-red-400'>Failed to fund account</p>}
-      <h3 className='pt-4'>My Balance</h3>
+      <h3 className='pt-4 font-bold text-gray-600'>My Balance</h3>
       <div className='mt-[1.5rem]'>
         <h1 className='text-3xl text-gray-800 font-extrabold'>{isLoading ? (<LoaderIcon />) : (<span>₦{wallet?.value}</span>)}</h1>
       </div>
       <div className='flex gap-2 mt-[1.5rem]'>
-        <button onClick={toggleFundingSelect} className='flex-1 bg-secondary text-[12px] text-gray-100  px-6 py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border md:px-10'>Fund</button>
+        <button onClick={toggleFundingSelect} className='flex-1 bg-secondary text-[12px] text-gray-100  px-10 py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border md:px-10'>Fund</button>
         <button  className='flex-1 bg-transparent border border-gray-500 text-[12px] text-gray-600 px-6 py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Withdraw</button>
       </div>
 
-      <div className='flex-wrap items-center justify-center mt-[4rem] pb-4 gap-5 md:flex'>
+      <div className='flex items-center justify-center mt-[4rem] pb-4 gap-5 md:flex'>
         <div className='flex flex-col items-center justify-center mb-[1rem] md:mb-[0rem]'>
           <h3 className='font-semibold text-gray-600 text-[12px]'>Total Earnings</h3> 
           <small>{isLoading ? (<LoaderIcon />) : (<span>₦{wallet?.totalEarning}</span>)}</small>
@@ -63,7 +63,6 @@ const Wallet = () => {
           <h3 className='font-semibold text-gray-600 text-[12px]'>Amount Spent</h3>
           <small>{isLoading ? (<LoaderIcon />) : (<span>₦{wallet?.amountSpent}</span>)}</small>
         </div>
-
       </div>
     </div>
   )
