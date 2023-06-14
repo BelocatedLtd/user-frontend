@@ -12,6 +12,7 @@ import { useState } from 'react'
 import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser'
 import { getUser } from '../../services/authServices'
 import { toast } from 'react-hot-toast'
+import FreeTaskCount from '../../components/dashboard/FreeTaskCount'
 
 const Dashboard = () => {
   const navigate = useNavigate()
@@ -65,7 +66,10 @@ const Dashboard = () => {
                 </div>
               </div>
 
+              {/* User Wallet */}
               <div className='right flex-1 w-full mt-6'>
+              <p className='text-center text-gray-600 text-[12px]'><span className='text-tertiary'>{3}</span> Tasks remaining to complete this week's free tasks </p>
+              <FreeTaskCount />
                 <Wallet />
               </div>
             </div>
