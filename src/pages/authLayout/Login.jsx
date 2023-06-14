@@ -44,6 +44,11 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
    
     const response = await loginUser(formData)
 
+    if (!response) {
+      setIsLoading(false)
+      toast.error("Login failure, check your internet connection...")
+    }
+
     if(response.isEmailVerified === false) {
       toast.error('User Exist but not verified')
 

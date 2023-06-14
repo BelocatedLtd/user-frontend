@@ -42,25 +42,10 @@ const TransHistory = () => {
                   <button className='flex items-center gap-1 bg-secondary text-primary rounded-full px-5 py-2 mr-5 text-[12px] md:text-[15px]'><BsFillPlusCircleFill />Transactions</button>
       </div>
 
-      {/* <div className=''>
-        {adverts.map((item) => (
-          <AdItem  
-            key={item._id}
-            socialIcon={item.platform} 
-            date={item.createdAt} 
-            title={`Buy ${item.desiredROI} ${item.platform} ${item.asset}`}
-            adperPostAmt="N4 Per Ad"
-            roi={item.desiredROI}
-            adBudget={item.adAmount}
-            adAsset={item.asset}
-            status={item.status}
-            adDesc={item.caption}
-            location={item.location}
-            community={item.community}
-            religion={item.religion}
-          />
-        ))}
-      </div> */}
+      
+      <div>
+        <TransactionList />
+      </div>
     </div>
   )
 }
