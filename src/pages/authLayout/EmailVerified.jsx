@@ -15,15 +15,22 @@ const EmailVerified = () => {
     const [loginBtn, setLoginBtn] = useState(false)
 
     const handleVerifyEmail = async() => {
+      console.log(token)
         const response = await emailVerified(token)
+
+        console.log(response)
+
+        if (!response) {
+          return toast.error("Internal server error")
+        }
         
-        if (response.isEmailVerified === "False") {
+        if (response.isEmailVerified === false) {
           setFormData(response)
           toast.error("Invalid or Expired Verification Link")
           navigate('/verify-email', { state:{ formData } })
         }
 
-        if (response.isEmailVerified === "true") {
+        if (response.isEmailVerified === true) {
           toast.error("Email Verified, proceed to login")
         }
     }

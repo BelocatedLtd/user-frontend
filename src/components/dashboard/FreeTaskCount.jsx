@@ -40,14 +40,29 @@ const FreeTaskCount = () => {
     }, [])
     
   return (
-    <div className='flex gap-1'>
-        <p>
-            Time Remaining: 
-            {countDown.days} days,
-            {countDown.hours} hours,
-            {countDown.minutes} minutes,
-            {countDown.seconds} seconds,
-        </p>
+    <div className=''>
+        <div className='flex gap-3'>
+            <div className='flex items-center border-r border-gray-200 p-2'>Time Remaining:</div>
+            <div className='w-[250px] flex items-center justify-between p-2 gap-3'>
+              <div className='flex flex-col items-center'>
+                <h1 className='text-2xl font-bold'>{countDown.days}</h1> 
+                <p>days</p>
+              </div>
+              <div className='flex flex-col items-center'>
+                <h1 className='text-2xl font-bold'>{countDown.hours}</h1>
+                <p>hrs</p>
+              </div>
+              <div className='flex flex-col items-center'>
+                <h1 className='text-2xl font-bold'>{countDown.minutes}</h1> 
+                <p>mins</p>
+              </div>
+              <div className='flex flex-col items-center'>
+                <h1 className='text-2xl font-bold'>{countDown.seconds}</h1>
+                <p>secs</p> 
+              </div>
+            </div>
+            
+        </div>
     </div>
   )
 }

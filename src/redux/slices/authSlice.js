@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast';
 
 const initialState = {
     isLoggedIn: false,
-   // username: username ? username : "",
+    //username: username ? username : "",
     username: "",
     user: {
         id: "",
@@ -18,11 +18,19 @@ const initialState = {
         religion: "",
         gender: "",
         community: "",
-        walletId: "",
         accountType: "",
+        bankName: "",
+        bankAccountNumber: null,
+        accountHolderName: "",
+        isEmailVerified: false,
+        isPhoneVerified: false,
+        taskCompleted: 0,
+        taskOngoing: 0,
+        adsCreated: 0,
+        freeTaskCount: 0,
+        walletId: {},
         token: ""
     },
-    walletId: "",
     isLoading: false,
     isSuccess: false,
     isError: false,
@@ -60,18 +68,27 @@ const authSlice = createSlice({
     },
     SET_USER(state, action) {
         const profile = action.payload
-        state.user.id = profile._id
-        state.user.fullname = profile.fullname
-        state.user.username = profile.username
-        state.user.email = profile.email
-        state.user.phone = profile.phone
-        state.user.location = profile.location
-        state.user.religion = profile.religion
-        state.user.community = profile.community
-        state.user.gender = profile.gender
-        state.user.walletId = profile.walletId 
-        state.user.accountType = profile.accountType
-        state.user.token = profile.token
+        state.user.id = profile?._id
+        state.user.fullname = profile?.fullname
+        state.user.username = profile?.username
+        state.user.email = profile?.email
+        state.user.phone = profile?.phone
+        state.user.location = profile?.location
+        state.user.religion = profile?.religion
+        state.user.community = profile?.community
+        state.user.gender = profile?.gender
+        state.user.accountType = profile?.accountType
+        state.user.bankName = profile?.bankName,
+        state.user.bankAccountNumber = profile?.bankAccountNumber,
+        state.user.accountHolderName = profile?.accountHolderName,
+        state.user.isEmailVerified = profile?.isEmailVerified
+        state.user.isPhoneVerified = profile?.isPhoneVerified,
+        state.user.taskCompleted = profile?.taskCompleted,
+        state.user.taskOngoing = profile?.taskOngoing,
+        state.user.adsCreated = profile?.adsCreated,
+        state.user.freeTaskCount = profile?.freeTaskCount,
+        state.user.walletId = profile?.walletId,
+        state.user.token = profile?.token
     },
     // SET_LOGOUT(state) {
     //     state.username = ""

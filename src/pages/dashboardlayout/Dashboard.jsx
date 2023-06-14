@@ -28,7 +28,7 @@ const Dashboard = () => {
         const data = await getUser()
         setProfile(data)
         await dispatch(SET_USER(data))
-       dispatch(SET_USERNAME(data.username))
+       dispatch(SET_USERNAME(data?.username))
         }
       }
     getUserData()
@@ -68,13 +68,17 @@ const Dashboard = () => {
 
               {/* User Wallet */}
               <div className='right flex-1 w-full mt-6'>
-              <p className='text-center text-gray-600 text-[12px]'><span className='text-tertiary'>{3}</span> Tasks remaining to complete this week's free tasks </p>
-              <FreeTaskCount />
+              <p className='text-center text-gray-600 text-[12px]'><span className='text-tertiary'>{user.freeTaskCount}</span> Tasks remaining to complete this week's free tasks </p>
                 <Wallet />
               </div>
             </div>
 
+          
+
         <ProfileInComplete>
+          <div className="w-full flex justify-center mt-[1rem]">
+            <FreeTaskCount/>
+          </div>
         <div className='w-full flex flex-col justify-center items-center h-fit my-5 px-5 py-[3rem] border border-tertiary'>
               <small className='px-[2rem] text-[15px] text-gray-600 text-center'>Welcome, <span className='text-tertiary'>@{username}</span>. Your account setup is incomple click below to completely set up your belocated account so you can start fulfilling tasks and making or set up ad campaigns to promote your product or services.</small>
 
@@ -85,6 +89,7 @@ const Dashboard = () => {
         </ProfileInComplete>
 
         <ProfileComplete>
+        <FreeTaskCount className="w-full bg-black mx-auto"/>
             <div className='w-full flex flex-col justify-center items-center h-fit my-5 px-5 py-[3rem] border border-gray-200'>
               <small className='px-[2rem] text-[15px] text-gray-600 text-center'>Welcome, <span className='text-secondary'>@{username}</span>. Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam perspiciatis voluptatum mollitia animi quas id possimus rem qui esse maxime.</small>
 
