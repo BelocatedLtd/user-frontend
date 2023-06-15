@@ -40,6 +40,11 @@ const AccountDetailsSettings = ({user}) => {
     try {
         setIsLoading(true)
      const response = await handlesendingPhoneOTP(accountDetailsData)
+
+     if (!response) {
+      return toast.error("error while sending OTP to yourphone")
+     }
+
      if (response) {
         toast.success('OTP sent to your phone number')
         navigate('/verify-phone', { state:{ accountDetailsData } })

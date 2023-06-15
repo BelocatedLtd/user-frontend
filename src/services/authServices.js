@@ -131,9 +131,7 @@ export const emailVerified = async(token) => {
 export const handlesendingPhoneOTP = async(accountDetailsData) => {
     try {
         const response = await axios.post(`${BACKEND_URL}/api/user/verifyphone`, accountDetailsData)
-        if (response.statusText ==="OK") {
             return response.data
-        }
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
          toast.error(message)
