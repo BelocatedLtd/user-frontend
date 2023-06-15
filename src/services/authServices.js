@@ -119,7 +119,6 @@ export const resendVerificationEmail = async(email) => {
 //Email Verified
 export const emailVerified = async(token) => {
     try {
-        return console.log(token)
         const response = await axios.patch(`${BACKEND_URL}/api/user/emailverify/${token}`)
         return response.data
     } catch (error) {

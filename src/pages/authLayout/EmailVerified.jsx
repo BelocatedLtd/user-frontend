@@ -16,10 +16,7 @@ const EmailVerified = () => {
     const [loginBtn, setLoginBtn] = useState(false)
 
     const handleVerifyEmail = async() => {
-      console.log(verificationToken)
         const response = await emailVerified(verificationToken)
-
-        console.log(response)
 
         if (!response) {
           return toast.error("Internal server error")
@@ -32,7 +29,7 @@ const EmailVerified = () => {
         }
 
         if (response.isEmailVerified === true) {
-          toast.error("Email Verified, proceed to login")
+          toast.success("Email Verified, proceed to login")
         }
     }
 
