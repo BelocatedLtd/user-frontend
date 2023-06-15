@@ -1,6 +1,6 @@
 import React from 'react'
 import Loader from '../../components/loader/Loader'
-import { useSearchParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { CheckmarkIcon, toast } from 'react-hot-toast'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -8,15 +8,16 @@ import { emailVerified } from '../../services/authServices'
 import Login from './Login'
 
 const EmailVerified = () => {
-    const [searchParams, setSearchParams] = useSearchParams();
-    const token = searchParams.get('token');
+    //const [searchParams, setSearchParams] = useSearchParams();
+    //const token = searchParams.get('token');
+    const {verificationToken} = useParams()
     const [isLoading, setIsLoading] = useState(false)
     const [formData, setFormData] = useState()
     const [loginBtn, setLoginBtn] = useState(false)
 
     const handleVerifyEmail = async() => {
-      console.log(token)
-        const response = await emailVerified(token)
+      console.log(verificationToken)
+        const response = await emailVerified(verificationToken)
 
         console.log(response)
 
