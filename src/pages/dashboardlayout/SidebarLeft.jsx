@@ -19,7 +19,7 @@ const SidebarLeft = ({children}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const user = useSelector(selectUser)
-    const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
     const toggleSidebar = () => setIsOpen(!isOpen)
     const username = useSelector(selectUsername)
 
@@ -117,12 +117,13 @@ const SidebarLeft = ({children}) => {
 
   return ( 
     <div className=''>
-        <div className="hidden fixed top-0  left-0 w-[230px] h-screen shrink-0 border border-right border-gray-200 overflow-auto md:flex md:flex-col" style={{width: isOpen ? "230px" : "60px"}}>
+        <div className={`fixed top-0  left-0 w-[230px] h-screen shrink-0 border border-right border-gray-200 overflow-auto`} style={{width: isOpen ? "230px" : "60px"}}>
           <div className='top_section flex justify-between items-center w-full py-6 px-3 text-[20px]  bg-tertiary_bg'>
                   <h3 className='text-[18px]' style={{display: isOpen ? "block" : "none"}} onClick={() => navigate('/')} ><FaHome  className='border border-btn rounded-full text-btn p-2 cursor-pointer' size={35}/></h3>
 
                   <div className='' style={{marginLeft: isOpen ? "100px" : "0px"}}>
-                  <BiMenuAltRight className='text-btn cursor-pointer' onClick={toggleSidebar} />
+                  <FaHome  onClick={() => navigate('/')} className='flex border border-btn rounded-full text-btn p-2 cursor-pointer md:hidden' size={35}/>
+                  <BiMenuAltRight className='hidden text-btn cursor-pointer md:flex' onClick={toggleSidebar} />
                   </div>
           </div>
          
