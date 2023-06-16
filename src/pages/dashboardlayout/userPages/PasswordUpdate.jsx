@@ -37,10 +37,10 @@ const PasswordUpdate = () => {
   return (
     <div className='w-full h-fit'>
       {isLoading && <Loader />}
-      <div className='w-[60%] h-fit flex flex-col gap-[5rem] mt-[1rem]'>
+      <div className='w-full h-fit flex flex-col gap-[5rem] mt-[1rem] md:w-[50%]'>
 
         {/* Layered Boxes wrapper */}
-        <div className='boxesContainer w-full flex  flex-col justify-center gap-[3rem] p-8'>
+        <div className='boxesContainer w-full flex  flex-col justify-center gap-[3rem] md:p-3'>
           {/* Profile details  Settings */}
           <AccountDetailsSettings user={user} />
 

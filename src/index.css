@@ -57,7 +57,9 @@ button {
 }
 
 .nav__items a:active {
-    
+  background: #4285F4;
+  padding: 0.3rem 1rem;
+  transition: 1s;
 }
 
 .dashboard__menu li {
@@ -151,12 +153,12 @@ button {
   }
   
   .active {
-    color: var(--color-primary);
+    color: #fdfdfd;
     display: block;
     position: relative;
     width: 100%;
     height: auto;
-    background-color: #eee;
+    background-color: #4285F4;
   }
   
   .active::after {

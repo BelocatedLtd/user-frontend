@@ -51,7 +51,7 @@ const Profile = () => {
             <p>{profile?.email}</p>
           </div>
           <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
-            <label htmlFor="username" className='font-extrabold'>Phone Number:</label>
+            <label htmlFor="username" className='font-extrabold'>Phone:</label>
             <p>+{profile?.phone}</p>
           </div>
           <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>

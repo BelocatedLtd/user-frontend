@@ -4,10 +4,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router-dom'
 import { handleGetUserTransactions } from '../../redux/slices/transactionSlice'
+import { selectTransactions } from '../../redux/slices/transactionSlice';
+import { selectIsLoading } from '../../redux/slices/transactionSlice';
+import { selectIsError } from '../../redux/slices/transactionSlice';
+import { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 
 const TransactionList = () => {
     const dispatch = useDispatch()
-    const {transactions, isLoading, isError, message} = useSelector((state) => state.transactions)
+    //const {transactions, isLoading, isError, message} = useSelector((state) => state.transactions)
+    const transactions = useSelector(selectTransactions)
+    const isLoading = useSelector(selectIsLoading)
+    const isError = useSelector(selectIsError)
     const [perPage, setPerPage] = useState(10)
     const navigate = useNavigate()
 
@@ -56,9 +64,9 @@ const TransactionList = () => {
         dispatch(handleGetUserTransactions())
     
       if (isError) {
-        console.log(message)
+        toast.error("failed to fetch transactions")
       }
-    }, [isError, message, dispatch])
+    }, [isError, dispatch])
 
 
     return (

@@ -58,7 +58,7 @@ const AccountDetailsSettings = ({user}) => {
 
 
   return (
-    <form onSubmit={handleAccountDetailsUpdate} className='box p-6 shadow-lg'>
+    <form onSubmit={handleAccountDetailsUpdate} className='w-full box p-6 shadow-lg'>
         {isLoading && <Loader />}
           <label htmlFor="accountDetails reset" className='font-bold'>Authentication Details</label>
               <div className='flex flex-col mt-3 mb-3'>

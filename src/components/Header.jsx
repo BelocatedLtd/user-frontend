@@ -31,15 +31,16 @@ export const Header = () => {
         {regBtn && <Register handleRegister={handleRegister} setRegBtn={setRegBtn} regBtn={regBtn} />}
         {loginBtn && <Login handleLogin={handleLogin} setLoginBtn={setLoginBtn} loginBtn={loginBtn}/>}
 
-        <div className='relative container px-4 py-6 flex justify-between items-center mx-auto md:px-0'>
-            <div className='logo cursor-pointer text-4xl font-extrabold text-secondary'>
+        <div className='relative container px-6 py-6 flex justify-between items-center mx-auto md:px-0'>
+            <Link to='/' className='logo cursor-pointer text-4xl font-extrabold text-secondary'>
                 <span className='text-tertiary'>Be</span>located
-            </div>
+            </Link>
 
             <div className='hidden nav__items gap-4 font-bold text-lg text-gray-600 md:flex'>
                 <NavLink to='/'>Home</NavLink>
                 <NavLink to='/about'>About</NavLink>
-                <NavLink to='/more'>More</NavLink>
+                <NavLink to='/faq'>FAQ</NavLink>
+                <NavLink to='/hiw'>Partners</NavLink>
                 <NavLink to='/contact'>Contact</NavLink>
             </div>
 

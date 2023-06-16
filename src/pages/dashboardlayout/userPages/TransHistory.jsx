@@ -7,6 +7,7 @@ import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
 import Loader from '../../../components/loader/Loader'
 import { toast } from 'react-hot-toast'
+import TransactionList from '../../../components/dashboard/TransactionList'
 
 const TransHistory = () => {
   const transactions = useSelector(selectTransactions)

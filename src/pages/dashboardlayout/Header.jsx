@@ -5,6 +5,7 @@ import { MdMenu, MdOutlineCancel } from 'react-icons/md'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/slices/authSlice'
+import { ShowOnLogin } from '../../components/protect/hiddenLinks'
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -12,7 +13,7 @@ const Header = () => {
 
   return (
     <header className='w-full border-b border-gray-200'>
-        <div className='ml-5 py-6 flex justify-between items-center mx-auto md:px-2'>
+        <div className='ml-5 py-6 px-2 flex justify-between items-center mx-auto md:px-2'>
             <div className='cursor-pointer text-secondary'>
             {/* <span className='text-tertiary'>Be</span>located */}
             <div className='flex flex-col justify-start md:hidden'>
@@ -47,7 +48,7 @@ const Header = () => {
             </div>
 
             {mobileMenuOpen && (
-            <div className='absolute right-5 top-[5.5rem] p-[1.5rem] shadow rounded-sm'>
+            <div className='absolute right-5 top-[6rem] p-[1.5rem] bg-gray-50 rounded-sm'>
                 <div className='flex flex-col justify-center items-center w-[150px] h-fit gap-3 '>
                     <Link to="/">Home</Link>
                     <Link to="/about">About</Link>
