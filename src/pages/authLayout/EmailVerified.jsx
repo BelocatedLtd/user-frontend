@@ -1,6 +1,6 @@
 import React from 'react'
 import Loader from '../../components/loader/Loader'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { CheckmarkIcon, toast } from 'react-hot-toast'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -8,15 +8,15 @@ import { emailVerified } from '../../services/authServices'
 import Login from './Login'
 
 const EmailVerified = () => {
-    //const [searchParams, setSearchParams] = useSearchParams();
-    //const token = searchParams.get('token');
-    const {verificationToken} = useParams()
+    const [searchParams, setSearchParams] = useSearchParams();
+    const token = searchParams.get('token');
+    //const {verificationToken} = useParams()
     const [isLoading, setIsLoading] = useState(false)
     const [formData, setFormData] = useState()
     const [loginBtn, setLoginBtn] = useState(false)
 
     const handleVerifyEmail = async() => {
-        const response = await emailVerified(verificationToken)
+        const response = await emailVerified(token)
 
         if (!response) {
           return toast.error("Internal server error")

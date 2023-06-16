@@ -110,8 +110,8 @@ useEffect(() => {
                     {selectedPlatformObject?.assets?.map( (service, index) => 
                         <ul className='flex items-center gap-3'>
                             <li key={index} className='flex items-center gap-3 border-b border-gray-50 py-3'>
-                            <div onClick={e => handleSelectAsset(e, service?.asset)} className='flex items-center gap-3'>
-                                {service.asset}
+                            <div onClick={e => handleSelectAsset(e, service?.asset)} className='flex items-center gap-3 cursor-pointer'>
+                                {service.TD}
                                 <button className='bg-gray-200 p-2 border border-gray-200 rounded-full'>{selectedPlatformAds?.filter(advert => advert?.service === service?.asset).length}</button>
                             </div>
                             </li>

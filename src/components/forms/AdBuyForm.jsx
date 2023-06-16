@@ -98,7 +98,7 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
                           {/* Services */}
                           <div className='flex flex-col md:gap-6 w-full md:flex-row'>
                             <div className='flex flex-col mt-3 mb-3'>
-                                <label htmlFor="Product Name " className='text-left'>Service</label>
+                                <label htmlFor="Product Name " className='text-left'>Service on {platform}</label>
                                 <input  value={service} disabled className='w-full shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl' />
                                 <small className='text-left'>{platform} service to advertise on</small>
                             </div>

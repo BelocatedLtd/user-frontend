@@ -90,8 +90,9 @@ const Advertise = () => {
                     {selectedPlatformObject?.assets?.map( (service, index) => 
                         <ul key={index} className='flex items-center gap-3'>
                             <li className='flex items-center gap-3 border-b border-gray-50 py-3 '>
-                            <div onClick={e => handleSelectService(e, service?.asset)} className='flex items-center gap-3'>
-                                {service.asset}
+                            <div onClick={e => handleSelectService(e, service?.asset)} className='flex items-center gap-3 cursor-pointer'>
+                                <p>{service.SC}</p>
+                                <span className='bg-gray-50 rounded-full p-3'>₦{service.CostToOrder}</span>
                             </div>
                             
 

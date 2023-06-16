@@ -141,7 +141,7 @@ const TaskEarn = () => {
             </div>
 
             <div className='flex items-center gap-3 border-b border-gray-200'>
-                <p className='font-normal text-[14px] text-gray-700 p-6'>You can earn consistently by posting adverts of various businesses and top brands on your social media accounts and performing simple social media tasks. There are <span className='text-tertiary font-bold'>({finalFilteredTasks.length})</span> {service} tasks you are qualified to perform on {platformName}. To get started, simply click on any of the earning options shown below:</p>
+                <p className='font-normal text-[14px] text-gray-700 p-6'>You can earn consistently by posting adverts of various businesses and top brands on your social media accounts and performing simple social media tasks. There are <span className='text-tertiary font-bold'>({finalFilteredTasks.length})</span> tasks you are qualified to perform on {platformName}. To get started, simply click on any of the earning options shown below:</p>
             </div>
         </div>
 
