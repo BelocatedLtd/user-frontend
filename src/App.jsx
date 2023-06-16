@@ -78,7 +78,7 @@ function App() {
           <Route path="/retrieve-pass" element={<RetrievePassword />}/>
           <Route path="/verify-phone" element={<VerifyOTP />}/>
           <Route path="/verify-email" element={<VerifyEmail />}/>
-          <Route path="/verified/:verificationToken" element={<EmailVerified />}/>
+          <Route path="/verified" element={<EmailVerified />}/>
         </Route>
 
         <Route path="/" element={<AuthLayout />}>
