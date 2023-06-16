@@ -8,6 +8,7 @@ import Logout from '../pages/authLayout/Logout'
 import { useSelector } from 'react-redux'
 import { selectUser, selectUsername } from '../redux/slices/authSlice'
 import { MdMenu, MdOutlineCancel } from 'react-icons/md'
+import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -66,7 +67,7 @@ export const Header = () => {
             <div className='relative md:hidden'>
                 <div>
                     {mobileMenuOpen && <MdOutlineCancel onClick={() => setMobileMenuOpen(!mobileMenuOpen)} size={30} className='text-gray-600' />}
-                    {!mobileMenuOpen && <MdMenu onClick={() => setMobileMenuOpen(!mobileMenuOpen)} size={30} className='text-gray-600' />}
+                    {!mobileMenuOpen && <HiOutlineMenuAlt3 onClick={() => setMobileMenuOpen(!mobileMenuOpen)} size={30} className='text-gray-600' />}
                 </div>
             </div>
 
