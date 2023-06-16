@@ -37,7 +37,7 @@ const Dashboard = () => {
   const handleEarn = (e) => {
     e.preventDefault()
     if (!user.phone || !user.location || !user.community || !user.gender) {
-      toast.error("Please, complete your profile before you can create Adverts")
+      toast.error("Please, complete your profile before you can perform tasks")
     }
     if (user.phone && user.location && user.community && user.gender)
     (navigate('/dashboard/earn'))
@@ -45,6 +45,10 @@ const Dashboard = () => {
 
   const handleAdvertise = (e) => {
     e.preventDefault()
+    if (!user.phone || !user.location || !user.community || !user.gender) {
+      toast.error("Please, complete your profile before you can create Adverts")
+    }
+    if (user.phone && user.location && user.community && user.gender)
     navigate('/dashboard/advertise')
   }
   
