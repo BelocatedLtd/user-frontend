@@ -6,11 +6,13 @@ import { useNavigate } from 'react-router-dom'
 import Loader from '../../components/loader/Loader'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
+import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser'
 
 const Logout = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
+    useRedirectLoggedOutUser('/')
 
     const handleLogout = async () => {
       setIsLoading(true)
@@ -31,7 +33,7 @@ const Logout = () => {
   return (
     <>
     {isLoading && <Loader />}
-    <button onClick={handleLogout}>Logout</button>
+    <button onClick={handleLogout} className='py-2 px-6 bg-tertiary text-primary rounded-full'>Logout</button>
     </>
   )
 }

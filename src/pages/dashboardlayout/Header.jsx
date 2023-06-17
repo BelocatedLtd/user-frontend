@@ -11,6 +11,10 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const user = useSelector(selectUser)
 
+  const handleCloseMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen)
+}
+
   return (
     <header className='w-full border-b border-gray-200'>
         <div className='ml-5 py-6 px-2 flex justify-between items-center mx-auto md:px-2'>
@@ -48,18 +52,19 @@ const Header = () => {
             </div>
 
             {mobileMenuOpen && (
-            <div className='absolute right-5 top-[6rem] p-[1.5rem] bg-gray-50 rounded-sm'>
-                <div className='flex flex-col justify-center items-center w-[150px] h-fit gap-3 '>
+            <div className='absolute w-full right-0 left-0 shadow-xl top-[6rem] py-[5rem] p-[1.5rem] bg-primary rounded-sm'>
+                <div onClick={() => handleCloseMenu()} className='flex flex-col h-[200px] justify-center items-center gap-[1rem] font-extrabold text-gray-700'>
                     <Link to="/">Home</Link>
-                    <Link to="/about">About</Link>
-                    <Link to="/more">More</Link>
+                    <Link to="/earn">Earn</Link>
+                    <Link to="/dashboard/advertise">Advertise</Link>
+                    <Link to='/terms'>Terms</Link>
                     <ShowOnLogin>
+                        <Link to={`dashboard/account-settings/${user.username}`}>Settings</Link>
                         <Link to={`/dashboard/${user.username}`} className='text-gray-800 cursor-pointer'>Dashboard
                         </Link>
                     </ShowOnLogin>
                     <ShowOnLogin>
-                        <Link to={'/logout'} className='text-gray-800 cursor-pointer'>Logout
-                        </Link>
+                        <Logout />
                     </ShowOnLogin>
                 </div>
             </div>

@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 import { selectUser, selectUsername } from '../redux/slices/authSlice'
 import { MdMenu, MdOutlineCancel } from 'react-icons/md'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
+import { useEffect } from 'react'
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -17,6 +18,19 @@ export const Header = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false) 
     const user = useSelector(selectUser)
     const username = useSelector(selectUsername)
+
+    const userDashboard = () => {
+         if (user.accountType === "Admin") {
+            return (<Link to={`/admin/dashboard/${username}`} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</Link>  )
+         } else {
+           return (<Link to={`/dashboard/${user.username}`} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</Link>)
+        }
+    }
+
+    useEffect(() => {
+        userDashboard()
+    }, [user])
+    
 
     const handleRegister = (e) => {
         e.preventDefault()
@@ -27,6 +41,11 @@ export const Header = () => {
         e.preventDefault()
         setLoginBtn(!loginBtn)
     }
+
+    const handleCloseMenu = () => {
+        setMobileMenuOpen(!mobileMenuOpen)
+    }
+
   return (
     <header className='w-full border-b border-gray-200'>
         {regBtn && <Register handleRegister={handleRegister} setRegBtn={setRegBtn} regBtn={regBtn} />}
@@ -54,12 +73,7 @@ export const Header = () => {
 
             <ShowOnLogin>
             <div className='hidden gap-2 md:flex'>
-                {user.accountType === "User" && (
-                    <Link to={`/dashboard/${user.username}`} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</Link>
-                )}
-                {user.accountType === "Admin" && (
-                    <Link to={`/admin/dashboard/${username}`} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</Link>
-                )}
+                {userDashboard()}
                 <Logout />
             </div>
             </ShowOnLogin>
@@ -72,11 +86,15 @@ export const Header = () => {
             </div>
 
             {mobileMenuOpen && (
-            <div className='absolute right-5 top-[5.5rem] p-[1.5rem] shadow rounded-sm'>
-                        <div className='flex flex-col justify-center items-center w-[150px] h-fit gap-3 '>
+            <div className='absolute w-full right-0 left-0 top-[5.5rem] py-[5rem] p-[1.5rem] shadow-xl rounded-sm bg-[#BEE2F2]'>
+                        <div onClick={() => handleCloseMenu()} className='flex h-[200px] flex-col justify-center items-center gap-[1rem] font-extrabold text-gray-700'>
                             <Link to="/">Home</Link>
                             <Link to="/about">About</Link>
-                            <Link to="/more">More</Link>
+                            <Link to="/">FAQ</Link>
+                            <Link to="/">Partner</Link>
+                            <Link to="/">Contact</Link>
+                            
+
                             <ShowOnLogout>
                                 <p onClick={handleLogin} className='text-gray-800 cursor-pointer'>Login</p>
                             </ShowOnLogout>
@@ -89,8 +107,7 @@ export const Header = () => {
                                 </Link>
                             </ShowOnLogin>
                             <ShowOnLogin>
-                                <Link to={'/logout'} className='text-gray-800 cursor-pointer'>Logout
-                                </Link>
+                                <Logout />
                             </ShowOnLogin>
                         </div>
             </div>
