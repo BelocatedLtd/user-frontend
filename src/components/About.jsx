@@ -5,7 +5,7 @@ import ActivityFeed from './ActivityFeed'
 
 const About = () => {
   return (
-    <section className='w-full h-screen md:h-screen'>
+    <section className='w-full h-fit md:h-screen'>
         <div className='container h-full flex flex-col justify-start gap-7 mx-auto md:flex-row'>
             <div className='flex h-full flex-col'>
                 <div className='flex w-full h-full flex-col px-[2rem] py-[4rem] gap-3'>

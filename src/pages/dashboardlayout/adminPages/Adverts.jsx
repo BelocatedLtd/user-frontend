@@ -17,7 +17,7 @@ const actionColumn = [
   {field: '_id', headerName: '', width: 100, renderCell:(params) => {
     return (
       <div className='cellAction'>
-        <div onClick={() => navigate(`/admin/dashboard/adverts/${params.row._id}`)} className='viewBtn py-2 px-5 rounded-[5px] text-[darkblue] border border-[#00008b50] cursor-pointer'>View</div>
+        <div onClick={() => navigate(`/admin/dashboard/adverts/${params.row?._id}`)} className='viewBtn py-2 px-5 rounded-[5px] text-[darkblue] border border-[#00008b50] cursor-pointer'>View</div>
       </div>
     )
   } }
@@ -25,10 +25,10 @@ const actionColumn = [
 
 const columns = [
     { field: 'userId', headerName: 'Advertiser', width: 150, renderCell:(params) => {
-      const advertiser = users.find(user => user._id === params.row.userId)
+      const advertiser = users.find(user => user._id === params.row?.userId)
       return (
         
-          <div className=''>{advertiser.fullname}</div>
+          <div className=''>{advertiser?.fullname}</div>
         
       )
     } },

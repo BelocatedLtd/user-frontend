@@ -317,7 +317,7 @@ function App() {
 
         {/* Admin Users Single*/}
       <Route 
-        path="/admin/dashboard/users/:id" 
+        path="/admin/dashboard/user/:id" 
         element={
           <SidebarLeft>
             <DashLayout>
