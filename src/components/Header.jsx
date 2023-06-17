@@ -86,7 +86,7 @@ export const Header = () => {
             </div>
 
             {mobileMenuOpen && (
-            <div className='absolute w-full right-0 left-0 top-[5.5rem] py-[5rem] p-[1.5rem] shadow-xl rounded-sm bg-[#BEE2F2]'>
+            <div className='absolute w-full right-0 left-0 top-[5.5rem] py-[5rem] p-[1.5rem] shadow-xl rounded-sm bg-primary'>
                         <div onClick={() => handleCloseMenu()} className='flex h-[200px] flex-col justify-center items-center gap-[1rem] font-extrabold text-gray-700'>
                             <Link to="/">Home</Link>
                             <Link to="/about">About</Link>
@@ -103,8 +103,7 @@ export const Header = () => {
                             </ShowOnLogout>
 
                             <ShowOnLogin>
-                                <Link to={`/dashboard/${user.username}`} className='text-gray-800 cursor-pointer'>Dashboard
-                                </Link>
+                                {userDashboard()}
                             </ShowOnLogin>
                             <ShowOnLogin>
                                 <Logout />
