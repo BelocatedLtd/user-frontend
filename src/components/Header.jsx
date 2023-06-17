@@ -10,6 +10,7 @@ import { selectUser, selectUsername } from '../redux/slices/authSlice'
 import { MdMenu, MdOutlineCancel } from 'react-icons/md'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import { useEffect } from 'react'
+import { BsArrowUpRight } from 'react-icons/bs'
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -99,7 +100,7 @@ export const Header = () => {
                                 <p onClick={handleLogin} className='text-gray-800 cursor-pointer'>Login</p>
                             </ShowOnLogout>
                             <ShowOnLogout>
-                                <p onClick={handleRegister} className='text-gray-800 cursor-pointer'>Register</p>
+                                <p onClick={handleRegister} className='text-gray-50 cursor-pointer bg-secondary px-8 rounded-full py-2'>Get Started Free </p>
                             </ShowOnLogout>
 
                             <ShowOnLogin>
