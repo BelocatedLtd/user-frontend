@@ -105,7 +105,7 @@ const Register = ({handleRegister, setRegBtn, regBtn}) => {
   return ReactDOM.createPortal(
     <div className='wrapper'>
       {isLoading && <Loader />}
-        <div className='relative modal w-[400px] h-[600px] bg-primary'>
+        <div className='relative modal w-[350px] h-[600px] bg-primary md:w-[400px]'>
           <img src={close} alt="close" onClick={handleRegister} size={40} className='absolute top-[-1rem] right-[-1rem] text-tertiary' />
           <div className='modal__header__text flex flex-col items-center mt-[3rem] mb-[1.7rem]'>
             <h2 className='text-sm text-gray-400 font-medium px-6 text-center'><span className='text-secondary font-extrabold'>200+</span> simple and profitable tasks posted today!</h2>
@@ -127,7 +127,7 @@ const Register = ({handleRegister, setRegBtn, regBtn}) => {
                   </div>
                   
                   <div className='flex flex-col'>
-                  <label htmlFor="password" className='mr-[1rem]'>Confirm Password</label>
+                  <label htmlFor="password" className='w-full mr-[1rem]'>Confirm Password</label>
                   <input type="password" name="password2" onChange={handleInputChange} className={`w-full  mb-[1rem] shadow-inner p-3 bg-transparent border ${isError ? 'border-red-400' : 'border-gray-200'} rounded-xl`}/>
                   </div>
                 </div>

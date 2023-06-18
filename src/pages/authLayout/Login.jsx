@@ -104,7 +104,7 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
     return ReactDOM.createPortal(
       <div className='wrapper'>
         {isLoading && <Loader />}
-          <div className='relative modal w-[400px] h-[550px] bg-primary'>
+          <div className='relative modal w-[350px] h-[550px] bg-primary md:w-[400px]'>
             <img src={close} alt="close" onClick={handleLogin} size={40} className='absolute top-[-1rem] right-[-1rem] text-tertiary' />
             <div className='modal__header__text flex flex-col items-center my-[3rem]'>
             <h2 className='text-sm text-gray-400 font-medium px-6 text-center'><span className='text-secondary font-extrabold'>200+</span> simple and profitable tasks posted today!</h2>
