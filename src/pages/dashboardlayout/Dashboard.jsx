@@ -91,7 +91,7 @@ const Dashboard = () => {
           
 
         <ProfileInComplete>
-          <div className="w-full flex justify-center mt-[1rem]">
+          <div className="w-full flex items-center justify-center mt-[1rem]">
             <FreeTaskCount/>
           </div>
         <div className='w-full flex flex-col justify-center items-center h-fit my-5 px-5 py-[3rem] border border-tertiary'>

@@ -12,16 +12,38 @@ import { toast } from 'react-hot-toast'
 const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudget, costToPay, earnPerTask, imagePreview, handleOnSubmit, handleInputChange, handleImageChange }) => {
     const [mediaTypeImage, setMediaTypeImage] = useState('image')
     const [selectPaymentBtn, setSelectPaymentBtn] = useState(false)
-    const [hideInputFields, setHideInputFields] = useState(false)
+    const [hideCommentInputFields, setHideCommentInputFields] = useState(false)
+    const [hideImageInputFields, setHideImageInputFields] = useState(false)
     const [selectedState, setSelectedState] = useState("")
     const [selectedStateCommunities, setSelectedStateCommunities] = useState([])
     const [selectedCommunity, setSelectedCommunity] = useState("")
 
 
     useEffect(() => {
-      if (platform === "tiktok" && service === "Page Followers") {
-        setHideInputFields(true)
+
+      //Both comment field and image field hidden
+      if ( service === "Facebook Friend" || 
+      service === "Page Likes" ||
+      service === "Page Followers" ||
+      service === "Post Likes" ||
+      service === "Video Views" ||
+      service === "Share"
+      ) {
+        setHideCommentInputFields(true)
+        setHideImageInputFields(true)
       }
+
+      //Image field hidden
+      if ( service === "Comment") {
+        setHideCommentInputFields(false)
+        setHideImageInputFields(true)
+      }
+
+      //Comment field hidden
+      // if (  ) {
+      //   setHideCommentInputFields(true)
+      //   setHideImageInputFields(true)
+      // }
     }, [platform, service])
     
 
@@ -83,8 +105,6 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
       }
   }
 
-  console.log(service)
-
   
 
 
@@ -104,13 +124,15 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
                             </div>
                           </div>
 
-                            {/* Expt Budget and ROI */}
+                            {/* Unit */}
                             <div className='flex flex-col w-full items-center md:gap-3 md:flex-row'>
                             <div className='flex flex-col mt-3 mb-3'>
-                                <label htmlFor="Business Name" className='text-left mb-1 ml-1'>Expected ROI</label>
+                                <label htmlFor="Business Name" className='text-left mb-1 ml-1'>Unit</label>
                                 <input type="number" placeholder='' name='roi' value={advert.roi} onChange={handleInputChange} className='w-full shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'/>
                                 <small className='text-left'>Expected Cost per unit For this Campaign: ₦{costToPay}/task</small>
                             </div>
+
+                             {/* Unit's total cost */}
                             <div className='flex flex-col mb-3 justify-center'>
                             <label className='text-left mb-1 ml-1 text-sm'>You will Pay:</label>
                             <div className='flex items-center ml-2'>
@@ -121,7 +143,7 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
                             </div>
                           </div>
                           
-
+                             {/* State */}
                           <div className='flex flex-col w-full md:flex-row md:gap-6'>
                           <div className='flex flex-col mt-3 mb-3'>
                               <label htmlFor="location" className='text-left mb-1 ml-1'>State</label>
@@ -138,6 +160,7 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
                                 </select>
                           </div>
 
+                          {/* Local Government */}
                           {selectedState !== "" && (
                             <div className='flex flex-col mt-3 mb-3'>
                             <label htmlFor="city-select" className='text-left mb-1 ml-1'>LGAs from {selectedState}</label>
@@ -158,7 +181,7 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
                           )}
                           </div>
 
-                                  
+                            {/* Gender */}
                           <div className='flex flex-col w-full md:flex-row md:gap-6'>
                             <div className='flex flex-col mt-3 mb-3'>
                                 <label htmlFor="Gender" className='text-left mb-1 ml-1'>Gender</label>
@@ -171,18 +194,22 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
                             </div>
                           </div>
 
-                          {hideInputFields ? "" : (
+                          {/* Ad text/Caption/omment */}
+                          {hideCommentInputFields ? "" : (
                           <div className='flex flex-col mt-3 mb-1'>
-                              <label htmlFor="badText" className='text-left mt-4 mb-1 ml-1'>{service == "Comment" ? "Comment" : "Caption"}</label>
-                              <textarea type="textarea" cols="80" rows="10" name='adText' value={advert.adText} onChange={handleInputChange} className='shadow-inner bg-transparent border border-gray-200 rounded-xl p-3 mb-1 w-[100%]'/>
+                              <label htmlFor="adText" className='text-left mt-4 mb-1 ml-1'>
+                                {service == "Comment" ? "Type of comments you want" : "Caption"}
+                                {service === "Post Your Content" ? "Write up/Text Content (include link if necessary)" : "Caption"}
+                              </label>
+                              <textarea type="textarea" cols="80" rows="10" name='adText' placeholder={service === "Comment" && "Give as many examplesas possible, write a comment example per line and seperated by fullstop"} value={advert.adText} onChange={handleInputChange} className='shadow-inner bg-transparent border border-gray-200 rounded-xl p-3 mb-1 w-[100%]'/>
                           </div>
                           )}
                   </div>
 
+
                     {/* Image and video upload */}
-                    
                   <div className='right w-full flex-1 pt-3'>
-                  {hideInputFields ? "" : (
+                  {hideImageInputFields ? "" : (
                     <div className=''>
                         <label htmlFor="media" className='my-6'>Campaign Media</label>
                         <div className='w-full h-full flex flex-col pt-[1rem] items-center border-gray-200'>
@@ -204,6 +231,7 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
                     </div>
                   )}
 
+                     {/*Associated Link */}
                     <div className='flex justify-center mt-[2rem] flex-col md:gap-6 w-full md:flex-row'>
                             <div className='flex flex-col mt-3 mb-3'>
                                 <label htmlFor="Page Link" className='text-left'>Associated link if any</label>
@@ -211,7 +239,8 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
                                 <small className='text-left'>Eg, copy and paste your {platform} page link here.</small>
                             </div>
                           </div>
-                  </div>
+                    </div>
+
                     
 
                 </div>

@@ -63,7 +63,7 @@ const socialPlatforms = [
                 amountForTask: 25,
             },
             {
-                asset: 'Get People to Post Your Content On Facebook',
+                asset: 'Post Your Content',
                 SC: 'Get People To Post Your Content on Their Facebook',
                 TD: 'Get Paid For Posting a User’s Content on your Facebook',
                 verification: 'Screenshot of the clients content being posted on their page',

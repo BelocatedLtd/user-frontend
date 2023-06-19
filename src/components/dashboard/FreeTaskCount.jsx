@@ -12,7 +12,7 @@ const FreeTaskCount = () => {
       
       startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
       const endOfWeek = new Date(startOfWeek);
-      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      endOfWeek.setDate(startOfWeek.getDate() + 7);
 
       const updateCountdown = () => {
         const now = Date.now();
@@ -40,8 +40,8 @@ const FreeTaskCount = () => {
     }, [])
     
   return (
-    <div className=''>
-        <div className='flex gap-3'>
+    <div className='w-full flex justify-center'>
+        <div className='flex items-center gap-3'>
             <div className='flex items-center border-r border-gray-200 p-2'>Time Remaining:</div>
             <div className='w-[250px] flex items-center justify-between p-2 gap-3'>
               <div className='flex flex-col items-center'>

@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import socialPlatforms from '../../../components/data/assets'
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
+import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
 
 const initialState = {
     roi: '',
@@ -72,7 +73,14 @@ const AdBuy = () => {
 
   return (
     <div>
-       <AdBuyForm 
+        <div className='flex items-center gap-3 border-b border-gray-200 pb-6 mb-3'>
+            <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))}/>
+            <div className='flex flex-col'>
+                <p className='font-semibold text-xl text-gray-700'>Create an Advertising Campaign</p>
+                <small className='font-medium text-gray-500'>Click <span className='text-secondary'>here</span> to see and monitor your adverts</small>
+            </div>
+        </div>
+       <AdBuyForm  
        platform={platformName}
        service={service}
        advert={advert} 
