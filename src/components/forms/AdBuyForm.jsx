@@ -27,14 +27,18 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
       service === "Page Followers" ||
       service === "Post Likes" ||
       service === "Video Views" ||
-      service === "Share"
+      service === "Share" ||
+      service === "Instagram Story View" ||
+      service === "Retweet" ||
+      service === "Join Twitter Space"
       ) {
         setHideCommentInputFields(true)
         setHideImageInputFields(true)
       }
 
       //Image field hidden
-      if ( service === "Comment") {
+      if ( service === "Comment" ||
+      service === "Quote Tweet") {
         setHideCommentInputFields(false)
         setHideImageInputFields(true)
       }
@@ -194,14 +198,24 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
                             </div>
                           </div>
 
-                          {/* Ad text/Caption/omment */}
+                          {/* Ad text/Caption/Comment */}
                           {hideCommentInputFields ? "" : (
                           <div className='flex flex-col mt-3 mb-1'>
                               <label htmlFor="adText" className='text-left mt-4 mb-1 ml-1'>
-                                {service == "Comment" ? "Type of comments you want" : "Caption"}
-                                {service === "Post Your Content" ? "Write up/Text Content (include link if necessary)" : "Caption"}
+                                {service == "Comment" && "Type of comments you want"}
+                                {service === "Quote Tweet" && "Kind of quotes you want (Give as many example as possible)"}
+                                {service === "Post Your Content" && "Write up/Post Content (include link if necessary)"}
                               </label>
-                              <textarea type="textarea" cols="80" rows="10" name='adText' placeholder={service === "Comment" && "Give as many examplesas possible, write a comment example per line and seperated by fullstop"} value={advert.adText} onChange={handleInputChange} className='shadow-inner bg-transparent border border-gray-200 rounded-xl p-3 mb-1 w-[100%]'/>
+                              <textarea 
+                              type="textarea" 
+                              cols="80" 
+                              rows="10" 
+                              name='adText' 
+                              placeholder=
+                              {service === "Comment" ? "Give as many examplesas possible, write a comment example per line and seperated by fullstop" : "Ad Caption"}
+                              value={advert.adText} 
+                              onChange={handleInputChange} 
+                              className='shadow-inner bg-transparent border border-gray-200 rounded-xl p-3 mb-1 w-[100%]'/>
                           </div>
                           )}
                   </div>

@@ -124,7 +124,7 @@ const socialPlatforms = [
                 amountForTask: 25,
             },
             {
-                asset: 'Get People To Post Your Content On Their Instagram',
+                asset: 'Post Your Content',
                 SC: 'Get People To Post Your Content on Their Instagram',
                 TD: 'Get Paid For Posting a User’s Content on your Instagram',
                 verification: 'Screenshot of the clients content being posted on their page.',
@@ -153,7 +153,7 @@ const socialPlatforms = [
                 amountForTask: 3,
             },
             {
-                asset: 'Video View',
+                asset: 'Video Views',
                 SC: 'Get People To View Your Twitter Video',
                 TD: 'Get Paid For Viewing User’s Twitter Video',
                 verification: '2 different screenshots at different view time showing different part of the viewing video.',
@@ -185,7 +185,7 @@ const socialPlatforms = [
                 amountForTask: 50,
             },
             {
-                asset: 'Get People To Join Twitter Space',
+                asset: 'Join Twitter Space',
                 SC: 'Get People To Join Your Twitter Space',
                 TD: 'Get Paid For Joining a Twitter Space',
                 verification: 'Screenshot While listening to the space at 3 different occasions. Screenshots must not be same',
@@ -193,7 +193,7 @@ const socialPlatforms = [
                 amountForTask: 50,
             },
             {
-                asset: 'Get People To Post Your Content On Their Twitter Page',
+                asset: 'Post Your Content',
                 SC: 'Get People To Post Your Content on Their Twitter Page',
                 TD: 'Get Paid For Posting a User’s Content on your Twitter Page',
                 verification: 'Screenshot of the clients content being posted on their page',
@@ -214,7 +214,7 @@ const socialPlatforms = [
                 amountForTask: 3,
             },
             {
-                asset: 'Post likes',
+                asset: 'Post Likes',
                 SC: 'Get People To Like Your Tiktok Post',
                 TD: 'Get Paid For liking User’s Tiktok Post',
                 verification: 'Screenshot showing user has liked the particular post',
@@ -222,7 +222,7 @@ const socialPlatforms = [
                 amountForTask: 3,
             },
             {
-                asset: 'Video View',
+                asset: 'Video Views',
                 SC: 'Get People To View Your TIktok Video',
                 TD: 'Get Paid For Viewing User’s Tiktok Video',
                 verification: '2 different screenshots at different view time showing different part of the viewing video.',
