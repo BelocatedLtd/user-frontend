@@ -64,7 +64,7 @@ const AdBuy = () => {
 
 
     useEffect(() => {
-      const selectedService = selectedPlatformObject.assets?.find((item) => item?.asset == service);
+      const selectedService = selectedPlatformObject?.assets?.find((item) => item?.asset == service);
       setEarnPerTask(selectedService?.amountForTask)
       setExpBudget(selectedService?.CostToOrder * advert?.roi)
       setCostToPay(selectedService?.CostToOrder)

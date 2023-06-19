@@ -262,7 +262,7 @@ const socialPlatforms = [
                 amountForTask: 25,
             },
             {
-                asset: 'Get People To Post Your Content On Their TikTok',
+                asset: 'Post Your Content',
                 SC: 'Get People To Post Your Content on Their TikTok Page',
                 TD: 'Get Paid For Posting a User’s Content on your TikTok Page',
                 verification: "Screenshot of the clients content being posted on their page",
@@ -283,7 +283,7 @@ const socialPlatforms = [
                 amountForTask: 25,
             },
             {
-                asset: 'Post likes',
+                asset: 'Post Likes',
                 SC: 'Get People To Like to your YouTube Content',
                 TD: 'Get Paid For Liking a User’s YouTube Content',
                 verification: "Screenshot showing user has liked the particular Video, short or picture post.",
@@ -291,7 +291,7 @@ const socialPlatforms = [
                 amountForTask: 5,
             },
             {
-                asset: 'Video View',
+                asset: 'Video Views',
                 SC: 'Get People To View your YouTube Video',
                 TD: 'Get Paid For Viewing a User’s YouTube Video',
                 verification: "5 different screenshots at different view time showing different part of the viewing video",
@@ -307,7 +307,7 @@ const socialPlatforms = [
                 amountForTask: 10,
             },
             {
-                asset: 'Share To Other Social Media Platforms.',
+                asset: 'Share',
                 SC: 'Get People To Share Your YouTube Content To Other Social Media Platforms',
                 TD: 'Get Paid For Sharing User’s YouTube Content To Other Social Media Platforms',
                 verification: "Screenshot showing user’s post shared to another Social Media platform.",
@@ -328,7 +328,7 @@ const socialPlatforms = [
                 amountForTask: 3,
             },
             {
-                asset: 'LinkedIn Follow',
+                asset: 'Page Followers',
                 SC: 'Get People To Follow You On LinkedIn',
                 TD: 'Get Paid For Following a User on LinkedIn',
                 verification: "Screenshot showing user Followed the particular page",
@@ -336,7 +336,7 @@ const socialPlatforms = [
                 amountForTask: 3,
             },
             {
-                asset: 'Post likes',
+                asset: 'Post Likes',
                 SC: 'Get People To Like Your Post On LinkedIn',
                 TD: 'Get Paid For Liking a User’s Post on LinkedIn',
                 verification: "Screenshot showing user has liked the particular Video, short or picture post",
@@ -344,7 +344,7 @@ const socialPlatforms = [
                 amountForTask: 3,
             },
             {
-                asset: 'Send Content To Other LinkedIn Connect/Friend',
+                asset: 'Share',
                 SC: 'Get People To Send Your LinkedIn Content To Other LinkedIn Connect/Friend on LinkedIn',
                 TD: 'Get Paid For Sending User’s Content To Other LinkedIn Connect/Friend on LinkedIn',
                 verification: "Screenshot DM Showing it was sent to a Connect/Friend on LinkedIn",
@@ -376,7 +376,7 @@ const socialPlatforms = [
                 amountForTask: 25,
             },
             {
-                asset: 'Get People to Post On Their LinkedIn Page',
+                asset: 'Post Your Content',
                 SC: 'Get People To Post Your content On Their LinkedIn Page',
                 TD: 'Get Paid for Posting a user’s Your content On your LinkedIn Page',
                 verification: "Screenshot of the clients Content on their page",
@@ -390,7 +390,7 @@ const socialPlatforms = [
         'assetplatform': 'whatsapp',
         assets: [
             {
-                asset: 'Get People to Post content on their WhatsApp Status',
+                asset: 'Post Your Content',
                 SC: 'Get People To Post Your Post content on their WhatsApp Status',
                 TD: 'Get Paid for Posting a user’s Post content on your WhatsApp Status',
                 verification: "1st stage - Screenshot showing you posted on WhatsApp. User is notified 4 hrs after posting to moves to State 2 if stage 1 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason. 2nd Stage - Screenshot showing your post has been posted for over 6 hours on your status. User is notified to moves to State 3 if stage 2 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason. 3rd Stage - Screenshot showing you post has been posted for over 12 hrs on your status. User’s wallet is credited if stage 3 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason",
@@ -403,7 +403,7 @@ const socialPlatforms = [
         'assetplatform': 'iOS App Download',
         assets: [
             {
-                asset: 'Get People to Download App on iOS',
+                asset: 'Download App',
                 SC: 'Get People To Download Your App on iOS',
                 TD: 'Get Paid for Downloading a user’s App on iOS',
                 verification: "2 Screenshot 1st screenshot showing the downloading process. 2nd screenshot in iOS Store that you have downloaded",
@@ -411,7 +411,7 @@ const socialPlatforms = [
                 amountForTask: 50,
             },
             {
-                asset: 'Get People to Download App on iOS and Review',
+                asset: 'Download App and Review',
                 SC: 'Get People To Download and Review Your App on iOS',
                 TD: 'Get Paid for Downloading and Reviewing a user’s App on iOS',
                 verification: "4 Screenshot 1st screenshot showing the downloading process. 2nd screenshot in iOS Store that you have downloaded. 3rd screenshot in iOS Store showing the Rating selected. 4th Screenshot Showing you write and submit the review based on clients Prefered Review comment.",
@@ -419,7 +419,7 @@ const socialPlatforms = [
                 amountForTask: 75,
             },
             {
-                asset: 'Get People to Download App on iOS, Review and Register on App',
+                asset: 'Download App Review and Register',
                 SC: 'Get People To Download, Review and Register on Your App on iOS',
                 TD: 'Get Paid for Downloading, Reviewing and Registering on a user’s App on iOS',
                 verification: "Upload (6)Six screenshot. 1st screenshot showing the downloading process. 2nd screenshot in iOS Store that you have downloaded. 3rd screenshot in iOS Store showing the Rating selected. 4th Screenshot Showing you write and submit the review based on clients Prefered Review comment. 5th Screenshot showing you registered. 6th Screenshot showing you logged in",
@@ -433,7 +433,7 @@ const socialPlatforms = [
         'assetplatform': 'android app download',
         assets: [
             {
-                asset: 'Get People to Download App on Android PlayStore',
+                asset: 'Download App',
                 SC: 'Get People To Download Your App on Android PlayStore',
                 TD: 'Get Paid for Downloading a user’s App on Android PlayStore',
                 verification: "Upload (2)two screenshot. 1st screenshot showing the downloading process. 2nd screenshot showing in Android PlayStore that you have downloaded.",
@@ -441,7 +441,7 @@ const socialPlatforms = [
                 amountForTask: 50,
             },
             {
-                asset: 'Get People to Download App on android PlayStore and Review',
+                asset: 'Download App and Review',
                 SC: 'Get People To Download and Review Your App on Android PlayStore',
                 TD: 'Get Paid for Downloading and Reviewing a user’s App on Android PlayStore',
                 verification: "Upload (4)four screenshot. 1st screenshot showing the downloading process. 2nd screenshot in Android PlayStore that you have downloaded. 3rd screenshot in Android PlayStore showing the Rating selected 4th Screenshot Showing you write and submit the review based on clients Prefered Review comment",
@@ -449,7 +449,7 @@ const socialPlatforms = [
                 amountForTask: 75,
             },
             {
-                asset: 'Get People to Download App on Android PlayStore, Review and Register on App',
+                asset: 'Download App Review and Register',
                 SC: 'Get People To Download, Review and Register on Your App on Android PlayStore',
                 TD: 'Get Paid for Downloading, Reviewing and Registering on user’s App on Android PlayStore.',
                 verification: "Upload (6)Six screenshot. 1st screenshot showing the downloading process. 2nd screenshot in Android PlayStore that you have downloaded. 3rd screenshot in Android PlayStore showing the Rating selected. 4th Screenshot Showing you write and submit the review based on clients Prefered Review comment. 5th Screenshot showing you registered. 6th Screenshot showing you logged in",
@@ -515,7 +515,7 @@ const socialPlatforms = [
                 amountForTask: 5,
             },
             {
-                asset: 'Like',
+                asset: 'Like/Favourite',
                 SC: 'Get People To Like Your Song/Content On Audiomack',
                 TD: 'Get Paid for Liking User’s Song/Content On Audiomack',
                 verification: "Screenshot showing You like the particular Song/Content.",
@@ -560,7 +560,7 @@ const socialPlatforms = [
                 amountForTask: 5,
             },
             {
-                asset: 'Add to Liked Songs',
+                asset: 'Like/Favourite',
                 SC: 'Get People To Add your song to Liked Songs On Spotify',
                 TD: 'Get Paid for Adding a user’s Songs to liked On Spotify',
                 verification: "Screenshot showing you adding song to liked songs",

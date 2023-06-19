@@ -30,15 +30,29 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
       service === "Share" ||
       service === "Instagram Story View" ||
       service === "Retweet" ||
-      service === "Join Twitter Space"
+      service === "Join Twitter Space" ||
+      service === "TikTok Favourites" ||
+      service === "Subscribers" ||
+      service === "LinkedIn Connect" ||
+      service === "Repost" ||
+      service === "Download App" ||
+      service === "Download App and Review" ||
+      service === "Download App Review and Register" ||
+      service === "Follow" ||
+      service === "Like/Favourite" ||
+      service === "Stream"
       ) {
         setHideCommentInputFields(true)
         setHideImageInputFields(true)
       }
 
       //Image field hidden
-      if ( service === "Comment" ||
-      service === "Quote Tweet") {
+      if ( 
+        service === "Comment" ||
+        service === "Quote Tweet" ||
+        service === "Share With Comment" ||
+        service === "Repost With comment"
+      ) {
         setHideCommentInputFields(false)
         setHideImageInputFields(true)
       }
@@ -48,6 +62,11 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
       //   setHideCommentInputFields(true)
       //   setHideImageInputFields(true)
       // }
+
+      if (platform === "youtube" && service === "Share") {
+        setHideCommentInputFields(false)
+        setHideImageInputFields(false)
+      }
     }, [platform, service])
     
 
@@ -204,7 +223,10 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
                               <label htmlFor="adText" className='text-left mt-4 mb-1 ml-1'>
                                 {service == "Comment" && "Type of comments you want"}
                                 {service === "Quote Tweet" && "Kind of quotes you want (Give as many example as possible)"}
+                                {service === "Share With Comment" && "Kind of comments you want (Give as many example as possible)"}
                                 {service === "Post Your Content" && "Write up/Post Content (include link if necessary)"}
+                                {platform === "youtube" && service === "Share" && "Write up/Post Content (include link if necessary)"}
+                                {platform === "linkedin" && service === "Repost With comment" && "Kind of comments you want (Give as many example as possible)"}
                               </label>
                               <textarea 
                               type="textarea" 
@@ -212,7 +234,7 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
                               rows="10" 
                               name='adText' 
                               placeholder=
-                              {service === "Comment" ? "Give as many examplesas possible, write a comment example per line and seperated by fullstop" : "Ad Caption"}
+                              {service === "Comment" ? "Give as many examples as possible, write a comment example per line and seperated by fullstop" : "Ad Caption"}
                               value={advert.adText} 
                               onChange={handleInputChange} 
                               className='shadow-inner bg-transparent border border-gray-200 rounded-xl p-3 mb-1 w-[100%]'/>
