@@ -23,9 +23,6 @@ const SidebarLeft = ({children}) => {
     const toggleSidebar = () => setIsOpen(!isOpen)
     const username = useSelector(selectUsername)
 
-
-
-
     const menu = [
       {
         title: "Dashboard",
@@ -102,17 +99,25 @@ const SidebarLeft = ({children}) => {
       },
     ]
 
-    const handleLogout = async () => {
-      try {
-          await logoutUser()
-          await dispatch(SET_LOGIN(false))
-          navigate('/')
-          toast.success('User logged out')
-      } catch (error) {
-        setIsLoading(false)
-        toast.error(error)
-      }
-}
+    // const sidebarAccountType = () => {
+    //   if (user.accountType === "Admin") {
+    //     <>
+    //     {adminMenu?.map((item, index) => { 
+    //       return (<SidebarItems key={index} item={item} isOpen={isOpen} />)
+    //    })}
+    //     </>
+    //   } else {
+    //     <>
+    //     {menu?.map((item, index) => { 
+    //       return (<SidebarItems key={index} item={item} isOpen={isOpen} />)
+    //    })}
+    //     </>
+    //   }
+    //   }
+
+    // useEffect(() => {
+    //   sidebarAccountType()
+    // }, [])
   
 
   return ( 
@@ -126,11 +131,13 @@ const SidebarLeft = ({children}) => {
                   <BiMenuAltRight className='hidden text-btn cursor-pointer md:flex' onClick={toggleSidebar} />
                   </div>
           </div>
+
+          {/* {sidebarAccountType} */}
          
           {user.accountType === "User" && (
              <>
               {menu.map((item, index) => { 
-                return <SidebarItems key={item.title} item={item} isOpen={isOpen} />
+                return <SidebarItems key={index} item={item} isOpen={isOpen} />
              })}
             </>
           )}
@@ -138,7 +145,7 @@ const SidebarLeft = ({children}) => {
           {user.accountType === "Admin" && (
               <>
               {adminMenu.map((item, index) => { 
-                return <SidebarItems key={item.title} item={item} isOpen={isOpen} />
+                return <SidebarItems key={index} item={item} isOpen={isOpen} />
              })}
              </>
           )}
