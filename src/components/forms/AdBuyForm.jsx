@@ -7,6 +7,8 @@ import  nigerianStates  from '../data/States'
 import { useEffect } from 'react'
 import PaymentMethod from '../PaymentMethod'
 import { toast } from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+import { selectUser } from '../../redux/slices/authSlice'
 
 
 const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudget, costToPay, earnPerTask, imagePreview, handleOnSubmit, handleInputChange, handleImageChange }) => {
@@ -14,9 +16,11 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
     const [selectPaymentBtn, setSelectPaymentBtn] = useState(false)
     const [hideCommentInputFields, setHideCommentInputFields] = useState(false)
     const [hideImageInputFields, setHideImageInputFields] = useState(false)
+    const [hideLinkInputFields, setHideLinkInputFields] = useState(false)
     const [selectedState, setSelectedState] = useState("")
     const [selectedStateCommunities, setSelectedStateCommunities] = useState([])
     const [selectedCommunity, setSelectedCommunity] = useState("")
+    const user = useSelector(selectUser)
 
 
     useEffect(() => {
@@ -66,6 +70,11 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
       if (platform === "youtube" && service === "Share") {
         setHideCommentInputFields(false)
         setHideImageInputFields(false)
+      }
+
+      //Link field Hidden
+      if (service === "Post Your Content") {
+        setHideLinkInputFields(true) 
       }
     }, [platform, service])
     
@@ -233,8 +242,9 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
                               cols="80" 
                               rows="10" 
                               name='adText' 
-                              placeholder=
-                              {service === "Comment" ? "Give as many examples as possible, write a comment example per line and seperated by fullstop" : "Ad Caption"}
+                              placeholder =
+                              {service === "Comment" || service === "Share With Comment" ? "Give as many examples as possible, write a comment example per line and seperated by fullstop" : "Ad description"
+                              }
                               value={advert.adText} 
                               onChange={handleInputChange} 
                               className='shadow-inner bg-transparent border border-gray-200 rounded-xl p-3 mb-1 w-[100%]'/>
@@ -268,14 +278,17 @@ const AdBuyForm = ({advert, service, platform, mediaUrl, socialService, expBudge
                   )}
 
                      {/*Associated Link */}
+                     {hideLinkInputFields ? "" : (
                     <div className='flex justify-center mt-[2rem] flex-col md:gap-6 w-full md:flex-row'>
                             <div className='flex flex-col mt-3 mb-3'>
                                 <label htmlFor="Page Link" className='text-left'>Associated link if any</label>
-                                      <input type="text" name="socialPageLink" id="socialPageLink" value={advert.socialPageLink} onChange={handleInputChange} className='w-full shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'/>
+                                      <input type="text" name="socialPageLink" id="socialPageLink" placeholder={`https://${platform}.com/${user.username}`} value={advert.socialPageLink} onChange={handleInputChange} className='w-full shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'/>
                                 <small className='text-left'>Eg, copy and paste your {platform} page link here.</small>
                             </div>
                           </div>
+                      )}
                     </div>
+                     
 
                     
 
