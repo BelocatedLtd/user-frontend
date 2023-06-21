@@ -322,6 +322,7 @@ function App() {
           <SidebarLeft>
             <DashLayout>
               <UserSingle />
+              <SidebarRight />
             </DashLayout>
           </SidebarLeft>
         }
@@ -341,11 +342,12 @@ function App() {
 
          {/* Admin Adverts Single*/}
       <Route 
-        path="/admin/dashboard/adverts/:id" 
+        path="/admin/dashboard/advert/:id" 
         element={
           <SidebarLeft>
             <DashLayout>
               <AdvertSingle />
+              <SidebarRight />
             </DashLayout>
           </SidebarLeft>
         }
@@ -365,11 +367,12 @@ function App() {
 
         {/* Admin Tasks Single*/}
       <Route 
-        path="/admin/dashboard/adverts/:id" 
+        path="/admin/dashboard/task/:id" 
         element={
           <SidebarLeft>
             <DashLayout>
               <TaskSingle />
+              <SidebarRight />
             </DashLayout>
           </SidebarLeft>
         }

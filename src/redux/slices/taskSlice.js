@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { toast } from 'react-hot-toast';
-import { approveTask, createTask, getUserTasks, submitTask } from '../../services/taskServices';
+import { approveTask, createTask, getTasks, getUserTasks, submitTask } from '../../services/taskServices';
 
 const initialState = {
   task: null,
@@ -24,12 +24,26 @@ export const createNewTask = createAsyncThunk(
   }
 )
 
-// Get User Tasks
+// Get User Tasks 
 export const handleGetUserTasks = createAsyncThunk(
   "get/handleGetUserTasks",
   async(__, thunkAPI) => {
       try {
         return await getUserTasks()
+      } catch(error) {
+          const message = 
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+          return thunkAPI.rejectWithValue(message)
+      }
+      } 
+  )
+
+// Get Tasks 
+export const handleGetTasks = createAsyncThunk(
+  "get/handleGetTasks",
+  async(__, thunkAPI) => {
+      try {
+        return await getTasks()
       } catch(error) {
           const message = 
       (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -91,7 +105,7 @@ const taskSlice = createSlice({
             toast.error(action.payload) 
           })
 
-          // Get User Tasks
+          // Get User Tasks handleGetTasks
           .addCase(handleGetUserTasks.pending, (state) => {
             state.isLoading = true
           })
@@ -102,6 +116,23 @@ const taskSlice = createSlice({
             state.tasks = action.payload
           })
           .addCase(handleGetUserTasks.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload;
+            toast.error(action.payload) 
+          })
+
+          // Get User Tasks
+          .addCase(handleGetTasks.pending, (state) => {
+            state.isLoading = true
+          })
+          .addCase(handleGetTasks.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;
+            state.tasks = action.payload
+          })
+          .addCase(handleGetTasks.rejected, (state, action) => {
             state.isLoading = false;
             state.isError = true;
             state.message = action.payload;

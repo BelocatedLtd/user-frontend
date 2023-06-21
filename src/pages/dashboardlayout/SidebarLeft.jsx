@@ -3,17 +3,19 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import SidebarItems from './SidebarItems'
 //import menu from '../../components/data/SidebarData'
-import { FaGrinHearts, FaHome, FaStar, FaUsers } from 'react-icons/fa'
+import { FaAdversal, FaGrinHearts, FaHome, FaStar, FaTasks, FaUsers } from 'react-icons/fa'
 import { AiOutlineUser, AiOutlineLogout } from 'react-icons/ai'
 import { MdCreateNewFolder, MdOutlineWorkHistory } from 'react-icons/md'
-import { GrSettingsOption } from 'react-icons/gr'
-import { BiMenuAltRight } from 'react-icons/bi'
+import {GiPublicSpeaker } from 'react-icons/gi'
+import { GrSettingsOption, GrTransaction } from 'react-icons/gr'
+import { BiMenuAltRight, BiMessageRoundedDetail } from 'react-icons/bi'
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_LOGIN, SET_USER, SET_USERNAME, selectUser } from '../../redux/slices/authSlice'
 import { selectUsername } from '../../redux/slices/authSlice'
 import { getUser, logoutUser } from '../../services/authServices'
 import { toast } from 'react-hot-toast'
 import { useEffect } from 'react'
+import adverts from '../../assets/adverts.png'
 
 const SidebarLeft = ({children}) => {
     const navigate = useNavigate()
@@ -22,6 +24,18 @@ const SidebarLeft = ({children}) => {
     const [isOpen, setIsOpen] = useState(false)
     const toggleSidebar = () => setIsOpen(!isOpen)
     const username = useSelector(selectUsername)
+
+
+    useEffect(() => {
+      async function getUserData() {
+        if (!user.email) {
+        const data = await getUser()
+        await dispatch(SET_USER(data))
+       dispatch(SET_USERNAME(data?.username))
+        }
+      }
+    getUserData()
+  }, [dispatch])
 
     const menu = [
       {
@@ -69,32 +83,32 @@ const SidebarLeft = ({children}) => {
       },
       {
         title: "All Users",
-        icon: <FaStar className='mr-2'/>,
+        icon: <FaUsers className='mr-2'/>,
         path: `/admin/dashboard/users/${username}`,
       },
       {
         title: "All Adverts",
-        icon: <FaStar className='mr-2'/>,
+        icon: <FaAdversal className='mr-2'/>,
         path: `/admin/dashboard/adverts/${username}`,
       },
       {
         title: "All Tasks",
-        icon: <FaStar className='mr-2'/>,
+        icon: <FaTasks className='mr-2'/>,
         path: `/admin/dashboard/tasks/${username}`,
       },
       {
         title: "All Transactions",
-        icon: <FaStar className='mr-2'/>,
+        icon: <GrTransaction className='mr-2'/>,
         path: `/admin/dashboard/transactions/${username}`,
       },
       {
         title: "Account Settings",
-        icon: <FaStar className='mr-2'/>,
+        icon: <GrSettingsOption className='mr-2'/>,
         path: `/admin/dashboard/account-settings/${username}`,
       },
       {
         title: "Support Messages",
-        icon: <GrSettingsOption className='mr-2'/>,
+        icon: <BiMessageRoundedDetail className='mr-2'/>,
         path: `/admin/dashboard/support-messages/${username}`,
       },
     ]
@@ -115,9 +129,11 @@ const SidebarLeft = ({children}) => {
     //   }
     //   }
 
-    // useEffect(() => {
-    //   sidebarAccountType()
-    // }, [])
+    useEffect(() => {
+      // sidebarAccountType()
+
+     
+    }, [])
   
 
   return ( 

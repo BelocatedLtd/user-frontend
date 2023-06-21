@@ -3,12 +3,12 @@ import DataTable from 'react-data-table-component';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { selectTransactions, selectIsError, selectIsLoading } from '../../../redux/slices/transactionSlice';
+import { selectTransactions, selectIsError, selectIsLoading, handleGetUserTransactions } from '../../../redux/slices/transactionSlice';
 
 const Transactions = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const users = useSelector(selectTransactions)
+  const transactions = useSelector(selectTransactions)
   const isLoading = useSelector(selectIsLoading)
   const isError = useSelector(selectIsError)
 
@@ -60,7 +60,7 @@ const Transactions = () => {
   }
 
    useEffect(() => {
-    dispatch(handleGetAllUser())
+    dispatch(handleGetUserTransactions())
 
     if (isError) {
       toast.error("failed to fetch users")
@@ -73,7 +73,7 @@ const Transactions = () => {
         <div className='w-full mx-auto mt-[2rem]'>
         <DataTable 
         columns={columns} 
-        data={users}
+        data={transactions}
         progressPending={isLoading}
         pagination
         selectableRows

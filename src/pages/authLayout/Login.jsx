@@ -83,7 +83,11 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
       await dispatch(SET_USER(response))
       const username = response.username
       if (response.accountType === "User") {
-        navigate(`/dashboard/${username}`)
+        if (response.isPhoneVerified === false) {
+          navigate(`/dashboard/account-settings/${username}`)
+        } else if (response.isPhoneVerified === true) {
+          navigate(`/dashboard/${username}`)
+        }
       } else if (response.accountType === "Admin") {
         navigate(`/admin/dashboard/${username}`)
       }

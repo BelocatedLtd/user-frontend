@@ -9,6 +9,12 @@ export const createTask = async (taskData) => {
 
 // Get User Tasks
 export const getUserTasks = async() => {
+    const response = await axios.get(`${BACKEND_URL}/api/tasks/task`)
+   return response.data      
+}
+
+// Get All Tasks
+export const getTasks = async() => {
     const response = await axios.get(`${BACKEND_URL}/api/tasks`)
    return response.data      
 }

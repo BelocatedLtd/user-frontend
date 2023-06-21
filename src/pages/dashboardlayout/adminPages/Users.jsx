@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { handleGetAllUser, selectIsError, selectIsLoading, selectUsers } from '../../../redux/slices/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { MdArrowDownward } from 'react-icons/md';
+import { toast } from 'react-hot-toast';
 
 
 const Users = () => {
@@ -15,6 +16,15 @@ const Users = () => {
   const isLoading = useSelector(selectIsLoading)
   const isError = useSelector(selectIsError)
   const sortIcon = <MdArrowDownward />;
+
+  useEffect(() => {
+    dispatch(handleGetAllUser())
+
+    if (isError) {
+      toast.error("failed to fetch users")
+    }
+}, [dispatch])
+
 
   const columns = [
     {
@@ -87,19 +97,8 @@ const Users = () => {
 
   const handleButtonClick = (e, userId) => {
     e.preventDefault();
-    const [user] = users?.find(user => user?._id === userId) || {}
-    navigate(`/admin/dashboard/user/${userId}`, { state:{ user } })
+    navigate(`/admin/dashboard/user/${userId}`)
   }
-
-   useEffect(() => {
-    dispatch(handleGetAllUser())
-
-    if (isError) {
-      toast.error("failed to fetch users")
-    }
-
-}, [isError, dispatch])
-
 
   return (
         <div className='w-full mx-auto mt-[2rem]'>

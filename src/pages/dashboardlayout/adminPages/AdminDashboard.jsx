@@ -35,19 +35,6 @@ const AdminDashboard = () => {
     const [tableSwitch, setTableSwitch] = useState('users')
     useRedirectLoggedOutUser('/')
 
-
-        // const handleClick = (table) => {
-        //     if (table !== tableSwitch) {
-        //         setTableSwitch(table)
-                
-        //     }
-        // }
-     
- 
-    
-
-    
-
     useEffect(() => {
         async function getUserData() {
             await dispatch(handleGetAllUser())
@@ -71,7 +58,7 @@ const AdminDashboard = () => {
     <div className='w-full h-fit flex flex-col'>
       
 
-      <div className='widgets flex p-[20px] gap-[20px]'>
+      <div className='widgets flex flex-wrap p-[20px] gap-[20px]'>
         <Widgets type="users" totalUsers={users}/>
         <Widgets type="adverts" totalAdverts={adverts} />
         <Widgets type="transactions" totalTrx={transactions}/>
