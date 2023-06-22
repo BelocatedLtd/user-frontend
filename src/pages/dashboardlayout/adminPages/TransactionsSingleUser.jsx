@@ -2,18 +2,26 @@ import React from 'react'
 import DataTable from 'react-data-table-component';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { selectTransactions, selectIsError, selectIsLoading, handleGetTransactions } from '../../../redux/slices/transactionSlice';
 import { selectUsers } from '../../../redux/slices/userSlice';
 import { toast } from 'react-hot-toast';
+import { useState } from 'react';
 
-const Transactions = () => {
+const TransactionsSingleUser = () => {
+    const {userId} = useParams()
   const navigate = useNavigate()
   const users = useSelector(selectUsers)
   const dispatch = useDispatch()
   const transactions = useSelector(selectTransactions)
   const isLoading = useSelector(selectIsLoading)
   const isError = useSelector(selectIsError)
+  const [userTransactions, setUserTransactions] = useState()
+
+  useEffect(() => {
+    const userTransactionsList = transactions?.filter(trx => trx.userId === userId)
+    setUserTransactions(userTransactionsList) 
+  }, [transactions])
 
   const columns = [
     {
@@ -85,7 +93,7 @@ const Transactions = () => {
         <div className='w-full mx-auto mt-[2rem]'>
         <DataTable 
         columns={columns} 
-        data={transactions}
+        data={userTransactions}
         progressPending={isLoading}
         pagination
         selectableRows
@@ -97,4 +105,4 @@ const Transactions = () => {
   )
 }
 
-export default Transactions
+export default TransactionsSingleUser

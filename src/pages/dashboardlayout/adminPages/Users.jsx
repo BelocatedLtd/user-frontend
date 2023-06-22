@@ -80,7 +80,7 @@ const Users = () => {
       name: 'Actions',
       button: true,
       cell: (row) => (
-        <button className='bg-[#18141E] text-gray-100 px-3 py-2 rounded-2xl hover:bg-btn' onClick={(e) => handleButtonClick(e, row._id)}>View User</button>
+        <button className='bg-[#18141E] text-gray-100 px-3 py-2 rounded-2xl hover:bg-btn hover:bg-secondary' onClick={(e) => handleButtonClick(e, row._id)}>View User</button>
       )
     },
   ];

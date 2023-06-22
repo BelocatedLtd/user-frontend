@@ -149,7 +149,7 @@ export const confirmOTP = async(OTP) => {
     }
 }
 
-//Phone Verify
+//Delete User
 export const deleteUser = async(userId) => {
     try {
         const response = await axios.delete(`${BACKEND_URL}/api/user/delete/${userId}`)

@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
 import { useSelector, useDispatch } from 'react-redux';
 import { handleGetAllUser, selectIsError, selectIsLoading, selectUsers } from '../../../redux/slices/userSlice';
-import { useNavigate } from 'react-router-dom';
-import { MdArrowDownward } from 'react-icons/md';
+import { useNavigate, useParams } from 'react-router-dom';
+import { MdArrowDownward, MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { selectAllAdverts, handleGetALLUserAdverts } from '../../../redux/slices/advertSlice';
 import { toast } from 'react-hot-toast';
 
-const Adverts = () => {
+const AdvertSingleUser = () => {
+    const {userId} = useParams()
   const users = useSelector(selectUsers)
   const adverts = useSelector(selectAllAdverts)
   const navigate = useNavigate()
@@ -15,6 +16,12 @@ const Adverts = () => {
   const isLoading = useSelector(selectIsLoading)
   const isError = useSelector(selectIsError)
   const sortIcon = <MdArrowDownward />;
+  const [userAds,  setUserAds] = useState()
+
+  useEffect(() => {
+    const userAdsList = adverts?.filter(ad => ad.userId === userId)
+    setUserAds(userAdsList ) 
+  }, [adverts])
   
 const columns = [
   {
@@ -109,20 +116,28 @@ const handleButtonClick = (e, advertId) => {
 
   return (
     <div className='w-full mx-auto mt-[2rem]'>
-      <DataTable 
-      columns={columns} 
-      data={adverts}
-      progressPending={isLoading}
-      pagination
-      selectableRows
-      fixedHeader
-      customStyles={customStyles}
-      sortIcon={sortIcon}
-      handleButtonClick={handleButtonClick}
-      />
+        <div className='flex items-center gap-3 border-b border-gray-200 pb-6'>
+            <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))}/>
+            <div className='flex flex-col'>
+                <p className='font-semibold text-xl text-gray-700'>Go back to User</p>
+                <small className='font-medium text-gray-500'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae, placeat.</small>
+            </div>
+        </div>
+
+        <DataTable 
+        columns={columns} 
+        data={userAds}
+        progressPending={isLoading}
+        pagination
+        selectableRows
+        fixedHeader
+        customStyles={customStyles}
+        sortIcon={sortIcon}
+        handleButtonClick={handleButtonClick}
+        />
     </div>
   )
 
 }
 
-export default Adverts
+export default AdvertSingleUser

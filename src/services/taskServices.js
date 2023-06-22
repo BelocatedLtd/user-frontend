@@ -25,8 +25,19 @@ export const submitTask = async (taskData) => {
    return response.data   
 }
 
-// Submit task
+// Approve task
 export const approveTask = async (taskData) => {
-    const response = await axios.post(`${BACKEND_URL}/api/tasks/approve`, taskData)
+    const response = await axios.patch(`${BACKEND_URL}/api/tasks/approve`, taskData)
    return response.data   
+}
+
+// Delete task
+export const deleteTask = async (taskId) => {
+    try {
+        const response = await axios.delete(`${BACKEND_URL}/api/tasks/delete/${taskId}`)
+        return response.data
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+    }
 }

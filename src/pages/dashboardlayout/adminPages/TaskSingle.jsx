@@ -9,6 +9,9 @@ import { MdKeyboardDoubleArrowRight, MdOutlineKeyboardArrowLeft } from 'react-ic
 import { selectTasks } from '../../../redux/slices/taskSlice';
 import { BiArrowToRight } from 'react-icons/bi';
 import placeholder from '../../../assets/placeholder.jpg'
+import TaskModal from '../../../components/adminComponents/TaskModal';
+import Loader from '../../../components/loader/Loader';
+import DeleteTaskModal from '../../../components/adminComponents/DeleteTaskModal';
 
 const TaskSingle = () => {
     const {id} = useParams()
@@ -18,19 +21,35 @@ const TaskSingle = () => {
     const navigate = useNavigate()
     const [taskPerformer, setTaskPerformer] = useState()
     const [advertiser, setAdvertiser] = useState()
+    const [isLoading, setIsLoading] = useState(false)
+    const [modalBtn, setModalBtn] = useState(false)
+    const [delBtn, setDelBtn] = useState(false)
 
     useEffect(() => {
       const taskDetails = tasks?.find(task => task?._id === id)
-      const taskPerformerDetails = users?.find(user => user._id === task?.taskPerformerId)
-      const advertiserDetails = users?.find(user => user._id === task?.advertiserId)
+      const taskPerformerDetails = users?.find(user => user._id === taskDetails?.taskPerformerId)
+      const advertiserDetails = users?.find(user => user._id === taskDetails?.advertiserId)
 
       settask(taskDetails)
       setTaskPerformer(taskPerformerDetails)
       setAdvertiser(advertiserDetails)
     }, [])
 
+    const handleModal = (e) => {
+      e.preventDefault()
+      setModalBtn(!modalBtn)
+    }
+
+    const handleDelete = (e) => {
+      e.preventDefault()
+      setDelBtn(!delBtn)
+    }
+
   return (
     <div className = 'w-full h-fit'>
+      {modalBtn && <TaskModal handleModal={handleModal} task={task}/>}
+      {delBtn && <DeleteTaskModal handleDelete={handleDelete} task={task}/>}
+      {isLoading && <Loader />}
       <div className='flex items-center gap-3 border-b border-gray-200 pb-6'>
           <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))}/>
           <div className='flex flex-col'>
@@ -43,12 +62,12 @@ const TaskSingle = () => {
         {/* Task Performer Details */}
         <div className='box flex flex-col border-b border-gray-100 p-3 pb-6'>
         <label htmlFor="adverter" className='text-secondary text-[25px] font-bold'>Task Performer</label>
-        <div className='flex items-center gap-3 mt-3'>
-          <FaUser size={100} className='text-gray-800'/>
-            <div className='flex flex-col gap-1'>
-              <h3 className='text-[18px]'>{taskPerformer?.fullname}</h3>
-              <small className='text-gray-700 font-semibold'>@{taskPerformer?.username}</small>
-              <button className='px-4 py-2 bg-secondary text-primary hover:bg-gray-900 mt-2'>View Task Performer</button>
+        <div className='flex flex-col items-center gap-3 mt-3 md:flex-row'>
+          <FaUser size={300} className='text-gray-800 border border-gray-100 p-[2rem] rounded-full'/>
+            <div className='flex flex-col text-center gap-1 md:text-left'>
+              <h3 className='text-[3rem]'>{taskPerformer?.fullname}</h3>
+              <small className='text-gray-700 mt-[-0.7rem] mb-[1rem] font-semibold'>@{taskPerformer?.username}</small>
+              <button onClick={() => navigate(`/admin/dashboard/user/${taskPerformer?._id}`)} className='px-4 py-2 bg-secondary text-primary hover:bg-gray-900 mt-2'>View Task Performer</button>
             </div>
         </div>
         </div>
@@ -58,35 +77,44 @@ const TaskSingle = () => {
           <div className='box flex flex-col border-b border-gray-100 p-3 pb-6'>
             <label htmlFor="adverter" className='text-secondary text-[25px] font-bold'>Task Details</label>
             <div className='flex flex-col gap-[1rem] mt-3 border-b border-gray-50 pb-6'>
-
               <div className='flex flex-col'>
                 <label htmlFor="" className='font-bold'>Task Title:</label>
                 <p>{task?.title}</p>
               </div>
 
               <div className='flex flex-col'>
-                <label htmlFor="" className='font-bold'>Advert Details:</label>
-                <p className='flex items-center'><span>Advertiser Name:</span> {advertiser?.fullname} <span><MdKeyboardDoubleArrowRight /></span></p>
+                <label htmlFor="" className='font-bold'>Advertiser Name:</label>
+                <div onClick={() => navigate(`/admin/dashboard/user/${advertiser._id}`)} className='flex items-center cursor-pointer hover:text-secondary'>
+                  <p>{advertiser?.fullname}</p>
+                  <MdKeyboardDoubleArrowRight className='text-secondary '/>
+                </div>
               </div>
 
             </div>
 
-            <div className='flex items-center gap-[4rem] mt-3'>
+          {/* Task Sub Details */}
+          <div className='user__details__container flex flex-col gap-1 md:gap-[4rem] md:flex-row'>
+            <div className='left flex flex-col gap-1 md:gap-[4rem] mt-3'>
+                <div className='flex flex-col border-b border-gray-50 py-3'>
+                  <label htmlFor="" className='font-bold'>Platform:</label>
+                  <p>{task?.platform}</p>
+                </div>
 
-              <div className='flex flex-col'>
-                <label htmlFor="" className='font-bold'>Platform:</label>
-                <p>{task?.platform}</p>
-              </div>
+                <div className='flex flex-col border-b border-gray-50 py-3'>
+                  <label htmlFor="" className='font-bold'>Service:</label>
+                  <p>{task?.service}</p>
+                </div>
 
-              <div className='flex flex-col'>
-                <label htmlFor="" className='font-bold'>Service:</label>
-                <p>{task?.service}</p>
-              </div>
-
+                <div className='flex flex-col border-b border-gray-50 py-3'>
+                  <label htmlFor="" className='font-bold'>Task Proof URL:</label>
+                  <div className='flex gap-1 items-baseline'>
+                    <p>{task?.nameOnSocialPlatform}</p>
+                  </div>
+                </div>
             </div>
 
-            <div className='flex items-center gap-[4rem] mt-3'>
-              <div className='flex flex-col'>
+            <div className='right flex flex-col gap-1 md:gap-[4rem] mt-3'>
+              <div className='flex flex-col border-b border-gray-50 py-3'>
                 <label htmlFor="" className='font-bold'>Ad Units:</label>
                 <div className='flex gap-1 items-baseline'>
                   <p>{task?.desiredROI}</p>
@@ -95,21 +123,12 @@ const TaskSingle = () => {
                 
               </div>
 
-              <div className='flex flex-col'>
+              <div className='flex flex-col border-b border-gray-50 py-3'>
                 <label htmlFor="" className='font-bold'>Amount to Earn:</label>
                 <p>{task?.toEarn}</p>
               </div>
-            </div>
 
-            <div className='flex items-center gap-[4rem] mt-3'>
-              <div className='flex flex-col'>
-                <label htmlFor="" className='font-bold'>Task Proof URL:</label>
-                <div className='flex gap-1 items-baseline'>
-                  <p>{task?.nameOnSocialPlatform}</p>
-                </div>
-              </div>
-
-              <div className='flex flex-col'>
+              <div className='flex flex-col border-b border-gray-50 py-3'>
                 <label htmlFor="" className='font-bold'>Task Status:</label>
                 <p className={`
                 ${task?.status === "Pending" && 'pending'}
@@ -122,6 +141,7 @@ const TaskSingle = () => {
                 </p>
               </div>
             </div>
+          </div>
 
           </div>
 
@@ -132,16 +152,12 @@ const TaskSingle = () => {
         </div>
         
 
-        {/* Advert Controls */}
+        {/* Task Controls */}
         <div className='mt-[1rem]'>
-          <div className='mb-[1rem] flex items-center gap-1'>
-            <input type="checkbox" name="isWeeklyFree" id="" />
-            <label htmlFor="">Feature in Weekly free Adverts</label>
-          </div>
           
           <div className='flex gap-2'>
-            <button className='py-2 px-5 bg-tertiary text-primary'>Delete</button>
-            <button className='py-2 px-5 bg-secondary text-primary'>Message Advertiser</button>
+            <button onClick={handleModal} className='py-2 px-5 bg-secondary text-primary'>Approve/Reject</button>
+            <button onClick={handleDelete} className='py-2 px-5 bg-tertiary text-primary'>Delete</button>
           </div>
         </div>
       </div>

@@ -2,14 +2,16 @@ import React from 'react'
 import DataTable from 'react-data-table-component';
 import { useSelector, useDispatch } from 'react-redux';
 import { handleGetAllUser, selectUsers } from '../../../redux/slices/userSlice';
-import { useNavigate } from 'react-router-dom';
-import { MdArrowDownward } from 'react-icons/md';
+import { useNavigate, useParams } from 'react-router-dom';
+import { MdArrowDownward, MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { handleGetTasks, selectIsError, selectIsLoading, selectTasks } from '../../../redux/slices/taskSlice';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import { useState } from 'react';
 
 
-const Tasks = () => {
+const TasksSingleUser = () => {
+    const {userId} = useParams()
   const users = useSelector(selectUsers)
   const tasks = useSelector(selectTasks)
   const navigate = useNavigate()
@@ -17,6 +19,7 @@ const Tasks = () => {
   const isLoading = useSelector(selectIsLoading)
   const isError = useSelector(selectIsError)
   const sortIcon = <MdArrowDownward />;
+  const [userTasks, setUserTasks] = useState()
 
   useEffect(() => {
     dispatch(handleGetTasks())
@@ -26,6 +29,11 @@ const Tasks = () => {
     }
   
   }, [isError, dispatch])
+
+  useEffect(() => {
+    const userTasksList = tasks?.filter(task => task.taskPerformerId === userId)
+    setUserTasks(userTasksList) 
+  }, [tasks])
 
   const columns = [
     {
@@ -121,19 +129,27 @@ const Tasks = () => {
 
   return (
     <div className='w-full mx-auto mt-[2rem]'>
-      <DataTable 
-      columns={columns} 
-      data={tasks}
-      progressPending={isLoading}
-      pagination
-      selectableRows
-      fixedHeader
-      customStyles={customStyles}
-      sortIcon={sortIcon}
-      handleButtonClick={handleButtonClick}
-      />
+        <div className='flex items-center gap-3 border-b border-gray-200 pb-6'>
+            <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))}/>
+            <div className='flex flex-col'>
+                <p className='font-semibold text-xl text-gray-700'>Go back to User</p>
+                <small className='font-medium text-gray-500'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae, placeat.</small>
+            </div>
+        </div>
+
+        <DataTable 
+        columns={columns} 
+        data={userTasks}
+        progressPending={isLoading}
+        pagination
+        selectableRows
+        fixedHeader
+        customStyles={customStyles}
+        sortIcon={sortIcon}
+        handleButtonClick={handleButtonClick}
+        />
     </div>
   )
 }
 
-export default Tasks
+export default TasksSingleUser

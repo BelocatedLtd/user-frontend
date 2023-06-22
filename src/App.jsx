@@ -50,6 +50,9 @@ import VerifyEmail from "./pages/authLayout/VerifyEmail";
 import EmailVerified from "./pages/authLayout/EmailVerified";
 import PasswordChangeOTP from "./pages/dashboardlayout/userPages/PasswordChangeOTP";
 import ChangePassword from "./pages/dashboardlayout/userPages/settings/ChangePassword";
+import AdvertSingleUser from "./pages/dashboardlayout/adminPages/AdvertSingleUser";
+import TransactionsSingleUser from "./pages/dashboardlayout/adminPages/TransactionsSingleUser";
+import TasksSingleUser from "./pages/dashboardlayout/adminPages/TasksSingleUser";
 
 
 axios.defaults.withCredentials = true 
@@ -353,6 +356,18 @@ function App() {
         }
         />
 
+        {/* Admin Adverts Single User*/}
+      <Route 
+        path="/admin/dashboard/adverts/user/:userId" 
+        element={
+          <SidebarLeft>
+            <DashLayout>
+              <AdvertSingleUser/>
+            </DashLayout>
+          </SidebarLeft>
+        }
+        />
+
         {/* Admin Tasks*/}
       <Route 
         path="/admin/dashboard/tasks/:username" 
@@ -378,6 +393,18 @@ function App() {
         }
         />
 
+        {/* Admin Tasks Single User*/}
+      <Route 
+        path="/admin/dashboard/tasks/user/:userId" 
+        element={
+          <SidebarLeft>
+            <DashLayout>
+              <TasksSingleUser />
+            </DashLayout>
+          </SidebarLeft>
+        }
+        />
+
         {/* Admin Transactions*/}
       <Route 
         path="/admin/dashboard/transactions/:username" 
@@ -397,6 +424,18 @@ function App() {
           <SidebarLeft>
             <DashLayout>
               <AdvertSingle />
+            </DashLayout>
+          </SidebarLeft>
+        }
+        />
+
+        {/* Admin Transactions Single User*/}
+      <Route 
+        path="/admin/dashboard/transactions/user/:userId" 
+        element={
+          <SidebarLeft>
+            <DashLayout>
+              <TransactionsSingleUser />
             </DashLayout>
           </SidebarLeft>
         }

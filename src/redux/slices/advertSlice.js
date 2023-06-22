@@ -94,7 +94,6 @@ const advertSlice = createSlice({
             state.isSuccess = true;
             state.isError = false;
             state.adverts = action.payload
-            toast.success("Adverts Retrieved Successfully")
           })
           .addCase(handleGetUserAdverts.rejected, (state, action) => {
             state.isLoading = false;
@@ -113,7 +112,6 @@ const advertSlice = createSlice({
             state.isSuccess = true;
             state.isError = false;
             state.allAdverts = action.payload
-            toast.success("All Adverts Retrieved Successfully")
           })
           .addCase(handleGetALLUserAdverts.rejected, (state, action) => {
             state.isLoading = false;

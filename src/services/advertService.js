@@ -1,3 +1,4 @@
+import { toast } from 'react-hot-toast'
 import { BACKEND_URL } from '../../utils/globalConfig'
 import axios from "axios"
 
@@ -17,4 +18,15 @@ export const getUserAdverts = async() => {
 export const getAllUserAdverts = async() => {
     const response = await axios.get(`${BACKEND_URL}/api/adverts/all`)
    return response.data      
+}
+
+// Delete Advert
+export const deleteAdvert = async(advertId) => {
+    try {
+        const response = await axios.delete(`${BACKEND_URL}/api/adverts/delete/${advertId}`)
+        return response.data
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+    }
 }

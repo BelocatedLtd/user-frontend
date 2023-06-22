@@ -20,5 +20,11 @@ export const getUserTransactions = async() => {
         return response.data       
 }
 
+// Get Transactions List
+export const getAllTransactions = async() => {
+    const response = await axios.get(`${BACKEND_URL}/api/transactions/all`)
+   return response.data       
+}
+
 
 

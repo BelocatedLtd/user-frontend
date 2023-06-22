@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { getUserTransactions } from '../../services/transactionService';
+import { getAllTransactions, getUserTransactions } from '../../services/transactionService';
 import { toast } from 'react-hot-toast';
 
 const initialState = {
@@ -10,7 +10,7 @@ const initialState = {
     isLoading: false,
 }
 
-// Get User Adverts
+// Get User Transactions
 export const handleGetUserTransactions = createAsyncThunk(
     "get/handleGetUserTransactions",
     async(__, thunkAPI) => {
@@ -23,6 +23,21 @@ export const handleGetUserTransactions = createAsyncThunk(
         }
         } 
     )
+
+
+  // Get All Transactions
+export const handleGetTransactions = createAsyncThunk(
+  "get/handleGetTransactions",
+  async(__, thunkAPI) => {
+      try {
+        return await getAllTransactions()
+      } catch(error) {
+          const message = 
+      (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+          return thunkAPI.rejectWithValue(message)
+      }
+      } 
+  )
 
 const transactionSlice = createSlice({
   name: 'transaction',
@@ -40,7 +55,6 @@ const transactionSlice = createSlice({
         state.isSuccess = true;
         state.isError = false;
         state.transactions = action.payload
-        toast.success("Trasaction list updated and Retrieved Successfully")
       })
       .addCase(handleGetUserTransactions.rejected, (state, action) => {
         state.isLoading = false;
@@ -48,7 +62,24 @@ const transactionSlice = createSlice({
         state.message = action.payload;
         toast.error(action.payload) 
       })
-    }
+
+    // Get All Transactions
+    .addCase(handleGetTransactions.pending, (state) => {
+      state.isLoading = true
+    })
+    .addCase(handleGetTransactions.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.isError = false;
+      state.transactions = action.payload
+    })
+    .addCase(handleGetTransactions.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload;
+      toast.error(action.payload) 
+    })
+  }
 
 });
 
