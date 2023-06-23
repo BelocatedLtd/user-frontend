@@ -64,11 +64,6 @@ const Tasks = () => {
   
     },
     {
-      name: 'Units',
-      selector: row => row.desiredROI, 
-      sortable: true
-    },
-    {
       name: 'To Earn',
       cell: (row) => (
         <p>₦{row.toEarn}</p>

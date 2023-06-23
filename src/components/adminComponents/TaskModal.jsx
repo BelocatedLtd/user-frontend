@@ -9,6 +9,7 @@ import { CheckmarkIcon, toast } from 'react-hot-toast'
 import { handleApproveTask } from '../../redux/slices/taskSlice'
 import Loader from '../loader/Loader'
 import { useEffect } from 'react'
+import socket from '../../services/socket'
 
 
 
@@ -77,6 +78,15 @@ const TaskModal = ({handleModal, task}) => {
 
         if (response.payload) {
             toast.error("Task Approved")
+
+            const emitData = {
+                userId: task.taskPerformerId,
+                action: 'Henry from mushin just earned #500 from a task he completed'
+            }
+
+            //Emit Socket event to update activity feed
+            socket.emit('activity', emitData)
+
             handleModal()
             setIsLoading(false)
         }

@@ -83,11 +83,23 @@ const TaskSingle = () => {
               </div>
 
               <div className='flex flex-col'>
-                <label htmlFor="" className='font-bold'>Advertiser Name:</label>
-                <div onClick={() => navigate(`/admin/dashboard/user/${advertiser._id}`)} className='flex items-center cursor-pointer hover:text-secondary'>
-                  <p>{advertiser?.fullname}</p>
-                  <MdKeyboardDoubleArrowRight className='text-secondary '/>
-                </div>
+                  <div className='flex items gap-[3rem]'>
+                      <div>
+                        <label htmlFor="" className='font-bold'>Advertiser Name:</label>
+                        <div onClick={() => navigate(`/admin/dashboard/user/${advertiser._id}`)} className='flex items-center cursor-pointer gap-1 hover:text-secondary'>
+                          <p>{advertiser?.fullname}</p>
+                          <MdKeyboardDoubleArrowRight className='text-secondary '/>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label htmlFor="" className='font-bold'>Advert Id:</label>
+                        <div onClick={() => navigate(`/admin/dashboard/advert/${task.advertId}`)} className='flex items-center cursor-pointer gap-1 hover:text-secondary'>
+                          <p>{task.advertId}</p>
+                          <MdKeyboardDoubleArrowRight className='text-secondary '/>
+                        </div>
+                      </div>
+                  </div>
               </div>
 
             </div>
