@@ -11,6 +11,11 @@ import { useNavigate } from 'react-router-dom';
 import Loader from '../../components/loader/Loader';
 import RetrievePassword from './RetrievePassword';
 import VerifyEmail from './VerifyEmail';
+import io from 'socket.io-client'
+import { BACKEND_URL } from '../../../utils/globalConfig'
+
+
+const socket = io.connect(`${BACKEND_URL}`)
 
 
 const initialState = {
@@ -73,6 +78,15 @@ const Register = ({handleRegister, setRegBtn, regBtn}) => {
 
       if (response._id) {
         toast.success("User Profile Created Successfully, proceeding to verification...")
+
+        //Emit socket io event to the backend
+        const emitData = {
+          userId: response?._id,
+          action: `@${response?.username} just registered`
+      }
+
+      //Emit Socket event to update activity feed
+      socket.emit('sendActivity', emitData) 
         
         // Start sending email verification link
         const emailResponse = resendVerificationEmail(email)

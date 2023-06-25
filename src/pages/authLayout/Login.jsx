@@ -9,6 +9,11 @@ import { useDispatch } from 'react-redux'
 import { CheckmarkIcon, toast } from 'react-hot-toast'
 import { loginUser, resendVerificationEmail } from '../../services/authServices'
 import Loader from '../../components/loader/Loader'
+import io from 'socket.io-client'
+import { BACKEND_URL } from '../../../utils/globalConfig'
+
+
+const socket = io.connect(`${BACKEND_URL}`)
 
 const initialState = {
   email: '',
@@ -82,15 +87,28 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
       await dispatch(SET_USERNAME(response.username))
       await dispatch(SET_USER(response))
       const username = response.username
+
       if (response.accountType === "User") {
+
         if (response.isPhoneVerified === false) {
           navigate(`/dashboard/account-settings/${username}`)
         } else if (response.isPhoneVerified === true) {
           navigate(`/dashboard/${username}`)
         }
+
+        //Emit socket io event to the backend
+        const emitData = {
+          userId: response?._id,
+          action: `@${username} just logged in`
+      }
+
+      //Emit Socket event to update activity feed
+      socket.emit('sendActivity', emitData) 
+
       } else if (response.accountType === "Admin") {
         navigate(`/admin/dashboard/${username}`)
       }
+
       setIsLoading(false)
     }
 

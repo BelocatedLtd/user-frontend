@@ -88,7 +88,7 @@ const TaskModal = ({handleModal, task, taskPerformer}) => {
 
             const emitData = {
                 userId: task.taskPerformerId,
-                action: `${taskPerformer?.username} from ${taskPerformer?.location} just earned ₦${task?.toEarn} from a task completed`
+                action: `@${taskPerformer?.username} from ${taskPerformer?.location} just earned ₦${task?.toEarn} from a task completed`
             }
 
             

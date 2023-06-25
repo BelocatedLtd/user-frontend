@@ -10,6 +10,7 @@ import { BACKEND_URL } from '../../utils/globalConfig'
 import { NEW_ACTIVITY, handleGetActivity, handleGetAllActivities, selectActivities } from '../redux/slices/feedSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import speaker from '../assets/animated icons/speaker.gif'
+import { format, formatDistanceToNow } from 'date-fns'
 
 
 const socket = io.connect(`${BACKEND_URL}`)
@@ -20,6 +21,7 @@ const ActivityFeed = () => {
     const newsFeed = useSelector(selectActivities)
     const dispatch = useDispatch()
     const [currentPage, setCurrentPage] = useState(1);
+    const [createdAtTimestamp, setCreatedAtTimestamp] = useState()
 
     const itemsPerPage = 4;
 
@@ -34,9 +36,6 @@ const ActivityFeed = () => {
         const endIndex = startIndex + itemsPerPage;
         return newsFeed.slice(startIndex, endIndex);
     }
-
-    
-    
 
     useEffect(() => {
         //Listen for activity event from the backend
@@ -55,9 +54,9 @@ const ActivityFeed = () => {
         getActivities()
     }, [dispatch])
 
-    
-
-   
+    // const createdAt = new Date(createdAtTimestamp);
+    // const readableDate = format(createdAt, 'EEE MMM dd yyyy');
+    // const timeAgo = formatDistanceToNow(readableDate, {addSuffix: true});
 
     
     return (
@@ -83,7 +82,10 @@ const ActivityFeed = () => {
                                 <div>
                                     <img src={speaker} alt="announcement" />
                                 </div>
+                                <div className="flex flex-col">
+                                <small>{formatDistanceToNow(new Date(item?.createdAt))}</small>
                                 <p className='text-gray-600 text-[14px]'>{item.action}</p>
+                                </div>
                         </div>
                         
                     ))}

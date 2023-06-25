@@ -62,7 +62,6 @@ const AdminDashboard = () => {
         <div className="listTitle font-semibold text-gray-600 m-[15px]">
           Latest Adverts
         </div>
-        {/* <List /> */}
 
         <Adverts adverts={adverts}/>
       </div>
