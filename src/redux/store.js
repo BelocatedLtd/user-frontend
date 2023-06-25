@@ -5,6 +5,7 @@ import advertReducer from './slices/advertSlice'
 import walletReducer from './slices/walletSlice'
 import taskReducer from './slices/taskSlice'
 import transactionReducer from './slices/transactionSlice'
+import feedReducer from './slices/feedSlice'
 
 const store = configureStore ({
     reducer: {
@@ -13,7 +14,8 @@ const store = configureStore ({
         advert: advertReducer,
         wallet: walletReducer,
         task: taskReducer,
-        transaction: transactionReducer
+        transaction: transactionReducer,
+        feed: feedReducer
     },
 })
 

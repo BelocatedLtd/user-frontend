@@ -9,14 +9,20 @@ import { CheckmarkIcon, toast } from 'react-hot-toast'
 import { handleApproveTask } from '../../redux/slices/taskSlice'
 import Loader from '../loader/Loader'
 import { useEffect } from 'react'
-import socket from '../../services/socket'
+//import socket from '../../services/socket'
+import io from 'socket.io-client'
+import { handleGetAllActivities } from '../../redux/slices/feedSlice'
+import { BACKEND_URL } from '../../../utils/globalConfig'
 
 
+const socket = io.connect(`${BACKEND_URL}`)
 
-const TaskModal = ({handleModal, task}) => {
+const TaskModal = ({handleModal, task, taskPerformer}) => {
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(false)
     const [rejectMessage, setRejectMessage] = useState(false)
+
+    
     
 
     const initialState = {
@@ -50,10 +56,10 @@ const TaskModal = ({handleModal, task}) => {
     
 
     const taskData = {
-        taskId: task._id, 
-        advertId: task.advertId, 
-        advertiserId: task.advertiserId, 
-        taskPerformerId: task.taskPerformerId, 
+        taskId: task?._id, 
+        advertId: task?.advertId, 
+        advertiserId: task?.advertiserId, 
+        taskPerformerId: task?.taskPerformerId, 
         taskStatus: taskStatus, 
         message: message,
     }
@@ -72,24 +78,29 @@ const TaskModal = ({handleModal, task}) => {
         const response = await dispatch(handleApproveTask(taskData))
 
         if (!response.payload) {
-            toast.error("Failed to delete user")
+            toast.error("Error")
             setIsLoading(false)
         }
 
         if (response.payload) {
             toast.error("Task Approved")
+            setIsLoading(false)
 
             const emitData = {
                 userId: task.taskPerformerId,
-                action: 'Henry from mushin just earned #500 from a task he completed'
+                action: `${taskPerformer?.username} from ${taskPerformer?.location} just earned ₦${task?.toEarn} from a task completed`
             }
 
+            
+
             //Emit Socket event to update activity feed
-            socket.emit('activity', emitData)
+            socket.emit('sendActivity', emitData)  
+            
 
             handleModal()
             setIsLoading(false)
         }
+           
         setIsLoading(false)
     }
 
@@ -116,7 +127,7 @@ const TaskModal = ({handleModal, task}) => {
 
                     <div className='flex items-center justify-center gap-2 '>
                     <button className='py-2 px-4 text-[15px] bg-tertiary text-primary rounded-full'>Confirm</button>
-                    <button onClick={handleModal} className='py-2 px-4 text-[15px] bg-secondary text-primary rounded-full'>Cancel</button>
+                    <button onClick={(e) => handleModal(e)} className='py-2 px-4 text-[15px] bg-secondary text-primary rounded-full'>Cancel</button>
                 </div>
                 </form>
                 

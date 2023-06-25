@@ -5,46 +5,97 @@ import tiktok from '../assets/social icons/tiktok.svg'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { io } from "socket.io-client";
+import io from 'socket.io-client'
 import { BACKEND_URL } from '../../utils/globalConfig'
+import { NEW_ACTIVITY, handleGetActivity, handleGetAllActivities, selectActivities } from '../redux/slices/feedSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import speaker from '../assets/animated icons/speaker.gif'
 
-//COnnect to the io server
-const socket = io(`${BACKEND_URL}`)
+
+const socket = io.connect(`${BACKEND_URL}`)
 
 const ActivityFeed = () => {
     const [activities, setActivities] = useState([])
     const [newActivityData, setNewActivityData] = useState('')
+    const newsFeed = useSelector(selectActivities)
+    const dispatch = useDispatch()
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const itemsPerPage = 4;
+
+    const totalPage = Math.ceil(newsFeed.length / itemsPerPage)
+
+    const handlePageChange = (selectedPage) => {
+        setCurrentPage(selectedPage);
+    };
+
+    const getCurrentPageData = () => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        return newsFeed.slice(startIndex, endIndex);
+    }
+
+    
+    
 
     useEffect(() => {
         //Listen for activity event from the backend
-       socket.on('activity', (data) => {
-        console.log(data)
-       })
+        socket.on("recievedActivity", (data) => {
+            async() => {
+                await dispatch(NEW_ACTIVITY(data))
+            }
+        })
+    }, [socket])
 
-       return () => {
-        socket.off('activity');
-       };
-    }, [])
+    const getActivities = async() => {
+        await dispatch(handleGetAllActivities())
+     }
+
+    useEffect(() => {
+        getActivities()
+    }, [dispatch])
+
+    
+
+   
 
     
     return (
-        <div className='right-0 w-[400px] h-[71vh] border-l border-gray-200 md:flex md:flex-col'>
+        <div className='right-0 w-[400px] h-[71vh]  md:flex md:flex-col'>
             <div className='w-full border-b border-gray-200 px-5 pb-3 my-3'>
                 <h1 className='text-xl font-semibold text-gray-600'>Recent Activities</h1>
                 <p className='text-sm mt-2 text-gray-500 font-medium'>See what people are doing on Belocated</p>
             </div>
     
 
-            <div className='flex w-full border-b border-gray-200 px-5 pb-3 items-center gap-3 py-5'>
-                <img src={facebook} alt="" />
-                <p className='text-gray-600 text-[14px]'><span className='italic text-tertiary font-semibold'>@ameer232</span> from <span className='italic text-secondary font-semibold'>Lagos Mainland</span>, Lagos just earned <span className='italic text-tertiary font-semibold'>₦3 </span>for following a page or account on Tiktok</p>
-            </div>
-    
-    
-    
-            <div className='flex items-center justify-center  gap-2 p-6 border-b border-gray-200'>
-                <p className='font-bold text-gray-500'>View More</p>
-                <MdOutlineKeyboardArrowDown  size={30} className='text-gray-500'/>
+            <div className='flex flex-col w-full border-b border-gray-200 px-5 pb-3 items-center gap-3 py-5'>
+                
+                    {/* {newsFeed?.map((feed, index) => (
+                    <div key={index} className='flex items-center gap-2 border-b border-gray-100 py-5'>
+                        <div><img src={speaker} alt="announcement" /></div>
+                            <p className='text-gray-600 text-[14px]'>{feed.action}</p>
+                    </div> 
+                     ))} */}
+
+                <div className='flex flex-col gap-[0.8rem] text-gray-600 text-[14px]'>
+                    {getCurrentPageData().map((item, index) => (
+                        <div key={index} className='flex items-center gap-2 border-b border-gray-100 py-5'>
+                                <div>
+                                    <img src={speaker} alt="announcement" />
+                                </div>
+                                <p className='text-gray-600 text-[14px]'>{item.action}</p>
+                        </div>
+                        
+                    ))}
+                </div>
+
+                {currentPage < totalPage && (
+                    <div onClick={() => handlePageChange(currentPage + 1)} className='flex items-center justify-center  gap-2 p-6 '>
+                        <p className='font-bold text-gray-500'>View More</p>
+                        <MdOutlineKeyboardArrowDown  size={30} className='text-gray-500'/>
+                    </div>
+                )}
+                
             </div>
         </div>
       )

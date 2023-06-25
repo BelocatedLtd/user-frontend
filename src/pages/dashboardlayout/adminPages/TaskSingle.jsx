@@ -47,7 +47,7 @@ const TaskSingle = () => {
 
   return (
     <div className = 'w-full h-fit'>
-      {modalBtn && <TaskModal handleModal={handleModal} task={task}/>}
+      {modalBtn && <TaskModal handleModal={handleModal} task={task} taskPerformer={taskPerformer} />}
       {delBtn && <DeleteTaskModal handleDelete={handleDelete} task={task}/>}
       {isLoading && <Loader />}
       <div className='flex items-center gap-3 border-b border-gray-200 pb-6'>
@@ -94,8 +94,8 @@ const TaskSingle = () => {
 
                       <div>
                         <label htmlFor="" className='font-bold'>Advert Id:</label>
-                        <div onClick={() => navigate(`/admin/dashboard/advert/${task.advertId}`)} className='flex items-center cursor-pointer gap-1 hover:text-secondary'>
-                          <p>{task.advertId}</p>
+                        <div onClick={() => navigate(`/admin/dashboard/advert/${task?.advertId}`)} className='flex items-center cursor-pointer gap-1 hover:text-secondary'>
+                          <p>{task?.advertId}</p>
                           <MdKeyboardDoubleArrowRight className='text-secondary '/>
                         </div>
                       </div>

@@ -3,6 +3,7 @@ import facebook from '../../assets/social icons/facebook.svg'
 import twitter from '../../assets/social icons/twitter.png'
 import tiktok from '../../assets/social icons/tiktok.svg'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
+import ActivityFeed from '../../components/ActivityFeed'
 
 const SidebarRight = () => {
   return (
@@ -12,7 +13,7 @@ const SidebarRight = () => {
             <p className='text-sm mt-2 text-gray-500 font-medium'>See what people are doing on Belocated</p>
         </div>
 
-        <div className='flex w-full border-b border-gray-200 px-5 pb-3 items-center gap-3 py-5'>
+        {/* <div className='flex w-full border-b border-gray-200 px-5 pb-3 items-center gap-3 py-5'>
             <img src={facebook} alt="" />
             <p className='text-gray-600 text-[14px]'><span className='italic text-tertiary font-semibold'>@ameer232</span> from <span className='italic text-secondary font-semibold'>Lagos Mainland</span>, Lagos just earned <span className='italic text-tertiary font-semibold'>₦3 </span>for following a page or account on Tiktok</p>
         </div>
@@ -25,12 +26,9 @@ const SidebarRight = () => {
         <div className='flex w-full border-b border-gray-200 px-5 pb-3 items-center gap-3 py-5'>
             <img src={twitter} alt="" />
             <p className='text-gray-600 text-[14px]'><span className='italic text-tertiary font-semibold'>@ameer232</span> from <span className='italic text-secondary font-semibold'>Lagos Mainland</span>, Lagos just earned <span className='italic text-tertiary font-semibold'>₦3 </span>for following a page or account on Tiktok</p>
-        </div>
+        </div> */}
 
-        <div className='flex items-center justify-center  gap-2 p-6 border-b border-gray-200'>
-            <p className='font-bold text-gray-500'>View More</p>
-            <MdOutlineKeyboardArrowDown  size={30} className='text-gray-500'/>
-        </div>
+        <ActivityFeed />
     </div>
   )
 }
