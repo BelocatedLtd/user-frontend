@@ -54,10 +54,6 @@ const ActivityFeed = () => {
         getActivities()
     }, [dispatch])
 
-    // const createdAt = new Date(createdAtTimestamp);
-    // const readableDate = format(createdAt, 'EEE MMM dd yyyy');
-    // const timeAgo = formatDistanceToNow(readableDate, {addSuffix: true});
-
     
     return (
         <div className='right-0 w-[400px] h-[71vh]  md:flex md:flex-col'>
@@ -68,14 +64,6 @@ const ActivityFeed = () => {
     
 
             <div className='flex flex-col w-full border-b border-gray-200 px-5 pb-3 items-center gap-3 py-5'>
-                
-                    {/* {newsFeed?.map((feed, index) => (
-                    <div key={index} className='flex items-center gap-2 border-b border-gray-100 py-5'>
-                        <div><img src={speaker} alt="announcement" /></div>
-                            <p className='text-gray-600 text-[14px]'>{feed.action}</p>
-                    </div> 
-                     ))} */}
-
                 <div className='flex flex-col gap-[0.8rem] text-gray-600 text-[14px]'>
                     {getCurrentPageData().map((item, index) => (
                         <div key={index} className='flex items-center gap-2 border-b border-gray-100 py-5'>
