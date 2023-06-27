@@ -1,7 +1,4 @@
 import React from 'react'
-import facebook from '../assets/social icons/facebook.svg'
-import twitter from '../assets/social icons/twitter.png'
-import tiktok from '../assets/social icons/tiktok.svg'
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { useEffect } from 'react'
 import { useState } from 'react'
