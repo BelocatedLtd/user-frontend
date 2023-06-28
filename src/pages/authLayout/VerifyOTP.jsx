@@ -65,10 +65,17 @@ const  VerifyOTP = () => {
       email, 
       phone,
     }
+
+    const OTPData = {
+      phone,
+      OTP
+    }
+
+
       
       try {
         setIsLoading(true)
-       const response = await confirmOTP(OTP)
+       const response = await confirmOTP(OTPData)
 
         if (response) {
          const updatedUserDetailes = await updateUserAccountDetails(verificationData)

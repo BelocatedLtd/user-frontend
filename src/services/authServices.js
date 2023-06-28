@@ -139,9 +139,9 @@ export const handlesendingPhoneOTP = async(accountDetailsData) => {
 }
 
 //Phone Verify
-export const confirmOTP = async(OTP) => {
+export const confirmOTP = async(OTPData) => {
     try {
-        const response = await axios.patch(`${BACKEND_URL}/api/user/confirmphone/${OTP}`)
+        const response = await axios.patch(`${BACKEND_URL}/api/user/confirmphone`, OTPData)
         return response.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
