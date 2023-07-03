@@ -61,7 +61,7 @@ export const Header = () => {
                 <NavLink to='/'>Home</NavLink>
                 <NavLink to='/about'>About</NavLink>
                 <NavLink to='/faq'>FAQ</NavLink>
-                <NavLink to='/hiw'>Partners</NavLink>
+                <NavLink to='/hiw'>Services</NavLink>
                 <NavLink to='/contact'>Contact</NavLink>
             </div>
 
@@ -92,7 +92,7 @@ export const Header = () => {
                             <Link to="/">Home</Link>
                             <Link to="/about">About</Link>
                             <Link to="/">FAQ</Link>
-                            <Link to="/">Partner</Link>
+                            <Link to="/">Services</Link>
                             <Link to="/">Contact</Link>
                             
 
