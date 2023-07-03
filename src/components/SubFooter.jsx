@@ -27,7 +27,6 @@ const SubFooter = () => {
                 </div> 
                         <ul className='text-lg flex flex-col gap-2'>
                             <li>User Registration</li>
-                            <li>Logout</li>
                             <li>How it Works</li>
                             <li>Help & FAQs</li>
                             <li>Legal</li>
@@ -56,9 +55,8 @@ const SubFooter = () => {
                     <AiOutlineHolder className='rotate-90 text-2xl text-tertiary mt-1'/>
                 </div> 
                         <ul className='text-lg flex flex-col gap-3'>
-                            <li className='flex items-center gap-2'><BsFillTelephoneFill className='text-tertiary border border-tertiary rounded-full p-1 text-2xl'/> +234 803 555 4444</li>
-                            <li className='flex items-center gap-2'><MdOutlineEmail  className='text-tertiary border border-tertiary rounded-full p-1 text-2xl'/>cs@belocated.com</li>
-                            <li className='flex items-center gap-2'><MdLocationPin  className='text-tertiary border border-tertiary rounded-full p-1 text-2xl'/>222 Chevron Estate, VI, Lagos</li>
+                            <li className='flex items-center gap-2'><BsFillTelephoneFill className='text-tertiary border border-tertiary rounded-full p-1 text-2xl'/> +234 703 193 5276</li>
+                            <li className='flex items-center gap-2'><MdOutlineEmail  className='text-tertiary border border-tertiary rounded-full p-1 text-2xl'/>cs@belocated.ng</li>
                         </ul>
             </div>
 

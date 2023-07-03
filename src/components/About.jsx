@@ -5,15 +5,14 @@ import ActivityFeed from './ActivityFeed'
 
 const About = () => {
   return (
-    <section className='w-full h-fit md:h-screen'>
-        <div className='container h-full flex flex-col justify-start gap-7 mx-auto md:flex-row'>
-            <div className='flex h-full flex-col'>
+    <section className='w-full h-fit md:h-screen mb-[3rem]'>
+        <div className='container h-full flex flex-col justify-start gap-7 my-[3rem] mx-auto md:flex-row md:items-center'>
+            <div className='flex h-full flex-col justify-center'>
                 <div className='flex w-full h-full flex-col px-[2rem] py-[4rem] gap-3'>
                     <div className='flex items-center gap-2'>
-                        <h1 className='text-3xl text-gray-800 font-extrabold'>About Belocated </h1>
-                        <img src={aboutIcon} alt="about us" className='w-[50px] h-[50px]' />
+                        <h1 className='text-3xl text-gray-600 font-extrabold border-l-4 px-4 border-red-400'>About Belocated </h1>
                     </div>
-                    <p className='w-full text-[20px] leading-8 text-gray-600 mt-3'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, incidunt ea blanditiis totam velit explicabo deserunt. Ipsam culpa earum a quas recusandae vero doloremque amet odio quaerat temporibus, perferendis tempore. Ipsam culpa earum a quas recusandae vero doloremque amet odio quaerat temporibus, perferendis tempore? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, incidunt ea blanditiis totam velit explicabo deserunt. Ipsam culpa earum a quas recusandae vero doloremque amet odio quaerat temporibus, perferendis tempore.</p>
+                    <p className='w-full text-[20px] leading-[2.2] text-gray-600 mt-3 text-justify md:text-left'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, incidunt ea blanditiis totam velit explicabo deserunt. Ipsam culpa earum a quas recusandae vero doloremque amet odio quaerat temporibus, perferendis tempore. Ipsam culpa earum a quas recusandae vero doloremque amet odio quaerat temporibus, perferendis tempore? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, incidunt ea blanditiis totam velit explicabo deserunt. Ipsam culpa earum a quas recusandae vero doloremque amet odio quaerat temporibus, perferendis tempore.</p>
                 </div>
 
                 {/* <div className='stats flex gap-5 mt-5'>
@@ -43,7 +42,6 @@ const About = () => {
             </div>
 
             <div className='flex mb-[3rem] px-[2rem]'>
-                {/* <img src={aboutImg} alt="about us" className='w-full h-full object-cover' /> */}
                 <ActivityFeed />
             </div>
         </div>
