@@ -12,7 +12,7 @@ const About = () => {
                     <div className='flex items-center gap-2'>
                         <h1 className='text-3xl text-gray-600 font-extrabold border-l-4 px-4 border-red-400'>About Belocated </h1>
                     </div>
-                    <p className='w-full text-[20px] leading-[2.2] text-gray-600 mt-3 text-justify md:text-left'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, incidunt ea blanditiis totam velit explicabo deserunt. Ipsam culpa earum a quas recusandae vero doloremque amet odio quaerat temporibus, perferendis tempore. Ipsam culpa earum a quas recusandae vero doloremque amet odio quaerat temporibus, perferendis tempore? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, incidunt ea blanditiis totam velit explicabo deserunt. Ipsam culpa earum a quas recusandae vero doloremque amet odio quaerat temporibus, perferendis tempore.</p>
+                    <p className='w-full text-[20px] text-gray-600 mt-3 text-justify md:text-left'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, incidunt ea blanditiis totam velit explicabo deserunt. Ipsam culpa earum a quas recusandae vero doloremque amet odio quaerat temporibus, perferendis tempore. Ipsam culpa earum a quas recusandae vero doloremque amet odio quaerat temporibus, perferendis tempore? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, incidunt ea blanditiis totam velit explicabo deserunt. Ipsam culpa earum a quas recusandae vero doloremque amet odio quaerat temporibus, perferendis tempore.</p>
                 </div>
 
                 {/* <div className='stats flex gap-5 mt-5'>
