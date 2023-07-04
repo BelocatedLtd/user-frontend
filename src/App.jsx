@@ -53,12 +53,17 @@ import ChangePassword from "./pages/dashboardlayout/userPages/settings/ChangePas
 import AdvertSingleUser from "./pages/dashboardlayout/adminPages/AdvertSingleUser";
 import TransactionsSingleUser from "./pages/dashboardlayout/adminPages/TransactionsSingleUser";
 import TasksSingleUser from "./pages/dashboardlayout/adminPages/TasksSingleUser";
+import { useState } from "react";
+import RefRegister from "./pages/authLayout/RefRegister";
 
 
 axios.defaults.withCredentials = true 
 
 function App() {
   const dispatch = useDispatch();
+  const [regBtn, setRegBtn] = useState(false)
+  const [loginBtn, setLoginBtn] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false) 
 
   useEffect(() => {
     async function loginStatus() {
@@ -68,13 +73,27 @@ function App() {
     loginStatus()
   }, [dispatch])
 
+  const handleRegister = (e) => {
+    e.preventDefault()
+    setRegBtn(!regBtn)
+}
+
+const handleLogin = (e) => {
+    e.preventDefault()
+    setLoginBtn(!loginBtn)
+}
+
+const handleCloseMenu = () => {
+  setMobileMenuOpen(!mobileMenuOpen)
+}
+
   return (
     <BrowserRouter>
       <Toaster/>
       
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />}/>
+          <Route index element={<Home handleLogin={handleLogin} handleRegister={handleRegister} loginBtn={loginBtn} regBtn={regBtn} handleCloseMenu={handleCloseMenu}/>}/>
           <Route path="/about" element={<About />}/>
           <Route path="/contact" element={<Contact />}/>
           <Route path="/*" element={<Error404Page />}/>
@@ -85,7 +104,7 @@ function App() {
         </Route>
 
         <Route path="/" element={<AuthLayout />}>
-          <Route path="/register" element={<Register />}/>
+          <Route path="/register/:referrerId" element={<RefRegister />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/logout" element={<Logout />}/>
           <Route path="/confirm-pass" element={<ConfirmPassword />}/>

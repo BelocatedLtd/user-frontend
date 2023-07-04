@@ -7,14 +7,14 @@ import SubFooter from '../../components/SubFooter'
 import Services from './Services'
 import CallToAction from '../../components/CallToAction'
 
-export const Home = () => {
+export const Home = ({handleRegister, handleLogin, handleCloseMenu, loginBtn, regBtn}) => {
   return (
     <div>
-      <Jumbotron />
+      <Jumbotron handleRegister={handleRegister} handleLogin={handleLogin} loginBtn={loginBtn} regBtn={regBtn}/>
       <Services />
       <About />
       <MembersTab />
-      <CallToAction />
+      <CallToAction handleRegister={handleRegister}  regBtn={regBtn}/>
       <SubFooter />
     </div>
   )

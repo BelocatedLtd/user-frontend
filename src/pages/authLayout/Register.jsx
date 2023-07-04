@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { createNewUser, resendVerificationEmail } from '../../services/authServices';
 import { useDispatch } from 'react-redux';
 import { SET_LOGIN, SET_USER, SET_USERNAME } from '../../redux/slices/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../../components/loader/Loader';
 import RetrievePassword from './RetrievePassword';
 import VerifyEmail from './VerifyEmail';
@@ -24,6 +24,7 @@ const initialState = {
 }
 
 const Register = ({handleRegister, setRegBtn, regBtn}) => {
+  const referrerId = useParams()
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
@@ -56,7 +57,8 @@ const Register = ({handleRegister, setRegBtn, regBtn}) => {
       const formData = {
         username, 
         email,
-        password
+        password,
+        referrerId: referrerId ? referrerId : ''
       }
 
       setIsLoading(true)
