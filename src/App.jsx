@@ -104,7 +104,7 @@ const handleCloseMenu = () => {
         </Route>
 
         <Route path="/" element={<AuthLayout />}>
-          <Route path="/register/:referrerId" element={<RefRegister />}/>
+          <Route path="/register/ref/:referrerId" element={<RefRegister />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/logout" element={<Logout />}/>
           <Route path="/confirm-pass" element={<ConfirmPassword />}/>

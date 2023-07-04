@@ -11,6 +11,7 @@ import RetrievePassword from './RetrievePassword';
 import VerifyEmail from './VerifyEmail';
 import io from 'socket.io-client'
 import { BACKEND_URL } from '../../../utils/globalConfig'
+import { useEffect } from 'react';
 
 const socket = io.connect(`${BACKEND_URL}`)
 
@@ -26,6 +27,10 @@ const RefRegister = () => {
   const [isError, setIsError] = useState(false)
   const [values, setValues] = useState(initialState)
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    
+  }, [])
 
     const {username, email, password, password2 } = values
 
@@ -56,9 +61,6 @@ const RefRegister = () => {
         password,
         referrerId: referrerId ? referrerId : ''
       }
-
-      console.log(formData)
-      return
 
       setIsLoading(true)
       
@@ -155,7 +157,7 @@ const RefRegister = () => {
                 <div className='w-full mt-[3rem]'>
                     <div className='flex gap-1 justify-center text-[9px]'>
                     <label>Referred By:</label>
-                    <p>{referrerId}</p>
+                    <p>@{referrerId}</p>
                     </div>
                 </div>
             </div>

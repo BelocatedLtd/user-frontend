@@ -20,6 +20,7 @@ const Dashboard = () => {
   const [profile, setProfile] = useState(null)
   const username = useSelector(selectUsername)
   const user = useSelector(selectUser)
+  const [refLink, setRefLink] = useState('')
   useRedirectLoggedOutUser('/')
 
   useEffect(() => {
@@ -32,6 +33,9 @@ const Dashboard = () => {
         }
       }
     getUserData()
+
+    const frontEndUrl = window.location.hostname;
+    setRefLink(`https://${frontEndUrl}/register/ref/${user.id}`)
   }, [dispatch])
 
   const handleEarn = (e) => {
@@ -92,7 +96,7 @@ const Dashboard = () => {
 
         <ProfileInComplete>
           <div className="w-full flex items-center justify-center mt-[1rem]">
-            <FreeTaskCount/>
+            <FreeTaskCount/>         
           </div>
         <div className='w-full flex flex-col justify-center items-center h-fit my-5 px-5 py-[3rem] border border-tertiary'>
               <small className='px-[2rem] text-[15px] text-gray-600 text-center'>Welcome, <span className='text-tertiary'>@{username}</span>. Your account setup is incomple click below to completely set up your belocated account so you can start fulfilling tasks and making or set up ad campaigns to promote your product or services.</small>
@@ -111,6 +115,11 @@ const Dashboard = () => {
               <div className='w-fit text-[10px] bg-green-700 text-gray-100 px-3 py-3 mt-5 rounded-2xl'>180 tasks posted today for you to perform and make money</div>
 
               <button onClick={() => (navigate('/dashboard/earn'))} className='bg-transparent border border-gray-300 px-6 py-3 mt-5'>Perform Tasks & Earn</button>
+            </div>
+
+            <div className='flex items-center gap-2 w-full justify-center'>
+            <label>Referral Link:</label>
+            <input type="link" value={refLink} disabled className='w-fit md:w-1/2 p-3'/>
             </div>
           </ProfileComplete>
         </div>
