@@ -90,9 +90,9 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
 
       if (response.accountType === "User") {
 
-        if (response.isPhoneVerified === false) {
+        if (response.phone === "") {
           navigate(`/dashboard/account-settings/${username}`)
-        } else if (response.isPhoneVerified === true) {
+        } else if (response.phone) {
           navigate(`/dashboard/${username}`)
         }
 

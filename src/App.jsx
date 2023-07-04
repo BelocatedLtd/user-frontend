@@ -55,6 +55,7 @@ import TransactionsSingleUser from "./pages/dashboardlayout/adminPages/Transacti
 import TasksSingleUser from "./pages/dashboardlayout/adminPages/TasksSingleUser";
 import { useState } from "react";
 import RefRegister from "./pages/authLayout/RefRegister";
+import PasswordVerify from "./pages/dashboardlayout/userPages/settings/PasswordVerify";
 
 
 axios.defaults.withCredentials = true 
@@ -101,6 +102,7 @@ const handleCloseMenu = () => {
           <Route path="/verify-phone" element={<VerifyOTP />}/>
           <Route path="/verify-email" element={<VerifyEmail />}/>
           <Route path="/verified" element={<EmailVerified />}/>
+          <Route path="/pass" element={<ChangePassword />}/>
         </Route>
 
         <Route path="/" element={<AuthLayout />}>

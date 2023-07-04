@@ -52,7 +52,7 @@ const Profile = () => {
           </div>
           <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
             <label htmlFor="username" className='font-extrabold'>Phone:</label>
-            <p>+{profile?.phone}</p>
+            <p>{profile?.phone}</p>
           </div>
           <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
             <label htmlFor="fullname" className='font-extrabold'>Gender:</label>

@@ -23,12 +23,14 @@ const initialState = {
         bankAccountNumber: null,
         accountHolderName: "",
         isEmailVerified: false,
-        isPhoneVerified: false,
+       // isPhoneVerified: false,
         taskCompleted: 0,
         taskOngoing: 0,
         adsCreated: 0,
         freeTaskCount: 0,
         walletId: {},
+        referrals: [],
+        referrersId: "",
         token: ""
     },
     isLoading: false,
@@ -82,12 +84,14 @@ const authSlice = createSlice({
         state.user.bankAccountNumber = profile?.bankAccountNumber,
         state.user.accountHolderName = profile?.accountHolderName,
         state.user.isEmailVerified = profile?.isEmailVerified
-        state.user.isPhoneVerified = profile?.isPhoneVerified,
+       // state.user.isPhoneVerified = profile?.isPhoneVerified,
         state.user.taskCompleted = profile?.taskCompleted,
         state.user.taskOngoing = profile?.taskOngoing,
         state.user.adsCreated = profile?.adsCreated,
         state.user.freeTaskCount = profile?.freeTaskCount,
         state.user.walletId = profile?.walletId,
+        state.user.referrersId = profile?.referrersId,
+        state.user.referrals = profile?.referrals,
         state.user.token = profile?.token
     },
     // SET_LOGOUT(state) {

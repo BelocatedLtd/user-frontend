@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { handlesendingPhoneOTP, verifyUserPassword } from '../../../../services/authServices'
+import { handlesendingPhoneOTP, resendPasswordVerificationEmail, verifyUserPassword } from '../../../../services/authServices'
 import { toast } from 'react-hot-toast'
 import Loader from '../../../../components/loader/Loader'
 
@@ -41,6 +41,7 @@ const handleSubmit = async(e) => {
 
     const accountDetailsData = {
         userId: user.id,
+        email: user.email,
         oldPassword: password
       }
 
@@ -49,9 +50,13 @@ const handleSubmit = async(e) => {
         const oldPasswordOk = await verifyUserPassword(data)
      
      if (oldPasswordOk.message === "Password is Correct") {
-        const OTPSent = await handlesendingPhoneOTP(accountDetailsData)
-        if (OTPSent.message === "OTP Sent Successfully") {
-            console.log(OTPSent)
+        // const OTPSent = await handlesendingPhoneOTP(accountDetailsData)
+
+        const emailSent = await resendPasswordVerificationEmail(user.email)
+
+        console.log(emailsent)
+        return
+        if (emailSent.message === "OTP Sent Successfully") {
             navigate('/dashboard/password-verify', { state:{ accountDetailsData } })
         }
      } else {

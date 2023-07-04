@@ -1,5 +1,8 @@
 import React from 'react'
 import { useState } from 'react';
+import { changeUserPassword } from '../../../../services/authServices';
+import { useParams, useSearchParams } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const initialState = {
     newPassword: '',
@@ -57,14 +60,13 @@ const ChangePassword = () => {
             {isLoading && <Loader />}
           <div className='flex flex-col justify-center items-center gap-4 mx-auto w-full h-full px-[2rem] md:w-1/2'>
             <div className='mb-5 flex flex-col items-center text-center'>
-                <h2 className='text-sm text-gray-400 font-medium px-6 text-center'><span className='text-tertiary font-extrabold'>Verification</span> Email Sent!</h2>
-                <h3 className='w-[80%] text-xl text-gray-600 font-bold px-6 mt-2'>Please, enter the OTP code sent to your mobile number</h3>
+                <h2 className='text-sm text-gray-400 font-medium px-6 text-center'><span className='text-tertiary font-extrabold'>Set</span> New Password!</h2>
             </div>
             <form onSubmit={handleOnSubmit} className='w-[500px]'>
                         <label htmlFor="new password"> New Password</label>
                       <input type="password" name="newPassword" placeholder="123456" onChange={handleInputChange} className='w-full  mb-[1rem] shadow-inner p-6 bg-transparent border border-gray-500 rounded-xl' />
 
-                      <label htmlFor="new password"> New Password</label>
+                      <label htmlFor="new password">Confirm New Password</label>
                       <input type="password" name="confirmNewPassword" placeholder="123456" onChange={handleInputChange} className='w-full  mb-[1rem] shadow-inner p-6 bg-transparent border border-gray-500 rounded-xl' />
     
                       <div className='flex items-center gap-2'>

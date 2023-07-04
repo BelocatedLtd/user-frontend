@@ -77,6 +77,7 @@ const Dashboard = () => {
                   <img src={about} alt=""  className='w-[150px] border p-[1rem] rounded-full'/>
                   <p className='mt-1'>Welcome, {user.fullname ? user.fullname : username}</p>
                   <small className='mb-5'>@{username}</small>
+                  <small>Referred: {user?.referrals?.length}</small>
 
                   <div className='flex gap-2'>
                     <button onClick={handleEarn} className='flex-1 bg-secondary text-primary px-10 py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Earn</button>

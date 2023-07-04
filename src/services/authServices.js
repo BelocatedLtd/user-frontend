@@ -73,7 +73,7 @@ export const updateUser = async (formData) => {
 export const updateUserAccountDetails = async (verificationData) => {
     try {
         const response = await axios.patch(`${BACKEND_URL}/api/user/update/accountdetails`, verificationData) 
-         return response
+         return response.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
          toast.error(message)
@@ -109,6 +109,16 @@ export const changeUserPassword = async(data) => {
 export const resendVerificationEmail = async(email) => {
     try {
         const response = await axios.post(`${BACKEND_URL}/api/user/authverification/${email}`)
+        return response.data
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+    }
+}
+
+export const resendPasswordVerificationEmail = async(email) => {
+    try {
+        const response = await axios.post(`${BACKEND_URL}/api/user/authverificationpassword/${email}`)
         return response.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
