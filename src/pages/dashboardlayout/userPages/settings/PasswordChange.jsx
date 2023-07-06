@@ -12,8 +12,8 @@ const initialState = {
 
 const PasswordChange = ({user}) => {
     const navigate = useNavigate()
-const [passwordChange, setPasswordChange] = useState(initialState)
-const [isLoading, setIsLoading] = useState()
+    const [passwordChange, setPasswordChange] = useState(initialState)
+    const [isLoading, setIsLoading] = useState()
 
 //Password InPut Change
 const handlePasswordInputChange = (e) => {
@@ -54,14 +54,18 @@ const handleSubmit = async(e) => {
 
         const emailSent = await resendPasswordVerificationEmail(user.email)
 
-        console.log(emailsent)
-        return
-        if (emailSent.message === "OTP Sent Successfully") {
-            navigate('/dashboard/password-verify', { state:{ accountDetailsData } })
+        if (emailSent === "Password Reset Link Sent Successfully") {
+         
+            navigate('/password-verify', { state:{ accountDetailsData } })
+            setIsLoading(false)
         }
+        setIsLoading(false)
+
      } else {
         toast.error("Password is incorrect")
+        setIsLoading(false)
      }
+
       setIsLoading(false)
     } catch (error) {
       setIsLoading(false)

@@ -1,19 +1,26 @@
 import React from 'react'
 import { useState } from 'react';
-import { changeUserPassword } from '../../../../services/authServices';
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import { toast } from 'react-hot-toast';
+import { changeUserPassword } from '../../../../services/authServices';
+import Loader from '../../../../components/loader/Loader';
 
 const initialState = {
     newPassword: '',
-    confirmPassword: '',
+    confirmNewPassword: '',
   }
 
 const ChangePassword = () => {
-    const [values, setValues] = useState()
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { accountDetailsData } = location.state || {};
+  const [isLoading, setIsLoading] = useState(false)
+  const [values, setValues] = useState(initialState)
 
 
-    const {newPassword, confirmPassword } = values
+    const { userId, email, oldPassword } = accountDetailsData
+    const {newPassword, confirmNewPassword } = values
 
 
     const handleInputChange = (e) => {
@@ -24,7 +31,7 @@ const ChangePassword = () => {
       const handleOnSubmit = async(e) => {
         e.preventDefault()
 
-        if ( newPassword || confirmPassword ) {
+        if ( !newPassword || !confirmNewPassword ) {
             return toast.error("All fields are required")
           }
     
@@ -32,7 +39,7 @@ const ChangePassword = () => {
             return toast.error("Password must be upto 6 characters")
           }
     
-          if (newPassword !== confirmPassword) {
+          if (newPassword !== confirmNewPassword) {
             return toast.error("Passwords do not match")
           }
     
@@ -41,13 +48,20 @@ const ChangePassword = () => {
             oldPassword,
             newPassword
           }
-        
+
           setIsLoading(true)
         try {
             const passwordChanged = await changeUserPassword(formData)
 
+            if (!passwordChanged) {
+              toast.error('Failed to changed password')
+            }
+
             if (passwordChanged) {
-                navigate('/dashboard/profile/')
+              toast.error('Password Changed Sucessfully')
+              console.log(passwordChanged)
+              return
+                navigate('/logout')
             }
             setIsLoading(false)
         } catch (error) {

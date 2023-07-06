@@ -58,6 +58,7 @@ import RefRegister from "./pages/authLayout/RefRegister";
 import PasswordVerify from "./pages/dashboardlayout/userPages/settings/PasswordVerify";
 
 
+
 axios.defaults.withCredentials = true 
 
 function App() {
@@ -102,7 +103,9 @@ const handleCloseMenu = () => {
           <Route path="/verify-phone" element={<VerifyOTP />}/>
           <Route path="/verify-email" element={<VerifyEmail />}/>
           <Route path="/verified" element={<EmailVerified />}/>
-          <Route path="/pass" element={<ChangePassword />}/>
+          <Route path="/password-change" element={<ChangePassword />}/>
+          
+          <Route path="/password-verify" element={<PasswordVerify />}/>
         </Route>
 
         <Route path="/" element={<AuthLayout />}>

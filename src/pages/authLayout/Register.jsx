@@ -112,10 +112,7 @@ const Register = ({handleRegister, setRegBtn, regBtn}) => {
       
     }
 
-    // Handle retrieve password
-    const handleRetrievePass = (e) => {
-      e.preventDefault()
-    }
+    
 
 
   return ReactDOM.createPortal(

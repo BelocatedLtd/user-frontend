@@ -90,22 +90,26 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
 
       if (response.accountType === "User") {
 
-        if (response.phone === "") {
-          navigate(`/dashboard/account-settings/${username}`)
-        } else if (response.phone) {
-          navigate(`/dashboard/${username}`)
-        }
+          //Emit socket io event to the backend
+          const emitData = {
+            userId: response?._id,
+            action: `@${username} just logged in`
+          }
 
-        //Emit socket io event to the backend
-        const emitData = {
-          userId: response?._id,
-          action: `@${username} just logged in`
-      }
+          //Emit Socket event to update activity feed
+          socket.emit('sendActivity', emitData) 
 
-      //Emit Socket event to update activity feed
-      socket.emit('sendActivity', emitData) 
-
-      } else if (response.accountType === "Admin") {
+          if (response.phone === null) {
+            navigate(`/dashboard/account-settings/${username}`)
+          } 
+          
+          if (response.phone) {
+            navigate(`/dashboard/${username}`)
+          }
+  
+      } 
+      
+      if (response.accountType === "Admin") {
         navigate(`/admin/dashboard/${username}`)
       }
 
@@ -122,6 +126,8 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
       setLoginBtn(!loginBtn)
     navigate('/retrieve-pass')
   }
+
+  
 
     return ReactDOM.createPortal(
       <div className='wrapper'>

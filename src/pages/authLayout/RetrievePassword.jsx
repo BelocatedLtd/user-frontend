@@ -6,6 +6,7 @@ import { LoaderIcon, toast } from 'react-hot-toast';
 import { useState } from 'react';
 import Loader from '../../components/loader/Loader';
 import { useNavigate } from 'react-router-dom';
+import { resendPasswordVerificationEmail } from '../../services/authServices';
 
 const initialState = {
   email: '',
@@ -31,24 +32,30 @@ const RetrievePassword = () => {
         return toast.error("You have to input your Email")
       }
 
+      const accountDetailsData = {
+        userId: "",
+        email: email,
+        oldPassword: ""
+      }
+
 
       setIsLoading(true)
       try {
+        // Handle retrieve password
+      const emailSent = await resendPasswordVerificationEmail(email)
 
-        toast.success("Verification Email Sent")
-        navigate('/verify')
+      if (!emailSent) {
+        toast.error("User email not found")
+      }
+
+      if (emailSent === "Password Reset Link Sent Successfully") {
        
-        setIsLoading(false)
+          navigate('/password-verify', { state:{ accountDetailsData } })
+          setIsLoading(false)
+      }
 
-      //  if(response.email) {
-      //     await dispatch(SET_LOGIN(true))
-      //     await dispatch(SET_USERNAME(response.username))
-      //     await dispatch(SET_USER(response))
-      //     const username = response.username
+      setIsLoading(false)
 
-      //     navigate(`/dashboard/${username}`)
-      //  }
-        
      } catch (error) {
         setIsLoading(false)
        toast.error(error, 'User not registered')

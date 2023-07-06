@@ -137,6 +137,17 @@ export const emailVerified = async(token) => {
     }
 }
 
+//Email OTP Verified
+export const confirmEmailOTP = async(OTP) => {
+    try {
+        const response = await axios.patch(`${BACKEND_URL}/api/user/confirmemailOTP/${OTP}`)
+        return response.data
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+    }
+}
+
 //Send Phone OTP
 export const handlesendingPhoneOTP = async(accountDetailsData) => {
     try {
