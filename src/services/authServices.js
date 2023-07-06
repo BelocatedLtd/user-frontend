@@ -81,10 +81,22 @@ export const updateUserAccountDetails = async (verificationData) => {
 }
 
 
-//Verify Old Password
+//Verify User Password
 export const verifyUserPassword = async(data) => {
     try {
          const response = await axios.post(`${BACKEND_URL}/api/user/verifypasswordchange`, data)
+        return response.data
+     } catch (error) {
+         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+     }
+            
+}
+
+//Verify Old User Password
+export const verifyOldUserPassword = async(data) => {
+    try {
+         const response = await axios.post(`${BACKEND_URL}/api/user/verifyoldpassword`, data)
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

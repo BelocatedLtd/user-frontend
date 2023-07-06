@@ -59,9 +59,7 @@ const ChangePassword = () => {
 
             if (passwordChanged) {
               toast.error('Password Changed Sucessfully')
-              console.log(passwordChanged)
-              return
-                navigate('/logout')
+                navigate('/login')
             }
             setIsLoading(false)
         } catch (error) {

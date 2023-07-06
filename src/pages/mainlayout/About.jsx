@@ -68,17 +68,17 @@ const About = () => {
             {/* Call to action */}
             <div className='mt-[5rem]'>
             <div className='flex flex-col items-center gap-2 mt-[2rem] md:flex-row'>
-                <div className='bg-transparent w-fit md:w-[450px] h-[450px] flex flex-col gap-2 items-center justify-center text-center shadow-xl'>
+                <div className='bg-transparent w-fit md:w-[450px] h-[450px] flex flex-col gap-2 items-center justify-center text-center shadow-2xl'>
                     <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>VISION</h2>
                     <p className='px-6'>We are dedicated to providing solutions to publicity and media challenges while providing earning opportunities to all users.</p>
                 </div>
 
-                <div className='bg-transparent w-fit md:w-[450px] h-[450px] flex flex-col gap-2 items-center justify-center text-center shadow-xl'>
+                <div className='bg-transparent w-fit md:w-[450px] h-[450px] flex flex-col gap-2 items-center justify-center text-center shadow-2xl'>
                     <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>MISSION</h2>
                     <p className='px-6'>BeLocated is a people driven organization passionate about solving the one major problem of businesses and brands</p>
                 </div>
 
-                <div className='bg-transparent w-fit md:w-[450px] h-[450px] flex flex-col gap-2 items-center justify-center text-center shadow-xl'>
+                <div className='bg-transparent w-fit md:w-[450px] h-[450px] flex flex-col gap-2 items-center justify-center text-center shadow-2xl'>
                     <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>VISIBILITY</h2>
                     <p className='px-6'>We partner with our clients by giving them a platform to be seen and with visibility comes the needed sales.</p>
                 </div>

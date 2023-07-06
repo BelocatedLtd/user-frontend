@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { handlesendingPhoneOTP, resendPasswordVerificationEmail, verifyUserPassword } from '../../../../services/authServices'
+import { handlesendingPhoneOTP, resendPasswordVerificationEmail, verifyOldUserPassword, verifyUserPassword } from '../../../../services/authServices'
 import { toast } from 'react-hot-toast'
 import Loader from '../../../../components/loader/Loader'
 
@@ -36,7 +36,7 @@ const handleSubmit = async(e) => {
 
     const data = {
         userId: user.id,
-        password,
+        oldPassword: password,
     }
 
     const accountDetailsData = {
@@ -47,7 +47,7 @@ const handleSubmit = async(e) => {
 
     try {
         setIsLoading(true)
-        const oldPasswordOk = await verifyUserPassword(data)
+        const oldPasswordOk = await verifyOldUserPassword(data)
      
      if (oldPasswordOk.message === "Password is Correct") {
         // const OTPSent = await handlesendingPhoneOTP(accountDetailsData)

@@ -103,7 +103,6 @@ const handleCloseMenu = () => {
           <Route path="/verify-phone" element={<VerifyOTP />}/>
           <Route path="/verify-email" element={<VerifyEmail />}/>
           <Route path="/verified" element={<EmailVerified />}/>
-          <Route path="/password-change" element={<ChangePassword />}/>
           
           <Route path="/password-verify" element={<PasswordVerify />}/>
         </Route>
@@ -113,6 +112,7 @@ const handleCloseMenu = () => {
           <Route path="/login" element={<Login />}/>
           <Route path="/logout" element={<Logout />}/>
           <Route path="/confirm-pass" element={<ConfirmPassword />}/>
+          <Route path="/password-change" element={<ChangePassword />}/>
         </Route>
 
         <Route path="/logout" element={<Logout />}/>

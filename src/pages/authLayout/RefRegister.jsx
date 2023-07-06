@@ -62,6 +62,9 @@ const RefRegister = () => {
         referrerId: referrerId ? referrerId : ''
       }
 
+      console.log(formData)
+      return
+
       setIsLoading(true)
       
       const response = await createNewUser(formData)

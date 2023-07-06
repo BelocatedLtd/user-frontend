@@ -61,7 +61,7 @@ export const Header = () => {
                 <NavLink to='/'>Home</NavLink>
                 <NavLink to='/about'>About</NavLink>
                 <NavLink to='/faq'>FAQ</NavLink>
-                <NavLink to='/hiw'>Services</NavLink>
+                <NavLink to='/services'>Services</NavLink>
                 <NavLink to='/contact'>Contact</NavLink>
             </div>
 

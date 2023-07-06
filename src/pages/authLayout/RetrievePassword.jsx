@@ -32,12 +32,6 @@ const RetrievePassword = () => {
         return toast.error("You have to input your Email")
       }
 
-      const accountDetailsData = {
-        userId: "",
-        email: email,
-        oldPassword: ""
-      }
-
 
       setIsLoading(true)
       try {
@@ -48,7 +42,13 @@ const RetrievePassword = () => {
         toast.error("User email not found")
       }
 
-      if (emailSent === "Password Reset Link Sent Successfully") {
+      if (emailSent.message === "Verification OTP Sent Successfully") {
+
+        const accountDetailsData = {
+          userId: emailSent.userId,
+          email: email,
+          oldPassword: ""
+        }
        
           navigate('/password-verify', { state:{ accountDetailsData } })
           setIsLoading(false)

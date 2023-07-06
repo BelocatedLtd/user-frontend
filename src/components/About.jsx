@@ -12,7 +12,9 @@ const About = () => {
                     <div className='flex items-center gap-2'>
                         <h1 className='text-3xl text-gray-600 font-extrabold border-l-4 px-4 border-red-400'>About Belocated </h1>
                     </div>
-                    <p className='w-full text-[20px] text-gray-600 mt-3 text-justify md:text-left'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, incidunt ea blanditiis totam velit explicabo deserunt. Ipsam culpa earum a quas recusandae vero doloremque amet odio quaerat temporibus, perferendis tempore. Ipsam culpa earum a quas recusandae vero doloremque amet odio quaerat temporibus, perferendis tempore? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit, incidunt ea blanditiis totam velit explicabo deserunt. Ipsam culpa earum a quas recusandae vero doloremque amet odio quaerat temporibus, perferendis tempore.</p>
+                    <p className='w-full text-[20px] leading-10 text-gray-600 mt-3 md:text-left'>Belocated is a people driven organization passionate about solving the one major problem of businesses and brands - Visibility. <br/> <br/> 
+                    We partner with our clients by giving them a platform to be seen and with visibility comes the needed sales.<br/> <br/> 
+                    Across all media platforms, Belocated  drives the necessary traffic, likes, followers, product review, comments and the clicks you need to take your business, product or brand to the next level</p>
                 </div>
 
                 {/* <div className='stats flex gap-5 mt-5'>

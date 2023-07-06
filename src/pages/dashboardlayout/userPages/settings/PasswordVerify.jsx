@@ -64,7 +64,7 @@ const PasswordVerify = () => {
        }
 
         if (response === "Verification Successful") {
-            navigate('/dashboard/password-change', { state:{ accountDetailsData } })
+            navigate('/password-change', { state:{ accountDetailsData } })
             setIsLoading(false)
         }
 
