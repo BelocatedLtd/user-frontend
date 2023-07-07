@@ -4,9 +4,10 @@ import { BiCheckCircle } from 'react-icons/bi'
 
 const MembersTab = () => {
   return (
-    <section className='w-full h-fit mb-[4rem]'>
-        <div className='container flex flex-col justify-center items-center gap-[5rem] mx-auto md:flex-row'>
-            <div className='flex-1 flex flex-col items-center justify-center gap-3 text-center p-10 bg-gray-100 shadow-2xl mx-[1.5rem] w-fit md:w-[500px] h-[600px] rounded-2xl'>
+    <section className='w-full h-fit mb-[4rem] '>
+        <div className='bg-blue-200 flex flex-col justify-center items-center gap-[5rem] mx-auto md:flex-row py-[5rem]'>
+          <div className='container flex flex-col gap-[2rem] md:flex-row'>
+          <div className='flex-1 flex flex-col items-center justify-center gap-3 text-center p-10 bg-gray-100 shadow-2xl mx-[1.5rem] w-fit md:w-[500px] h-[600px] rounded-2xl'>
                     <h1 className='text-3xl text-secondary font-extrabold'>Earners </h1>
                     <p className='w-full text-gray-600 mt-3'>On Belocated platform, earners are those who earn money by doing tasks provided by the Belocated Platform and Advertisers on the Belocated Platform. Your earnings are accumulated in your wallet on the platform and you can start transacting with your funds</p>
                     <div className='flex flex-col gap-2'>
@@ -31,6 +32,7 @@ const MembersTab = () => {
                     <button onClick className='bg-tertiary text-primary font-bold px-10 py-3 mt-[2rem] rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Register Today!</button>
                     <small>See Pricing</small>
             </div>
+          </div>
         </div>
     </section>
   )
