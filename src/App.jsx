@@ -56,6 +56,7 @@ import TasksSingleUser from "./pages/dashboardlayout/adminPages/TasksSingleUser"
 import { useState } from "react";
 import RefRegister from "./pages/authLayout/RefRegister";
 import PasswordVerify from "./pages/dashboardlayout/userPages/settings/PasswordVerify";
+import ServicesPage from "./pages/mainlayout/ServicesPage";
 
 
 
@@ -94,10 +95,11 @@ const handleCloseMenu = () => {
       <Toaster/>
       
       <Routes>
-        <Route path="/" element={<MainLayout />}>
+        <Route path="/" element={<MainLayout handleRegister={handleRegister} regBtn={regBtn}/>}>
           <Route index element={<Home handleLogin={handleLogin} handleRegister={handleRegister} loginBtn={loginBtn} regBtn={regBtn} handleCloseMenu={handleCloseMenu}/>}/>
           <Route path="/about" element={<About />}/>
           <Route path="/contact" element={<Contact />}/>
+          <Route path="/services" element={<ServicesPage />}/>
           <Route path="/*" element={<Error404Page />}/>
           <Route path="/retrieve-pass" element={<RetrievePassword />}/>
           <Route path="/verify-phone" element={<VerifyOTP />}/>

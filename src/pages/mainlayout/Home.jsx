@@ -14,8 +14,6 @@ export const Home = ({handleRegister, handleLogin, handleCloseMenu, loginBtn, re
       <Services />
       <About />
       <MembersTab />
-      <CallToAction handleRegister={handleRegister}  regBtn={regBtn}/>
-      <SubFooter />
     </div>
   )
 }

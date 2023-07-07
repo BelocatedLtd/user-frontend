@@ -5,7 +5,7 @@ const Services = () => {
   return (
     <section className='w-full h-fit'>
         <div className='container flex flex-col items-center mx-auto leading-[1.2]'>
-            <h3 className='text-[#0F1741] px-6 text-[23px] md:text-[38px] mb-[5px] font-bold text-center'>WITH BELOCATED, EVERYONE IS A WINNER</h3>
+            <h3 className='text-[#0F1741] px-6 text-[30px] md:text-[38px] mb-[5px] font-bold text-center'>WITH BELOCATED, EVERYONE IS A WINNER</h3>
             <h3 className='text-secondary text-[18px] mx-[1rem] w-fit md:text-[38px] mb-[1rem] text-center'>It's all about reward!</h3>
             <p className='flex text-[18px] text-center mx-[1rem] w-fit md:w-[900px] text-gray-600 leading-[1.5]'>We reward our Clients/Advertisers with good services while upholding all our core values. But we don't stop there, we are also interested in our Earners by offering opportuinities to be rewarded for tasks performed on Belocated platform. Everyone gets more than they deserve on our platform because our users are our priority.</p>
 

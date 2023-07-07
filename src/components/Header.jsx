@@ -11,6 +11,7 @@ import { MdMenu, MdOutlineCancel } from 'react-icons/md'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import { useEffect } from 'react'
 import { BsArrowUpRight } from 'react-icons/bs'
+import logo from '../assets/belocated-logo.png'
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -53,8 +54,8 @@ export const Header = () => {
         {loginBtn && <Login handleLogin={handleLogin} setLoginBtn={setLoginBtn} loginBtn={loginBtn}/>}
 
         <div className='relative container px-6 py-6 flex justify-between items-center mx-auto md:px-0'>
-            <Link to='/' className='logo cursor-pointer text-4xl font-extrabold text-secondary'>
-                <span className='text-tertiary'>Be</span>located
+            <Link to='/' className='logo cursor-pointer text-4xl font-extrabold text-secondary w-[150px] md:w-[170px]'>
+                <img src={logo} alt="logo" className='w-full h-full object-cover'/>
             </Link>
 
             <div className='hidden nav__items gap-4 font-bold text-lg text-gray-600 md:flex'>
@@ -92,7 +93,7 @@ export const Header = () => {
                             <Link to="/">Home</Link>
                             <Link to="/about">About</Link>
                             <Link to="/">FAQ</Link>
-                            <Link to="/">Services</Link>
+                            <Link to="/services">Services</Link>
                             <Link to="/">Contact</Link>
                             
 

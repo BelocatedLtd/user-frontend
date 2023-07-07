@@ -3,21 +3,29 @@ import { AiOutlineHolder } from 'react-icons/ai'
 import { BsFillTelephoneFill } from 'react-icons/bs'
 import { MdOutlineEmail, MdLocationPin } from 'react-icons/md'
 import { RxDoubleArrowRight } from 'react-icons/rx'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import facebook from '../assets/facebook.svg'
+import twitter from '../assets/twitter.svg'
+import instagram from '../assets/instagram.svg'
+import whatsapp from '../assets/whatsapp.svg'
+import logo from '../assets/belocated-logo.png'
+
 
 const SubFooter = () => {
+    const navigate = useNavigate()
+
   return (
-    <section className='hidden md:flex'>
-        <div className='container flex  mx-auto pt-[3rem] pb-[3rem] border-t border-gray-300 md:flex-row'>
+    <section className='md:flex'>
+        <div className='container flex flex-col mx-auto pt-[3rem] pb-[3rem] border-t border-gray-300 md:flex-row'>
             
-            <div className='w-full p-6 text-gray-600'>
-                <div className='flex items-center gap-2 mb-6'>
-                    <h1 className='text-2xl text-secondary'>Belocated</h1>
+            <div className='w-full p-6 text-gray-600 md:flex md:flex-col'>
+                <div className='flex items-center gap-2 mb-3 w-[150px] md:w-[170px]'>
+                    <img src={logo} alt="logo" className='w-full h-full object-cover'/>
                     <AiOutlineHolder className='rotate-90 text-2xl text-tertiary mt-1'/>
                 </div> 
-                <ul className='text-lg' key="category.id">
-                    <li className='flex items-center gap-1'><RxDoubleArrowRight className='text-tertiary'/>Category</li>
-                </ul>
+                <div className='text-lg' key="category.id">
+                    <p className='flex items-center gap-1'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam minima perspiciatis fuga facilis unde itaque tempora excepturi veniam</p>
+                </div>
             </div>
 
             <div className='w-full p-6 text-gray-600'>
@@ -26,7 +34,6 @@ const SubFooter = () => {
                     <AiOutlineHolder className='rotate-90 text-2xl text-tertiary mt-1'/>
                 </div> 
                         <ul className='text-lg flex flex-col gap-2'>
-                            <li>User Registration</li>
                             <li>How it Works</li>
                             <li>Help & FAQs</li>
                             <li>Legal</li>
@@ -43,7 +50,7 @@ const SubFooter = () => {
                 </div> 
                         <ul className='text-lg flex flex-col gap-2'>
                             <li>About Us</li>
-                            <li>Contact Us</li>
+                            <li>Services</li>
                             <li>FAQ</li>
                             <li>Top Partners</li>
                         </ul>
@@ -57,6 +64,12 @@ const SubFooter = () => {
                         <ul className='text-lg flex flex-col gap-3'>
                             <li className='flex items-center gap-2'><BsFillTelephoneFill className='text-tertiary border border-tertiary rounded-full p-1 text-2xl'/> +234 703 193 5276</li>
                             <li className='flex items-center gap-2'><MdOutlineEmail  className='text-tertiary border border-tertiary rounded-full p-1 text-2xl'/>cs@belocated.ng</li>
+                            <div className="flex items-center gap-2  w-[30px] h-[30px]">
+                                <img src={facebook} alt="facebook" className='w-full h-full hover:bg-red-100 rounded-full' onClick={() => navigate('/')}/>
+                                <img src={twitter} alt="twitter" className='w-full h-full hover:bg-red-100 rounded-full' onClick={() => navigate('/')}/>
+                                <img src={instagram} alt="instagram" className='w-full h-full hover:bg-red-100 rounded-full' onClick={() => navigate('/')}/>
+                                <img src={whatsapp} alt="whatsapp" className='w-full h-full hover:bg-red-100 rounded-full' onClick={() => navigate('/')}/>
+                            </div>
                         </ul>
             </div>
 

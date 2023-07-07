@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import SidebarLeft from './SidebarLeft'
 import SidebarRight from './SidebarRight'
 import about from '../../assets/about.png'
@@ -13,8 +13,10 @@ import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser'
 import { getUser } from '../../services/authServices'
 import { toast } from 'react-hot-toast'
 import FreeTaskCount from '../../components/dashboard/FreeTaskCount'
+import copy from '../../assets/copy.png'
 
 const Dashboard = () => {
+  const inputRef = useRef(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [profile, setProfile] = useState(null)
@@ -65,6 +67,12 @@ const Dashboard = () => {
     }
     if (user.phone && user.location && user.community && user.gender)
     navigate('/dashboard/advertise')
+  }
+
+  const handleRefLinkCopy = (e) => {
+    inputRef.current.select();
+    document.execCommand('copy')
+    toast.success('Referral link copied to clipboard')
   }
   
 
@@ -118,9 +126,12 @@ const Dashboard = () => {
               <button onClick={() => (navigate('/dashboard/earn'))} className='bg-transparent border border-gray-300 px-6 py-3 mt-5'>Perform Tasks & Earn</button>
             </div>
 
-            <div className='flex items-center gap-2 w-full justify-center'>
+            <div className='flex flex-col items-center gap-2 w-full justify-center md:flex-row'>
             <label>Referral Link:</label>
-            <input type="link" value={refLink} disabled className='w-fit md:w-1/2 p-3'/>
+            <div className='flex items-center gap-2  w-[60%]'>
+              <input type="link" value={refLink} readOnly ref={inputRef} className='w-fit md:w-1/2 p-3 border border-gray-200 rounded-lg'/>
+              <img src={copy} alt="click to copy ref link" className='w-[20px] h-[20px]' onClick={handleRefLinkCopy}/>
+            </div>
             </div>
           </ProfileComplete>
         </div>
