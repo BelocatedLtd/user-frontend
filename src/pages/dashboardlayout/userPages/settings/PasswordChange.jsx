@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { handlesendingPhoneOTP, resendPasswordVerificationEmail, verifyOldUserPassword, verifyUserPassword } from '../../../../services/authServices'
+import { handlesendingPhoneOTP, resendOTPVerificationEmail, verifyOldUserPassword, verifyUserPassword } from '../../../../services/authServices'
 import { toast } from 'react-hot-toast'
 import Loader from '../../../../components/loader/Loader'
 
@@ -52,7 +52,7 @@ const handleSubmit = async(e) => {
      if (oldPasswordOk.message === "Password is Correct") {
         // const OTPSent = await handlesendingPhoneOTP(accountDetailsData)
 
-        const emailSent = await resendPasswordVerificationEmail(user.email)
+        const emailSent = await resendOTPVerificationEmail(user.email)
 
         if (emailSent === "Password Reset Link Sent Successfully") {
          

@@ -6,7 +6,7 @@ import { LoaderIcon, toast } from 'react-hot-toast';
 import { useState } from 'react';
 import Loader from '../../components/loader/Loader';
 import { useNavigate } from 'react-router-dom';
-import { resendPasswordVerificationEmail } from '../../services/authServices';
+
 
 const initialState = {
   email: '',
@@ -36,7 +36,7 @@ const RetrievePassword = () => {
       setIsLoading(true)
       try {
         // Handle retrieve password
-      const emailSent = await resendPasswordVerificationEmail(email)
+      const emailSent = await resendOTPVerificationEmail(email)
 
       if (!emailSent) {
         toast.error("User email not found")

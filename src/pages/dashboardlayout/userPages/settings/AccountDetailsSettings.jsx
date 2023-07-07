@@ -4,15 +4,15 @@ import { SET_USER, SET_USERNAME, selectUser } from '../../../../redux/slices/aut
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import Loader from '../../../../components/loader/Loader'
-import { handlesendingPhoneOTP, updateUserAccountDetails } from '../../../../services/authServices'
-import { useNavigate } from 'react-router-dom'
+import { handlesendingPhoneOTP, resendOTPVerificationEmail, updateUserAccountDetails } from '../../../../services/authServices'
+import VerifyAccountOTP from './VerifyAccountOTP'
 
 
 
 const AccountDetailsSettings = ({user}) => {
-    const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [isLoading, setIsLoading] = useState()
+    const [isLoading, setIsLoading] = useState(false)
+    const [toggleOTPVerify, setToggleOTPVerify] = useState(false)
 
     const accountDetailsInitialState = {
         username: user?.username,
@@ -36,45 +36,37 @@ const AccountDetailsSettings = ({user}) => {
     phone: accountDetails?.phone,
   }
 
-  const handleAccountDetailsUpdate = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setIsLoading(true)
+    const OTPSent = await resendOTPVerificationEmail(user.email)
 
-    try {
-      setIsLoading(true)
-     //const response = await handlesendingPhoneOTP(accountDetailsData)
-
-    //  if (!response) {
-    //   return toast.error("error while sending OTP to yourphone")
-    //  }
-    // navigate('/verify-phone', { state:{ accountDetailsData } })
-
-    const updatedUserDetailes = await updateUserAccountDetails(accountDetailsData)
-
-    if (!updatedUserDetailes) {
-      toast.error("Failed to update user details")
-    }
-       
-    if(updatedUserDetailes) {
-        await dispatch(SET_USERNAME(updatedUserDetailes.username))
-        await dispatch(SET_USER(updatedUserDetailes))
-
-        //const username = updatedUserDetailes?.username
-
-        navigate(`/dashboard/profile`)
-        setIsLoading(false)
-    }
-     // }
-     setIsLoading(false)
-   } catch (error) {
+    setIsLoading(false)
+    if (!OTPSent) {
       setIsLoading(false)
-     toast.error("failed to update user account details")
-   }
+      toast.error('Error Sending Verification Email')
+      return
+    }
+
+    if (OTPSent && OTPSent.message === "Verification OTP Sent") {
+      setIsLoading(false)
+      setToggleOTPVerify(true)
+      toast.success('Please, verify your account')
+      return
+    }
+  }
+
+  const handleModal = () => {
+    setToggleOTPVerify(!toggleOTPVerify)
   }
 
 
   return (
-    <form onSubmit={handleAccountDetailsUpdate} className='w-full box p-6 shadow-lg'>
-        {isLoading && <Loader />}
+    <div>
+      {isLoading && <Loader />}
+      {toggleOTPVerify && <VerifyAccountOTP accountDetailsData={accountDetailsData} handleModal={handleModal} email={user.email}/>}
+        <form onSubmit={handleSubmit} className='w-full box p-6 shadow-lg'>
+        
           <label htmlFor="accountDetails reset" className='font-bold'>Authentication Details</label>
               <div className='flex flex-col mt-3 mb-3'>
                   <label htmlFor="Product Name " className='text-left'>Username</label>
@@ -96,7 +88,9 @@ const AccountDetailsSettings = ({user}) => {
 
                   <button className='w-full bg-tertiary text-gray-100 p-2 rounded-2xl'>Edit</button>
               </div>
-          </form>
+    </form>
+    </div>
+    
   )
 }
 

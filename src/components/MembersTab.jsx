@@ -5,7 +5,7 @@ import { BiCheckCircle } from 'react-icons/bi'
 const MembersTab = () => {
   return (
     <section className='w-full h-fit mb-[4rem] '>
-        <div className='bg-blue-200 flex flex-col justify-center items-center gap-[5rem] mx-auto md:flex-row py-[5rem]'>
+        <div className='bg-[#D3EBF6] flex flex-col justify-center items-center gap-[5rem] mx-auto md:flex-row py-[5rem]'>
           <div className='container flex flex-col gap-[2rem] md:flex-row'>
           <div className='flex-1 flex flex-col items-center justify-center gap-3 text-center p-10 bg-gray-100 shadow-2xl mx-[1.5rem] w-fit md:w-[500px] h-[600px] rounded-2xl'>
                     <h1 className='text-3xl text-secondary font-extrabold'>Earners </h1>

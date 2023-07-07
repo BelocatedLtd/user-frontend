@@ -4,23 +4,24 @@ import  ReactDOM  from 'react-dom'
 import { toast } from 'react-hot-toast';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Loader from '../../../../components/loader/Loader';
-import { confirmEmailOTP, resendOTPVerificationEmail } from '../../../../services/authServices';
+import { confirmEmailOTP, resendOTPVerificationEmail, updateUserBankAccountDetails } from '../../../../services/authServices';
+import { SET_USER } from '../../../../redux/slices/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
     OTP: '',
 }
 
-const PasswordVerify = ({accountDetailsData, handleModal}) => {
+const VerifyOTP = ({accountDetailsData, handleModal, email}) => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(false)
     const [values, setValues] = useState(initialState)
-    // const location = useLocation();
-    // const { accountDetailsData } = location.state || {};
     const [timer, setTimer] = useState(10);
     const [resendBtn, setResendBtn] = useState(false)
+    const [isUpdating, setIsUpdating] = useState(false)
 
     let interval;
 
@@ -39,65 +40,93 @@ const PasswordVerify = ({accountDetailsData, handleModal}) => {
   }, [timer])
 
   const {OTP} = values
-  const { userId, email } = accountDetailsData
 
   const handleInputChange = (e) => {
     const {name, value } = e.target;
     setValues({ ...values, [name]: value })
   }
 
-  const handleOnSubmit = async (e) => {
+const handleOnSubmit = async (e) => {
     e.preventDefault()
 
     if (OTP.length > 6) {
-      return toast.error("Invalid Code")
-    }
-
-    if (!OTP ) {
-      return toast.error("You have to input the OTP code sent to your email")
-    }
-      
-      try {
-        setIsLoading(true)
-       const response = await confirmEmailOTP(OTP)
-
-       if (!response) {
-        toast.error('Failed to verify')
-       }
-
-        if (response === "Verification Successful") {
-            navigate('/password-change', { state:{ accountDetailsData } })
-            setIsLoading(false)
+        toast.error("Invalid Code")
+        return
         }
+    
+        if (OTP.length < 6) {
+            toast.error("Invalid Code")
+            return
+        }
+    
+        if (!OTP ) {
+        toast.error("You have to input the OTP code sent to your email")
+        return
+        }
+          
+    //Verifying OTP Code
+            setIsLoading(true)
+            const response = await confirmEmailOTP(OTP)
 
-       setIsLoading(false)
+            setIsLoading(false)
+            if (!response) {
+            setIsLoading(false)
+            toast.error('Failed to verify')
+            return
+            }
+
+            setIsLoading(false)
+
+       
+    
+    
+    //Sending data to update user account details
+    if (response && response === "Verification Successful") {
+        setIsUpdating(true)
         
-     } catch (error) {
-        setIsLoading(false)
-       toast.error("OTP verification failed") 
-     }
-    }
+        const updatedUserDetails = await updateUserBankAccountDetails(accountDetailsData)
+        setIsUpdating(false)
+    
+        if (!updatedUserDetails) {
+        setIsUpdating(false)
+        toast.error("Failed to update Bank Details")
+        setIsUpdating(false)
+        return
+        }
+                
+        if(updatedUserDetails) {
+            setIsUpdating(false)
+            await dispatch(SET_USER(updatedUserDetails))
+    
+            navigate(`/dashboard/profile`)
+            toast.success('User Account Details Updated!')
+            handleModal()
+            setIsUpdating(false)
+        }
+        setIsUpdating(false)
+            
+        
+}}
 
     const resendOTP = async (e) => {
-     e.preventDefault()
+        e.preventDefault()
+      
+       try {
+           setIsLoading(true)
+        const response = resendOTPVerificationEmail(email)
+        if (response) {
+           toast.success('OTP resent to your email')
+           
+           setResendBtn(false)
+           setTimer(10)
    
-    try {
-        setIsLoading(true)
-     const response = resendOTPVerificationEmail(email)
-     if (response) {
-        toast.success('OTP resent to your email')
-        
-        setResendBtn(false)
-        setTimer(10)
-
-     }
-      setIsLoading(false)
-    } catch (error) {
-      setIsLoading(false)
-      console.log(error)
-    }
-    }
-
+        }
+         setIsLoading(false)
+       } catch (error) {
+         setIsLoading(false)
+         console.log(error)
+       }
+       }
 
     return ReactDOM.createPortal(
         <div className='wrapper'>
@@ -112,7 +141,11 @@ const PasswordVerify = ({accountDetailsData, handleModal}) => {
                       <input type="text" name="OTP" placeholder="123456" onChange={handleInputChange} className='w-full  mb-[1rem] shadow-inner py-3 px-3 bg-transparent border border-gray-500 rounded-xl' />
     
                       <div className='flex items-center gap-2'>
-                        <button type="submit" className='w-full mt-1 mb-[-0rem] py-2 text-md rounded-xl bg-secondary text-gray-100 mb-5'>Verify!</button>
+                        <button type="submit" className='w-full mt-1 mb-[-0rem] py-2 text-md rounded-xl bg-secondary text-gray-100 mb-5'>
+                            {isLoading && "Verifying"} 
+                            {isUpdating && "Updating"}
+                            {!isLoading && !isUpdating && "Verify"}
+                        </button>
                         {resendBtn && <div onClick={resendOTP} className='w-full mt-1 mb-[-0rem] py-2 text-md rounded-xl bg-tertiary text-gray-100 text-center mb-5'>Resend OTP</div>}
                         {!resendBtn && <span className='ml-4 p-3 bg-slate-100 text-gray-800 rounded-full'>{timer}</span> }
                       </div>
@@ -123,4 +156,4 @@ const PasswordVerify = ({accountDetailsData, handleModal}) => {
       )
 }
 
-export default PasswordVerify
+export default VerifyOTP

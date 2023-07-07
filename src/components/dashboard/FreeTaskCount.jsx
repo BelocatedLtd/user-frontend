@@ -40,24 +40,24 @@ const FreeTaskCount = () => {
     }, [])
     
   return (
-    <div className='w-full flex justify-center'>
+    <div className='w-fit md:w-full flex justify-center'>
         <div className='flex items-center gap-3'>
-            <div className='flex items-center border-r border-gray-200 p-2'>Time Remaining:</div>
-            <div className='w-[250px] flex items-center justify-between p-2 gap-3'>
+            <div className='flex items-center border-r border-gray-200 p-2 text-[9px] md:text-[15px]'>Time Remaining:</div>
+            <div className='w-fit md:w-[250px] flex items-center justify-between py-6 px-2 gap-2 md:gap-3'>
               <div className='flex flex-col items-center'>
-                <h1 className='text-2xl font-bold'>{countDown.days}</h1> 
+                <h1 className='text-[12px] md:text-2xl'>{countDown.days}</h1> 
                 <p>days</p>
               </div>
               <div className='flex flex-col items-center'>
-                <h1 className='text-2xl font-bold'>{countDown.hours}</h1>
+                <h1 className='text-[12px] md:text-2xl font-bold'>{countDown.hours}</h1>
                 <p>hrs</p>
               </div>
               <div className='flex flex-col items-center'>
-                <h1 className='text-2xl font-bold'>{countDown.minutes}</h1> 
+                <h1 className='text-[12px] md:text-2xl font-bold'>{countDown.minutes}</h1> 
                 <p>mins</p>
               </div>
               <div className='flex flex-col items-center'>
-                <h1 className='text-2xl font-bold'>{countDown.seconds}</h1>
+                <h1 className='text-[12px] md:text-2xl font-bold'>{countDown.seconds}</h1>
                 <p>secs</p> 
               </div>
             </div>

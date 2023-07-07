@@ -38,33 +38,47 @@ const Profile = () => {
             <p>Something went wrong, please reload the page...</p>
           ) : (
             <div className='user__data__group flex flex-col py-[2rem] gap-3 w-full'>
-          <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] pb-5 px-5'>
+          <div className='user__data flex flex-col md:flex-row gap-1 text-lg border-b border-gray-100 mx-[2rem] pb-5 px-5'>
             <label htmlFor="fullname" className='font-extrabold'>Full Name:</label>
             <p>{profile?.fullname}</p>
           </div>
-          <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
+          <div className='user__data flex flex-col md:flex-row gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
             <label htmlFor="username" className='font-extrabold'>Username:</label>
             <p>@{profile?.username}</p>
           </div>
-          <div className='user__data flex items-center  gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
+          <div className='user__data flex flex-col md:flex-row  gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
             <label htmlFor="fullname" className='font-extrabold'>Email:</label>
             <p>{profile?.email}</p>
           </div>
-          <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
+          <div className='user__data flex flex-col md:flex-row gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
             <label htmlFor="username" className='font-extrabold'>Phone:</label>
             <p>{profile?.phone}</p>
           </div>
-          <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
+          <div className='user__data flex flex-col md:flex-row gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
             <label htmlFor="fullname" className='font-extrabold'>Gender:</label>
             <p>{profile?.gender}</p>
           </div>
-          <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
+          <div className='user__data flex flex-col md:flex-row gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
             <label htmlFor="username" className='font-extrabold'>State:</label>
             <p>{profile?.location}</p>
           </div>
-          <div className='user__data flex items-center gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
+          <div className='user__data flex flex-col md:flex-row gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
             <label htmlFor="fullname" className='font-extrabold'>LGA:</label>
             <p>{profile?.community}</p>
+          </div>
+
+          {/* Bank Details */}
+          <div className='user__data flex flex-col md:flex-row gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
+            <label htmlFor="fullname" className='font-extrabold'>Bank Name:</label>
+            <p>{profile?.bankName}</p>
+          </div>
+          <div className='user__data flex flex-col md:flex-row gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
+            <label htmlFor="fullname" className='font-extrabold'>Account Name:</label>
+            <p>{profile?.accountHolderName}</p>
+          </div>
+          <div className='user__data flex flex-col md:flex-row gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
+            <label htmlFor="fullname" className='font-extrabold'>Account Number:</label>
+            <p>{profile?.bankAccountNumber}</p>
           </div>
         </div>
           )

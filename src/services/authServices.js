@@ -80,6 +80,17 @@ export const updateUserAccountDetails = async (verificationData) => {
     }
 }
 
+//Update user account details
+export const updateUserBankAccountDetails = async (verificationData) => {
+    try {
+        const response = await axios.patch(`${BACKEND_URL}/api/user/update/bankaccountdetails`, verificationData) 
+         return response.data
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+    }
+}
+
 
 //Verify User Password
 export const verifyUserPassword = async(data) => {
@@ -128,7 +139,7 @@ export const resendVerificationEmail = async(email) => {
     }
 }
 
-export const resendPasswordVerificationEmail = async(email) => {
+export const resendOTPVerificationEmail = async(email) => {
     try {
         const response = await axios.post(`${BACKEND_URL}/api/user/authverificationpassword/${email}`)
         return response.data

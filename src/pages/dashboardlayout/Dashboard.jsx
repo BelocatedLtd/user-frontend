@@ -84,8 +84,8 @@ const Dashboard = () => {
                 <div className='w-full flex flex-col justify-center items-center'>
                   <img src={about} alt=""  className='w-[150px] border p-[1rem] rounded-full'/>
                   <p className='mt-1'>Welcome, {user.fullname ? user.fullname : username}</p>
-                  <small className='mb-5'>@{username}</small>
-                  <small>Referred: {user?.referrals?.length}</small>
+                  <small className='mb-1'>@{username}</small>
+                  <small className='mb-5'>Referred: {user?.referrals?.length}</small>
 
                   <div className='flex gap-2'>
                     <button onClick={handleEarn} className='flex-1 bg-secondary text-primary px-10 py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Earn</button>
@@ -96,7 +96,7 @@ const Dashboard = () => {
 
               {/* User Wallet */}
               <div className='right flex-1 w-full mt-6'>
-              <p className='text-center text-gray-600 text-[12px]'><span className='text-tertiary'>{user.freeTaskCount}</span> Tasks remaining to complete this week's free tasks </p>
+              <p className='text-center text-gray-600 text-[12px]'><span className='text-tertiary'>{user.freeTaskCount}</span> free tasks remaining this Week</p>
                 <Wallet />
               </div>
             </div>
@@ -104,9 +104,6 @@ const Dashboard = () => {
           
 
         <ProfileInComplete>
-          <div className="w-full flex items-center justify-center mt-[1rem]">
-            <FreeTaskCount/>         
-          </div>
         <div className='w-full flex flex-col justify-center items-center h-fit my-5 px-5 py-[3rem] border border-tertiary'>
               <small className='px-[2rem] text-[15px] text-gray-600 text-center'>Welcome, <span className='text-tertiary'>@{username}</span>. Your account setup is incomple click below to completely set up your belocated account so you can start fulfilling tasks and making or set up ad campaigns to promote your product or services.</small>
 
@@ -119,9 +116,9 @@ const Dashboard = () => {
         <ProfileComplete>
         <FreeTaskCount className="w-full bg-black mx-auto"/>
             <div className='w-full flex flex-col justify-center items-center h-fit my-5 px-5 py-[3rem] border border-gray-200'>
-              <small className='px-[2rem] text-[15px] text-gray-600 text-center'>Welcome, <span className='text-secondary'>@{username}</span>. Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam perspiciatis voluptatum mollitia animi quas id possimus rem qui esse maxime.</small>
+              <small className='px-[2rem] text-[15px] text-gray-600 text-center'>Welcome, <span className='text-secondary'>@{username}</span>. Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam perspiciatis voluptatum mollitia animi.</small>
 
-              <div className='w-fit text-[10px] bg-green-700 text-gray-100 px-3 py-3 mt-5 rounded-2xl'>180 tasks posted today for you to perform and make money</div>
+              <div className='w-fit text-[10px] bg-green-700 text-gray-100 px-5 py-3 mt-5 rounded-2xl'>180 tasks launched today on Belocated</div>
 
               <button onClick={() => (navigate('/dashboard/earn'))} className='bg-transparent border border-gray-300 px-6 py-3 mt-5'>Perform Tasks & Earn</button>
             </div>
