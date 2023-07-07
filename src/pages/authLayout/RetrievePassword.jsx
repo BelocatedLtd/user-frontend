@@ -1,11 +1,12 @@
 import React from 'react'
 import close from '../../assets/close.svg'
-import  ReactDOM  from 'react-dom'
-import { MdCancel } from 'react-icons/md'
 import { LoaderIcon, toast } from 'react-hot-toast';
 import { useState } from 'react';
 import Loader from '../../components/loader/Loader';
 import { useNavigate } from 'react-router-dom';
+import PasswordVerify from '../dashboardlayout/userPages/settings/PasswordVerify';
+import { resendOTPVerificationEmail } from '../../services/authServices';
+import ForgottenPasswordVerify from '../dashboardlayout/userPages/settings/ForgottenPasswordVerify';
 
 
 const initialState = {
@@ -13,10 +14,10 @@ const initialState = {
 }
 
 const RetrievePassword = () => {
-  const [isLoading, setIsLoading] = useState(false)
   const [values, setValues] = useState(initialState)
-  const [modalBtn, setModalBtn] = useState(false)
-  const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState()
+  const [toggleOTPVerify, setToggleOTPVerify] = useState(false)
+  const [userId, setUserId] = useState('')
 
   const {email} = values
 
@@ -25,45 +26,50 @@ const RetrievePassword = () => {
     setValues({ ...values, [name]: value })
   }
 
+  const accountDetailsData = {
+    userId: '',
+    email,
+    oldPassword: ''
+  }
+
   const handleOnSubmit = async (e) => {
     e.preventDefault()
 
+    //Verifications
       if (!email ) {
         return toast.error("You have to input your Email")
       }
 
-
       setIsLoading(true)
-      try {
-        // Handle retrieve password
-      const emailSent = await resendOTPVerificationEmail(email)
-
-      if (!emailSent) {
-        toast.error("User email not found")
-      }
-
-      if (emailSent.message === "Verification OTP Sent Successfully") {
-
-        const accountDetailsData = {
-          userId: emailSent.userId,
-          email: email,
-          oldPassword: ""
-        }
-       
-          navigate('/password-verify', { state:{ accountDetailsData } })
-          setIsLoading(false)
-      }
-
+      //Sending Email Verification OTP
+      const OTPSent = await resendOTPVerificationEmail(email)
       setIsLoading(false)
 
-     } catch (error) {
+      if (!OTPSent) {
         setIsLoading(false)
-       toast.error(error, 'User not registered')
-     }
+        toast.error('Error Sending Verification Email')
+        return
+      }
+
+      if (OTPSent && OTPSent.message === "Verification OTP Sent") {
+        setUserId(OTPSent?.userId)
+        setIsLoading(true)
+
+        setToggleOTPVerify(true)
+        setIsLoading(false)
+        toast.success('Please, verify your account')
+        return
+      }
+      setIsLoading(false)
+    }
+
+    const handleModal = () => {
+      setToggleOTPVerify(!toggleOTPVerify)
     }
 
   return(
     <div className='w-full h-[70vh]'>
+      {toggleOTPVerify && <ForgottenPasswordVerify accountDetailsData={accountDetailsData} handleModal={handleModal} email={email} userId={userId}/>}
         {isLoading && <Loader />}
       <div className='flex flex-col justify-center items-center gap-4 mx-auto w-full h-full px-[2rem] md:w-1/2'>
         <div className='mb-5 flex justify-center text-center'>

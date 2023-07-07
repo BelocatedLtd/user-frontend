@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { toast } from 'react-hot-toast';
-import { verifyOldUserPassword } from '../../../../services/authServices';
+import { changeUserPassword } from '../../../../services/authServices';
 import Loader from '../../../../components/loader/Loader';
 
 const initialState = {
@@ -11,64 +11,61 @@ const initialState = {
     confirmNewPassword: '',
   }
 
-const ChangePassword = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { accountDetailsData } = location.state || {};
-  const [isLoading, setIsLoading] = useState(false)
-  const [values, setValues] = useState(initialState)
-
-
-    const { userId, email, oldPassword } = accountDetailsData
-    const {newPassword, confirmNewPassword } = values
-
-
-    const handleInputChange = (e) => {
-        const {name, value } = e.target;
-        setValues({ ...values, [name]: value })
-      }
-
-      const formData = {
-        userId, 
-        oldPassword,
-        newPassword
-      }
-
-      const handleOnSubmit = async(e) => {
-        e.preventDefault()
-
-        if ( !newPassword || !confirmNewPassword ) {
-            toast.error("All fields are required")
-            return
-          }
-    
-          if (newPassword.length < 6) {
-            toast.error("Password must be upto 6 characters")
-            return
-          }
-    
-          if (newPassword !== confirmNewPassword) {
-            toast.error("Passwords do not match")
-            return
-          }
-    
-          setIsLoading(true)
-            const passwordChanged = await verifyOldUserPassword(formData)
-
-            if (!passwordChanged) {
-              setIsLoading(false)
-              toast.error('Failed to changed password')
-              return
+const ForgottenPassword = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { accountDetailsData } = location.state || {};
+    const [isLoading, setIsLoading] = useState(false)
+    const [values, setValues] = useState(initialState)
+  
+  
+      const { userId, email, oldPassword } = accountDetailsData
+      const {newPassword, confirmNewPassword } = values
+  
+  
+      const handleInputChange = (e) => {
+          const {name, value } = e.target;
+          setValues({ ...values, [name]: value })
+        }
+  
+        const handleOnSubmit = async(e) => {
+          e.preventDefault()
+  
+          if ( !newPassword || !confirmNewPassword ) {
+              return toast.error("All fields are required")
             }
-
-            if (passwordChanged) {
-              setIsLoading(false)
-              toast.success('Password Changed Sucessfully, login')
-                navigate('/login')
+      
+            if (newPassword.length < 6) {
+              return toast.error("Password must be upto 6 characters")
             }
-            setIsLoading(false)
-      }
-
+      
+            if (newPassword !== confirmNewPassword) {
+              return toast.error("Passwords do not match")
+            }
+      
+            const formData = {
+              userId, 
+            email,
+              newPassword
+            }
+  
+            setIsLoading(true)
+          try {
+              const passwordChanged = await changeUserPassword(formData)
+  
+              if (!passwordChanged) {
+                toast.error('Failed to changed password')
+              }
+  
+              if (passwordChanged) {
+                toast.error('Password Changed Sucessfully')
+                  navigate('/login')
+              }
+              setIsLoading(false)
+          } catch (error) {
+              
+          }
+        }
     return(
         <div className='w-full h-[70vh]'>
             {isLoading && <Loader />}
@@ -92,4 +89,4 @@ const ChangePassword = () => {
       )
 }
 
-export default ChangePassword
+export default ForgottenPassword

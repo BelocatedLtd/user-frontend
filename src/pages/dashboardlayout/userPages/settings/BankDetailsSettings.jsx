@@ -92,7 +92,7 @@ const handleBankInputChange = (e) => {
       }
 
   return (
-    <div className='className = box p-6 shadow-lg'>
+    <div className='box p-6 shadow-lg'>
       {toggleOTPVerify && <VerifyOTP accountDetailsData={accountDetailsData} handleModal={handleModal} email={user.email}/>}
       <form onSubmit={handleSubmit} >
         {isLoading && <Loader />}

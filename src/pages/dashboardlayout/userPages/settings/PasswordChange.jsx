@@ -1,9 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { handlesendingPhoneOTP, resendOTPVerificationEmail, verifyOldUserPassword, verifyUserPassword } from '../../../../services/authServices'
+import { resendOTPVerificationEmail, verifyOldUserPassword } from '../../../../services/authServices'
 import { toast } from 'react-hot-toast'
 import Loader from '../../../../components/loader/Loader'
+import PasswordVerify from './PasswordVerify'
 
 const initialState = {
     password: ""
@@ -11,9 +12,9 @@ const initialState = {
 
 
 const PasswordChange = ({user}) => {
-    const navigate = useNavigate()
     const [passwordChange, setPasswordChange] = useState(initialState)
     const [isLoading, setIsLoading] = useState()
+    const [toggleOTPVerify, setToggleOTPVerify] = useState(false)
 
 //Password InPut Change
 const handlePasswordInputChange = (e) => {
@@ -24,57 +25,69 @@ const handlePasswordInputChange = (e) => {
 
 const {password} = passwordChange
 
+const accountDetailsData = {
+  userId: user?.id,
+  email: user?.email,
+  oldPassword: password
+}
+
 const handleSubmit = async(e) => {
     e.preventDefault()
+
+    //Verifications
     if (!password) {
-        return toast.error("Input your old password")
+        toast.error("Input your old password")
+        return
       }
 
     if (password.length < 6) {
-        return toast.error("Please, input your old password")
+        toast.error("Incorrect Password")
+        return
     }
 
-    const data = {
-        userId: user.id,
-        oldPassword: password,
-    }
+        setIsLoading(true)
+        const oldPasswordOk = await verifyOldUserPassword(accountDetailsData)
 
-    const accountDetailsData = {
-        userId: user.id,
-        email: user.email,
-        oldPassword: password
+        setIsLoading(false)
+        if(!oldPasswordOk) {
+          setIsLoading(false)
+          toast.error('Error, check the password and try again')
+          return
+        }
+     
+     if (oldPasswordOk === "Password is Correct") {
+
+      //Sending Email Verification OTP
+      const OTPSent = await resendOTPVerificationEmail(user.email)
+      setIsLoading(false)
+
+      if (!OTPSent) {
+        setIsLoading(false)
+        toast.error('Error Sending Verification Email')
+        return
       }
 
-    try {
+      if (OTPSent && OTPSent.message === "Verification OTP Sent") {
         setIsLoading(true)
-        const oldPasswordOk = await verifyOldUserPassword(data)
-     
-     if (oldPasswordOk.message === "Password is Correct") {
-        // const OTPSent = await handlesendingPhoneOTP(accountDetailsData)
 
-        const emailSent = await resendOTPVerificationEmail(user.email)
-
-        if (emailSent === "Password Reset Link Sent Successfully") {
-         
-            navigate('/password-verify', { state:{ accountDetailsData } })
-            setIsLoading(false)
-        }
+        setToggleOTPVerify(true)
         setIsLoading(false)
-
-     } else {
-        toast.error("Password is incorrect")
-        setIsLoading(false)
+        toast.success('Please, verify your account')
+        return
+      }
+      setIsLoading(false)
      }
+}
 
-      setIsLoading(false)
-    } catch (error) {
-      setIsLoading(false)
-      console.log(error)
-    }
+
+const handleModal = () => {
+  setToggleOTPVerify(!toggleOTPVerify)
 }
 
   return (
-    <form onSubmit={handleSubmit} className='box p-6 shadow-lg'>
+    <div className='box p-6 shadow-lg'>
+      {toggleOTPVerify && <PasswordVerify accountDetailsData={accountDetailsData} handleModal={handleModal} email={user.email}/>}
+      <form onSubmit={handleSubmit}>
         {isLoading && <Loader />}
           <label htmlFor="accountDetails reset" className='font-bold'>Change Password</label>
               <div className='flex flex-col mt-3 mb-3'>
@@ -83,7 +96,9 @@ const handleSubmit = async(e) => {
 
                   <button className='w-full bg-tertiary text-gray-100 p-2 rounded-2xl mt-6'>Change Password</button>
               </div>
-          </form>
+      </form>
+    </div>
+    
   )
 }
 

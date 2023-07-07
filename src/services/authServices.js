@@ -128,6 +128,18 @@ export const changeUserPassword = async(data) => {
             
 }
 
+//Reset forgotten password
+export const forgottenPasswordChange = async(data) => {
+    try {
+         const response = await axios.post(`${BACKEND_URL}/api/user/forgotpassword`, data)
+        return response.data
+     } catch (error) {
+         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+     }
+            
+}
+
 //Resend Verification Email
 export const resendVerificationEmail = async(email) => {
     try {

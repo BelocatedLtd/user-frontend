@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { toast } from 'react-hot-toast';
-import { verifyOldUserPassword } from '../../../../services/authServices';
+import { forgottenPasswordChange } from '../../../../services/authServices';
 import Loader from '../../../../components/loader/Loader';
 
 const initialState = {
@@ -11,15 +11,15 @@ const initialState = {
     confirmNewPassword: '',
   }
 
-const ChangePassword = () => {
-  const location = useLocation();
+const ForgotPasswordChange = () => {
+    const location = useLocation();
   const navigate = useNavigate();
-  const { accountDetailsData } = location.state || {};
+  const { transportData } = location.state || {};
   const [isLoading, setIsLoading] = useState(false)
   const [values, setValues] = useState(initialState)
 
 
-    const { userId, email, oldPassword } = accountDetailsData
+    const { userId, email } = transportData 
     const {newPassword, confirmNewPassword } = values
 
 
@@ -30,43 +30,43 @@ const ChangePassword = () => {
 
       const formData = {
         userId, 
-        oldPassword,
+        email,
         newPassword
       }
 
       const handleOnSubmit = async(e) => {
         e.preventDefault()
 
-        if ( !newPassword || !confirmNewPassword ) {
+        //Verifications
+            if ( !newPassword || !confirmNewPassword ) {
             toast.error("All fields are required")
-            return
+            return 
           }
     
           if (newPassword.length < 6) {
             toast.error("Password must be upto 6 characters")
-            return
+            return 
           }
     
           if (newPassword !== confirmNewPassword) {
             toast.error("Passwords do not match")
-            return
+            return 
           }
-    
+
           setIsLoading(true)
-            const passwordChanged = await verifyOldUserPassword(formData)
+        
+        const passwordChanged = await forgottenPasswordChange(formData)
 
-            if (!passwordChanged) {
-              setIsLoading(false)
-              toast.error('Failed to changed password')
-              return
-            }
+        if (!passwordChanged) {
+            toast.error('Failed to changed password')
+            return
+        }
 
-            if (passwordChanged) {
-              setIsLoading(false)
-              toast.success('Password Changed Sucessfully, login')
-                navigate('/login')
-            }
-            setIsLoading(false)
+        if (passwordChanged) {
+            toast.success('Password Changed Sucessfully')
+            navigate('/')
+        }
+        setIsLoading(false)
       }
 
     return(
@@ -92,4 +92,4 @@ const ChangePassword = () => {
       )
 }
 
-export default ChangePassword
+export default ForgotPasswordChange

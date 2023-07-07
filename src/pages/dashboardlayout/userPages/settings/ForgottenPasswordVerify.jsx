@@ -13,8 +13,8 @@ const initialState = {
     OTP: '',
 }
 
-const PasswordVerify = ({accountDetailsData, handleModal, email}) => {
-  const navigate = useNavigate()
+const ForgottenPasswordVerify = ({accountDetailsData, handleModal, email, userId}) => {
+    const navigate = useNavigate()
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
   const [values, setValues] = useState(initialState)
@@ -43,6 +43,11 @@ const PasswordVerify = ({accountDetailsData, handleModal, email}) => {
   const handleInputChange = (e) => {
     const {name, value } = e.target;
     setValues({ ...values, [name]: value })
+  }
+
+  const transportData  = {
+    userId,
+    email,
   }
 
   const handleOnSubmit = async (e) => {
@@ -79,7 +84,7 @@ const PasswordVerify = ({accountDetailsData, handleModal, email}) => {
         //Sending data to update user account details
     if (response && response === "Verification Successful") {
           setIsUpdating(true)
-          navigate(`/password-change/${OTP}`, { state:{ accountDetailsData } })
+          navigate(`/forgot-password-change/${OTP}`, { state:{ transportData } })
           handleModal()
           setIsUpdating(false)
         }
@@ -104,7 +109,6 @@ const PasswordVerify = ({accountDetailsData, handleModal, email}) => {
       console.log(error)
     }
     }
-
 
     return ReactDOM.createPortal(
         <div className='wrapper'>
@@ -134,4 +138,4 @@ const PasswordVerify = ({accountDetailsData, handleModal, email}) => {
       )
 }
 
-export default PasswordVerify
+export default ForgottenPasswordVerify

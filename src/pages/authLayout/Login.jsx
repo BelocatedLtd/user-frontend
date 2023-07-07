@@ -51,7 +51,7 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
 
     if (!response) {
       setIsLoading(false)
-      toast.error("Login failure, check your internet connection...")
+      toast.error("Login failure...")
     }
 
     if(response.isEmailVerified === false) {

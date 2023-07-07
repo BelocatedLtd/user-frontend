@@ -57,6 +57,7 @@ import { useState } from "react";
 import RefRegister from "./pages/authLayout/RefRegister";
 import PasswordVerify from "./pages/dashboardlayout/userPages/settings/PasswordVerify";
 import ServicesPage from "./pages/mainlayout/ServicesPage";
+import ForgotPasswordChange from "./pages/dashboardlayout/userPages/settings/ForgotPasswordChange";
 
 
 
@@ -114,7 +115,8 @@ const handleCloseMenu = () => {
           <Route path="/login" element={<Login />}/>
           <Route path="/logout" element={<Logout />}/>
           <Route path="/confirm-pass" element={<ConfirmPassword />}/>
-          <Route path="/password-change" element={<ChangePassword />}/>
+          <Route path="/password-change/:id" element={<ChangePassword />}/>
+          <Route path="/forgot-password-change/:id" element={<ForgotPasswordChange />}/>
         </Route>
 
         <Route path="/logout" element={<Logout />}/>
