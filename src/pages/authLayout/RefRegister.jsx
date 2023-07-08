@@ -1,13 +1,9 @@
 import React from 'react'
 import { toast } from 'react-hot-toast'
-import { MdCancel } from 'react-icons/md'
 import { useState } from 'react';
-import { createNewUser, resendVerificationEmail } from '../../services/authServices';
-import { useDispatch } from 'react-redux';
-import { SET_LOGIN, SET_USER, SET_USERNAME } from '../../redux/slices/authSlice';
+import { createNewUserRef, resendVerificationEmail } from '../../services/authServices';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../../components/loader/Loader';
-import RetrievePassword from './RetrievePassword';
 import VerifyEmail from './VerifyEmail';
 import io from 'socket.io-client'
 import { BACKEND_URL } from '../../../utils/globalConfig'
@@ -21,12 +17,12 @@ const initialState = {
 }
 
 const RefRegister = () => {
-    const {referrerId} = useParams()
+  const {referrerId} = useParams()
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [values, setValues] = useState(initialState)
-  const dispatch = useDispatch()
+
 
   useEffect(() => {
     
@@ -40,46 +36,53 @@ const RefRegister = () => {
         setValues({ ...values, [name]: value })
       }
 
-    const toggleEmailVerifyModal = async (e) => {
-    e.preventDefault()
-
-      if (!username || !email || !password || !password2) {
-        return toast.error("All fields are required")
-      }
-
-      if (password.length < 6) {
-        return toast.error("Password must be upto 6 characters")
-      }
-
-      if (password !== password2) {
-        return toast.error("Passwords do not match")
+      if (!referrerId) {
+        toast.error("Error trying to register")
+        return 
       }
 
       const formData = {
         username, 
         email,
         password,
-        referrerId: referrerId ? referrerId : ''
+        referrerId
       }
 
-      console.log(formData)
-      return
+    const toggleEmailVerifyModal = async (e) => {
+    e.preventDefault()
+
+      if (!username || !email || !password || !password2 ) {
+        return toast.error("All fields are required")
+      }
+
+      if (password.length < 6) {
+        toast.error("Password must be upto 6 characters")
+        return 
+      }
+
+      if (password !== password2) {
+        toast.error("Passwords do not match")
+        return 
+      }
 
       setIsLoading(true)
-      
-      const response = await createNewUser(formData)
+      const response = await createNewUserRef(formData)
+
+      console.log(response)
 
       if (!response) {
         toast.error("Error trying to register user")
       }
 
-      if (response.message === "Email has already been registered, please login") {
+      if (response?.message === "Email has already been registered, please login") {
         toast.error("Email has already been registered, please login")
         navigate('/login')
+        return
       }
 
       if (!response._id) {
         toast.error("user not registered")
+        return
       }
 
       if (response._id) {
@@ -89,7 +92,7 @@ const RefRegister = () => {
         const emitData = {
           userId: response?._id,
           action: `@${response?.username} just registered`
-      }
+        }
 
       //Emit Socket event to update activity feed
       socket.emit('sendActivity', emitData) 

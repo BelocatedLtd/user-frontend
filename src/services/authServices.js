@@ -16,6 +16,20 @@ export const createNewUser = async(formData) => {
             
 }
 
+//Create New User Ref
+export const createNewUserRef = async(formData) => {
+    try {
+         const response = await axios.post(`${BACKEND_URL}/api/user/refregister`, formData )
+         if (response.statusText === "Created") {
+          }
+        return response.data 
+     } catch (error) {
+         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+     }
+            
+}
+
 //Login User
 export const loginUser = async(formData) => {
     try {
