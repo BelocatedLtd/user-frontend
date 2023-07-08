@@ -22,8 +22,17 @@ const Dashboard = () => {
   const [profile, setProfile] = useState(null)
   const username = useSelector(selectUsername)
   const user = useSelector(selectUser)
+  const [profileComplete, setProfileComplete] = useState(false)
   const [refLink, setRefLink] = useState('')
   useRedirectLoggedOutUser('/')
+
+  useEffect(() => {
+    if (!user.fullname || !user.phone || !user.location || !user.gender || !user.community || !user.religion) {
+      setProfileComplete(true)
+    } 
+  }, [profileComplete])
+  
+  
 
   useEffect(() => {
       async function getUserData() {
@@ -79,7 +88,7 @@ const Dashboard = () => {
   return (
     <div className='w-full h-fit'>
         <div className='justify-between mx-auto mr-3'>
-            <div className='hero__section flex flex-col w-full h-fit px-5 py-[3rem] border border-gray-200 md:flex-row'>
+            <div className={`hero__section flex flex-col w-full h-fit px-5 py-[3rem]  border ${profileComplete ? ('border-tertiary') : ('border-gray-200')} md:flex-row`}>
               <div className='hidden left w-full md:flex md:flex-1'>
                 <div className='w-full flex flex-col justify-center items-center'>
                   <img src={about} alt=""  className='w-[150px] border p-[1rem] rounded-full'/>
@@ -96,41 +105,24 @@ const Dashboard = () => {
 
               {/* User Wallet */}
               <div className='right flex-1 w-full mt-6'>
-              <p className='text-center text-gray-600 text-[12px]'><span className='text-tertiary'>{user.freeTaskCount}</span> free tasks remaining this Week</p>
+              <p className='text-center text-gray-600 text-[12px]'><span className='text-tertiary'>{user?.freeTaskCount}</span> free tasks remaining this Week</p>
                 <Wallet />
               </div>
             </div>
 
           
 
-        <ProfileInComplete>
-        <div className='w-full flex flex-col justify-center items-center h-fit my-5 px-5 py-[3rem] border border-tertiary'>
-              <small className='px-[2rem] text-[15px] text-gray-600 text-center'>Welcome, <span className='text-tertiary'>@{username}</span>. Your account setup is incomple click below to completely set up your belocated account so you can start fulfilling tasks and making or set up ad campaigns to promote your product or services.</small>
+            <div className='flex flex-col justify-center'>
+              <FreeTaskCount className="w-full bg-black mx-auto"/>
 
-              <div className='w-fit text-[10px] bg-green-700 text-gray-100 px-3 py-3 mt-5 rounded-2xl'>180 tasks posted today for you to perform and make money</div>
-
-              <button onClick={() => (navigate(`/dashboard/profile/`))} className='bg-tertiary text-gray-100 px-6 py-3 mt-5'>Complete Profile Setup</button>
+              <div className='w-full flex flex-col items-center gap-2 justify-center md:flex-row md:justify-center md:items-center md:mx-auto'>
+                  <label>Referral Link:</label>
+                  <div className='flex items-center gap-2  w-[60%]'>
+                    <input type="link" value={refLink} readOnly ref={inputRef} className='w-fit md:w-1/2 p-3 border border-gray-200 rounded-lg items-center'/>
+                    <img src={copy} alt="click to copy ref link" className='w-[20px] h-[20px]' onClick={handleRefLinkCopy}/>
+                  </div>
+              </div>
             </div>
-        </ProfileInComplete>
-
-        <ProfileComplete>
-        <FreeTaskCount className="w-full bg-black mx-auto"/>
-            <div className='w-full flex flex-col justify-center items-center h-fit my-5 px-5 py-[3rem] border border-gray-200'>
-              <small className='px-[2rem] text-[15px] text-gray-600 text-center'>Welcome, <span className='text-secondary'>@{username}</span>. Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam perspiciatis voluptatum mollitia animi.</small>
-
-              <div className='w-fit text-[10px] bg-green-700 text-gray-100 px-5 py-3 mt-5 rounded-2xl'>180 tasks launched today on Belocated</div>
-
-              <button onClick={() => (navigate('/dashboard/earn'))} className='bg-transparent border border-gray-300 px-6 py-3 mt-5'>Perform Tasks & Earn</button>
-            </div>
-
-            <div className='flex flex-col items-center gap-2 w-full justify-center md:flex-row'>
-            <label>Referral Link:</label>
-            <div className='flex items-center gap-2  w-[60%]'>
-              <input type="link" value={refLink} readOnly ref={inputRef} className='w-fit md:w-1/2 p-3 border border-gray-200 rounded-lg'/>
-              <img src={copy} alt="click to copy ref link" className='w-[20px] h-[20px]' onClick={handleRefLinkCopy}/>
-            </div>
-            </div>
-          </ProfileComplete>
         </div>
     </div>
   )

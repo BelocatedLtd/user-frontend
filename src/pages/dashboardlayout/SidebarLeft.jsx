@@ -67,11 +67,11 @@ const SidebarLeft = ({children}) => {
         icon: <GrSettingsOption className='mr-2'/>,
         path: `/dashboard/update-profile/`,
       },
-      {
-        title: "Account Settings",
-        icon: <FaStar className='mr-2'/>,
-        path: `/dashboard/account-settings/${username}`,
-      },
+      // {
+      //   title: "Account Settings",
+      //   icon: <FaStar className='mr-2'/>,
+      //   path: `/dashboard/account-settings/${username}`,
+      // },
       {
         title: "Contact Support",
         icon: <img src={customersupport} alt="ad campaigns" className='mr-2 w-[30px] h-[30px]'/>,
