@@ -58,6 +58,7 @@ import RefRegister from "./pages/authLayout/RefRegister";
 import PasswordVerify from "./pages/dashboardlayout/userPages/settings/PasswordVerify";
 import ServicesPage from "./pages/mainlayout/ServicesPage";
 import ForgotPasswordChange from "./pages/dashboardlayout/userPages/settings/ForgotPasswordChange";
+import PasswordChangeSuccess from "./pages/dashboardlayout/userPages/settings/PasswordChangeSuccess";
 
 
 
@@ -96,6 +97,8 @@ const handleCloseMenu = () => {
       <Toaster/>
       
       <Routes>
+      
+      <Route path="/success" element={<PasswordChangeSuccess handleLogin={handleLogin} handleRegister={handleRegister} loginBtn={loginBtn} regBtn={regBtn} handleCloseMenu={handleCloseMenu}/>} />
         <Route path="/" element={<MainLayout handleRegister={handleRegister} regBtn={regBtn}/>}>
           <Route index element={<Home handleLogin={handleLogin} handleRegister={handleRegister} loginBtn={loginBtn} regBtn={regBtn} handleCloseMenu={handleCloseMenu}/>}/>
           <Route path="/about" element={<About />}/>

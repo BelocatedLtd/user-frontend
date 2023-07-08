@@ -59,11 +59,11 @@ const Profile = () => {
             <p>{profile?.gender}</p>
           </div>
           <div className='user__data flex flex-col md:flex-row gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
-            <label htmlFor="username" className='font-extrabold'>State:</label>
+            <label htmlFor="username" className='font-extrabold'>Residential State:</label>
             <p>{profile?.location}</p>
           </div>
           <div className='user__data flex flex-col md:flex-row gap-1 text-lg border-b border-gray-100 mx-[2rem] py-5 px-5'>
-            <label htmlFor="fullname" className='font-extrabold'>LGA:</label>
+            <label htmlFor="fullname" className='font-extrabold'>Residential LGA:</label>
             <p>{profile?.community}</p>
           </div>
 

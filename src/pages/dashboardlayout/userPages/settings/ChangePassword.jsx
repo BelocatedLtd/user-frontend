@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { toast } from 'react-hot-toast';
-import { verifyOldUserPassword } from '../../../../services/authServices';
+import { changeUserPassword } from '../../../../services/authServices';
 import Loader from '../../../../components/loader/Loader';
 
 const initialState = {
@@ -17,6 +17,7 @@ const ChangePassword = () => {
   const { accountDetailsData } = location.state || {};
   const [isLoading, setIsLoading] = useState(false)
   const [values, setValues] = useState(initialState)
+  const [caption, setCaption] = useState("Password Reset Successful, Login")
 
 
     const { userId, email, oldPassword } = accountDetailsData
@@ -53,7 +54,9 @@ const ChangePassword = () => {
           }
     
           setIsLoading(true)
-            const passwordChanged = await verifyOldUserPassword(formData)
+            const passwordChanged = await changeUserPassword(formData)
+
+            console.log(passwordChanged)
 
             if (!passwordChanged) {
               setIsLoading(false)
@@ -64,7 +67,7 @@ const ChangePassword = () => {
             if (passwordChanged) {
               setIsLoading(false)
               toast.success('Password Changed Sucessfully, login')
-                navigate('/login')
+                navigate('/success', { state:{ caption }})
             }
             setIsLoading(false)
       }

@@ -17,6 +17,7 @@ const ForgottenPassword = () => {
     const { accountDetailsData } = location.state || {};
     const [isLoading, setIsLoading] = useState(false)
     const [values, setValues] = useState(initialState)
+    const [caption, setCaption] = useState("Password Reset Successful, Login")
   
   
       const { userId, email, oldPassword } = accountDetailsData
@@ -59,7 +60,7 @@ const ForgottenPassword = () => {
   
               if (passwordChanged) {
                 toast.error('Password Changed Sucessfully')
-                  navigate('/login')
+                navigate('/success', { state:{ caption }})
               }
               setIsLoading(false)
           } catch (error) {

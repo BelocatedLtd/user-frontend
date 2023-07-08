@@ -76,12 +76,12 @@ const ActivityFeed = () => {
                     ))}
                 </div>
 
-                {currentPage < totalPage && (
+                {/* {currentPage < totalPage && (
                     <div onClick={() => handlePageChange(currentPage + 1)} className='flex items-center justify-center  gap-2 p-6 '>
                         <p className='font-bold text-gray-500'>View More</p>
                         <MdOutlineKeyboardArrowDown  size={30} className='text-gray-500'/>
                     </div>
-                )}
+                )} */}
                 
             </div>
         </div>

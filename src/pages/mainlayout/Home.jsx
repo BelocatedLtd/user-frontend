@@ -13,7 +13,7 @@ export const Home = ({handleRegister, handleLogin, handleCloseMenu, loginBtn, re
       <Jumbotron handleRegister={handleRegister} handleLogin={handleLogin} loginBtn={loginBtn} regBtn={regBtn}/>
       <Services />
       <About />
-      <MembersTab />
+      <MembersTab handleRegister={handleRegister} regBtn={regBtn}/>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectUserId } from '../../redux/slices/authSlice'
+import { selectUser, selectUserId } from '../../redux/slices/authSlice'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { getUserWallet, selectIsError, selectIsLoading, selectUserWallet } from '../../redux/slices/walletSlice'
@@ -8,13 +8,16 @@ import { LoaderIcon, toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import FundWallet from '../FundWallet'
 import FundingForm from '../../components/forms/FundingForm'
+import WithdrawalForm from '../forms/WithdrawalForm'
 
 
 const Wallet = () => {
   const [selectFundingBtn, setSelectFundingBtn] = useState(false)
+  const [togleWithdrawBtn, setTogleWithdrawBtn] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const wallet = useSelector(selectUserWallet)
+  const user = useSelector(selectUser)
   const isLoading = useSelector(selectIsLoading)
   const isError = useSelector(selectIsError)
 
@@ -23,6 +26,12 @@ const Wallet = () => {
   const toggleFundingSelect = (e) => {
     e.preventDefault()
     setSelectFundingBtn(!selectFundingBtn)
+}
+
+// Toggle withdraw funds
+const handleWithdrawFunds = (e) => {
+e.preventDefault()
+setTogleWithdrawBtn(!togleWithdrawBtn)
 }
 
   useEffect(() => {
@@ -40,6 +49,7 @@ const Wallet = () => {
   return (
     <div className='w-full h-full flex flex-col justify-between items-center border border-gray-200 rounded-2xl py-6'>
        {selectFundingBtn && <FundingForm toggleFundingSelect={toggleFundingSelect} />}
+       {togleWithdrawBtn && <WithdrawalForm handleWithdrawFunds={handleWithdrawFunds} wallet={wallet} user={user}/>}
        {isError && <p className='text-red-400'>Failed to fund account</p>}
       <h3 className='pt-4 font-bold text-gray-600'>My Balance</h3>
       <div className='mt-[1.5rem]'>
@@ -47,7 +57,7 @@ const Wallet = () => {
       </div>
       <div className='flex gap-2 mt-[1.5rem]'>
         <button onClick={toggleFundingSelect} className='flex-1 bg-secondary text-[9px] md:text-[12px] text-gray-100  px-7 py-0 md:py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border md:px-10'>Fund</button>
-        <button  className='flex-1 bg-transparent border border-gray-500 text-[12px] text-gray-600 px-4 py-2 md:py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Withdraw</button>
+        <button  onClick={handleWithdrawFunds} className='flex-1 bg-transparent border border-gray-500 text-[12px] text-gray-600 px-4 py-2 md:py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Withdraw</button>
       </div>
 
       <div className='flex px-6 items-center justify-center mt-[4rem] pb-4 gap-5 md:flex'>

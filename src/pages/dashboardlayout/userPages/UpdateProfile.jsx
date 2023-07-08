@@ -6,6 +6,9 @@ import { useState } from 'react'
 import Loader from '../../../components/loader/Loader'
 import { redirect, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import PasswordChange from './settings/PasswordChange'
+import BankDetailsSettings from './settings/BankDetailsSettings'
+import AccountDetailsSettings from './settings/AccountDetailsSettings'
 
 
 const UpdateProfile = () => {
@@ -70,10 +73,29 @@ const UpdateProfile = () => {
   }
 
   return (
-    <>
+    <div>
     {isLoading && <Loader />}
-    <ProfileForm user={user} email={email} username={username} profile={profile} handleProfileUpdate={handleProfileUpdate} handleInputChange={handleInputChange} />
-    </>
+
+    {/* User profile */}
+    <div>
+      <ProfileForm user={user} email={email} username={username} profile={profile} handleProfileUpdate={handleProfileUpdate} handleInputChange={handleInputChange} />
+    </div>
+
+    {/* User profile */}
+    {/* Layered Boxes wrapper */}
+    <div className='w-full h-fit flex flex-col gap-[5rem] mt-[1rem] md:w-[54%]'>
+      <div className='boxesContainer w-full flex  flex-col justify-center gap-[3rem] md:p-3'>
+        {/* Profile details  Settings */}
+        <AccountDetailsSettings user={user} />
+
+        {/* Bank Details Settings */}
+        <BankDetailsSettings  user={user} />
+
+        {/* password change  */}
+        <PasswordChange user={user} />
+      </div>
+    </div>
+    </div>
   )
 }
 

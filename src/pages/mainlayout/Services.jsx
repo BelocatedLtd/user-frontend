@@ -1,5 +1,7 @@
 import React from 'react'
 import adRoi from '../../assets/adRoi.svg'
+import money from '../../assets/money.png'
+import roi from '../../assets/roi.png'
 
 const Services = () => {
   return (
@@ -12,7 +14,7 @@ const Services = () => {
             <div className='flex flex-col items-center gap-2 mt-[2rem] md:flex-row'>
                 <div className='bg-gray-100 w-[350px] h-[400px] flex flex-col gap-2 items-center justify-center text-center shadow-2xl rounded-2xl'>
                     <div className='w-[70px] h-fit bg-gray-300 p-2 rounded-full mb-4'>
-                        <img src={adRoi} alt="Advert ROI" className='w-full h-full object-cover'/>
+                        <img src={roi} alt="Advert ROI" className='w-full h-full object-cover'/>
                     </div>
                     <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>Massive ROI On Adverts</h2>
                     <p className='px-6'>Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
@@ -28,7 +30,7 @@ const Services = () => {
 
                 <div className='bg-gray-100 w-[350px] h-[400px] flex flex-col gap-2 items-center justify-center text-center shadow-2xl rounded-2xl'>
                     <div className='w-[70px] h-fit bg-gray-300 p-2 rounded-full mb-4'>
-                        <img src={adRoi} alt="Advert ROI" className='w-full h-full object-cover'/>
+                        <img src={money} alt="Advert ROI" className='w-full h-full object-cover'/>
                     </div>
                     <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>Earn Steady Income</h2>
                     <p className='px-6'>Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>

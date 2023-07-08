@@ -16,6 +16,10 @@ import { getUser, logoutUser } from '../../services/authServices'
 import { toast } from 'react-hot-toast'
 import { useEffect } from 'react'
 import adverts from '../../assets/adverts.png'
+import adCampaigns from '../../assets/adscampaign.png'
+import transactions from '../../assets/transactions.png'
+import userprofile from '../../assets/userprofile.png'
+import customersupport from '../../assets/customersupport.png'
 
 const SidebarLeft = ({children}) => {
     const navigate = useNavigate()
@@ -45,17 +49,17 @@ const SidebarLeft = ({children}) => {
       },
       {
         title: "My Campaigns",
-        icon: <MdCreateNewFolder className='mr-2'/>,
+        icon: <img src={adCampaigns} alt="ad campaigns" className='mr-2 w-[30px] h-[30px]'/>,
         path: "/dashboard/campaign-stats",
       },
       {
         title: "Transactions",
-        icon: <MdCreateNewFolder className='mr-2'/>,
+        icon: <img src={transactions} alt="ad campaigns" className='mr-2 w-[30px] h-[30px]'/>,
         path: "/dashboard/transactions",
       },
       {
         title: "Profile",
-        icon: <MdCreateNewFolder className='mr-2'/>,
+        icon: <img src={userprofile} alt="ad campaigns" className='mr-2 w-[30px] h-[30px]'/>,
         path: '/dashboard/profile',
       },
       {
@@ -70,7 +74,7 @@ const SidebarLeft = ({children}) => {
       },
       {
         title: "Contact Support",
-        icon: <GrSettingsOption className='mr-2'/>,
+        icon: <img src={customersupport} alt="ad campaigns" className='mr-2 w-[30px] h-[30px]'/>,
         path: "/dashboard/contact-support",
       },
     ]

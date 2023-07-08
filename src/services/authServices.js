@@ -119,7 +119,7 @@ export const verifyOldUserPassword = async(data) => {
 //Change Password
 export const changeUserPassword = async(data) => {
     try {
-         const response = await axios.post(`${BACKEND_URL}/api/user/verifypasswordchange`, data)
+         const response = await axios.post(`${BACKEND_URL}/api/user/changePassword`, data)
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

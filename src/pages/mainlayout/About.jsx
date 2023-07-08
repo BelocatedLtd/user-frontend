@@ -5,9 +5,11 @@ import ActivityFeed from '../../components/ActivityFeed'
 import refd from '../../assets/refd.svg'
 import adRoi from '../../assets/adRoi.svg'
 import hah from '../../assets/hah.png'
+import { useNavigate } from 'react-router-dom'
 
 
 const About = () => {
+    const navigate = useNavigate()
   return (
     <div className='w-full h-fit'>
       <div className='container h-full flex flex-col justify-center gap-7 mx-auto'>
@@ -27,46 +29,8 @@ const About = () => {
                 </div>
             </div>
 
-            {/* what we do */}
-            <div className='flex flex-col mt-[5rem]'>
-                <div className='flex items-center gap-2 ml-[2rem]'>
-                    <h1 className='text-3xl text-gray-800 font-extrabold border-l-4 px-4 border-red-400'>What We Do</h1>
-                </div>
-
-                <div className='flex flex-col w-full items-center gap-2 mt-[2rem] md:flex-row'>
-                    <div className='bg-gray-100 w-fit md:w-[450px] h-[450px] mx-[1rem] flex flex-col gap-2 items-center justify-center text-center shadow-2xl rounded-2xl'>
-                        <div className='w-[70px] h-fit bg-gray-300 p-2 rounded-full mb-4'>
-                            <img src={adRoi} alt="Advert ROI" className='w-full h-full object-cover'/>
-                        </div>
-                        <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>Locate Your Business</h2>
-                        <p className='px-6 text-center'>In a global village such as the one we find ourselves today, being located is as important as your identity. There are uncountable opportunities out there for you but only if you can be located. With BeLocated platform you can access countless business and earning opportunities while listing opportunities for many others.</p>
-                    </div>
-
-                    <div className='bg-gray-100 w-fit md:w-[450px] h-[450px] mx-[1rem] flex flex-col gap-2 items-center justify-center text-center shadow-2xl rounded-2xl'>
-                        <div className='w-[70px] h-fit bg-gray-300 p-2 rounded-full mb-4'>
-                            <img src={adRoi} alt="Advert ROI" className='w-full h-full object-cover'/>
-                        </div>
-                        <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>Increase Your Business </h2>
-                        <p className='px-6 text-center'>Increase your business visibility and create awareness for your brand and services through our customized publicity plan. With Belocated, there is a package for everyone no matter how little or how much your budget is. We work with your business goal and timeline to provide affordable publicity packages that will get you, your brand or your business located</p>
-                    </div>
-
-                    <div className='bg-gray-100 w-fit md:w-[450px] h-[450px] mx-[1rem] flex flex-col gap-2 items-center justify-center text-center shadow-2xl rounded-2xl'>
-                        <div className='w-[70px] h-fit bg-gray-300 p-2 rounded-full mb-4'>
-                            <img src={adRoi} alt="Advert ROI" className='w-full h-full object-cover'/>
-                        </div>
-                        <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>Earn Steady Income</h2>
-                        <p className='px-6 text-center'>Belocated is more than just a business but an organization that rewards you for all transactions carried out on the platform. As a client, you earn guaranteed return on your business investments, visibr results as well as on time and quality service delivery. As a user you earn for every task performed on the platform. With Belocated, everyone is a WINNER!</p>
-                    </div>
-                </div>
-            </div>
-
-            <div className='mt-[5rem]'>
-                <h2 className="text-gray-600 px-6 text-[23px] md:text-[38px] mb-[5px] font-bold text-center w-fit">Across all media platforms, BeLocated drives the necessary <span className='text-red-500'>traffic, likes, followers, product review, comments and clicks</span> you need to take your business, product or brand to the next level.</h2>
-                <h3 className="text-secondary text-[18px] mx-[1rem] w-fit md:text-[38px] mb-[1rem] text-center">We are a brand that does the unusual and so we stay outside the box to give our clients the very best services.</h3>
-            </div>
-
-            {/* Call to action */}
-            <div className='mt-[5rem]'>
+             {/* Vision Mission */}
+             <div className='mt-[5rem]'>
             <div className='flex flex-col items-center gap-2 mt-[2rem] md:flex-row'>
                 <div className='bg-transparent w-fit md:w-[450px] h-[450px] flex flex-col gap-2 items-center justify-center text-center shadow-2xl'>
                     <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>VISION</h2>
@@ -85,10 +49,10 @@ const About = () => {
                 </div>
             </div>
 
-            {/* Core Values */}
-            <div className="w-full h-fit flex flex-col mt-[5rem] px-[2rem]">
+             {/* Core Values */}
+             <div className="w-full h-fit flex flex-col mt-[5rem] px-[2rem]">
                 <div className='flex items-center gap-2 mb-6'>
-                    <h1 className='text-3xl text-gray-800 font-extrabold border-l-4 px-4 border-red-400'>What We Do</h1>
+                    <h1 className='text-3xl text-gray-800 font-extrabold border-l-4 px-4 border-red-400'>Our Core Values</h1>
                 </div>
 
                 <div className='flex flex-col md:flex-row'>
@@ -117,6 +81,51 @@ const About = () => {
                     </div>
                 </div>
             </div>
+
+            <div className='mt-[5rem]'>
+                <h2 className="text-gray-600 px-6 text-[23px] md:text-[38px] mb-[5px] font-bold text-center w-fit">Across all media platforms, BeLocated drives the necessary <span className='text-red-500'>traffic, likes, followers, product review, comments and clicks</span> you need to take your business, product or brand to the next level.</h2>
+                <h3 className="text-secondary text-[18px] mx-[1rem] w-fit md:text-[38px] mb-[1rem] text-center">We are a brand that does the unusual and so we stay outside the box to give our clients the very best services.</h3>
+            </div>
+
+            {/* what we do */}
+            <div className='flex flex-col mt-[5rem]'>
+                <div className='flex items-center gap-2 ml-[2rem]'>
+                    <h1 className='text-3xl text-gray-800 font-extrabold border-l-4 px-4 border-red-400'>What We Do</h1>
+                </div>
+
+                <div className='flex flex-col w-full items-center gap-2 mt-[2rem] md:flex-row'>
+                    <div className='bg-gray-100 w-fit md:w-[450px] h-[500px] mx-[1rem] flex flex-col gap-2 items-center justify-center text-center shadow-2xl rounded-2xl'>
+                        <div className='w-[70px] h-fit bg-gray-300 p-2 rounded-full mb-4'>
+                            <img src={adRoi} alt="Advert ROI" className='w-full h-full object-cover'/>
+                        </div>
+                        <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>Locate Your Business</h2>
+                        <p className='px-6 text-center'>In a global village such as the one we find ourselves today, being located is as important as your identity. There are uncountable opportunities out there for you but only if you can be located. With BeLocated platform you can access countless business and earning opportunities while listing opportunities for many others.</p>
+
+                        <button onClick={() => navigate('/services')} className='bg-red-400 text-primary px-4 py-2 mt-3'>Services</button>
+                    </div>
+
+                    <div className='bg-gray-100 w-fit md:w-[450px] h-[500px] mx-[1rem] flex flex-col gap-2 items-center justify-center text-center shadow-2xl rounded-2xl'>
+                        <div className='w-[70px] h-fit bg-gray-300 p-2 rounded-full mb-4'>
+                            <img src={adRoi} alt="Advert ROI" className='w-full h-full object-cover'/>
+                        </div>
+                        <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>Increase Your Business </h2>
+                        <p className='px-6 text-center'>Increase your business visibility and create awareness for your brand and services through our customized publicity plan. With Belocated, there is a package for everyone no matter how little or how much your budget is. We work with your business goal and timeline to provide affordable publicity packages that will get you, your brand or your business located</p>
+
+                        <button onClick={() => navigate('/services')} className='bg-red-400 text-primary px-4 py-2 mt-3'>Services</button>
+                    </div>
+
+                    <div className='bg-gray-100 w-fit md:w-[450px] h-[500px] mx-[1rem] flex flex-col gap-2 items-center justify-center text-center shadow-2xl rounded-2xl'>
+                        <div className='w-[70px] h-fit bg-gray-300 p-2 rounded-full mb-4'>
+                            <img src={adRoi} alt="Advert ROI" className='w-full h-full object-cover'/>
+                        </div>
+                        <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>Earn Steady Income</h2>
+                        <p className='px-6 text-center'>Belocated is more than just a business but an organization that rewards you for all transactions carried out on the platform. As a client, you earn guaranteed return on your business investments, visible results as well as on time and quality service delivery. As a user you earn for every task performed on the platform. With Belocated, everyone is a WINNER!</p>
+
+                        <button onClick={() => navigate('/services')} className='bg-red-400 text-primary px-4 py-2 mt-3'>Services</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     

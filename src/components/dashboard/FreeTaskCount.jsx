@@ -42,7 +42,7 @@ const FreeTaskCount = () => {
   return (
     <div className='w-fit md:w-full flex justify-center'>
         <div className='flex items-center gap-3'>
-            <div className='flex items-center border-r border-gray-200 p-2 text-[9px] md:text-[15px]'>Time Remaining:</div>
+            <div className='flex items-center border-r border-gray-200 p-2 text-[9px] md:text-[15px]'>Free Tasks Resets In:</div>
             <div className='w-fit md:w-[250px] flex items-center justify-between py-6 px-2 gap-2 md:gap-3'>
               <div className='flex flex-col items-center'>
                 <h1 className='text-[12px] md:text-2xl'>{countDown.days}</h1> 
