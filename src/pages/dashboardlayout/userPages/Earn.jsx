@@ -53,11 +53,11 @@ useEffect(() => {
    
     }
 
-    const handleSelectAsset = (e, asset) => {
+    const handleSelectAsset = (e, asset, taskTitle, taskVerification) => {
         e.preventDefault(e)
 
         const filteredServiceAdvert = selectedPlatformAds?.filter(advert => advert?.service === asset)
-        navigate(`/dashboard/taskearn/${platformName}`, { state:{ filteredServiceAdvert, asset } });
+        navigate(`/dashboard/taskearn/${platformName}`, { state:{ filteredServiceAdvert, asset, taskTitle, taskVerification } });
 
 }
 
@@ -82,17 +82,17 @@ useEffect(() => {
             <div className='flex flex-col gap-[3rem] items-center justify-center mt-[1rem] px-3 py-5'>
                 {socialMenu.map((menu, index) => (
                 <div  key={index} className='shadow-lg p-5'>
-                 <div className='flex items-center gap-5' key={index}>
+                 <div className='flex flex-col md:flex-row items-center gap-5' key={index}>
                     <div className='flex flex-col'>
-                        <div className='flex items-center justify-center w-[100px] h-[100px] bg-gray-50 rounded-t-xl rounded-b-2xl'>
+                        <div className='hidden md:flex items-center justify-center w-[100px] h-[100px] bg-gray-50 rounded-t-xl rounded-b-2xl'>
                             <img src={menu?.icon} alt="" className='object-cover rounded-full p-2'/>
                         </div>
-                        <button onClick={e => handleSelect(e, menu?.value)} className='px-5 py-3 border border-gray-200 mt-5'>Select</button>
+                        <button onClick={e => handleSelect(e, menu?.value)} className='hidden md:flex px-5 py-3 border border-gray-200 mt-5'>Select</button>
                     </div>
                     
                     <div className='w-full'>
                         <div className='flex flex-col md:flex-row md:justify-between md:items-center md:border-b md:border-gray-100' >
-                            <div className='flex flex-col w-[70%]'>
+                            <div className='flex flex-col w-full md:w-[70%]'>
                                 <h3 className='font-bold text-[20px] text'>{menu?.title}</h3>
                                 <p className='pb-3 text-[14px] text-gray-500 font-semibold'><span className='font-extrabold'>Earning: </span> Starts from ₦{menu?.earn}/Task Completed & Approved</p>
                             </div>
@@ -101,6 +101,16 @@ useEffect(() => {
                             </div>
                         </div>
                         <p className='font-normal text-[14px] text-gray-700 mt-3'>{menu?.desc}</p>
+
+                        {/* Select button and logo for mobile */}
+                        <div className='w-full flex items-center gap-2'>
+                            <button onClick={e => handleSelect(e, menu?.value)} className='flex md:hidden px-5 py-3 border border-gray-200 mt-5'>Select</button>
+
+                            <div className='flex md:hidden items-center justify-end w-[50px] h-[50px] rounded-t-xl rounded-b-2xl'>
+                            <img src={menu?.icon} alt="" className='object-cover rounded-full mt-5'/>
+                            </div>
+                        </div>
+                        
                     </div>
                  </div>
 
@@ -110,7 +120,7 @@ useEffect(() => {
                     {selectedPlatformObject?.assets?.map( (service, index) => 
                         <ul className='flex items-center gap-3'>
                             <li key={index} className='flex items-center gap-3 border-b border-gray-50 py-3'>
-                            <div onClick={e => handleSelectAsset(e, service?.asset)} className='flex items-center gap-3 cursor-pointer'>
+                            <div onClick={e => handleSelectAsset(e, service?.asset, service?.TD, service?.verification)} className='flex items-center gap-3 cursor-pointer'>
                                 {service.TD}
                                 <button className='bg-gray-200 p-2 border border-gray-200 rounded-full'>{selectedPlatformAds?.filter(advert => advert?.service === service?.asset).length}</button>
                             </div>

@@ -45,12 +45,17 @@ const SidebarLeft = ({children}) => {
       {
         title: "Dashboard",
         icon: <FaHome className='mr-2'/>,
-        path:  `/dashboard/${username}`,
+        path:  `/dashboard/${user?.username}`,
       },
       {
         title: "My Campaigns",
         icon: <img src={adCampaigns} alt="ad campaigns" className='mr-2 w-[30px] h-[30px]'/>,
         path: "/dashboard/campaign-stats",
+      },
+      {
+        title: "My Ongoing Tasks",
+        icon: <FaTasks size={30} className='mr-2 text-gray-800'/>,
+        path: `/dashboard/tasks/${user?.id}`,
       },
       {
         title: "Transactions",

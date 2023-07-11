@@ -4,6 +4,7 @@ import facebook from '../../assets/social icons/facebook.svg'
 import tiktok from '../../assets/social icons/tiktok.svg'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { formatDate } from '../../../utils/formatDate'
 
 const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adService, status, adDesc, state, lga }) => {
     const [icon, setIcon] = useState()
@@ -32,7 +33,7 @@ const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adService
     
 
   return (
-    <div className='relative shadow-lg flex w-[95%] h-fit mt-5 mb-[2rem] bg-[#fcfcfc] p-[2rem] rounded-2xl rounded-tr-none md:p-[3rem]'>
+    <div className='relative shadow-lg flex w-fit md:w-[95%] h-fit mt-5 mb-[2rem] bg-[#fcfcfc] p-[2rem] rounded-2xl rounded-tr-none md:p-[3rem]'>
         {/* Close icon to delete ad campaign */}
         {status == 'pending' && 
         <img src={close} alt="close" size={20} className='absolute top-[-0.4rem] right-[-0.4rem] text-tertiary w-[28px] h-[28px]' />}
@@ -47,12 +48,12 @@ const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adService
 
         {/* ad details first layer */}
         <div className='flex flex-col mb-[1.5rem] border-b border-gray-100 pb-4'>
-            <small className='text-gray-400 font-semibold'>{date}</small>
-            <h1 className='font-bold text-lg'>{title}</h1>
+            <small className='text-gray-400 font-semibold'>{formatDate(date)}</small>
+            <h1 className='w-fit px-2 font-bold text-lg'>{title}</h1>
             <small className='text-gray-400 font-semibold'>Pricing: ₦{adperPostAmt} per advert post</small>
         </div>
 
-        <div className='flex justify-between'>
+        <div className='flex flex-col md:flex-row gap-2 justify-between'>
             <div className='flex flex-col'>
             <div className='flex flex-col'>
                 <label className='font-extrabold text-[12px] text-gray-700 md:text-[14px] md:font-bold'>No. of Facebook Advert Post:</label>
@@ -77,7 +78,7 @@ const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adService
                 <small className='bg-yellow-600 text-primary px-3 py-1 rounded-full'>{status}</small> 
             </div>
 
-            <button className='bg-tertiary text-[10px] text-primary rounded-full px-6 py-2 mt-[1rem] md:text-[14px] hover:bg-secondary'>{payBtn}</button>
+            <button className='w-fit bg-tertiary text-[10px] text-primary rounded-full px-6 py-2 mt-[1rem] md:text-[14px] hover:bg-secondary'>{payBtn}</button>
             </div>
         </div>
 

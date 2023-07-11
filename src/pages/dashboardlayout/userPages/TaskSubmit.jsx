@@ -1,12 +1,13 @@
 import React from 'react'
 import { useState } from 'react'
 import TaskPerform from './TaskPerform'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleSubmitTask, selectTasks, selectIsLoading, selectIsError } from '../../../redux/slices/taskSlice'
 import { selectUser, selectUserId } from '../../../redux/slices/authSlice'
 import { useEffect } from 'react'
+import { icons} from '../../../components/data/socialIcon'
 
 const initialState = {
     userSocialName: '',
@@ -20,11 +21,14 @@ const TaskSubmit = () => {
     const isError = useSelector(selectIsError)
     const navigate = useNavigate
     const user = useSelector(selectUser)
-    const [mediaUrl, setMediaUrl] = useState(null)
-    const [imagePreview, setImagePreview] = useState(null)
     const { taskId } = useParams()
     const tasks = useSelector(selectTasks)
     const [task, setTask] = useState()
+    
+    const [selectedImages, setSelectedImages] = useState([]);
+    const location = useLocation();
+    // const { newTask } = location.state || {};
+    const [verificationProcess, setVerificationProcess] = useState("")
 
 
     const { userSocialName } = taskSubmitData
@@ -38,8 +42,8 @@ const TaskSubmit = () => {
 
     useEffect(() => {
       setTask(tasks?.find(obj => obj._id === taskId))
-    }, [])
 
+    }, [])
 
     //Handle Input
     const handleInputChange = (e) => {
@@ -47,63 +51,65 @@ const TaskSubmit = () => {
         setTaskSubmitData({ ...taskSubmitData, [name]: value })
       }
 
-     //Handle image preview
-     const handleImageChange = (e) => {
-      setMediaUrl(e.target.files[0])
-      setImagePreview(URL.createObjectURL(e.target.files[0]))
-        
-    }
+
+     // Upload and preview multiple screenshots
+  const handleImageChange = (e) => {
+    const files = e.target.files;
+
+    //Create an array of files previews
+    const filePreviews = Array.from(files).map((file) => 
+    URL.createObjectURL(file));
+
+    setSelectedImages(filePreviews);
+  }
+
+  //Remove uploaded images
+  const handleImageRemove = (imagePreview) => {
+    //filter out the selected image and update the state
+    const updatedImages = selectedImages.filter((preview) => preview !== imagePreview);
+
+    setSelectedImages(updatedImages);
+
+    //Revoke the object URL to release memory
+    URL.revokeObjectURL(imagePreview);
+    toast.success("Image discarded successfully")
+  };
 
     const handleOnSubmit = async (e) => {
       e.preventDefault()
-  
-      if ( !userSocialName || !mediaUrl) {
-        return toast.error("Make Sure All Fields Filled before you can submit")
-      }
-  
-      if (!mediaUrl) {
-        return toast.error("Please upload an screenshot")
-      }
-  
-      if (userSocialName, mediaUrl) {
   
         const taskData = {
           taskId,
           advertId: task.advertId,
           taskPerformerId: task.taskPerformerId,
           userSocialName,
-          mediaUrl,
+          socialPageLink: task?.socialPageLink,
+          selectedImages,
           status: "Submitted"
         }
 
-        
-
        const response = await dispatch(handleSubmitTask(taskData))
-
-        console.log(response.payload)
 
         if (response.payload) {
           navigate(`dashboard/tasks/${task.taskPerformerId}`)
-        }
-
-
-          
+        }  
       }
-  }
 
 
   return (
     <div className='w-full h-fit'>
         <TaskPerform 
             taskId = {taskId}
+            // newTask= {task}
             isLoading = {isLoading}
             isError = {isError}
+            icons={icons}
             taskSubmitData = {taskSubmitData}
-            mediaUrl={mediaUrl}
-            imagePreview={imagePreview}
+            selectedImages={selectedImages}
             handleOnSubmit={handleOnSubmit} 
             handleInputChange={handleInputChange} 
             handleImageChange={handleImageChange} 
+            handleImageRemove={handleImageRemove}
         />
     </div>
   )

@@ -34,7 +34,7 @@ const CampaignStats = () => {
   }, [dispatch])
 
   return (
-    <div className='w-full h-fit'>
+    <div className='w-fit md:w-full h-fit'>
             {isLoading && <Loader />}
       <div className='flex items-center justify-between gap-3 border-b border-gray-200 pb-6'>
                 <div className='flex items-center'>
@@ -48,7 +48,7 @@ const CampaignStats = () => {
                   <button className='flex items-center gap-1 bg-secondary text-primary rounded-full px-5 py-2 mr-5 text-[12px] md:text-[15px]'><BsFillPlusCircleFill />Campaign</button>
       </div>
 
-      <div className=''>
+      <div className='w-fit md:w-full'>
         {adverts.map((item) => (
           <AdItem  
             key={item._id}

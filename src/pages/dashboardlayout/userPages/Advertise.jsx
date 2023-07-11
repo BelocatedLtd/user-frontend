@@ -44,10 +44,10 @@ const Advertise = () => {
         setSelectedPlatformObject(servicesList)
     }
 
-    const handleSelectService = (e, service) => {
+    const handleSelectService = (e, service, adTitle) => {
         e.preventDefault(e)
 
-        navigate(`/dashboard/adbuy/${platformName}`, { state:{ selectedPlatformObject, service } });
+        navigate(`/dashboard/adbuy/${platformName}`, { state:{ selectedPlatformObject, service, adTitle } });
 
 }
     
@@ -69,18 +69,31 @@ const Advertise = () => {
             <div className='flex flex-col gap-[3rem] items-center justify-center mt-[1rem] px-3 py-5'>
                 {socialMenu.map((menu, index) => (
                 <div  key={index} className='shadow-lg p-5'>
-                <div className='flex items-center gap-5'>
+                <div className='flex flex-col md:flex-row items-center gap-5'>
                     <div className='flex flex-col'>
-                        <div className='flex items-center justify-center w-[100px] h-[100px] bg-gray-50 rounded-t-xl rounded-b-2xl'>
+                        <div className='hidden md:flex items-center justify-center w-[100px] h-[100px] bg-gray-50 rounded-t-xl rounded-b-2xl'>
                             <img src={menu.icon} alt="" className='object-cover rounded-full p-2'/>
                         </div>
-                        <button onClick={e => handleSelect(e, menu.value)} className='px-5 py-3 border border-gray-200 mt-5'>Select</button>
+                        <button onClick={(e) => handleSelect(e, menu.value)} className='hidden md:flex px-5 py-3 border border-gray-200 mt-5'>Select</button>
                     </div>
                     
                     <div className='w-full'>
-                        <h3 className='font-bold text-[20px] text'>{menu.title}</h3>
-                        <p className='border-b border-gray-100 pb-3 text-[14px] text-gray-500 font-semibold'><span className='font-extrabold'>Pricing:</span> Starts at ₦{menu.price}/Task Performed</p>
+                        <div className='flex flex-col md:flex-row md:justify-between md:items-center md:border-b md:border-gray-100'>
+                            <div className='flex flex-col w-full md:w-[70%]'>
+                                <h3 className='font-bold text-[20px] text'>{menu.title}</h3>
+                                <p className='border-b border-gray-100 pb-3 text-[14px] text-gray-500 font-semibold'><span className='font-extrabold'>Pricing:</span> Starts at ₦{menu.price}/Task Performed</p>
+                            </div>
+                        </div>
                         <p className='font-normal text-[14px] text-gray-700 mt-3'>{menu.desc}</p>
+
+                        {/* Select button and logo for mobile */}
+                        <div className='w-full flex items-center gap-2'>
+                            <button onClick={(e) => handleSelect(e, menu.value)} className='flex md:hidden px-5 py-3 border border-gray-200 mt-5'>Select</button>
+
+                            <div className='flex md:hidden items-center justify-end w-[50px] h-[50px] rounded-t-xl rounded-b-2xl'>
+                            <img src={menu?.icon} alt="" className='object-cover rounded-full mt-5'/>
+                            </div>
+                        </div>  
                     </div>
                 </div>
                 
@@ -90,7 +103,7 @@ const Advertise = () => {
                     {selectedPlatformObject?.assets?.map( (service, index) => 
                         <ul key={index} className='flex items-center gap-3'>
                             <li className='flex items-center gap-3 border-b border-gray-50 py-3 '>
-                            <div onClick={e => handleSelectService(e, service?.asset)} className='flex items-center gap-3 cursor-pointer'>
+                            <div onClick={e => handleSelectService(e, service?.asset, service.SC)} className='flex items-center gap-3 cursor-pointer'>
                                 <p>{service.SC}</p>
                                 <span className='bg-gray-50 rounded-full p-3'>₦{service.CostToOrder}</span>
                             </div>

@@ -1,9 +1,16 @@
 import React, { useEffect } from 'react'
-import AdBuyForm from '../../../components/forms/AdBuyForm'
-import facebook from '../../../assets/social icons/facebook.svg'
-//import instagram from '../../../assets/social icons/instagram.svg'
-import tiktok from '../../../assets/social icons/tiktok.svg'
-import twitter from '../../../assets/social icons/twitter.png'
+import whatsapp from '../../../assets/animated icons/whatsapp.gif'
+import facebook from '../../../assets/animated icons/facebook.gif'
+import tiktok from '../../../assets/animated icons/tiktok.gif'
+import instagram from '../../../assets/animated icons/instagram.gif'
+import twitter from '../../../assets/animated icons/twitter.gif'
+import youtube from '../../../assets/animated icons/youtube.svg'
+import linkedin from '../../../assets/animated icons/linkedin.gif'
+import appstore from '../../../assets/animated icons/appstore.svg'
+import playstore from '../../../assets/animated icons/playstore.svg'
+import audiomack from '../../../assets/animated icons/audiomack.svg'
+import boomplay from '../../../assets/animated icons/boomplay.svg'
+import spotify from '../../../assets/animated icons/spotify.svg'
 import { useNavigate, useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { useState } from 'react'
 import { LoaderIcon, toast } from 'react-hot-toast'
@@ -13,6 +20,7 @@ import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUs
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { createNewTask, handleGetUserTasks, selectIsError, selectIsLoading, selectTasks } from '../../../redux/slices/taskSlice'
+import {formatDate} from '../../../../utils/formatDate'
 
 const TaskEarn = () => {
     const navigate = useNavigate()
@@ -20,17 +28,12 @@ const TaskEarn = () => {
     const user = useSelector(selectUser)
     const userId = useSelector(selectUserId)
     const username = useSelector(selectUsername)
-    const isLoading = useSelector(selectIsLoading)
-    const isError = useSelector(selectIsError)
     const [icon, setIcon] = useState(null)
     const [newTask, setNewTask] = useState()
-    const [taskSubmitted, setTaskSubmitted] = useState(false)
-    const [istaskCreated, setIsTaskCreated] = useState(false)
-    const [mappedTaskId, setMappedTaskId] = useState()
     const tasks = useSelector(selectTasks)
     const {platformName} = useParams();
     const location = useLocation();
-    const { filteredServiceAdvert, asset } = location.state || {};
+    const { filteredServiceAdvert, asset, taskTitle, taskVerification } = location.state || {};
     const [finalFilteredTasks, setFinalFilteredTasks] = useState([])
 
     const getAllTasks = async() => {
@@ -48,14 +51,41 @@ const TaskEarn = () => {
 
 
     useEffect(() => {
+        if (platformName === "tiktok") {
+            setIcon(tiktok)
+        }
         if (platformName === "facebook") {
             setIcon(facebook)
         }
         if (platformName === "twitter") {
             setIcon(twitter)
         }
-        if (platformName === "tiktok") {
-            setIcon(tiktok)
+        if (platformName === "instagram") {
+            setIcon(instagram)
+        }
+        if (platformName === "linkedin") {
+            setIcon(linkedin)
+        }
+        if (platformName === "whatsapp") {
+            setIcon(whatsapp)
+        }
+        if (platformName === "youtube") {
+            setIcon(youtube)
+        }
+        if (platformName === "appstore") {
+            setIcon(appstore)
+        }
+        if (platformName === "playstore") {
+            setIcon(playstore)
+        }
+        if (platformName === "audiomack") {
+            setIcon(audiomack)
+        }
+        if (platformName === "spotify") {
+            setIcon(spotify)
+        }
+        if (platformName === "boomplay") {
+            setIcon(boomplay)
         }
 
         //Filter all ads to get the ones this user is qualified to perform
@@ -73,13 +103,14 @@ const TaskEarn = () => {
 
     
 
+    //Check if user has already opted in to perform a task, any task he/she is already performing will be marked submit task and new unperformed tasks marked perform task.
     const checkTaskExistence = (advert_Id) => {
        const existingTask = tasks?.find((task) => 
             task.taskPerformerId === userId && task.advertId === advert_Id)
             if (existingTask) {
-               return ( <button onClick={() => goToTaskPage(existingTask._id)} className='flex items-center gap-1 text-primary py-2 px-5 rounded-2xl bg-secondary'>Task Already Created, click to view</button>);
+               return ( <button onClick={() => goToTaskPage(existingTask._id)} className='flex justify-center gap-1 text-primary text-[12px] md:text-[15px] py-2 px-5 rounded-2xl bg-secondary'>Submit Task</button>);
             } else {
-                return ( <button onClick={() => handleSelect(advert_Id)} className='flex items-center gap-1 text-primary py-2 px-5 rounded-2xl bg-tertiary'>Create Task</button>);
+                return ( <button onClick={() => handleSelect(advert_Id)} className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-tertiary text-[12px] md:text-[15px]'>Perform Task</button>);
             } 
     }
 
@@ -103,20 +134,23 @@ const TaskEarn = () => {
                         advertId: taskToPerform._id,
                         advertiserId: taskToPerform.userId,
                         taskPerformerId: userId,
-                        title: `${taskToPerform.desiredROI} ${taskToPerform.service} on ${taskToPerform.platform}`,
+                        title: taskTitle,
                         platform: taskToPerform.platform,
                         service: taskToPerform.service,
                         desiredROI: taskToPerform.desiredROI,
-                        toEarn: taskToPerform.toEarn ? taskToPerform.toEarn : 4,
+                        toEarn: taskToPerform.earnPerTask,
                         gender: taskToPerform.gender,
                         state: taskToPerform.state,
                         lga: taskToPerform.lga,
-                        caption: taskToPerform.caption,
+                        caption: "",
+                        taskVerification,
                         socialPageLink: taskToPerform.socialPageLink,
                     }
+
+                    
                         const response = await dispatch(createNewTask(taskData))
                         setNewTask(response.payload)
-                        console.log(response.payload)
+                        
                         navigate(`/dashboard/submittask/${response?.payload?._id}`)
                 }
     
@@ -145,27 +179,38 @@ const TaskEarn = () => {
             </div>
         </div>
 
-        <div className='px-8 mt-8'>
+        <div className='w-full mt-5 md:px-8 md:mt-8'>
          {finalFilteredTasks?.map((task, index) => (
-            <div key={index} className='flex items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
-                <div className='flex gap-2 items-center'>
-                    <img src={icon} alt={platformName} />
-                    <div className=''>
-                        <small>{task.createdAt}</small>
-                        <h1 className='text-[18px] font-bold my-[-5px] p-0'>{`${task.desiredROI} ${task.service} on ${task.platform}`}</h1>
-                        <small className='text-gray-400 text-[9px]'>To Earn: {task.toEarn ? task.toEarn : "₦3"} Per {task.service}</small>
+            <div key={index} className='w-full flex flex-col md:flex-row items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
+                <div className='w-[70%] flex flex-col gap-2 items-center md:flex-row'>
+                    <img src={icon} alt={platformName} className='hidden md:flex'/>
+                    <div className='flex flex-col'>
+                        {/* Ad details to perform as Task */}
+                        <div className='flex flex-col gap-[0.9rem]'>
+                            <small className='mb-[0.4rem] text-[9px] '>{formatDate(task.createdAt)}</small>
+                            <h4 className='text-gray-600 text-[15px] md:text-[18px] font-bold my-[-5px] p-0'>{taskTitle}</h4>
+                            <small className='text-gray-600 text-[9px] mb-[1rem]'><span className='font-bold'>To Earn:</span> {task.toEarn ? task.toEarn : "₦3"} Per {task.service}</small>
+                        </div>
 
-                        <p className='text-gray-500 text-[15px]'>{task.caption}</p>
+                        {/* Demographics and platform and create task button */}
+                        <div className='flex flex-col w-full gap-3 md:flex-row'>
+                            <div className='flex w-full items-center gap-[2rem]'>
+                            <ul className='flex gap-3 text-[12px] font-light'>
+                                <li><span className='font-bold'>State:</span> {task.state}</li> 
+                                <li><span className='font-bold'>LGA:</span> {task.lga}</li>
+                            </ul>
+                            <img src={icon} alt={platformName} className='flex w-[20px] h-[20px] md:hidden'/>
+                            </div>
 
-                        <div>
-                        <ul className='flex gap-3'>
-                            <li>State: {task.state}</li>
-                            <li>LGA: {task.lga}</li>
-                        </ul>
-                    </div>
+                            <div className='md:hidden w-fit flex md:mt-0 md:w-full md:justify-end'>
+                                {checkTaskExistence(task._id)}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div>
+
+                {/* Button */}
+                <div className='hidden w-[30%] md:flex md:justify-end'>
                         {checkTaskExistence(task._id)}
                 </div>
             </div>

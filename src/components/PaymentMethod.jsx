@@ -31,7 +31,7 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
     getWallet()
    }, [dispatch, wallet])
 
-   const {platform, service, desiredROI, costPerTask, earnPerTask, gender, state, lga, caption, mediaURL, socialPageLink, expBudget} = formData
+   const {platform, service, adTitle, desiredROI, costPerTask, earnPerTask, gender, state, lga, caption, mediaURL, socialPageLink, expBudget} = formData
    
 
    useEffect(() => {
@@ -48,6 +48,7 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
     userId: user.id, 
     platform, 
     service,
+    adTitle,
     desiredROI, 
     costPerTask,
     earnPerTask,
@@ -120,7 +121,7 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
 
     return ReactDOM.createPortal(
         <div className='wrapper'>
-            <div className='relative modal w-[600px] h-[550px] bg-primary'>
+            <div className='relative modal w-fit md:w-[600px] md:h-[550px] bg-primary'>
             <img src={close} alt="close" onClick={togglePaymentSelect} size={40} className='absolute top-[-1rem] right-[-1rem] text-tertiary' />
             <div className='w-full px-[3rem] py-[4rem]'>
                 <h1 className='font-bold mb-3 text-xl'>Hello Payment Method</h1>

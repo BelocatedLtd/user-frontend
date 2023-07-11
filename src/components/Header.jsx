@@ -5,27 +5,53 @@ import { useState } from 'react'
 import Login from '../pages/authLayout/Login'
 import { ShowOnLogin, ShowOnLogout } from './protect/hiddenLinks'
 import Logout from '../pages/authLayout/Logout'
-import { useSelector } from 'react-redux'
-import { selectUser, selectUsername } from '../redux/slices/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { SET_LOGIN, SET_USER, SET_USERNAME, selectUser, selectUsername } from '../redux/slices/authSlice'
 import { MdMenu, MdOutlineCancel } from 'react-icons/md'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import { useEffect } from 'react'
 import { BsArrowUpRight } from 'react-icons/bs'
 import logo from '../assets/belocated-logo.png'
+import { getLoginStatus, getUser } from '../services/authServices'
 
 export const Header = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [regBtn, setRegBtn] = useState(false)
     const [loginBtn, setLoginBtn] = useState(false)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false) 
     const user = useSelector(selectUser)
     const username = useSelector(selectUsername)
+    const [profile, setProfile] = useState(null)
+    const [isLoggedin, setIsLoggedIn] = useState(false)
+
+    useEffect(() => {
+        async function loginStatus() {
+          const status = await getLoginStatus()
+          dispatch(SET_LOGIN(status))
+          setIsLoggedIn(status)
+        }
+        
+        loginStatus()
+    
+        console.log(isLoggedin)
+    
+        if (isLoggedin === "true" && !user?.email) {
+          async function getUserData() {
+            const data = await getUser()
+            setProfile(data)
+            await dispatch(SET_USER(data))
+            await dispatch(SET_USERNAME(data?.username))
+          }
+          getUserData()
+        }
+      }, [])
 
     const userDashboard = () => {
          if (user.accountType === "Admin") {
-            return (<Link to={`/admin/dashboard/${username}`} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</Link>  )
+            return (<Link to={`/admin/dashboard/${user?.username}`} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</Link>  )
          } else {
-           return (<Link to={`/dashboard/${user.username}`} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</Link>)
+           return (<Link to={`/dashboard/${user?.username}`} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</Link>)
         }
     }
 

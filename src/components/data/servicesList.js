@@ -111,7 +111,7 @@ export const services = [
         ]
     },
     {
-        service: 'Audiomac',
+        service: 'Audiomack',
         desc: 'With a limitless music and podcast platform like Audiomack give your new single, album or podcast the needed publicity',
         assets: [
             'Get People To Follow You On Audiomack',

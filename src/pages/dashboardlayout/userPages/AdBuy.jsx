@@ -24,7 +24,7 @@ const AdBuy = () => {
     const [earnPerTask, setEarnPerTask] = useState()
     const {platformName} = useParams();
     const location = useLocation();
-    const { selectedPlatformObject, service } = location.state || {};
+    const { selectedPlatformObject, service, adTitle } = location.state || {};
     const [socialService, setSocialService] = useState(null)
     
 
@@ -83,6 +83,7 @@ const AdBuy = () => {
        <AdBuyForm  
        platform={platformName}
        service={service}
+       adTitle={adTitle}
        advert={advert} 
        mediaUrl={mediaUrl}
        imagePreview={imagePreview}

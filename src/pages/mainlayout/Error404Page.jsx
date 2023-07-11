@@ -1,20 +1,21 @@
 import React from 'react'
 import errorPage from '../../assets/errorpage.png'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { handleGetUserTasks } from '../../redux/slices/taskSlice'
 import { handleGetUserTransactions } from '../../redux/slices/transactionSlice'
 import { handleGetUserAdverts } from '../../redux/slices/advertSlice'
 import { getUser } from '../../services/authServices'
-import { SET_USER, SET_USERNAME } from '../../redux/slices/authSlice'
+import { SET_USER, SET_USERNAME, selectUser } from '../../redux/slices/authSlice'
 import { useEffect } from 'react'
 
 
 
 const Error404Page = () => {
     const dispatch = useDispatch()
+    const user = useSelector(selectUser)
 
     const getDetails = async() => {
-        if (user.email === "") {
+        if (user?.email === "") {
             const data = await getUser()
             await dispatch(SET_USER(data))
             dispatch(SET_USERNAME(data.username))
@@ -22,7 +23,6 @@ const Error404Page = () => {
         await dispatch(handleGetUserTasks())
         await dispatch(handleGetUserTransactions())
         await dispatch(handleGetUserAdverts())
-        await dispatch(get)
     }
 
     useEffect(() => {

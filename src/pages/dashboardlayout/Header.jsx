@@ -34,7 +34,7 @@ const Header = () => {
             </div>
 
             <div className='hidden nav__items mr-5 gap-4 font-medium text-lg text-gray-600 md:flex'>
-                <NavLink to='/dashboard/123456'>Home</NavLink>
+                <NavLink to={`/dashboard/${user?.username}`}>Home</NavLink>
                 <NavLink to='/dashboard/earn'>Earn</NavLink>
                 <NavLink to='/dashboard/advertise'>Advertise</NavLink>
                 <NavLink to='/terms'>Terms</NavLink>
@@ -55,7 +55,7 @@ const Header = () => {
             <div className='absolute w-full right-0 left-0 shadow-xl top-[6rem] py-[5rem] p-[1.5rem] bg-primary rounded-sm'>
                 <div onClick={() => handleCloseMenu()} className='flex flex-col h-[200px] justify-center items-center gap-[1rem] font-extrabold text-gray-700'>
                     <Link to="/">Home</Link>
-                    <Link to="/earn">Earn</Link>
+                    <Link to="/dashboard/earn">Earn</Link>
                     <Link to="/dashboard/advertise">Advertise</Link>
                     <Link to='/terms'>Terms</Link>
                     <ShowOnLogin>

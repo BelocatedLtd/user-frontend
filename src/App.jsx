@@ -23,10 +23,10 @@ import ContactSupport from "./pages/dashboardlayout/userPages/ContactSupport";
 import AdBuy from "./pages/dashboardlayout/userPages/AdBuy";
 import CampaignStats from "./pages/dashboardlayout/userPages/CampaignStats";
 import PaymentMethod from "./components/PaymentMethod";
-import { SET_LOGIN } from "./redux/slices/authSlice";
+import { SET_LOGIN, selectUser } from "./redux/slices/authSlice";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getLoginStatus } from "./services/authServices";
+import { useDispatch, useSelector } from "react-redux";
+import { getLoginStatus, getUser } from "./services/authServices";
 import UpdateProfile from "./pages/dashboardlayout/userPages/UpdateProfile";
 import Logout from "./pages/authLayout/Logout";
 import FundWallet from "./components/FundWallet";
@@ -59,6 +59,7 @@ import PasswordVerify from "./pages/dashboardlayout/userPages/settings/PasswordV
 import ServicesPage from "./pages/mainlayout/ServicesPage";
 import ForgotPasswordChange from "./pages/dashboardlayout/userPages/settings/ForgotPasswordChange";
 import PasswordChangeSuccess from "./pages/dashboardlayout/userPages/settings/PasswordChangeSuccess";
+import FAQ from "./pages/mainlayout/FAQ";
 
 
 
@@ -66,17 +67,32 @@ axios.defaults.withCredentials = true
 
 function App() {
   const dispatch = useDispatch();
+  const user = useSelector(selectUser)
   const [regBtn, setRegBtn] = useState(false)
   const [loginBtn, setLoginBtn] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false) 
+  const [profile, setProfile] = useState(null)
+  const [isLoggedin, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
     async function loginStatus() {
       const status = await getLoginStatus()
       dispatch(SET_LOGIN(status))
+      setIsLoggedIn(status)
     }
+    
     loginStatus()
-  }, [dispatch])
+
+    if (isLoggedin === "true" && !user?.email) {
+      async function getUserData() {
+        const data = await getUser()
+        setProfile(data)
+        await dispatch(SET_USER(data))
+        await dispatch(SET_USERNAME(data?.username))
+      }
+      getUserData()
+    }
+  }, [])
 
   const handleRegister = (e) => {
     e.preventDefault()
@@ -104,6 +120,7 @@ const handleCloseMenu = () => {
           <Route path="/about" element={<About />}/>
           <Route path="/contact" element={<Contact />}/>
           <Route path="/services" element={<ServicesPage />}/>
+          <Route path="/faq" element={<FAQ />}/>
           <Route path="/*" element={<Error404Page />}/>
           <Route path="/retrieve-pass" element={<RetrievePassword />}/>
           <Route path="/verify-phone" element={<VerifyOTP />}/>

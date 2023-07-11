@@ -149,6 +149,7 @@ const taskSlice = createSlice({
             state.isError = false;
             //console.log(action.payload)
             state.task = action.payload
+            console.log(action.payload)
             state.tasks.push(action.payload);
             toast.success("Task Submitted Successfully")
           })
