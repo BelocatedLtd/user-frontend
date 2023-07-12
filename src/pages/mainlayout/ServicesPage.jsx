@@ -23,7 +23,7 @@ const ServicesPage = () => {
             <div key={index} className='w-1/2 min-w-[400px] py-6'>
               <div className='flex items-center gap-2'>
                 <div>
-                <img src={item?.icon} alt="social Icon" className='w-[25px] h-[25px] rounded-full'/>
+                <img src={item?.icon} alt="social Icon" className='w-[25px] h-[25px]'/>
                 </div>
                 
               <h1 className='text-[25px] font-bold leading-[1.4em]'>{item?.service}</h1>

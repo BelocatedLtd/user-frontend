@@ -16,18 +16,18 @@ const FAQ = () => {
         </div>
 
         <div className='w-full h-fit flex justify-center bg-blue-200 py-[5rem]'>
-          <div className='services-list flex flex-wrap md:w-[80%] h-fit px-[3rem] md:px-0' >
+          <div className='services-list flex flex-wrap w-fit md:w-1/2 h-fit px-[2rem] md:px-0' >
           {faqData?.map((item, index) => (
-            <div key={index} className='w-1/2 min-w-[400px] py-6'>
+            <div key={index} className='w-fit md:w-full  py-6'>
               <div className='flex items-center gap-2 mb-[1rem]'>
                 {/* <div>
                 <img src={item?.icon} alt="social Icon" className='w-[25px] h-[25px]'/>
                 </div> */}
                 
-              <h1 className='text-[25px] w-[500px] font-bold text-gray-800 leading-[1.4em]'>{item?.question}</h1>
+              <h1 className='text-[25px] w-fit md:w-[500px] font-bold text-gray-800 leading-[1.4em]'>{item?.question}</h1>
               <AiOutlineHolder className='rotate-90 text-2xl text-tertiary'/>
               </div>
-              <p className='w-[500px] mt-1 text-[18px] my-6'>{item?.answer}</p>
+              <p className='w-fit md:w-[500px] text-[18px] my-6'>{item?.answer}</p>
             </div>
           ))}
           </div>
