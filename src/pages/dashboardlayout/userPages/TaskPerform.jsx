@@ -161,7 +161,7 @@ useEffect(() => {
 
             <div className='flex flex-col items-center gap-3 mt-[4rem]'>
               {/* Submition Form */}
-              <form onSubmit={handleOnSubmit} enctype='multipart/form-data' className='flex flex-col'>
+              <form onSubmit={handleOnSubmit} encType='multipart/form-data' className='flex flex-col'>
                 {/* Upload ScreenSHot */}
                 <div className='w-full h-full flex flex-col pt-[1rem] items-center border-gray-200'>
                   <label htmlFor="upload proof of work" className='text-gray-500 font-bold text-center mb-[1rem]'>Upload Proof of work</label>
