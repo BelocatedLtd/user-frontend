@@ -4,6 +4,7 @@ import Services from './Services'
 import {services} from '../../components/data/servicesList'
 import { CheckmarkIcon } from 'react-hot-toast'
 import { AiOutlineHolder } from 'react-icons/ai'
+import {icons} from '../../components/data/socialIcon'
 
 
 const ServicesPage = () => {
@@ -17,14 +18,18 @@ const ServicesPage = () => {
         
 
         <div className='w-full h-fit flex justify-center bg-blue-200 py-[5rem]'>
-          <div className='services-list flex flex-wrap w-[900px] h-fit'>
+          <div className='services-list flex flex-wrap md:w-[80%] h-fit px-[3rem] md:px-0' >
           {services?.map((item, index) => (
-            <div key={index} className='w-1/2 min-w-[400px] p-6'>
+            <div key={index} className='w-1/2 min-w-[400px] py-6'>
               <div className='flex items-center gap-2'>
+                <div>
+                <img src={item?.icon} alt="social Icon" className='w-[25px] h-[25px] rounded-full'/>
+                </div>
+                
               <h1 className='text-[25px] font-bold leading-[1.4em]'>{item?.service}</h1>
               <AiOutlineHolder className='rotate-90 text-2xl text-tertiary'/>
               </div>
-              <p className='mt-1 text-[18px] my-6'>{item?.desc}</p>
+              <p className='w-[450px] mt-1 text-[18px] my-6'>{item?.desc}</p>
 
               {item.assets?.map((asset, assetIndex) => (
                 <ul key={assetIndex} className='my-6'>

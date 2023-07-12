@@ -117,7 +117,7 @@ const handleCloseMenu = () => {
       <Route path="/success" element={<PasswordChangeSuccess handleLogin={handleLogin} handleRegister={handleRegister} loginBtn={loginBtn} regBtn={regBtn} handleCloseMenu={handleCloseMenu}/>} />
         <Route path="/" element={<MainLayout handleRegister={handleRegister} regBtn={regBtn}/>}>
           <Route index element={<Home handleLogin={handleLogin} handleRegister={handleRegister} loginBtn={loginBtn} regBtn={regBtn} handleCloseMenu={handleCloseMenu}/>}/>
-          <Route path="/about" element={<About />}/>
+          <Route path="/about" element={<About handleRegister={handleRegister} regBtn={regBtn} />}/>
           <Route path="/contact" element={<Contact />}/>
           <Route path="/services" element={<ServicesPage />}/>
           <Route path="/faq" element={<FAQ />}/>

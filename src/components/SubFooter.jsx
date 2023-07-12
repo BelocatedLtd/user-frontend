@@ -24,7 +24,7 @@ const SubFooter = () => {
                     <AiOutlineHolder className='rotate-90 text-2xl text-tertiary mt-1'/>
                 </div> 
                 <div className='text-lg' key="category.id">
-                    <p className='flex items-center gap-1'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam minima perspiciatis fuga facilis unde itaque tempora excepturi veniam</p>
+                    <p className='flex items-center gap-1'>Belocated is an enterprising publicity and media service provider across industries</p>
                 </div>
             </div>
 
@@ -35,7 +35,6 @@ const SubFooter = () => {
                 </div> 
                         <ul className='text-lg flex flex-col gap-2'>
                             <li>How it Works</li>
-                            <li>Help & FAQs</li>
                             <li>Legal</li>
                             <li>Terms of Service</li>
                             <li>Privacy Policy</li>
@@ -51,7 +50,7 @@ const SubFooter = () => {
                         <ul className='text-lg flex flex-col gap-2'>
                             <li>About Us</li>
                             <li>Services</li>
-                            <li>FAQ</li>
+                            <li>Help & FAQs</li>
                             <li>Top Partners</li>
                         </ul>
             </div>

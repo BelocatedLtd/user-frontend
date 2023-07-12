@@ -1,6 +1,20 @@
+import whatsapp from '../../assets/animated icons/whatsapp.gif'
+import facebook from '../../assets/animated icons/facebook.gif'
+import tiktok from '../../assets/animated icons/tiktok.gif'
+import instagram from '../../assets/animated icons/instagram.gif'
+import twitter from '../../assets/animated icons/twitter.gif'
+import youtube from '../../assets/animated icons/youtube.svg'
+import linkedin from '../../assets/animated icons/linkedin.gif'
+import appstore from '../../assets/animated icons/appstore.svg'
+import playstore from '../../assets/animated icons/playstore.svg'
+import audiomack from '../../assets/animated icons/audiomack.svg'
+import boomplay from '../../assets/animated icons/boomplay.svg'
+import spotify from '../../assets/animated icons/spotify.svg'
+
 export const services = [
     {
         service: 'Facebook',
+        icon: facebook,
         desc: 'Using our BeLocated Facebook Service Package, you can take advantage of the largest networking site in the world and build the publicity your brand/ business needs.',
         assets: [
             'Get People To Add You As Facebook Friend',
@@ -15,6 +29,7 @@ export const services = [
     },
     {
         service: 'Instagram',
+        icon: instagram,
         desc: 'Showcase your business or brand to over two billion active instagram users, using our BeLocated Instagram Service offers.',
         assets: [
             'Get People To Follow Your Instagram Page', 
@@ -29,6 +44,7 @@ export const services = [
     },
     {
         service: 'Twitter',
+        icon: twitter,
         desc: 'Twitter is a platform quite popular among B2B marketers, which makes it an ideal space to take your business to the next level with our BeLocated Twitter services.',
         assets: [
             'Get People To Follow Your Twitter Page', 
@@ -43,6 +59,7 @@ export const services = [
     },
     {
         service: 'TikTok',
+        icon: tiktok,
         desc: 'Leveraging on its high social media engagement rate, partner with BeLocated to get your brand noticed and engaged on Tiktok',
         assets: [
             'Get People To Follow Your Tiktok Page', 
@@ -58,6 +75,7 @@ export const services = [
     },
     {
         service: 'YouTube',
+        icon: youtube,
         desc: 'Give your business/ brand the opportunity to stand out on YouTube with our YouTube service offers',
         assets: [
             'Get People To Subscribe to your YouTube.',
@@ -70,6 +88,7 @@ export const services = [
     },
     {
         service: 'LinkedIn',
+        icon: linkedin,
         desc: 'What better place to access a lot of business tools and business connections than LinkedIn? Get the best out of LinkedIn using our LinkedIn services',
         assets: [
             'Get People To Connect With You On LinkedIn.',
@@ -85,6 +104,7 @@ export const services = [
     },
     {
         service: 'WhatsApp',
+        icon: whatsapp,
         desc: 'You can generate big buzz for your product, brand, and business using our Whatsapp Service',
         assets: [
             'Get People To Post Your Post content on their WhatsApp Status.'
@@ -92,6 +112,7 @@ export const services = [
     },
     {
         service: 'iOS App Download',
+        icon: appstore,
         desc: 'New app? No problem! BeLocated will have your app located, downloaded and reviewed with our services',
         assets: [
             'Get People To Download Your App on iOS.',
@@ -102,6 +123,7 @@ export const services = [
     },
     {
         service: 'Android App Download ',
+        icon: playstore,
         desc: 'Get your new application, located, downloaded and reviewed by as many android users as you desire. You only need to desire it and we make it happen',
         assets: [
             'Get People To Download Your App on Android PlayStore.',
@@ -112,6 +134,7 @@ export const services = [
     },
     {
         service: 'Audiomack',
+        icon: audiomack,
         desc: 'With a limitless music and podcast platform like Audiomack give your new single, album or podcast the needed publicity',
         assets: [
             'Get People To Follow You On Audiomack',
@@ -124,6 +147,7 @@ export const services = [
     },
     {
         service: 'BoomPlay',
+        icon: boomplay,
         desc: 'Take advantage of an amazing African focused media streaming and download service platform- Boomplay, to get your singles, and albums noticed and engaged with BeLocated',
         assets: [
             'Get People To Follow You On Boomplay.',
@@ -136,6 +160,7 @@ export const services = [
     },
     {
         service: 'Spotify',
+        icon: spotify,
         desc: 'As one of the first and the largest music streaming platforms, Spotiffy is the ideal platform for you to get located with BeLocated',
         assets: [
             'Get People To Follow You On Spotify.',

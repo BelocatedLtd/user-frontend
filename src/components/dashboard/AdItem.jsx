@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { formatDate } from '../../../utils/formatDate'
 
-const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adService, status, adDesc, state, lga }) => {
+const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adService, status, adDesc, state, lga, tasks, item }) => {
     const [icon, setIcon] = useState()
     const [payBtn, setPayBtn] = useState('Pay Now')
 
@@ -33,7 +33,7 @@ const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adService
     
 
   return (
-    <div className='relative shadow-lg flex w-fit md:w-[95%] h-fit mt-5 mb-[2rem] bg-[#fcfcfc] p-[2rem] rounded-2xl rounded-tr-none md:p-[3rem]'>
+    <div className='relative shadow-lg flex w-full md:w-[95%] h-fit mt-5 mb-[2rem] bg-[#fcfcfc] p-[2rem] rounded-2xl rounded-tr-none md:p-[3rem]'>
         {/* Close icon to delete ad campaign */}
         {status == 'pending' && 
         <img src={close} alt="close" size={20} className='absolute top-[-0.4rem] right-[-0.4rem] text-tertiary w-[28px] h-[28px]' />}
@@ -56,13 +56,13 @@ const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adService
         <div className='flex flex-col md:flex-row gap-2 justify-between'>
             <div className='flex flex-col'>
             <div className='flex flex-col'>
-                <label className='font-extrabold text-[12px] text-gray-700 md:text-[14px] md:font-bold'>No. of Facebook Advert Post:</label>
+                <label className='font-extrabold text-[12px] text-gray-700 md:text-[14px] md:font-bold'>Ad Unit:</label>
                 <small className='text-gray-500 font-bold'>{roi}</small> 
             </div>
 
             <div className='flex flex-col mt-[1rem]'>
                 <label className='font-extrabold text-[12px] text-gray-700 md:text-[14px] md:font-bold'>Amount Paid:</label>
-                <small className='text-gray-500 font-bold'>{adBudget}</small> 
+                <small className='text-gray-500 font-bold'>₦{adBudget}</small> 
             </div>
             </div>
 
@@ -78,7 +78,26 @@ const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adService
                 <small className='bg-yellow-600 text-primary px-3 py-1 rounded-full'>{status}</small> 
             </div>
 
-            <button className='w-fit bg-tertiary text-[10px] text-primary rounded-full px-6 py-2 mt-[1rem] md:text-[14px] hover:bg-secondary'>{payBtn}</button>
+            <div className='w-fit flex flex-col justify-start gap-2 text-[10px] py-2 mt-[1rem] md:text-[14px]'>
+                <div className=''>
+                    <label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>Tasks Completed:</label>
+                    <p className='text-[12px]'>{tasks}</p>
+                </div>
+                <ul className='flex items-center gap-2'>
+                    <li>
+                        <label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>Gender:</label>
+                        <p className='text-[12px]'>{item?.gender}</p>
+                    </li>
+                    <li>
+                        <label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>State:</label>
+                        <p className='text-[12px]'>{item?.state}</p>
+                    </li>
+                    <li>
+                        <label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>LGA:</label>
+                        <p className='text-[12px]'>{item?.lga}</p>
+                    </li>
+                </ul>
+            </div>
             </div>
         </div>
 

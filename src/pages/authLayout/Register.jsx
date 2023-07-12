@@ -112,7 +112,10 @@ const Register = ({handleRegister, setRegBtn, regBtn}) => {
       
     }
 
-    
+    const handleAuthSwitch = () => {
+      handleRegister()
+   
+    }
 
 
   return ReactDOM.createPortal(
@@ -148,7 +151,7 @@ const Register = ({handleRegister, setRegBtn, regBtn}) => {
                 <button type="submit" className='w-full mt-1 mb-[-0rem] py-2 text-md rounded-xl bg-secondary text-gray-100 mb-5'>Sign Up!</button>
             </form>
            
-            <p className='text-sm text-gray-500 text-center cursor-pointer mt-[2.5rem]'>No account yet? <span className='text-btn'>Sign Up</span></p>
+            <p onClick={handleAuthSwitch} className='text-sm text-gray-500 text-center cursor-pointer mt-[2.5rem]'>Already Registered? <span className='text-btn'>Sign In</span></p>
         </div>
         </div>
     </div>,

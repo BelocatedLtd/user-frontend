@@ -6,12 +6,15 @@ import refd from '../../assets/refd.svg'
 import adRoi from '../../assets/adRoi.svg'
 import hah from '../../assets/hah.png'
 import { useNavigate } from 'react-router-dom'
+import { ShowOnLogin, ShowOnLogout } from '../../components/protect/hiddenLinks'
+import Register from '../authLayout/Register'
 
 
-const About = () => {
+const About = ({handleRegister, regBtn}) => {
     const navigate = useNavigate()
   return (
     <div className='w-full h-fit'>
+        {regBtn && <Register handleRegister={handleRegister} regBtn={regBtn} />}
       <div className='container h-full flex flex-col justify-center gap-7 mx-auto'>
             {/* Who we are */}
             <div className='flex flex-col h-full items-center justify-center mx-auto md:flex-row'>
@@ -31,20 +34,15 @@ const About = () => {
 
              {/* Vision Mission */}
              <div className='mt-[5rem]'>
-            <div className='flex flex-col items-center gap-2 mt-[2rem] md:flex-row'>
+            <div className='flex flex-col items-center justify-center gap-[5rem] mt-[2rem] md:flex-row'>
                 <div className='bg-transparent w-fit md:w-[450px] h-[450px] flex flex-col gap-2 items-center justify-center text-center shadow-2xl'>
-                    <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>VISION</h2>
-                    <p className='px-6'>We are dedicated to providing solutions to publicity and media challenges while providing earning opportunities to all users.</p>
+                    <h2 className='text-[20px] font-[700] leading-[1.4em]  border-b-4 border-red-400 '>VISION</h2>
+                    <p className='px-6'>The belocated team is made up of highly determined and vision oriented group of individuals who are dedicated to providing solutions to publicity and media challenges while providing earning opportunities to all users.</p>
                 </div>
 
                 <div className='bg-transparent w-fit md:w-[450px] h-[450px] flex flex-col gap-2 items-center justify-center text-center shadow-2xl'>
-                    <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>MISSION</h2>
-                    <p className='px-6'>BeLocated is a people driven organization passionate about solving the one major problem of businesses and brands</p>
-                </div>
-
-                <div className='bg-transparent w-fit md:w-[450px] h-[450px] flex flex-col gap-2 items-center justify-center text-center shadow-2xl'>
-                    <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>VISIBILITY</h2>
-                    <p className='px-6'>We partner with our clients by giving them a platform to be seen and with visibility comes the needed sales.</p>
+                    <h2 className='text-[20px] font-[700] leading-[1.4em] border-b-4 border-red-400'>MISSION</h2>
+                    <p className='px-6'>BeLocated is a people driven organization passionate about solving the one major problem of businesses and brands; visibility. We partner with our clients by giving them a platform to be seen and with visibility comes the needed sales.</p>
                 </div>
                 </div>
             </div>
@@ -114,14 +112,19 @@ const About = () => {
                         <button onClick={() => navigate('/services')} className='bg-red-400 text-primary px-4 py-2 mt-3'>Services</button>
                     </div>
 
-                    <div className='bg-gray-100 w-fit md:w-[450px] h-[500px] mx-[1rem] flex flex-col gap-2 items-center justify-center text-center shadow-2xl rounded-2xl'>
+                    <div className='bg-gray-100 w-fit md:w-[450px] h-[500px] mx-[1rem] flex flex-col gap-2 items-center justify-center text-center shadow-2xl roundedP-2xl'>
                         <div className='w-[70px] h-fit bg-gray-300 p-2 rounded-full mb-4'>
                             <img src={adRoi} alt="Advert ROI" className='w-full h-full object-cover'/>
                         </div>
                         <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>Earn Steady Income</h2>
-                        <p className='px-6 text-center'>Belocated is more than just a business but an organization that rewards you for all transactions carried out on the platform. As a client, you earn guaranteed return on your business investments, visible results as well as on time and quality service delivery. As a user you earn for every task performed on the platform. With Belocated, everyone is a WINNER!</p>
+                        <p className='px-6 text-center'>Belocated is more than just a business but an organization that rewards you for all transactions carried out on the platform. As a client, you earn guaranteed return on your business investments, visible results as well as on time and quality service delivery. As a user you earn for every task performed on the platform. Here, everyone is a WINNER!</p>
 
-                        <button onClick={() => navigate('/services')} className='bg-red-400 text-primary px-4 py-2 mt-3'>Services</button>
+                        <ShowOnLogout>
+                        <button onClick={handleRegister} className='bg-red-400 text-primary px-8 py-2 mt-3'>Earn</button>
+                        </ShowOnLogout>
+                        <ShowOnLogin>
+                        <button onClick={() => navigate('/dashboard/earn')} className='bg-red-400 text-primary px-4 py-2 mt-3'>Earn</button> 
+                        </ShowOnLogin>
                     </div>
                 </div>
             </div>

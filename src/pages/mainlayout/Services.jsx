@@ -17,7 +17,7 @@ const Services = () => {
                         <img src={roi} alt="Advert ROI" className='w-full h-full object-cover'/>
                     </div>
                     <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>Massive ROI On Adverts</h2>
-                    <p className='px-6'>Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+                    <p className='px-6'>A guaranteed quick & positive return on your business publicity investment. Monitor the progress of your order from your dashboard. Transparency + Speed + Efficiency = BeLocated ROI</p>
                 </div>
 
                 <div className='bg-gray-100 w-[350px] h-[400px] flex flex-col gap-2 items-center justify-center text-center shadow-2xl rounded-2xl'>
@@ -25,7 +25,7 @@ const Services = () => {
                         <img src={adRoi} alt="Advert ROI" className='w-full h-full object-cover'/>
                     </div>
                     <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>Affordable Pricing</h2>
-                    <p className='px-6'>Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+                    <p className='px-6'>Get reliable publicity packages at very affordable rates. You can dictate the budget and details of your campaign with jus few clicks. Are you in doubt? A trial will convince you and get you hooked</p>
                 </div>
 
                 <div className='bg-gray-100 w-[350px] h-[400px] flex flex-col gap-2 items-center justify-center text-center shadow-2xl rounded-2xl'>
@@ -33,7 +33,7 @@ const Services = () => {
                         <img src={money} alt="Advert ROI" className='w-full h-full object-cover'/>
                     </div>
                     <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>Earn Steady Income</h2>
-                    <p className='px-6'>Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
+                    <p className='px-6'>Belocated offers you rewards for every media task you perform. Regardless of your social status, you can earn a steady income on BeLocated platform as long as you have a mobile device and data</p>
                 </div>
             </div>
         </div>
