@@ -63,7 +63,7 @@ export const socialMenu = [
         icon: twitter,
         price: 5,
         earn: 3,
-        desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat explicabo mollitia natus voluptatum doloremque, nisi libero? Sint est, unde quisquam, veritatis explicabo hic, repudiandae alias itaque non earum doloribus modi.",
+        desc: "Twitter is a platform quite popular among B2B marketers, which makes it an ideal space to take your business to the next level",
         path: "/dashboard/",
     },
     {
