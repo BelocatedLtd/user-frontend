@@ -20,7 +20,7 @@ export const socialMenu = [
         icon: whatsapp,
         price: 5,
         earn: 3,
-        desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat explicabo mollitia natus voluptatum doloremque, nisi libero? Sint est, unde quisquam, veritatis explicabo hic, repudiandae alias itaque non earum doloribus modi.",
+        desc: "You can generate big buzz for your product, brand and business using our whatsapp services",
         path: "/dashboard/",
         asset: {
             
@@ -32,7 +32,7 @@ export const socialMenu = [
         icon: tiktok,
         price: 5,
         earn: 3,
-        desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat explicabo mollitia natus voluptatum doloremque, nisi libero? Sint est, unde quisquam, veritatis explicabo hic, repudiandae alias itaque non earum doloribus modi.",
+        desc: "Leveraging onits high social media engagement rate, partner with Belocated to get your brand noticed and engaged",
         path: "/dashboard/",
     },
     {
@@ -41,7 +41,7 @@ export const socialMenu = [
         icon: facebook,
         price: 5,
         earn: 3,
-        desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat explicabo mollitia natus voluptatum doloremque, nisi libero? Sint est, unde quisquam, veritatis explicabo hic, repudiandae alias itaque non earum doloribus modi.",
+        desc: "Using our Belocated Facebook service package, you can take advantage of the largest networking site in the world and build the publicity your brand/business needs.",
         path: "/dashboard/",
         asset: {
            
@@ -54,7 +54,7 @@ export const socialMenu = [
         icon: instagram,
         price: 5,
         earn: 3,
-        desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat explicabo mollitia natus voluptatum doloremque, nisi libero? Sint est, unde quisquam, veritatis explicabo hic, repudiandae alias itaque non earum doloribus modi.",
+        desc: "Showcase your business or brand to over two billion active Instagram users.",
         path: "/dashboard/",
     },
     {
