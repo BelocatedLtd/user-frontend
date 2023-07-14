@@ -9,14 +9,14 @@ import { selectUser, selectUserId } from '../../../redux/slices/authSlice'
 import { useEffect } from 'react'
 import { icons} from '../../../components/data/socialIcon'
 
+
 const initialState = {
-    userSocialName: '',
+  userSocialName: '',
 }
 
 const TaskSubmit = () => {
     const dispatch = useDispatch()
     const userId = useSelector(selectUserId)
-    const [taskSubmitData, setTaskSubmitData] = useState(initialState)
     const isLoading = useSelector(selectIsLoading)
     const isError = useSelector(selectIsError)
     const navigate = useNavigate
@@ -24,11 +24,11 @@ const TaskSubmit = () => {
     const { taskId } = useParams()
     const tasks = useSelector(selectTasks)
     const [task, setTask] = useState()
-    
     const [selectedImages, setSelectedImages] = useState([]);
     const location = useLocation();
     // const { newTask } = location.state || {};
     const [verificationProcess, setVerificationProcess] = useState("")
+    const [taskSubmitData, setTaskSubmitData] = useState(initialState)
 
 
     const { userSocialName } = taskSubmitData
@@ -48,13 +48,15 @@ const TaskSubmit = () => {
     //Handle Input
     const handleInputChange = (e) => {
         const {name, value } = e.target;
-        setTaskSubmitData({ ...taskSubmitData, [name]: value })
-      }
+        setTaskSubmitData({...taskSubmitData, [name]: value});
+      } 
 
 
      // Upload and preview multiple screenshots
   const handleImageChange = (e) => {
     const files = e.target.files;
+
+
 
     //Create an array of files previews
     const filePreviews = Array.from(files).map((file) => 
@@ -75,20 +77,19 @@ const TaskSubmit = () => {
     toast.success("Image discarded successfully")
   };
 
+
+
     const handleOnSubmit = async (e) => {
       e.preventDefault()
-  
-        const taskData = {
-          taskId,
-          advertId: task.advertId,
-          taskPerformerId: task.taskPerformerId,
-          userSocialName,
-          socialPageLink: task?.socialPageLink,
-          selectedImages,
-          status: "Submitted"
-        }
 
-       const response = await dispatch(handleSubmitTask(taskData))
+      const formData = new FormData();
+      selectedImages.forEach((image) => {
+        formData.append('images', image);
+      });
+      formData.append('taskId', taskId);
+      formData.append('userSocialName', userSocialName);   
+
+      const response = await dispatch(handleSubmitTask(formData))  
 
         if (response.payload) {
           navigate(`dashboard/tasks/${task.taskPerformerId}`)

@@ -39,9 +39,9 @@ const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adService
         <img src={close} alt="close" size={20} className='absolute top-[-0.4rem] right-[-0.4rem] text-tertiary w-[28px] h-[28px]' />}
 
         {/* Social media icon  right */}
-        <div className='hidden w-[8%] md:flex'>
+        {/* <div className='hidden w-[8%] md:flex'>
         <img src={icon} alt="" className='w-[60px] h-[60px]'/>
-        </div>
+        </div> */}
 
         {/* ad details left */}
         <div className='w-[92%] flex flex-3 flex-col'>

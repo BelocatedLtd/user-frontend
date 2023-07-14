@@ -20,9 +20,9 @@ export const getTasks = async() => {
 }
 
 // Submit task
-export const submitTask = async (taskData) => {
-    const response = await axios.post(`${BACKEND_URL}/api/tasks/submit`, taskData)
-   return response.data   
+export const submitTask = async (formData) => {
+    const response = await axios.post(`${BACKEND_URL}/api/tasks/submit`, formData)
+  return response.data   
 }
 
 // Approve task

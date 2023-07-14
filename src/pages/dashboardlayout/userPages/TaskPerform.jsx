@@ -161,7 +161,7 @@ useEffect(() => {
 
             <div className='flex flex-col items-center gap-3 mt-[4rem]'>
               {/* Submition Form */}
-              <form onSubmit={handleOnSubmit} encType='multipart/form-data' className='flex flex-col'>
+              <form onSubmit={handleOnSubmit} className='flex flex-col'>
                 {/* Upload ScreenSHot */}
                 <div className='w-full h-full flex flex-col pt-[1rem] items-center border-gray-200'>
                   <label htmlFor="upload proof of work" className='text-gray-500 font-bold text-center mb-[1rem]'>Upload Proof of work</label>
@@ -175,14 +175,14 @@ useEffect(() => {
                       ))}
                       </div>
 
-                      <input type="file"  placeholder='Upload Screenshots' onChange={handleImageChange} multiple className='w-full p-3 shadow-inner rounded-2xl bg-gray-50 md:w-[300px]' />
+                      <input type="file"  name="selectedImages"  placeholder='Upload Screenshots' multiple  onChange={handleImageChange} className='w-full p-3 shadow-inner rounded-2xl bg-gray-50 md:w-[300px]' />
                 </div>
 
                 {/* Social Account Link */}
                 {hideUsernameDisplayField ? "" : (
                   <div className='w-full md:w-[500px] flex flex-col items-center mt-[2rem] mx-auto'>
                   <label htmlFor="social media username" className='text-gray-500 font-bold text-center mb-[1rem]'>Fill in your {newTask?.platform} Username</label>
-                  <input type="text" name="userSocialName" placeholder='Enter your social media username' onChange={handleInputChange} multiple className='py-2 px-6 text-gray-800 bg-gray-200 rounded-2xl'/>
+                  <input type="text" name="userSocialName" placeholder='Enter your social media username' onChange={handleInputChange} className='py-2 px-6 text-gray-800 bg-gray-200 rounded-2xl'/>
                 </div>
                 )}
                 

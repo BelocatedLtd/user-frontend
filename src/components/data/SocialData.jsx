@@ -95,7 +95,7 @@ export const socialMenu = [
     },
     {
         title: "Android App Download ",
-        value: 'android app download ',
+        value: 'android app download',
         icon: playstore,
         price: 100,
         earn: 50,

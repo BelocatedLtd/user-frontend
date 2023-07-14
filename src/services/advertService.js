@@ -5,7 +5,7 @@ import axios from "axios"
 // Create Advert
 export const createAdvert = async (formDataForPayment) => {
     const response = await axios.post(`${BACKEND_URL}/api/adverts/create`, formDataForPayment)
-   return response.data   
+   return response.data
 }
 
 // Get User Adverts
@@ -18,6 +18,12 @@ export const getUserAdverts = async() => {
 export const getAllUserAdverts = async() => {
     const response = await axios.get(`${BACKEND_URL}/api/adverts/all`)
    return response.data      
+}
+
+// Set Advert to be Free
+export const setAdvertFree = async(advertId) => {
+        const response = await axios.patch(`${BACKEND_URL}/api/adverts/setadfree/${advertId}`)
+        return response.data
 }
 
 // Delete Advert

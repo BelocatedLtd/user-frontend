@@ -55,9 +55,9 @@ export const handleGetTasks = createAsyncThunk(
   // Submit Task
 export const handleSubmitTask = createAsyncThunk(
   "create/handlesubmitTask",
-  async (taskData, thunkAPI) => {
+  async (formData, thunkAPI) => {
     try {
-      return await submitTask(taskData)
+      return await submitTask(formData)
     } catch (error) {
       const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       return thunkAPI.rejectWithValue(message)
@@ -147,7 +147,6 @@ const taskSlice = createSlice({
             state.isLoading = false;
             state.isSuccess = true;
             state.isError = false;
-            //console.log(action.payload)
             state.task = action.payload
             console.log(action.payload)
             state.tasks.push(action.payload);

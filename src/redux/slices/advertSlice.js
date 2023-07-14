@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { createAdvert, getAllUserAdverts, getUserAdverts } from '../../services/advertService'
+import { createAdvert, getAllUserAdverts, getUserAdverts, setAdvertFree } from '../../services/advertService'
 
 import { toast } from 'react-hot-toast';
 
@@ -19,6 +19,19 @@ export const createNewAdvert = createAsyncThunk(
   async (formData, thunkAPI) => {
     try {
       return await createAdvert(formData)
+    } catch (error) {
+      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// Toggle Free Ad State
+export const handleToggleFreeAdvert = createAsyncThunk(
+  "freeAd/createNewAdvert",
+  async (advertId, thunkAPI) => {
+    try {
+      return await setAdvertFree(advertId)
     } catch (error) {
       const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       return thunkAPI.rejectWithValue(message)
@@ -78,6 +91,27 @@ const advertSlice = createSlice({
             toast.success("Advert Created Successfully")
           })
           .addCase(createNewAdvert.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = false;
+            state.isError = true;
+            state.message = action.payload;
+            toast.error(action.payload) 
+          })
+
+          // Toggle Free Advert State
+          .addCase(handleToggleFreeAdvert.pending, (state) => {
+            state.isLoading = true
+          })
+          .addCase(handleToggleFreeAdvert.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;
+            console.log(action.payload)
+            state.advert = action.payload
+            state.adverts.push(action.payload);
+            toast.success("Advert Set To Free")
+          })
+          .addCase(handleToggleFreeAdvert.rejected, (state, action) => {
             state.isLoading = false;
             state.isSuccess = false;
             state.isError = true;

@@ -12,6 +12,7 @@ import placeholder from '../../../assets/placeholder.jpg'
 import TaskModal from '../../../components/adminComponents/TaskModal';
 import Loader from '../../../components/loader/Loader';
 import DeleteTaskModal from '../../../components/adminComponents/DeleteTaskModal';
+import Carousel from '../../../components/Carousel';
 
 const TaskSingle = () => {
     const {id} = useParams()
@@ -24,6 +25,7 @@ const TaskSingle = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [modalBtn, setModalBtn] = useState(false)
     const [delBtn, setDelBtn] = useState(false)
+    const [slides, setSlides] = useState([])
 
     useEffect(() => {
       const taskDetails = tasks?.find(task => task?._id === id)
@@ -31,6 +33,7 @@ const TaskSingle = () => {
       const advertiserDetails = users?.find(user => user._id === taskDetails?.advertiserId)
 
       settask(taskDetails)
+      setSlides(taskDetails?.proofOfWorkMediaURL?.secure_url)
       setTaskPerformer(taskPerformerDetails)
       setAdvertiser(advertiserDetails)
     }, [])
@@ -158,9 +161,24 @@ const TaskSingle = () => {
           </div>
 
           {/* Task Media Submit  */}
-          <div className='w-[400px] h-[400px] mx-auto mt-6'>
-            <img src={task?.proofOfWorkMediaURL?.url ? task?.proofOfWorkMediaURL?.url : placeholder} alt="" className='w-full h-full object-cover'/>
-          </div>
+          {/* <div className='w-[400px] h-[400px] mx-auto mt-6'> */}
+          <div className='w-full h-full justify-center mt-[5rem] flex-1 md:flex'>
+          {task?.proofOfWorkMediaURL?.lenght === 0 && (
+            <div className='max-w-lg '>
+                <p>No Proof uploaded yet</p>
+            </div>
+          )}
+          {task?.proofOfWorkMediaURL?.lenght > 0 && (
+            <div className='max-w-lg '>
+                <Carousel autoSlide={true} >
+                    {slides?.map((s, index) => (
+                        <img key={index} src={s} className='w-full h-full object-cover'/>
+                    ))}
+                </Carousel>
+            </div>
+          )}
+            </div>
+          {/* </div> */}
         </div>
         
 

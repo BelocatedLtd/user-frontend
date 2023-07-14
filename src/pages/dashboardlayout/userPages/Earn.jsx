@@ -25,14 +25,28 @@ const Earn = () => {
     const [selectedPlatformAds, setSelectedPlatformAds] = useState()
     const [platformName, setPlatformName] = useState("")
     useRedirectLoggedOutUser('/login')
+    const [taskList, setTaskList] = useState()
 
 
 useEffect(() => {
     const handleGetTasks = async() => {
         await dispatch(handleGetALLUserAdverts())
     }
+
+    //Check if task performer is still eligible for free tasks so he will see only the adverts that are marked as free. If not, he will see paid adverts
+    if (user?.freeTaskCount > 0 ) {
+        const freeAdverts = adverts?.filter(advert => advert.isFree === false)
+        setTaskList(freeAdverts)
+    } 
+
+    if (user?.freeTaskCount === 0) {
+        const paidAdverts = adverts?.filter(advert => advert.isFree === false)
+        setTaskList(paidAdverts)
+    }
+
     handleGetTasks()
 }, [dispatch])
+
 
     const handleSelect = (e, platform) => { 
         e.preventDefault(e)
@@ -40,7 +54,7 @@ useEffect(() => {
          setPlatformName(platform)
 
         //Filtered out only the ads that's relevant to the platform user clicked
-        const filteredAdverts = adverts?.filter(advert => advert?.platform === platform);
+        const filteredAdverts = taskList?.filter(advert => advert?.platform === platform);
         setSelectedPlatformAds(filteredAdverts)
 
         //Function to toggle to services list open and close
@@ -59,7 +73,7 @@ useEffect(() => {
         const filteredServiceAdvert = selectedPlatformAds?.filter(advert => advert?.service === asset)
         navigate(`/dashboard/taskearn/${platformName}`, { state:{ filteredServiceAdvert, asset, taskTitle, taskVerification } });
 
-}
+    }
 
   return (
     <div className='w-full h-fit'>
@@ -75,8 +89,11 @@ useEffect(() => {
                 </div>
             </div>
 
-            <div className='flex items-center gap-3 border-b border-gray-200'>
-                <p className='font-normal text-[14px] text-gray-700 p-6'>You can earn consistently by posting adverts of various businesses and top brands on your social media accounts and performing simple social media tasks. To get started, simply click on any of the earning options shown below:</p>
+            <div className='flex flex-col justify-center gap-3 border-b border-gray-200 py-6'>
+                <p className='font-normal text-[14px] text-gray-700 px-6'>You can earn consistently by posting adverts of various businesses and top brands on your social media accounts and performing simple social media tasks. To get started, simply click on any of the earning options shown below:</p>
+
+                {user?.freeTaskCount > 0 && (<p className='text-tertiary font-normal px-6'>Complete your 2 free tasks for the week and get access to paid tasks</p>)}
+                {user?.freeTaskCount === 0 && (<p className='text-secondary font-normal px-6'>Free tasks completed for the week, you are eligible to earn from the tasks you perform</p>)}
             </div>
 
             <div className='flex flex-col gap-[3rem] items-center justify-center mt-[1rem] px-3 py-5'>
@@ -97,7 +114,7 @@ useEffect(() => {
                                 <p className='pb-3 text-[14px] text-gray-500 font-semibold'><span className='font-extrabold'>Earning: </span> Starts from ₦{menu?.earn}/Task Completed & Approved</p>
                             </div>
                             <div className='w-full md:text-right'>
-                            <small className='py-2 px-5 bg-green-700 text-primary rounded-2xl'>{adverts?.filter(advert => advert?.platform === menu?.value).length} Tasks Available</small>
+                            <small className={`py-2 px-5 ${user?.freeTaskCount === 0 ? ('bg-secondary') : ('bg-tertiary')} text-primary rounded-2xl`}>{taskList?.filter(advert => advert?.platform === menu?.value).length} Tasks Available</small>
                             </div>
                         </div>
                         <p className='font-normal text-[14px] text-gray-700 mt-3'>{menu?.desc}</p>
