@@ -30,7 +30,7 @@ const Wallet = () => {
 
 // Toggle withdraw funds
 const handleWithdrawFunds = (e) => {
-e.preventDefault()
+e?.preventDefault()
 setTogleWithdrawBtn(!togleWithdrawBtn)
 }
 

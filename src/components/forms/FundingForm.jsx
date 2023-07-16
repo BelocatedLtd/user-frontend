@@ -32,7 +32,7 @@ const FundingForm = ({toggleFundingSelect}) => {
         return ReactDOM.createPortal(
             <div className='wrapper'>
                 {FLWFundingModal && <FundWallet toggleFLWFunding={toggleFLWFunding} fundingAmount={fundingAmount} />}
-                <div className='relative modal w-[600px] h-fit  bg-primary'>
+                <div className='relative modal w-fit md:w-[600px] h-fit  bg-primary'>
                     <img src={close} alt="close" onClick={toggleFundingSelect} size={40} className='absolute top-[-1rem] right-[-1rem] text-tertiary' />
                     <form onSubmit={toggleFLWFunding} className='flex flex-col justify-center items-center p-[4rem] gap-2'>
                         <label htmlFor="fund account" className='font-bold text-sm'>How much would you like to fund?</label>

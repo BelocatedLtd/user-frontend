@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { CheckmarkIcon, toast } from 'react-hot-toast'
-import { handleApproveTask } from '../../redux/slices/taskSlice'
+import { handleApproveTask, handleRejectTask } from '../../redux/slices/taskSlice'
 import Loader from '../loader/Loader'
 import { useEffect } from 'react'
 //import socket from '../../services/socket'
@@ -19,11 +19,9 @@ const socket = io.connect(`${BACKEND_URL}`)
 
 const TaskModal = ({handleModal, task, taskPerformer}) => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
     const [rejectMessage, setRejectMessage] = useState(false)
-
-    
-    
 
     const initialState = {
         taskStatus: '',
@@ -31,9 +29,6 @@ const TaskModal = ({handleModal, task, taskPerformer}) => {
     }
 
     const [taskConfirm, setTaskConfirm] = useState(initialState)
-
-    
-    
 
     const {taskStatus, message} = taskConfirm
     
@@ -53,61 +48,82 @@ const TaskModal = ({handleModal, task, taskPerformer}) => {
         }
     }, [taskStatus])
 
-    
 
-    const taskData = {
+    const approveTaskData = {
         taskId: task?._id, 
-        advertId: task?.advertId, 
-        advertiserId: task?.advertiserId, 
-        taskPerformerId: task?.taskPerformerId, 
-        taskStatus: taskStatus, 
+    }
+
+    const rejectTaskData = {
+        taskId: task?._id, 
         message: message,
     }
 
+
     const confirm = async(e) => {
         e.preventDefault()
-
-        if (taskStatus === "Rejected" && !message) {
-            toast.error("You have to let the user know why their Task was rejected")
-
-            return
-        }
-
+       
         setIsLoading(true)
+        //Admin Rejects Tasks
+        if (taskStatus === "Rejected") {
 
-        const response = await dispatch(handleApproveTask(taskData))
-
-        if (!response.payload) {
-            toast.error("Error")
-            setIsLoading(false)
-        }
-
-        if (response.payload) {
-            toast.error("Task Approved")
-            setIsLoading(false)
-
-            const emitData = {
-                userId: task.taskPerformerId,
-                action: `@${taskPerformer?.username} from ${taskPerformer?.location} just earned ₦${task?.toEarn} from a task completed`
+            if (!message) {
+                toast.error("You have to let the user know why their Task was rejected")
+                setIsLoading(false)
             }
 
-            
+            const response = await dispatch(handleRejectTask(rejectTaskData))
+            setIsLoading(false)
 
-            //Emit Socket event to update activity feed
-            socket.emit('sendActivity', emitData)  
-            
+            if (!response.payload) {
+                toast.error("Error Rejecting Task")
+                setIsLoading(false)
+            }
+    
+            if (response.payload) {
+                toast.error("Task Rejected")
+                setIsLoading(false)
+                navigate(`/admin/dashboard/tasks/${user?.username}`)
+                setIsLoading(false)
+        }
 
-            handleModal()
+        //If Admin Approves
+        if (taskStatus === "Approved") {
+            const response = await dispatch(handleApproveTask(approveTaskData))
+
+            if (!response.payload) {
+                toast.error("Error Approving Task")
+                setIsLoading(false)
+            }
+    
+            if (response.payload) {
+                toast.error("Task Approved")
+                setIsLoading(false)
+    
+                const emitData = {
+                    userId: task.taskPerformerId,
+                    action: `@${taskPerformer?.username} from ${taskPerformer?.location} just earned ₦${task?.toEarn} from a task completed`
+                }
+    
+                
+    
+                //Emit Socket event to update activity feed
+                socket.emit('sendActivity', emitData)  
+                
+                navigate(`/admin/dashboard/tasks/${user?.username}`)
+                handleModal()
+                setIsLoading(false)
+            }
             setIsLoading(false)
         }
            
         setIsLoading(false)
     }
+    }
 
     return ReactDOM.createPortal(
         <div className='wrapper'>
           {isLoading && <Loader />}
-            <div className='relative modal w-[400px] h-[400px] bg-primary md:w-[400px]'>
+            <div className='relative modal w-[85%] h-[400px] bg-primary md:w-[400px]'>
               <img src={close} alt="close" onClick={handleModal} size={40} className='absolute top-[-1rem] right-[-1rem] text-tertiary' />
               <div className='w-full h-full modal__header__text flex flex-col items-center justify-center'>
                 <h3 className='text-2xl text-gray-800 font-bold px-6 mb-4 text-center'>Confirm or reject task</h3>

@@ -16,9 +16,9 @@ const initialState = {
 // Creat New Ad
 export const createNewAdvert = createAsyncThunk(
   "create/createNewAdvert",
-  async (formData, thunkAPI) => {
+  async (paymentFormData, thunkAPI) => {
     try {
-      return await createAdvert(formData)
+      return await createAdvert(paymentFormData)
     } catch (error) {
       const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       return thunkAPI.rejectWithValue(message)
@@ -28,10 +28,10 @@ export const createNewAdvert = createAsyncThunk(
 
 // Toggle Free Ad State
 export const handleToggleFreeAdvert = createAsyncThunk(
-  "freeAd/createNewAdvert",
-  async (advertId, thunkAPI) => {
+  "freeAd/adType",
+  async (id, thunkAPI) => {
     try {
-      return await setAdvertFree(advertId)
+      return await setAdvertFree(id)
     } catch (error) {
       const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       return thunkAPI.rejectWithValue(message)
@@ -80,6 +80,7 @@ const advertSlice = createSlice({
           // Create New Advert
           .addCase(createNewAdvert.pending, (state) => {
             state.isLoading = true
+            state.isSuccess = false;
           })
           .addCase(createNewAdvert.fulfilled, (state, action) => {
             state.isLoading = false;
@@ -109,7 +110,7 @@ const advertSlice = createSlice({
             console.log(action.payload)
             state.advert = action.payload
             state.adverts.push(action.payload);
-            toast.success("Advert Set To Free")
+            toast.success("Ad Type Changed")
           })
           .addCase(handleToggleFreeAdvert.rejected, (state, action) => {
             state.isLoading = false;

@@ -5,19 +5,10 @@ import tiktok from '../../assets/social icons/tiktok.svg'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { formatDate } from '../../../utils/formatDate'
+import { icons} from '../../components/data/socialIcon'
 
-const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adService, status, adDesc, state, lga, tasks, item }) => {
-    const [icon, setIcon] = useState()
+const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, tasks, item }) => {
     const [payBtn, setPayBtn] = useState('Pay Now')
-
-    useEffect(() => {
-        if(socialIcon == 'facebook') {
-            return setIcon(facebook)
-         } 
-         if(socialIcon == 'tiktok') {
-             return setIcon(tiktok)
-          } 
-    }, [])
 
     useEffect(() => {
         if(status == 'Pending') {
@@ -36,12 +27,12 @@ const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adService
     <div className='relative shadow-lg flex w-full md:w-[95%] h-fit mt-5 mb-[2rem] bg-[#fcfcfc] p-[2rem] rounded-2xl rounded-tr-none md:p-[3rem]'>
         {/* Close icon to delete ad campaign */}
         {status == 'pending' && 
-        <img src={close} alt="close" size={20} className='absolute top-[-0.4rem] right-[-0.4rem] text-tertiary w-[28px] h-[28px]' />}
+        <img src={close}  alt="close" size={20} className='absolute top-[-0.4rem] right-[-0.4rem] text-tertiary w-[28px] h-[28px]' />}
 
         {/* Social media icon  right */}
-        {/* <div className='hidden w-[8%] md:flex'>
-        <img src={icon} alt="" className='w-[60px] h-[60px]'/>
-        </div> */}
+        <div className='hidden w-[40px] h-[40px] md:flex md:mr-1'>
+        <img src={icons?.find((icon) => icon.platform === item.platform)?.icon} alt="" className='w-full h-full object-cover'/>
+        </div>
 
         {/* ad details left */}
         <div className='w-[92%] flex flex-3 flex-col'>
@@ -96,14 +87,19 @@ const AdItem = ({socialIcon, date, title, adperPostAmt, roi, adBudget, adService
                         <label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>LGA:</label>
                         <p className='text-[12px]'>{item?.lga}</p>
                     </li>
+                    <li>
+                         {/* Social media icon  right */}
+                        <div className='flex md:hidden w-[25px] h-[25px]'>
+                            <img src={icons?.find((icon) => icon.platform === item.platform)?.icon} alt="" className='w-full h-full'/>
+                        </div>
+                    </li>
                 </ul>
             </div>
+
             </div>
         </div>
-
-
         </div>
-            </div>
+    </div>
   )
 }
 

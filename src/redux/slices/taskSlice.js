@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { toast } from 'react-hot-toast';
-import { approveTask, createTask, getTasks, getUserTasks, submitTask } from '../../services/taskServices';
+import { approveTask, createTask, getTasks, getUserTasks, rejectTask, submitTask } from '../../services/taskServices';
 
 const initialState = {
   task: null,
@@ -71,6 +71,20 @@ export const handleApproveTask = createAsyncThunk(
   async (taskData, thunkAPI) => {
     try {
       return await approveTask(taskData)
+    } catch (error) {
+      const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+
+// Reject Task
+export const handleRejectTask = createAsyncThunk(
+  "create/handleRejectTask",
+  async (taskData, thunkAPI) => {
+    try {
+      return await rejectTask(taskData)
     } catch (error) {
       const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       return thunkAPI.rejectWithValue(message)
@@ -167,12 +181,31 @@ const taskSlice = createSlice({
             state.isLoading = false;
             state.isSuccess = true;
             state.isError = false;
-            //console.log(action.payload)
             state.task = action.payload
             state.tasks.push(action.payload);
-            toast.success("Task Created Successfully")
+            toast.success("Task has been approved by admin")
           })
           .addCase(handleApproveTask.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload;
+            toast.error(action.payload) 
+          })
+
+
+          // Reject Task
+          .addCase(handleRejectTask.pending, (state) => {
+            state.isLoading = true
+          })
+          .addCase(handleRejectTask.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.isError = false;
+            state.task = action.payload
+            state.tasks.push(action.payload);
+            toast.success("Task has been rejected by admin")
+          })
+          .addCase( handleRejectTask.rejected, (state, action) => {
             state.isLoading = false;
             state.isError = true;
             state.message = action.payload;

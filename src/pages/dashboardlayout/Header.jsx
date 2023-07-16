@@ -39,7 +39,7 @@ const Header = () => {
                 <NavLink to='/dashboard/advertise'>Advertise</NavLink>
                 <NavLink to='/terms'>Terms</NavLink>
                 <NavLink to='/contact'>Contact</NavLink>
-                <div className='flex items-center  bg-tertiary text-gray-100 px-8 py-3 rounded-full cursor-pointer hover:bg-secondary'>
+                <div className='flex items-center  bg-tertiary text-gray-100 text-[15px] px-4 py-1 rounded-full cursor-pointer hover:bg-secondary'>
                   <Logout />
                 </div>
             </div>

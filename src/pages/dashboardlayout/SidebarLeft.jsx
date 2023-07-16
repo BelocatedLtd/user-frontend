@@ -111,6 +111,11 @@ const SidebarLeft = ({children}) => {
         path: `/admin/dashboard/transactions/${username}`,
       },
       {
+        title: "All Withdrawals",
+        icon: <GrTransaction className='mr-2'/>,
+        path: `/admin/dashboard/withdrawals/${username}`,
+      },
+      {
         title: "Account Settings",
         icon: <GrSettingsOption className='mr-2'/>,
         path: `/admin/dashboard/account-settings/${username}`,

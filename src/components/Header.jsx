@@ -25,34 +25,36 @@ export const Header = () => {
     const [profile, setProfile] = useState(null)
     const [isLoggedin, setIsLoggedIn] = useState(false)
 
+    const getUserData = async() => {
+        const data = await getUser()
+        await dispatch(SET_USER(data))
+        await dispatch(SET_USERNAME(data?.username))
+      }
+
     useEffect(() => {
-        async function loginStatus() {
-          const status = await getLoginStatus()
-          dispatch(SET_LOGIN(status))
-          setIsLoggedIn(status)
-        }
+        // async function loginStatus() {
+        //   const status = await getLoginStatus()
+        //   dispatch(SET_LOGIN(status))
+        //   setIsLoggedIn(status)
+        // }
         
-        loginStatus()
+        //loginStatus()
+
     
-        console.log(isLoggedin)
-    
-        if (isLoggedin === "true" && !user?.email) {
-          async function getUserData() {
-            const data = await getUser()
-            setProfile(data)
-            await dispatch(SET_USER(data))
-            await dispatch(SET_USERNAME(data?.username))
-          }
+        //if (isLoggedin === "true" && !user?.email) {
+          
           getUserData()
-        }
+       // }
       }, [])
 
     const userDashboard = () => {
          if (user.accountType === "Admin") {
-            return (<Link to={`/admin/dashboard/${user?.username}`} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</Link>  )
-         } else {
-           return (<Link to={`/dashboard/${user?.username}`} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</Link>)
-        }
+            return (<button onClick={() => navigate(`/admin/dashboard/${user?.username}`)} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</button>  )
+         }
+
+         if (user?.accountType === "User") {
+                return (<button onClick={() => navigate(`/dashboard/${user?.username}`)} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</button>)
+         }
     }
 
     useEffect(() => {

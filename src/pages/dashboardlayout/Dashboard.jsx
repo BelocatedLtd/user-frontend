@@ -112,7 +112,7 @@ const Dashboard = () => {
 
           
 
-            <div className='flex flex-col justify-center'>
+            <ProfileComplete className='flex flex-col justify-center'>
               <FreeTaskCount className="w-full bg-black mx-auto"/>
 
               <div className='w-full flex flex-col items-center gap-2 justify-center md:flex-row md:justify-center md:items-center md:mx-auto'>
@@ -122,7 +122,7 @@ const Dashboard = () => {
                     <img src={copy} alt="click to copy ref link" className='w-[20px] h-[20px]' onClick={handleRefLinkCopy}/>
                   </div>
               </div>
-            </div>
+            </ProfileComplete>
         </div>
     </div>
   )

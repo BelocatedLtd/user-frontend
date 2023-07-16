@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { selectAllAdverts, handleGetALLUserAdverts } from '../../../redux/slices/advertSlice';
+import { selectAllAdverts, handleGetALLUserAdverts, handleToggleFreeAdvert, selectIsLoading } from '../../../redux/slices/advertSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { selectUsers } from '../../../redux/slices/userSlice';
@@ -9,14 +9,16 @@ import { FaUser } from 'react-icons/fa';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import placeholder from '../../../assets/placeholder.jpg'
 import DeleteAdvertModal from '../../../components/adminComponents/DeleteAdvertModal';
-import { BsCheck } from 'react-icons/bs';
+import { BsCheck, BsCheckAll } from 'react-icons/bs';
 import { SwipeableDrawer } from '@mui/material';
+import { LoaderIcon } from 'react-hot-toast';
 
 const AdvertSingle = () => {
     const {id} = useParams()
     const adverts = useSelector(selectAllAdverts)
     const users = useSelector(selectUsers)
     const dispatch = useDispatch()
+    const isLoading = useSelector(selectIsLoading)
     const [ad, setAd] = useState()
     const navigate = useNavigate()
     const [adverter, setAdverter] = useState()
@@ -28,13 +30,27 @@ const AdvertSingle = () => {
       const advertiser = users?.find(user => user._id === advert.userId)
       setAd(advert)
       setAdverter(advertiser)
-    }, [])
+    }, [adverts])
 
-    const handleFreetaskCheck = async(e, id) => {
-      e.preventDefault()
+      //Handle Input
+      const handleFreetaskCheck = async(e) => {
+        e.preventDefault()
 
-      const response = await dispatch(handleToggleFreeAdvert(id))
-    }
+        setIsFree(!isFree)
+    
+        try {
+          const response = await dispatch(handleToggleFreeAdvert(id))
+
+          console.log(response)
+          return
+
+        } catch (error) {
+          toast.error('Failed to switch advert free status')
+        }
+       
+      } 
+
+    
 
     const handleDelete = (e) => {
       e.preventDefault()
@@ -132,14 +148,16 @@ const AdvertSingle = () => {
         
         {/* Advert Controls */}
         <div className='mt-[1rem]'>
-          <form className='mb-[1rem] flex items-center gap-1'>
-            <input type="checkbox" name="isWeeklyFree" value={isFree} id="" onChange={handleFreetaskCheck} />
-            <label htmlFor="">
+          <div className='w-full md:w-fit flex flex-col mb-[1rem] gap-1'>
+            <label htmlFor="" className='text-[14px]'>
               {isFree && (<p>This advert is set to run as a free task</p>)}
               {!isFree && (<p>This advert is set to run as a paid task</p>)}
               </label>
-            <SwipeableDrawer size={30} className='text-green-600'/>
-          </form>
+            <button onClick={handleFreetaskCheck} className='flex items-center gap-1 justify-center bg-gray-700 text-primary px-5 py-2 hover:bg-tertiary'>
+              Change
+              <span>{isLoading && <LoaderIcon />}</span>
+            </button>
+          </div>
           
           <div className='flex gap-2'>
             <button onClick={handleDelete} className='py-2 px-5 bg-tertiary text-primary'>Delete</button>

@@ -24,7 +24,7 @@ import copy from '../../../assets/copy.png'
 import { GiCancel } from 'react-icons/gi'
 import { selectTasks } from '../../../redux/slices/taskSlice'
 
-const TaskPerform = ({taskId, taskSubmitData, selectedImages, handleOnSubmit, handleInputChange, handleImageChange, handleImageRemove, isLoading, isError, icons}) => {
+const TaskPerform = ({taskId, userSocialName, selectedImages, handleOnSubmit, handleInputChange, handleImageChange, handleImageRemove, isLoading, isError, icons}) => {
   const linkRef = useRef(null)
   const userId = useSelector(selectUserId)
   //const [icon, setIcon] = useState('')
@@ -86,6 +86,9 @@ useEffect(() => {
       setHideUsernameDisplayField(true)
     }
   }, [newTask?.platform, newTask?.service])
+
+
+  
   
 
   const handleRefLinkCopy = (e) => {
@@ -144,7 +147,15 @@ useEffect(() => {
             {/* Verification Instructions */}
             <div className='w-full md-w-500px text-center mb-[2rem]'>
               <h1 className='text-gray-500 font-bold text-center mb-[1rem]'>Verification Instructions</h1>
-              <p>{newTask?.taskVerification}</p>
+              {newTask?.platform === 'whatsapp' ? (
+                <div>
+                  <p><span className='text-tertiary font-bold'>1st stage -</span> Screenshot showing you posted on WhatsApp. User is notified 4 hrs after posting to move to stage 2. If stage 1 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason.</p> <br/><br/>
+                
+                <p><span className='text-tertiary font-bold'>2nd Stage -</span> Screenshot showing your post has been posted for over 6 hours on your status. User is notified to moves to State 3 if stage 2 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason.</p> <br/><br/>
+                
+                <p><span className='text-tertiary font-bold'>3rd Stage -</span> Screenshot showing you post has been posted for over 12 hrs on your status. User’s wallet is credited if stage 3 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason</p>
+                </div>
+              ) : (<p>{newTask?.taskVerification}</p>)}
             </div>
 
             {/* Task link */}
@@ -175,14 +186,15 @@ useEffect(() => {
                       ))}
                       </div>
 
-                      <input type="file"  name="selectedImages"  placeholder='Upload Screenshots' multiple  onChange={handleImageChange} className='w-full p-3 shadow-inner rounded-2xl bg-gray-50 md:w-[300px]' />
+                        {/* File Upload Input Tag  */}
+                      <input type="file"  name="images"  placeholder='Upload Screenshots' multiple  onChange={handleImageChange} className='w-full p-3 shadow-inner rounded-2xl bg-gray-50 md:w-[300px]' />
                 </div>
 
                 {/* Social Account Link */}
                 {hideUsernameDisplayField ? "" : (
                   <div className='w-full md:w-[500px] flex flex-col items-center mt-[2rem] mx-auto'>
                   <label htmlFor="social media username" className='text-gray-500 font-bold text-center mb-[1rem]'>Fill in your {newTask?.platform} Username</label>
-                  <input type="text" name="userSocialName" placeholder='Enter your social media username' onChange={handleInputChange} className='py-2 px-6 text-gray-800 bg-gray-200 rounded-2xl'/>
+                  <input type="text" name="userSocialName" value={userSocialName} placeholder='Enter your social media username' onChange={handleInputChange} className='py-2 px-6 text-gray-800 bg-gray-200 rounded-2xl'/>
                 </div>
                 )}
                 

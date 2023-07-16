@@ -87,13 +87,13 @@ const FundWallet = ({toggleFLWFunding, fundingAmount}) => {
 
         return ReactDOM.createPortal(
             <div className='wrapper'>
-                <div className='relative modal w-[600px] h-fit bg-primary'>
+                <div className='relative modal w-[85%] md:w-[600px] h-fit bg-primary'>
                 <img src={close} alt="close" onClick={toggleFLWFunding} size={40} className='absolute top-[-1rem] right-[-1rem] text-tertiary' />
-                <div className='w-full px-[3rem] py-[4rem]'>
+                <div className='w-full px-[2rem] py-[2rem] md:px-[3rem] md:py-[4rem]'>
                     <h1 className='font-bold mb-3 text-xl'>Hello Payment Method</h1>
                     <div className='mb-5 border-b border-gray-200 pb-6'>
                         <h3 className='font-bold mb-2 text-lg text-gray-700'>100% Secure, Reliable & Fast Payment </h3>
-                        <small className='text-gray-700'>Pay through our highly secured online payment partner using your masterCard/VISA/Verve card. Bank transfer via USSD or internet  bank transfer. You can select your preferred online payment method on the payment checkout page that comes up.</small>
+                        <small className='text-gray-700 text-[12px]'>Pay through our highly secured online payment partner using your masterCard/VISA/Verve card. Bank transfer via USSD or internet  bank transfer. You can select your preferred online payment method on the payment checkout page that comes up.</small>
                     </div>
     
                     <div className=' flex flex-col'>
@@ -102,7 +102,7 @@ const FundWallet = ({toggleFLWFunding, fundingAmount}) => {
     
                         <div className='flex flex-col justify-center'>
                            
-                            <p className='bg-red-400 text-primary p-5 my-3'>Click the button below to fund your wallet now. On completion, fund gets added to your wallet immediately</p>
+                            <p className='bg-red-400 text-primary p-5 my-3 text-[12px]'>Click the button below to fund your wallet now. On completion, fund gets added to your wallet immediately</p>
 
                             <button className='px-6 py-2 bg-secondary text-primary hover:bg-gray-800'><FlutterWaveButton {...fwConfig}   />{isLoading && <LoaderIcon />}</button>
                         </div>

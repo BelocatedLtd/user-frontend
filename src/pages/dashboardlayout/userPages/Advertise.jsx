@@ -68,7 +68,7 @@ const Advertise = () => {
 
             <div className='flex flex-col gap-[3rem] items-center justify-center mt-[1rem] px-3 py-5'>
                 {socialMenu.map((menu, index) => (
-                <div  key={index} className='shadow-lg p-5'>
+                <div  key={index} className='w-fit md:w-full shadow-lg p-5'>
                 <div className='flex flex-col md:flex-row items-center gap-5'>
                     <div className='flex flex-col'>
                         <div className='hidden md:flex items-center justify-center w-[100px] h-[100px] bg-gray-50 rounded-t-xl rounded-b-2xl'>

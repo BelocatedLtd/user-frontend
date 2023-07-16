@@ -17,8 +17,8 @@ const initialState = {
 const AdBuy = () => {
     const navigate = useNavigate()
     const [advert, setAdvert] = useState(initialState)
-    const [mediaUrl, setMediaUrl] = useState({})
-    const [imagePreview, setImagePreview] = useState(null)
+    const [imageArray, setimageArray] = useState()
+    const [selectedImages, setSelectedImages] = useState([]);
     const [expBudget, setExpBudget] = useState(0)
     const [costToPay, setCostToPay] = useState()
     const [earnPerTask, setEarnPerTask] = useState()
@@ -35,32 +35,31 @@ const AdBuy = () => {
         setAdvert({ ...advert, [name]: value })
       }
 
-     //Handle image preview
-    const handleImageChange = (e) => {
-        setMediaUrl(e.target.files[0])
-        setImagePreview(URL.createObjectURL(e.target.files[0]))
-        
-    }
 
-    const handleOnSubmit = async (e) => {
-        e.preventDefault()
-    
-        if (
-          !service ||
-          !roi ||
-          !gender ||
-          !adText ||
-          !mediaUrl
-          ) {
-          return toast.error("Make Sure All Fields Filled")
-        }
-    
-        if (
-          !mediaUrl
-          ) {
-          return toast.error("Please upload an image or video")
-        }
-    }
+   // Upload and preview multiple screenshots
+const handleImageChange = (e) => {
+  const files = Array.from(e.target.files);
+  setimageArray(files)
+
+
+  //Create an array of files previews
+  const filePreviews = Array.from(files).map((file) => 
+  URL.createObjectURL(file));
+
+  setSelectedImages(filePreviews);
+}
+
+//Remove uploaded images
+const handleImageRemove = (imagePreview) => {
+  //filter out the selected image and update the state
+  const updatedImages = selectedImages.filter((preview) => preview !== imagePreview);
+
+  setSelectedImages(updatedImages);
+
+  //Revoke the object URL to release memory
+  URL.revokeObjectURL(imagePreview);
+  toast.success("Image discarded successfully")
+};
 
 
     useEffect(() => {
@@ -85,9 +84,9 @@ const AdBuy = () => {
        service={service}
        adTitle={adTitle}
        advert={advert} 
-       mediaUrl={mediaUrl}
-       imagePreview={imagePreview}
-       handleOnSubmit={handleOnSubmit} 
+       handleImageRemove={handleImageRemove}
+       selectedImages={selectedImages}
+       imageArray={imageArray}
        handleInputChange={handleInputChange} 
        handleImageChange={handleImageChange} 
        expBudget= {expBudget}

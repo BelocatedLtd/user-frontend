@@ -72,7 +72,7 @@ const TaskList = () => {
                 <div className='flex gap-2 items-center'>
                 <img src={icons?.find((icon) => icon.platform === task.platform)?.icon} alt={task.platform} className='hidden md:flex'/>
                     <div className=''>
-                        <small>{formatDate(task.createdAt)}</small>
+                        {/* <small>{formatDate(task.createdAt)}</small> */}
                         <h1 className='text-[15px] md:text-[18px] font-bold md:my-[-5px] p-0'>{task?.title}</h1>
                         <small className='text-gray-400 text-[9px]'>To Earn: {task.toEarn} Per {task.asset}</small>
 

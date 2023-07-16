@@ -35,7 +35,7 @@ useEffect(() => {
 
     //Check if task performer is still eligible for free tasks so he will see only the adverts that are marked as free. If not, he will see paid adverts
     if (user?.freeTaskCount > 0 ) {
-        const freeAdverts = adverts?.filter(advert => advert.isFree === false)
+        const freeAdverts = adverts?.filter(advert => advert.isFree === true)
         setTaskList(freeAdverts)
     } 
 
@@ -98,7 +98,7 @@ useEffect(() => {
 
             <div className='flex flex-col gap-[3rem] items-center justify-center mt-[1rem] px-3 py-5'>
                 {socialMenu.map((menu, index) => (
-                <div  key={index} className='shadow-lg p-5'>
+                <div  key={index} className='w-fit md:w-full shadow-lg p-5'>
                  <div className='flex flex-col md:flex-row items-center gap-5' key={index}>
                     <div className='flex flex-col'>
                         <div className='hidden md:flex items-center justify-center w-[100px] h-[100px] bg-gray-50 rounded-t-xl rounded-b-2xl'>

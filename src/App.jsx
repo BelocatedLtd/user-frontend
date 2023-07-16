@@ -60,6 +60,8 @@ import ServicesPage from "./pages/mainlayout/ServicesPage";
 import ForgotPasswordChange from "./pages/dashboardlayout/userPages/settings/ForgotPasswordChange";
 import PasswordChangeSuccess from "./pages/dashboardlayout/userPages/settings/PasswordChangeSuccess";
 import FAQ from "./pages/mainlayout/FAQ";
+import WithdrawalRequests from "./pages/dashboardlayout/adminPages/WithdrawalRequests";
+import WithdrawalModal from "./components/adminComponents/WithdrawalModal";
 
 
 
@@ -484,6 +486,30 @@ const handleCloseMenu = () => {
           <SidebarLeft>
             <DashLayout>
               <TransactionsSingleUser />
+            </DashLayout>
+          </SidebarLeft>
+        }
+        />
+
+        {/* Admin Withdrawal Request List*/}
+      <Route 
+        path="/admin/dashboard/withdrawals/:username" 
+        element={
+          <SidebarLeft>
+            <DashLayout>
+              <WithdrawalRequests />
+            </DashLayout>
+          </SidebarLeft>
+        }
+        />
+
+          {/* Admin Withdrawal Request List*/}
+      <Route 
+        path="/admin/dashboard/withdrawals/confirm" 
+        element={
+          <SidebarLeft>
+            <DashLayout>
+              <WithdrawalModal />
             </DashLayout>
           </SidebarLeft>
         }

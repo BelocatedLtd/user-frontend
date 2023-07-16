@@ -31,6 +31,12 @@ export const approveTask = async (taskData) => {
    return response.data   
 }
 
+// Reject task
+export const rejectTask = async (taskData) => {
+    const response = await axios.patch(`${BACKEND_URL}/api/tasks/reject`, taskData)
+   return response.data   
+}
+
 // Delete task
 export const deleteTask = async (taskId) => {
     try {

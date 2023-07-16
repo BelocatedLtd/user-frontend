@@ -8,11 +8,13 @@ import { handleSubmitTask, selectTasks, selectIsLoading, selectIsError } from '.
 import { selectUser, selectUserId } from '../../../redux/slices/authSlice'
 import { useEffect } from 'react'
 import { icons} from '../../../components/data/socialIcon'
+import io from 'socket.io-client'
+import { BACKEND_URL } from '../../../../utils/globalConfig'
 
 
-const initialState = {
-  userSocialName: '',
-}
+const socket = io.connect(`${BACKEND_URL}`)
+
+
 
 const TaskSubmit = () => {
     const dispatch = useDispatch()
@@ -24,14 +26,15 @@ const TaskSubmit = () => {
     const { taskId } = useParams()
     const tasks = useSelector(selectTasks)
     const [task, setTask] = useState()
+    const [imageArray, setimageArray] = useState()
     const [selectedImages, setSelectedImages] = useState([]);
     const location = useLocation();
     // const { newTask } = location.state || {};
     const [verificationProcess, setVerificationProcess] = useState("")
-    const [taskSubmitData, setTaskSubmitData] = useState(initialState)
+    const [userSocialName, setUserSocialName] = useState("")
 
 
-    const { userSocialName } = taskSubmitData
+    //const { userSocialName } = taskSubmitData
 
     useEffect(() => {
       if (!user.email || !tasks) {
@@ -42,20 +45,18 @@ const TaskSubmit = () => {
 
     useEffect(() => {
       setTask(tasks?.find(obj => obj._id === taskId))
-
     }, [])
 
     //Handle Input
     const handleInputChange = (e) => {
-        const {name, value } = e.target;
-        setTaskSubmitData({...taskSubmitData, [name]: value});
+        setUserSocialName(e.target.value);
       } 
 
 
      // Upload and preview multiple screenshots
   const handleImageChange = (e) => {
-    const files = e.target.files;
-
+    const files = Array.from(e.target.files);
+    setimageArray(files)
 
 
     //Create an array of files previews
@@ -77,21 +78,39 @@ const TaskSubmit = () => {
     toast.success("Image discarded successfully")
   };
 
+  //Append and prepare form data for transport
+  const formData = new FormData();
+
+  for (let i = 0; i < imageArray?.length; i++ ) {
+    formData?.append('images', imageArray[i]);
+  };
+
+  formData.append('taskId', taskId);
+  formData.append('userSocialName', userSocialName); 
+
 
 
     const handleOnSubmit = async (e) => {
       e.preventDefault()
 
-      const formData = new FormData();
-      selectedImages.forEach((image) => {
-        formData.append('images', image);
-      });
-      formData.append('taskId', taskId);
-      formData.append('userSocialName', userSocialName);   
+      if (!imageArray) {
+        toast.error("Please upload a screenshot to prove you performed the Task")
+        return
+      }
+      
+      
 
       const response = await dispatch(handleSubmitTask(formData))  
 
         if (response.payload) {
+           //Emit socket io event to the backend
+            const emitData = {
+              userId: user?.id,
+              action: `@${user?.username} just performed a task on ${task?.platform}`
+          }
+
+          //Emit Socket event to update activity feed
+          socket.emit('sendActivity', emitData) 
           navigate(`dashboard/tasks/${task.taskPerformerId}`)
         }  
       }
@@ -105,7 +124,7 @@ const TaskSubmit = () => {
             isLoading = {isLoading}
             isError = {isError}
             icons={icons}
-            taskSubmitData = {taskSubmitData}
+            userSocialName= {userSocialName}
             selectedImages={selectedImages}
             handleOnSubmit={handleOnSubmit} 
             handleInputChange={handleInputChange} 

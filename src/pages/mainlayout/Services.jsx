@@ -25,7 +25,7 @@ const Services = () => {
                         <img src={adRoi} alt="Advert ROI" className='w-full h-full object-cover'/>
                     </div>
                     <h2 className='text-[20px] font-[700] leading-[1.4em] px-[2rem]'>Affordable Pricing</h2>
-                    <p className='px-6'>Get reliable publicity packages at very affordable rates. You can dictate the budget and details of your campaign with jus few clicks. Are you in doubt? A trial will convince you and get you hooked</p>
+                    <p className='px-6'>Get reliable publicity packages at very affordable rates. You can dictate the budget and details of your campaign with just few clicks. Are you in doubt? A trial will convince you and get you hooked</p>
                 </div>
 
                 <div className='bg-gray-100 w-[350px] h-[400px] flex flex-col gap-2 items-center justify-center text-center shadow-2xl rounded-2xl'>

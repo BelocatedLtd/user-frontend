@@ -9,9 +9,10 @@ import PaymentMethod from '../PaymentMethod'
 import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/slices/authSlice'
+import { GiCancel } from 'react-icons/gi'
 
 
-const AdBuyForm = ({advert, service, adTitle, platform, mediaUrl, socialService, expBudget, costToPay, earnPerTask, imagePreview, handleOnSubmit, handleInputChange, handleImageChange }) => {
+const AdBuyForm = ({advert, service, adTitle, platform, selectedImages, imageArray, socialService, handleImageRemove, expBudget, costToPay, earnPerTask, handleInputChange, handleImageChange }) => {
     const [mediaTypeImage, setMediaTypeImage] = useState('image')
     const [selectPaymentBtn, setSelectPaymentBtn] = useState(false)
     const [hideCommentInputFields, setHideCommentInputFields] = useState(false)
@@ -99,13 +100,6 @@ const AdBuyForm = ({advert, service, adTitle, platform, mediaUrl, socialService,
       setSelectedCommunity(city);
     }
 
-    const toggleMediaTypeImage = () => {
-            setMediaTypeImage('image')
-    }
-
-    const toggleMediaTypeVideo = () => {
-        setMediaTypeImage('video')
-    }
 
     const formData = {
       platform,
@@ -114,19 +108,17 @@ const AdBuyForm = ({advert, service, adTitle, platform, mediaUrl, socialService,
       desiredROI: advert.roi,
       gender: advert.gender,
       state: selectedState,
+      imageArray: imageArray,
       lga: selectedCommunity,
       caption: advert.adText,
-      mediaURL: mediaUrl,
       socialPageLink: advert.socialPageLink,
       costPerTask: costToPay,
       expBudget,
       earnPerTask,
-      
     }
 
     const togglePaymentSelect = (e) => {
       e.preventDefault()
-
 
       if (!service || !adTitle || !advert.roi || !advert.gender || !selectedState || !selectedCommunity || !expBudget ) {
         toast.error("Some required fields are empty, please fill in all the fields")
@@ -260,23 +252,20 @@ const AdBuyForm = ({advert, service, adTitle, platform, mediaUrl, socialService,
                     <div className=''>
                         <label htmlFor="media" className='my-6'>Campaign Media</label>
                         <div className='w-full h-full flex flex-col pt-[1rem] items-center border-gray-200'>
-                                <div className='hidden gap-3 mb-3'>
-                                    <p onClick={toggleMediaTypeImage} className='px-4 py-2 bg-secondary text-[10px] text-gray-100 hover:bg-yellow-500 rounded-2xl cursor-pointer'>Upload Image Advert</p>
-                                    <p onClick={toggleMediaTypeVideo} className='px-4 py-2 bg-secondary text-[10px] text-gray-100 hover:bg-yellow-500 rounded-2xl cursor-pointer'>Upload Video Advert</p>
+                            {/* Upload Ad Media Contents */}
+                            <label htmlFor="upload proof of work" className='text-gray-500 font-bold text-center mb-[1rem]'>Upload Ad Media Contents</label>
+                                <div className='w-full h-fit flex flex-wrap items-center justify-center gap-2 p-5'>
+                                {selectedImages?.map((item, index) => (   
+                                  <div className='relative w-[200px] h-[200px]'>
+                                    <img  src={item} alt="preview" className='w-full h-full object-cover'/>
+                                    <GiCancel  size={20} className='absolute text-tertiary top-0 right-0 pr-1 pt-1' onClick={(e) => handleImageRemove(item)}/>
+                                  </div> 
+                                    
+                                ))}
                                 </div>
-                                {imagePreview != null ? (
-                                  <div className='w-[200px] h-[200px] md:w-full'>
-                                    <img src={imagePreview} alt="ad media file" className='w-full md:w-full h-full object-cover rounded-2xl mb-2'/>
-                                  </div>
-                                     
-                                    ) : (
-                                    <div className='w-fit md:w-[400px] h-[300px] flex items-center justify-center'>
-                                        {mediaTypeImage === 'image' && <img src={image} alt=""  className='rounded-2xl mb-2'/>}
-                                        {mediaTypeImage === 'video' && <img src={video} alt=""  className='rounded-2xl mb-2'/>}
-                                    </div>
-                                    )}
                                 
-                            <input type="file" name="mediaUrl" placeholder='Upload Media' onChange={(e) => handleImageChange(e)} className='w-[250px] p-3 shadow-inner rounded-2xl bg-gray-50 md:w-[300px]'/>
+                            {/* File Upload Input Tag  */}
+                      <input type="file"  name="images"  placeholder='Upload Screenshots' multiple  onChange={handleImageChange} className='w-full p-3 shadow-inner rounded-2xl bg-gray-50 md:w-[300px]' />
                         </div>
                     </div>
                   )}

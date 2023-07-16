@@ -36,5 +36,59 @@ export const fundWallet = async(trxData) => {
             
 }
 
+// Withdraw User Wallet 
+export const withdrawWallet = async(trxData) => { 
+    try {
+        const response = await axios.post(`${BACKEND_URL}/api/transactions/withdraw`, trxData)
+        return response.data
+     } catch (error) {
+         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+     }        
+}
+
+// Get All Withdrawals
+export const getWithdrawals = async() => {
+    try {
+         const response = await axios.get(`${BACKEND_URL}/api/transactions/withdrawals`)
+        return response.data
+     } catch (error) {
+         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+     }         
+}
 
 
+
+// Get User Withdrawals
+export const getUserWithdrawals = async(userId) => {
+    try {
+         const response = await axios.get(`${BACKEND_URL}/api/transactions/withdrawals/${userId}`)
+        return response.data
+     } catch (error) {
+         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+     }         
+}
+
+// Get User Withdrawals
+export const confirmWithdrawal = async(withdrawalRequestId) => {
+    try {
+         const response = await axios.patch(`${BACKEND_URL}/api/transactions/withdrawals/confirm/${withdrawalRequestId}`)
+        return response.data
+     } catch (error) {
+         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+     }         
+}
+
+// Get User Withdrawals
+export const deleteWithdrawal = async(withdrawalRequestId) => {
+    try {
+         const response = await axios.delete(`${BACKEND_URL}/api/transactions/withdrawals/delete/${withdrawalRequestId}`)
+        return response.data
+     } catch (error) {
+         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+     }         
+}
