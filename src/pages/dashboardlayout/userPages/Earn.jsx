@@ -28,28 +28,29 @@ const Earn = () => {
     const [taskList, setTaskList] = useState()
 
 
-useEffect(() => {
-    const handleGetTasks = async() => {
-        await dispatch(handleGetALLUserAdverts())
-    }
+    
 
+useEffect(() => {
     //Check if task performer is still eligible for free tasks so he will see only the adverts that are marked as free. If not, he will see paid adverts
     if (user?.freeTaskCount > 0 ) {
+        dispatch(handleGetALLUserAdverts())
+        
         const freeAdverts = adverts?.filter(advert => advert.isFree === true)
         setTaskList(freeAdverts)
     } 
 
     if (user?.freeTaskCount === 0) {
+        dispatch(handleGetALLUserAdverts())
         const paidAdverts = adverts?.filter(advert => advert.isFree === false)
         setTaskList(paidAdverts)
     }
 
-    handleGetTasks()
-}, [dispatch])
+}, [])
+
 
 
     const handleSelect = (e, platform) => { 
-        e.preventDefault(e)
+        e.preventDefault()
 
          setPlatformName(platform)
 
@@ -68,16 +69,17 @@ useEffect(() => {
     }
 
     const handleSelectAsset = (e, asset, taskTitle, taskVerification) => {
-        e.preventDefault(e)
+        e.preventDefault()
 
         const filteredServiceAdvert = selectedPlatformAds?.filter(advert => advert?.service === asset)
+
         navigate(`/dashboard/taskearn/${platformName}`, { state:{ filteredServiceAdvert, asset, taskTitle, taskVerification } });
 
     }
 
   return (
     <div className='w-full h-fit'>
-        {isLoading && <Loader />}
+        {/* {isLoading && <Loader />} */}
         {/* {adverts === [] && <Loader />} */}
 
         <div className='justify-between mx-auto mr-5'>
@@ -121,7 +123,7 @@ useEffect(() => {
 
                         {/* Select button and logo for mobile */}
                         <div className='w-full flex items-center gap-2'>
-                            <button onClick={e => handleSelect(e, menu?.value)} className='flex md:hidden px-5 py-3 border border-gray-200 mt-5'>Select</button>
+                            <button onClick={e => handleSelect(e, menu?.value)} className='flex md:hidden px-5 py-3 border border-gray-200 mt-5 hover:bg-gray-200'>Select</button>
 
                             <div className='flex md:hidden items-center justify-end w-[50px] h-[50px] rounded-t-xl rounded-b-2xl'>
                             <img src={menu?.icon} alt="" className='object-cover rounded-full mt-5'/>
@@ -137,7 +139,7 @@ useEffect(() => {
                     {selectedPlatformObject?.assets?.map( (service, index) => 
                         <ul className='flex items-center gap-3'>
                             <li key={index} className='flex items-center gap-3 border-b border-gray-50 py-3'>
-                            <div onClick={e => handleSelectAsset(e, service?.asset, service?.TD, service?.verification)} className='flex items-center gap-3 cursor-pointer'>
+                            <div onClick={(e) => handleSelectAsset(e, service?.asset, service?.TD, service?.verification)} className='flex items-center gap-3 cursor-pointer hover:bg-gray-300'>
                                 {service.TD}
                                 <button className='bg-gray-200 p-2 border border-gray-200 rounded-full'>{selectedPlatformAds?.filter(advert => advert?.service === service?.asset).length}</button>
                             </div>
