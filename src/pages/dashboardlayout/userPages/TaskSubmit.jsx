@@ -103,6 +103,7 @@ const TaskSubmit = () => {
       const response = await dispatch(handleSubmitTask(formData))  
 
         if (response.payload) {
+          navigate(`dashboard/tasks/${task.taskPerformerId}`)
            //Emit socket io event to the backend
             const emitData = {
               userId: user?.id,
@@ -111,7 +112,6 @@ const TaskSubmit = () => {
 
           //Emit Socket event to update activity feed
           socket.emit('sendActivity', emitData) 
-          navigate(`dashboard/tasks/${task.taskPerformerId}`)
         }  
       }
 

@@ -13,6 +13,7 @@ import TaskModal from '../../../components/adminComponents/TaskModal';
 import Loader from '../../../components/loader/Loader';
 import DeleteTaskModal from '../../../components/adminComponents/DeleteTaskModal';
 import Carousel from '../../../components/Carousel';
+import ImageGallery from '../../../components/ImageGallery';
 
 const TaskSingle = () => {
     const {id} = useParams()
@@ -33,13 +34,13 @@ const TaskSingle = () => {
       const advertiserDetails = users?.find(user => user._id === taskDetails?.advertiserId)
 
       settask(taskDetails)
-      setSlides(taskDetails?.proofOfWorkMediaURL?.secure_url)
+      setSlides(taskDetails?.proofOfWorkMediaURL)
       setTaskPerformer(taskPerformerDetails)
       setAdvertiser(advertiserDetails)
     }, [])
 
     const handleModal = (e) => {
-      e.preventDefault()
+      //e.preventDefault()
       setModalBtn(!modalBtn)
     }
 
@@ -161,31 +162,31 @@ const TaskSingle = () => {
           </div>
 
           {/* Task Media Submit  */}
-          {/* <div className='w-[400px] h-[400px] mx-auto mt-6'> */}
-          <div className='w-full h-full justify-center mt-[5rem] flex-1 md:flex'>
-          {task?.proofOfWorkMediaURL?.lenght === 0 && (
+          <div className='md:w-[400px] md:h-[400px] mx-auto md:mt-6'>
+            {/* <ImageGallery  images = {slides}/> */}
+          <div className='w-full h-full justify-center md:mt-[5rem] flex-1 md:flex'>
+          {task?.proofOfWorkMediaURL?.length === 0 && (
             <div className='max-w-lg '>
                 <p>No Proof uploaded yet</p>
             </div>
           )}
-          {task?.proofOfWorkMediaURL?.lenght > 0 && (
+
             <div className='max-w-lg '>
                 <Carousel autoSlide={true} >
                     {slides?.map((s, index) => (
-                        <img key={index} src={s} className='w-full h-full object-cover'/>
+                        <img key={index} src={s.secure_url} className='w-full h-full object-cover'/>
                     ))}
                 </Carousel>
             </div>
-          )}
-            </div>
-          {/* </div> */}
+    
+          </div>
+          </div>
         </div>
         
 
         {/* Task Controls */}
         <div className='mt-[1rem]'>
-          
-          <div className='flex gap-2'>
+          <div className='flex flex-col md:flex-row gap-2'>
             <button onClick={handleModal} className='py-2 px-5 bg-secondary text-primary'>Approve/Reject</button>
             <button onClick={handleDelete} className='py-2 px-5 bg-tertiary text-primary'>Delete</button>
           </div>

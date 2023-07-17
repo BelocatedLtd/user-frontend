@@ -68,9 +68,9 @@ export const handleSubmitTask = createAsyncThunk(
 // Approve Task
 export const handleApproveTask = createAsyncThunk(
   "create/handleapproveTask",
-  async (taskData, thunkAPI) => {
+  async (approveTaskData, thunkAPI) => {
     try {
-      return await approveTask(taskData)
+      return await approveTask(approveTaskData)
     } catch (error) {
       const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       return thunkAPI.rejectWithValue(message)

@@ -27,13 +27,13 @@ export const submitTask = async (formData) => {
 
 // Approve task
 export const approveTask = async (taskData) => {
-    const response = await axios.patch(`${BACKEND_URL}/api/tasks/approve`, taskData)
+    const response = await axios.post(`${BACKEND_URL}/api/tasks/approve`, taskData)
    return response.data   
 }
 
 // Reject task
 export const rejectTask = async (taskData) => {
-    const response = await axios.patch(`${BACKEND_URL}/api/tasks/reject`, taskData)
+    const response = await axios.post(`${BACKEND_URL}/api/tasks/reject`, taskData)
    return response.data   
 }
 

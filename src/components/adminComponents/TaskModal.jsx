@@ -46,15 +46,22 @@ const TaskModal = ({handleModal, task, taskPerformer}) => {
         if (taskStatus === "Approved") {
             setRejectMessage(false)
         }
+
+        if (taskStatus === "Partial Approval") {
+            setRejectMessage(true)
+        }
     }, [taskStatus])
 
 
     const approveTaskData = {
         taskId: task?._id, 
+        status: taskStatus,
+        message: message,
     }
 
     const rejectTaskData = {
         taskId: task?._id, 
+        status: taskStatus,
         message: message,
     }
 
@@ -62,17 +69,24 @@ const TaskModal = ({handleModal, task, taskPerformer}) => {
     const confirm = async(e) => {
         e.preventDefault()
        
-        setIsLoading(true)
+       
         //Admin Rejects Tasks
         if (taskStatus === "Rejected") {
 
-            if (!message) {
-                toast.error("You have to let the user know why their Task was rejected")
-                setIsLoading(false)
+            if (!approveTaskData?.taskId) {
+                toast.error('Task information missing')
+                return
             }
 
-            const response = await dispatch(handleRejectTask(rejectTaskData))
-            setIsLoading(false)
+            if (!message) {
+                toast.error("You have to let the user know why their Task was rejected")
+                return
+            }
+
+            setIsLoading(true)
+           const response = await dispatch(handleRejectTask(rejectTaskData))
+           setIsLoading(false)
+
 
             if (!response.payload) {
                 toast.error("Error Rejecting Task")
@@ -82,14 +96,24 @@ const TaskModal = ({handleModal, task, taskPerformer}) => {
             if (response.payload) {
                 toast.error("Task Rejected")
                 setIsLoading(false)
-                navigate(`/admin/dashboard/tasks/${user?.username}`)
+                navigate(-1)
                 setIsLoading(false)
+        }
         }
 
         //If Admin Approves
-        if (taskStatus === "Approved") {
-            const response = await dispatch(handleApproveTask(approveTaskData))
+        if (taskStatus === "Approved" || taskStatus === "Partial Approval") {
 
+            if (!approveTaskData?.taskId) {
+                toast.error('Task information missing')
+                return
+            }
+        
+            setIsLoading(true)
+            const response = await dispatch(handleApproveTask(approveTaskData))
+            
+            setIsLoading(false)
+            console.log(response)
             if (!response.payload) {
                 toast.error("Error Approving Task")
                 setIsLoading(false)
@@ -109,7 +133,7 @@ const TaskModal = ({handleModal, task, taskPerformer}) => {
                 //Emit Socket event to update activity feed
                 socket.emit('sendActivity', emitData)  
                 
-                navigate(`/admin/dashboard/tasks/${user?.username}`)
+                navigate(-1)
                 handleModal()
                 setIsLoading(false)
             }
@@ -117,7 +141,6 @@ const TaskModal = ({handleModal, task, taskPerformer}) => {
         }
            
         setIsLoading(false)
-    }
     }
 
     return ReactDOM.createPortal(
@@ -131,6 +154,7 @@ const TaskModal = ({handleModal, task, taskPerformer}) => {
                     <select name="taskStatus" className='py-3 px-6 mb-3 border border-gray-500' onChange={handleInputChange} >
                         <option value="" className='bg-gray-900 text-primary'>Change Task Status</option>
                         <option value="Approved" className='bg-gray-900 text-primary'>Approve</option>
+                        <option value="Partial Approval" className='bg-gray-900 text-primary'>Partial Approval</option>
                         <option value="Rejected" className='bg-gray-900 text-primary'>Reject</option>
                     </select>
 

@@ -144,6 +144,16 @@ useEffect(() => {
                 </div>
             </div>
 
+            {newTask?.message && (
+              <div className='w-full md-w-500px text-center mb-[2rem]'>
+                <label  className='text-gray-500 font-bold text-center mb-[1rem]'>Message:</label>
+                <p className='text-gray-600 font-normal'>
+                  {newTask?.message}
+                </p>
+              </div>
+            )}
+            
+
             {/* Verification Instructions */}
             <div className='w-full md-w-500px text-center mb-[2rem]'>
               <h1 className='text-gray-500 font-bold text-center mb-[1rem]'>Verification Instructions</h1>

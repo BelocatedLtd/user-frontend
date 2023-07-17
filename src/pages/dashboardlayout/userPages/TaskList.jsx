@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import {formatDate} from '../../../../utils/formatDate'
+import { toast } from 'react-hot-toast'
 
 const TaskList = () => {
     const navigate = useNavigate()
@@ -25,33 +26,35 @@ const TaskList = () => {
         getUserTasks()
     }, [dispatch])
 
+   
+
+
+    const handleSelect = async(e) => {
+        e.preventDefault()
+        toast.success('Task has been completed, approved and cleared')
+    }
+
     const checkTaskStatus = (task_Id, taskStatus) => {
              if (taskStatus === 'Awaiting Submission') {
-                return ( <button onClick={() => goToTaskPage(task_Id)} className='flex justify-center gap-1 text-primary text-[9px] md:text-[15px] py-2 px-5 rounded-2xl bg-secondary'>Submit</button>);
+                return ( <button onClick={() => navigate(`/dashboard/submittask/${task_Id}`)} className='flex justify-center gap-1 text-primary text-[9px] md:text-[15px] py-2 px-5 rounded-2xl bg-secondary'>Submit</button>);
              } 
 
             if (taskStatus === 'Submitted') {
-                return ( <button onClick={() => handleSelect(e, task_Id)} className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-yellow-600 text-[9px] md:text-[15px]'>Pending Approval</button>);
+                return ( <button onClick={() => navigate(`/dashboard/submittask/${task_Id}`)} className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-yellow-600 text-[9px] md:text-[15px]'>Pending Approval</button>);
             } 
 
             if (taskStatus === 'Rejected') {
-                return ( <button onClick={() => handleSelect(e, task_Id)} className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-tertiary text-[9px] md:text-[15px]'>Rejected</button>);
+                return ( <button onClick={() => navigate(`/dashboard/submittask/${task_Id}`)} className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-tertiary text-[9px] md:text-[15px]'>Rejected</button>);
             } 
 
             if (taskStatus === 'Approved') {
-                return ( <button onClick={() => handleSelect(e, task_Id)} className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-secondary text-[9px] md:text-[15px]'>Approved</button>);
+                return ( <button onClick={handleSelect} className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-secondary text-[9px] md:text-[15px]'>Approved</button>);
+            } 
+
+            if (taskStatus === 'Partial Approval') {
+                return ( <button onClick={() => navigate(`/dashboard/submittask/${task_Id}`)} className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-secondary text-[9px] md:text-[15px]'>Partial Approval</button>);
             } 
      }
-
-     const goToTaskPage = (task_Id) => {
-        navigate(`/dashboard/submittask/${task_Id}`) 
-    }
-
-
-    const handleSelect = async(e, taskId) => {
-        e.preventDefault()
-            navigate(`/dashboard/submittask/${taskId}`)
-    }
  
 
   return (
