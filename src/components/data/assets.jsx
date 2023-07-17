@@ -393,11 +393,11 @@ const socialPlatforms = [
                 asset: 'Post Your Content',
                 SC: 'Get People To Post Your Post content on their WhatsApp Status',
                 TD: 'Get Paid for Posting a user’s Post content on your WhatsApp Status',
-                verification: <div><p className="bg-tertiary">1st stage - Screenshot showing you posted on WhatsApp. User is notified 4 hrs after posting to moves to State 2 if stage 1 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason.</p> 
+                verification: `1st stage - Screenshot showing you posted on WhatsApp. User is notified 4 hrs after posting to moves to State 2 if stage 1 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason. 
                 
-                <p>2nd Stage - \n Screenshot showing your post has been posted for over 6 hours on your status. User is notified to moves to State 3 if stage 2 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason.</p> 
+                2nd Stage - \n Screenshot showing your post has been posted for over 6 hours on your status. User is notified to moves to State 3 if stage 2 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason.
                 
-                <p>3rd Stage - Screenshot showing you post has been posted for over 12 hrs on your status. User’s wallet is credited if stage 3 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason</p></div>,
+                3rd Stage - Screenshot showing you post has been posted for over 12 hrs on your status. User’s wallet is credited if stage 3 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason`,
                 CostToOrder: 150,
                 amountForTask: 75,
             }

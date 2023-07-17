@@ -22,9 +22,6 @@ export const socialMenu = [
         earn: 3,
         desc: "The daily income of whatsApp is estimated to be $23.8 million. As a user, how much do you make daily from this platform? With Belocated you stan a chance to earn daily as well. CLICK TO DO A TASK NOW TO EARN.",
         path: "/dashboard/taskearn/:platform",
-        asset: {
-            
-        }
     },
     {
         title: "Tiktok",
