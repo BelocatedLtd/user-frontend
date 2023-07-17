@@ -12,6 +12,7 @@ import DeleteAdvertModal from '../../../components/adminComponents/DeleteAdvertM
 import { BsCheck, BsCheckAll } from 'react-icons/bs';
 import { SwipeableDrawer } from '@mui/material';
 import { LoaderIcon } from 'react-hot-toast';
+import ImageGallery from '../../../components/ImageGallery';
 
 const AdvertSingle = () => {
     const {id} = useParams()
@@ -24,11 +25,13 @@ const AdvertSingle = () => {
     const [adverter, setAdverter] = useState()
     const [delBtn, setDelBtn] = useState(false)
     const [isFree, setIsFree] = useState(ad?.isFree)
+    const [slides, setSlides] = useState([])
 
     useEffect(() => {
       const advert = adverts?.find(advert => advert?._id === id)
       const advertiser = users?.find(user => user._id === advert.userId)
       setAd(advert)
+      setSlides(advert?.mediaURL)
       setAdverter(advertiser)
     }, [adverts])
 
@@ -141,8 +144,12 @@ const AdvertSingle = () => {
             </div>
 
 
+
+
             <div className='w-full h-full mx-auto mt-6 md:w-[400px] md:h-[400px]'>
-              <img src={ad?.mediaURL ? ad?.mediaURL : placeholder} alt="" className='w-full h-full object-cover'/>
+              {slides?.map((image, index) => (
+                  <img key={index} src={image?.secure_url} alt={`Image ${index}`} />
+              ))}
             </div>
         </div>
         

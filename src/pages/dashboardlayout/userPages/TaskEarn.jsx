@@ -145,6 +145,7 @@ const TaskEarn = () => {
                         caption: "",
                         taskVerification,
                         socialPageLink: taskToPerform.socialPageLink,
+                        adMedia: taskToPerform.mediaURL
                     }
 
                     

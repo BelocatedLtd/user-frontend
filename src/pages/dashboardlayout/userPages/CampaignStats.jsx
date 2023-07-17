@@ -54,7 +54,7 @@ const CampaignStats = () => {
             key={item._id}
             socialIcon={item.platform} 
             date={item.createdAt} 
-            title={`Buy ${item.desiredROI} ${item.platform} ${item.service}`}
+            title={`${item.service} on ${item?.platform?.toUpperCase()} `}
             adperPostAmt={`${item.costPerTask} Per Ad`}
             roi={item.desiredROI}
             adBudget={item.adAmount}

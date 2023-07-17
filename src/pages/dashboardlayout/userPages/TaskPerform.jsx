@@ -13,7 +13,7 @@ import boomplay from '../../../assets/animated icons/boomplay.svg'
 import spotify from '../../../assets/animated icons/spotify.svg'
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { selectUserId } from '../../../redux/slices/authSlice'
@@ -22,10 +22,12 @@ import {formatDate} from '../../../../utils/formatDate'
 import { useRef } from 'react'
 import copy from '../../../assets/copy.png'
 import { GiCancel } from 'react-icons/gi'
-import { selectTasks } from '../../../redux/slices/taskSlice'
+import { handleGetUserTasks, selectTasks } from '../../../redux/slices/taskSlice'
+import ImageGallery from '../../../components/ImageGallery'
 
 const TaskPerform = ({taskId, userSocialName, selectedImages, handleOnSubmit, handleInputChange, handleImageChange, handleImageRemove, isLoading, isError, icons}) => {
   const linkRef = useRef(null)
+  const dispatch = useDispatch()
   const userId = useSelector(selectUserId)
   //const [icon, setIcon] = useState('')
   const [newTask, setNewTask] = useState()
@@ -35,18 +37,25 @@ const TaskPerform = ({taskId, userSocialName, selectedImages, handleOnSubmit, ha
   const [hideLinkInputFields, setHideLinkInputFields] = useState(false)
   const [createdAtDate, setCreatedAtDate] = useState()
   const [icon, setIcon] = useState()
+  const [adMedia, setAdMedia] = useState()
 
-  
+  const getTask = async() => {
+    await dispatch(handleGetUserTasks())
+  }
   
 
   useEffect(() => {
+    getTask()
+
     const selecectTask = tasks?.find(obj => obj._id === taskId)
 
     setNewTask(selecectTask)
 
     const selectedPlatformIcon = icons?.find((icon) => icon.platform === newTask?.platform)
     setIcon(selectedPlatformIcon?.icon)
-}, [icon, tasks])
+
+    setAdMedia(selecectTask?.adMedia)
+}, [])
 
 
 //Filter for different services and platforms
@@ -152,6 +161,15 @@ useEffect(() => {
                 </p>
               </div>
             )}
+
+              <div className='w-fit md-w-500px text-center mb-[2rem]'>
+                <label  className='text-gray-500 font-bold text-center mb-[1rem]'>Download Media:</label>
+                {adMedia?.map((image, index) => (
+                  <img key={index} src={image?.secure_url} alt={`Image ${index}`} />
+              ))}
+
+              <button className='bg-green-700 text-gray-50 px-5 py-2 rounded-2xl hover:bg-tertiary'>Download</button>
+              </div>
             
 
             {/* Verification Instructions */}

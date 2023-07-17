@@ -28,19 +28,22 @@ const Earn = () => {
     const [taskList, setTaskList] = useState()
 
 
+    const getAllAdverts = async() => {
+       await dispatch(handleGetALLUserAdverts())
+    }
     
 
 useEffect(() => {
+
+    getAllAdverts()
+
     //Check if task performer is still eligible for free tasks so he will see only the adverts that are marked as free. If not, he will see paid adverts
     if (user?.freeTaskCount > 0 ) {
-        dispatch(handleGetALLUserAdverts())
-        
         const freeAdverts = adverts?.filter(advert => advert.isFree === true)
         setTaskList(freeAdverts)
     } 
 
     if (user?.freeTaskCount === 0) {
-        dispatch(handleGetALLUserAdverts())
         const paidAdverts = adverts?.filter(advert => advert.isFree === false)
         setTaskList(paidAdverts)
     }
