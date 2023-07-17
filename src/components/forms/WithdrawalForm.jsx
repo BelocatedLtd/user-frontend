@@ -26,8 +26,11 @@ const WithdrawalForm = ({handleWithdrawFunds, wallet, user}) => {
     const [confirmBtn, setConfirmBtn] = useState(false)
     const [withdrawDetails, setWithdrawDetails] = useState(initialState)
     const [withdrawMethod, setWithdrawMethod] = useState("")
-    const [withdrawAmount, setWithdrawAmount] = useState()
+    const [amount, setAmount] = useState()
     const [walletBalance, setwalletBalance] = useState(wallet?.value)
+    const [canWithdraw, setCanWithdraw] = useState(false)
+    const [error, setError] = useState('')
+
     
 
       const handleWithdrawalMethodChange = (event) => {
@@ -55,34 +58,75 @@ const WithdrawalForm = ({handleWithdrawFunds, wallet, user}) => {
     }, [withdrawMethod])
 
     const handleWithdrawalAmount = (event) => {
-        setWithdrawAmount(event.target.value)
-        setwalletBalance(wallet?.value - withdrawAmount)
+        const withdrawAmount = event.target.value
+        setAmount(event.target.value)
+        setwalletBalance(walletBalance - withdrawAmount)
+
+        if (parseFloat(withdrawAmount) > wallet?.value) {
+            setCanWithdraw(false)
+            toast.error('Withdrawal amount exceeds account balance')
+        } if (parseFloat(withdrawAmount) > parseFloat(wallet?.value)) {
+            setCanWithdraw(false)
+            toast.error('Withdrawal amount exceeds account balance')
+        } else if (isNaN(withdrawAmount) || withdrawAmount <= 0) {
+            setCanWithdraw(false)
+            toast.error('Invalid Amount')
+        } else if (withdrawAmount > wallet?.value) {
+            setCanWithdraw(false)
+            toast.error('Withdrawal Amount exceeds balance')
+        }else if (withdrawAmount > parseFloat(wallet?.value)) {
+            setCanWithdraw(false)
+            toast.error('Insufficient Funds')
+        } else {
+            setCanWithdraw(true)
+        }
     }
 
     const confirmedWithdrawalDetails = {
         userId: user.id,
         withdrawalMethod: withdrawMethod,
-        withdrawAmount: withdrawAmount,
+        withdrawAmount: amount,
     }
 
 
     const handleOnSubmit = async(e) => {
         e.preventDefault()
 
-        console.log(confirmedWithdrawalDetails)
+        if (parseFloat(amount) > wallet?.value) {
+            toast.error('Withdrawal amount exceeds account balance')
+            return
+        } if (parseFloat(amount) > parseFloat(wallet?.value)) {
+            toast.error('Withdrawal amount exceeds account balance')
+            return
+        } else if (isNaN(amount) || amount <= 0) {
+            toast.error('Invalid Amount')
+            return
+        } else if (amount > wallet?.value) {
+            toast.error('Withdrawal Amount exceeds balance')
+            return
+        }else if (amount > parseFloat(wallet?.value)) {
+            toast.error('Insufficient Funds')
+            return
+        } else {
+            if (canWithdraw) {
 
-        await dispatch(withdrawUserWallet(confirmedWithdrawalDetails))
+                if (withdrawMethod === "airtime" && amount > 5000) {
+                    toast.error('You can only get less than 5,000 Naira for Airtime Withdrawal')
+                    return
+                }
 
-        if (isError) {
-            toast.error("Error sending withdrawal request")
-        }
-
-        if (isSuccess) {
-            handleWithdrawFunds()
-            navigate(`/dashboard/${user.username}`)
-        }
+                await dispatch(withdrawUserWallet(confirmedWithdrawalDetails))
+    
+                if (isError) {
+                    toast.error("Error sending withdrawal request")
+                }
         
-        
+                if (isSuccess) {
+                    handleWithdrawFunds()
+                    navigate(`/dashboard/${user.username}`)
+                }
+            }
+        }
     }
 
     return ReactDOM.createPortal(
@@ -93,7 +137,7 @@ const WithdrawalForm = ({handleWithdrawFunds, wallet, user}) => {
                 <div className='w-full border-b border-gray-200 shadow-sm flex flex-col md:flex-row justify-center items-center py-[1.5rem] gap-1'>
                     <div className='flex items-center gap-1'>
                     <label htmlFor="wallet balance" className='font-bold'>Wallet Balance:</label>
-                    <p>₦{walletBalance}</p>
+                    <p>₦{wallet?.value}</p>
                     </div>   
                 </div>
 
@@ -116,9 +160,9 @@ const WithdrawalForm = ({handleWithdrawFunds, wallet, user}) => {
                             {formProgression === "airtime" ? (
                                 <div className='flex flex-col justify-center items-center gap-5'>
                                     {/* Withdrawal Amount */}
-                                    <div className='flex flex-col md:flex-row'>
-                                        <label htmlFor="fund account" className='font-bold text-sm'>How much would you like to withdraw?</label>
-                                        <input type="number" name='withdrawalAmount' placeholder='₦' value={withdrawAmount} onChange={handleWithdrawalAmount} className='border border-gray-600 py-2 px-2'/>
+                                    <div className='flex flex-col'>
+                                        <label htmlFor="fund account" className='font-bold text-sm mb-1'>How much would you like to withdraw?</label>
+                                        <input type="number" name='amount' placeholder='₦' value={amount} onChange={handleWithdrawalAmount} className='border border-gray-600 py-2 px-2'/>
                                     </div>
                                     
                                     <label htmlFor="fund account" className='font-bold text-sm'>We will send your airtime to your registered Phone number?</label>
@@ -130,9 +174,9 @@ const WithdrawalForm = ({handleWithdrawFunds, wallet, user}) => {
                             {/* Bank Transfer */}
                             {formProgression === "bank transfer" ? (
                                 <div className='flex flex-col justify-center items-center gap-2'>
-                                    <div className='flex flex-col md:flex-row'>
-                                        <label htmlFor="fund account" className='font-bold text-sm'>How much would you like to withdraw?</label>
-                                        <input type="number" name='withdrawalAmount' placeholder='₦' value={withdrawAmount} onChange={handleWithdrawalAmount} className='border border-gray-600 py-2 px-2'/>
+                                    <div className='flex flex-col'>
+                                        <label htmlFor="fund account" className='font-bold text-sm mb-1'>How much would you like to withdraw?</label>
+                                        <input type="number" name='withdrawalAmount' placeholder='₦' value={amount} onChange={handleWithdrawalAmount} className='border border-gray-600 py-2 px-2'/>
                                     </div>
 
                                     <label htmlFor="fund account" className='font-bold text-sm'>We will transfer your withdrawed funds to this bank account?</label>
@@ -156,16 +200,16 @@ const WithdrawalForm = ({handleWithdrawFunds, wallet, user}) => {
                         <div className='flex items-center'>
                         {/* {confirmBtn && (<button onClick={confirmWithdrawalMethod} className='bg-tertiary text-gray-100 px-6 py-1 mt-5'>Confirm</button>)} */}
 
-                        <button type='submit' className='bg-gray-800 text-gray-100 px-6 py-1 mt-5'>
-                            {withdrawMethod && withdrawAmount ? (
+                        {canWithdraw ? (
+                            <button type='submit' className='bg-gray-800 text-gray-100 px-6 py-1 mt-5'>
                                 <>
                                  {!isLoading && ("Send Request")}
                                 {isLoading && ("Sending Request...")}
                                 {isError && ("Sending Failed")}
                                 </>
-                            ) : ""}
-                            
-                        </button>
+                            </button>
+                        ) : (<p className='text-tertiary text-center mt-2'>You can only withdraw the amount in your wallet</p>)}
+                        
                         </div>
                     </form>
                 )}
