@@ -142,7 +142,7 @@ const TaskEarn = () => {
                         gender: taskToPerform.gender,
                         state: taskToPerform.state,
                         lga: taskToPerform.lga,
-                        caption: "",
+                        caption: taskToPerform.caption,
                         taskVerification,
                         socialPageLink: taskToPerform.socialPageLink,
                         adMedia: taskToPerform.mediaURL

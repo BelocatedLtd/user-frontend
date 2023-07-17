@@ -24,6 +24,7 @@ import copy from '../../../assets/copy.png'
 import { GiCancel } from 'react-icons/gi'
 import { handleGetUserTasks, selectTasks } from '../../../redux/slices/taskSlice'
 import ImageGallery from '../../../components/ImageGallery'
+import Loader from '../../../components/loader/Loader'
 
 const TaskPerform = ({taskId, userSocialName, selectedImages, handleOnSubmit, handleInputChange, handleImageChange, handleImageRemove, isLoading, isError, icons}) => {
   const linkRef = useRef(null)
@@ -38,6 +39,7 @@ const TaskPerform = ({taskId, userSocialName, selectedImages, handleOnSubmit, ha
   const [createdAtDate, setCreatedAtDate] = useState()
   const [icon, setIcon] = useState()
   const [adMedia, setAdMedia] = useState()
+  const [isDownloading, setIsDownloading] = useState(true)
 
   const getTask = async() => {
     await dispatch(handleGetUserTasks())
@@ -105,11 +107,32 @@ useEffect(() => {
     document.execCommand('copy')
     toast.success('Resource copied to clipboard')
   }
+
+  const handleDownload = async(mediaUrl, mediaName) => {
+
+    try {
+      setIsDownloading(true)
+      const response = await fetch(mediaUrl);
+      setIsDownloading(false)
+
+      const blob = await response.blob();
+      const downloadLink = URL.createObjectURL(blob);
+      const anchorElement = document.createElement('a')
+      anchorElement.href = downloadLink;
+      anchorElement.download = mediaName;
+
+      document.body.appendChild(anchorElement);
+      URL.revokeObjectURL(downloadLink)
+    } catch (error) {
+      setIsDownloading(false)
+      console.error('Error occured during download:', error)
+    }
+  }
  
 
   return (
     <div className='w-full h-fit'>
-      {/* {isLoading && <Loader />} */}
+      {/* {isDownloading && <Loader />} */}
       <div className='flex items-center justify-between gap-3 border-b border-gray-200 pb-6'>
                 <div className='flex items-center'>
                   <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))} className='mr-1'/>
@@ -153,23 +176,41 @@ useEffect(() => {
                 </div>
             </div>
 
-            {newTask?.message && (
+            {newTask?.message ? (
               <div className='w-full md-w-500px text-center mb-[2rem]'>
-                <label  className='text-gray-500 font-bold text-center mb-[1rem]'>Message:</label>
+                <label  className='text-gray-500 font-bold text-center mb-[1rem]'>Message from Admin:</label>
                 <p className='text-gray-600 font-normal'>
                   {newTask?.message}
                 </p>
               </div>
-            )}
+            ): ""}
 
-              <div className='w-fit md-w-500px text-center mb-[2rem]'>
+              {/* Ad Caption */}
+              {newTask?.caption ? (
+                <div className='w-fit flex flex-col md-w-500px text-center items-center mx-auto mb-[2rem]'>
+                <label  className='text-gray-500 font-bold text-center mb-[1rem]'>Message from Advertiser:</label>
+                {newTask?.caption}
+                </div>
+              ) : ""}
+              
+
+              {/* Ad Image */}
+              {adMedia?.length > 0 ? (
+                <div className='w-fit flex flex-col text-center items-center mx-auto md-w-500px mb-[2rem]'>
                 <label  className='text-gray-500 font-bold text-center mb-[1rem]'>Download Media:</label>
                 {adMedia?.map((image, index) => (
+                  <>
                   <img key={index} src={image?.secure_url} alt={`Image ${index}`} />
-              ))}
 
-              <button className='bg-green-700 text-gray-50 px-5 py-2 rounded-2xl hover:bg-tertiary'>Download</button>
-              </div>
+                  <button onClick={() => handleDownload(image?.secure_url, image?.public_id)} className='bg-green-700 text-gray-50 px-5 py-2 rounded-2xl mt-[1rem] hover:bg-tertiary'>
+                    {!isDownloading && ('Download')}
+                    {isDownloading && ('Downloading...')}
+                  </button>
+                  </>
+                ))}
+                </div>
+              ) : ""}
+              
             
 
             {/* Verification Instructions */}

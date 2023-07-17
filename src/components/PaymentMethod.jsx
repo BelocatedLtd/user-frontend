@@ -67,6 +67,7 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
      paymentFormData.append('costPerTask', costPerTask);
      paymentFormData.append('earnPerTask', earnPerTask);
      paymentFormData.append('socialPageLink', socialPageLink);
+     paymentFormData.append('caption', caption)
      paymentFormData.append('adAmount', expBudget);
 
 
