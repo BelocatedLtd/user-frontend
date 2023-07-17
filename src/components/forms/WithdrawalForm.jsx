@@ -115,6 +115,11 @@ const WithdrawalForm = ({handleWithdrawFunds, wallet, user}) => {
                     return
                 }
 
+                if (withdrawMethod === "bank transfer" && amount < 5000) {
+                    toast.error('You can only withdraw 5,000 Naira and above for bank withdrawals')
+                    return
+                }
+
                 await dispatch(withdrawUserWallet(confirmedWithdrawalDetails))
     
                 if (isError) {
