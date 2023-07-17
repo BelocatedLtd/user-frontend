@@ -50,29 +50,29 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
 
    const title = `Buy ${desiredROI} ${platform} ${service}`
 
+   //Append and prepare form data for transport
+   const paymentFormData = new FormData();
+
+   for (let i = 0; i < imageArray?.length; i++ ) {
+   paymentFormData.append('images', imageArray[i]);
+   };
+     paymentFormData.append('platform', platform);
+     paymentFormData.append('service', service);
+     paymentFormData.append('adTitle', adTitle);
+     paymentFormData.append('desiredROI', desiredROI);
+     paymentFormData.append('gender', gender);
+     paymentFormData.append('state', state);
+     paymentFormData.append('lga', lga);
+     paymentFormData.append('userId', user.id);
+     paymentFormData.append('costPerTask', costPerTask);
+     paymentFormData.append('earnPerTask', earnPerTask);
+     paymentFormData.append('socialPageLink', socialPageLink);
+     paymentFormData.append('adAmount', expBudget);
+
 
    //make payment from available wallet fund
    const handlePayment = async (e) => {
     e.preventDefault()
-
-    //Append and prepare form data for transport
-    const paymentFormData = new FormData();
-
-    for (let i = 0; i < imageArray.length; i++ ) {
-    paymentFormData.append('images', imageArray[i]);
-    };
-      paymentFormData.append('platform', platform);
-      paymentFormData.append('service', service);
-      paymentFormData.append('adTitle', adTitle);
-      paymentFormData.append('desiredROI', desiredROI);
-      paymentFormData.append('gender', gender);
-      paymentFormData.append('state', state);
-      paymentFormData.append('lga', lga);
-      paymentFormData.append('userId', user.id);
-      paymentFormData.append('costPerTask', costPerTask);
-      paymentFormData.append('earnPerTask', earnPerTask);
-      paymentFormData.append('socialPageLink', socialPageLink);
-      paymentFormData.append('adAmount', expBudget);
 
     if (canPay) {
         await dispatch(createNewAdvert(paymentFormData))
