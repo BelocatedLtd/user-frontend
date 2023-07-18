@@ -12,75 +12,93 @@ import Loader from '../loader/Loader'
 import { confirmWithdrawal, deleteWithdrawal } from '../../services/walletServices'
 import { BiArrowBack } from 'react-icons/bi'
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
+import { BACKEND_URL } from '../../../utils/globalConfig'
+import { io } from 'socket.io-client'
+
+
+const socket = io.connect(`${BACKEND_URL}`)
 
 const WithdrawalModal = () => {
+    const {withdrawalRequestId} = useParams()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const users = useSelector(selectUsers)
-    const wds = useSelector(selectWithdrawals)
+    const isLoading = useSelector(selectIsLoading)
     const isSuccess = useSelector(selectIsSuccess)
     const isError = useSelector(selectIsError)
     //const wdData = useParams()
     const location = useLocation();
-    const { wdDataItem } = location.state || {};
-   // const isLoading = useSelector(selectIsLoading)
-    const [isLoading, setIsLoading] = useState(false)
+    const { withdrawalList } = location.state || {};
+    //const [isLoading, setIsLoading] = useState(false)
     const [wdItem, setWdItem] = useState(null)
     const [wdUser, setWdUser] = useState()
     
     
-    const {_id, userId, withdrawAmount, withdrawMethod} = wdDataItem || {}
+    
 
     useEffect(() => {
-        const user = users?.find(user => user._id === wdDataItem?.userId)
+        const wd = withdrawalList?.find(wdrequest => wdrequest?._id === withdrawalRequestId) || {}
+        const user = users?.find(user => user._id === wd?.userId) || {}
         setWdUser(user)
+        setWdItem(wd)
      }, [])   
 
 
-     console.log(wdDataItem)
-     return
+     const {_id, userId, withdrawAmount, withdrawMethod} = wdItem || {}
+
+
+
+    
    
 
 
     const handleOnSubmit = async(e) => {
         e.preventDefault()
+    
+       const response =  await dispatch(handleConfirmUserWithdrawal(_id))
 
-        setIsLoading(true)
-        const response = await confirmWithdrawal(_id)
-
-        
-        if (!response) {
-            setIsLoading(false)
+        if (isError) {
             toast.error("Error confirming withdrawal request")
         }
 
-        if (response) {
-            setIsLoading(false)
-            navigate(`/admin/dashboard/withdrawals/${user?.username}`)
-            handleClose()
+        if (isSuccess) {
+           
+            console.log(response.payload)
+            const emitData = {
+                userId: userId,
+                action: `@${wdUser?.username} from ${wdUser?.location} just withdrew from their Belocated wallet`
+            }
+
+            //Emit Socket event to update activity feed
+            socket.emit('sendActivity', emitData)  
+            
+            navigate(-1) 
         }
 
-        setIsLoading(false)
+       
     }
 
     const handleDelete = async(e) => {
         e.preventDefault()
 
-        setIsLoading(true)
-        const response = await deleteWithdrawal(wd?._id)
+    
+        const response = await dispatch(handleDeleteWithdrawal(_id))
 
-        if (!response) {
-            setIsLoading(false)
+        if (!response.payload) {
+          
             toast.error("Error deleting withdrawal request")
         }
 
-        if (response) {
-            setIsLoading(false)
-            navigate(`/admin/dashboard/withdrawals/${user?.username}`)
-            handleClose()
+        if (response.payload) {
+            toast.success("Withdrawal Rejected")
+         
+
+            navigate(-1)
+            // handleClose()
+      
         }
 
-        setIsLoading(false)
+      
     }
 
     return (

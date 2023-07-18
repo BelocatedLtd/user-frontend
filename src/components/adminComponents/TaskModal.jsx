@@ -113,14 +113,13 @@ const TaskModal = ({handleModal, task, taskPerformer}) => {
             const response = await dispatch(handleApproveTask(approveTaskData))
             
             setIsLoading(false)
-            console.log(response)
             if (!response.payload) {
                 toast.error("Error Approving Task")
                 setIsLoading(false)
             }
     
             if (response.payload) {
-                toast.error("Task Approved")
+                toast.success("Task Approved")
                 setIsLoading(false)
     
                 const emitData = {

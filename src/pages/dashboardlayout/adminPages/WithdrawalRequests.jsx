@@ -21,6 +21,15 @@ const WithdrawalRequests = () => {
   const [wdDataItem, setWdData] = useState()
   const [wdUser, setWdUser] = useState()
 
+  useEffect(() => {
+    dispatch(handleGetAllUser())
+    dispatch(handleGetWithdrawals())
+
+    if (isError) {
+      toast.error("failed to fetch withdrawal requests")
+    }
+
+}, [isError, dispatch])
 
   const columns = [
     {
@@ -50,7 +59,7 @@ const WithdrawalRequests = () => {
     },
     {
       name: 'Status',
-      selector: row => row.status, 
+      selector: row => row?.status, 
       sortable: true
     },
     {
@@ -60,7 +69,7 @@ const WithdrawalRequests = () => {
             const userWithdrawalRequest = withdrawalList?.find(wdrequest => wdrequest?._id === row?._id) || {}
             setWdData(userWithdrawalRequest)
             return (
-                <button className='bg-[#18141E] text-gray-100 px-6 py-2 rounded-2xl hover:bg-btn hover:bg-secondary' onClick={(e) => handleButtonClick(e, row._id)}>Pay</button>
+                <button className='bg-[#18141E] text-gray-100 px-6 py-2 rounded-2xl hover:bg-btn hover:bg-secondary' onClick={(e) => handleButtonClick(e, row?._id)}>Pay</button>
             )
         }
       },
@@ -69,10 +78,7 @@ const WithdrawalRequests = () => {
   const handleButtonClick = (e, withdrawalRequestId) => {
     e.preventDefault();
 
-    console.log(wdUser)
-    return
-
-    navigate(`/admin/dashboard/withdrawals/confirm`, { state:{ wdDataItem } })
+    navigate(`/admin/dashboard/withdrawals/confirm/${withdrawalRequestId}`, { state:{ withdrawalList } })
     
   }
 
@@ -87,15 +93,8 @@ const WithdrawalRequests = () => {
   }
 
 
-  useEffect(() => {
-    dispatch(handleGetAllUser())
-    dispatch(handleGetWithdrawals())
+  
 
-    if (isError) {
-      toast.error("failed to fetch withdrawal requests")
-    }
-
-}, [isError, dispatch])
 
 
   return (

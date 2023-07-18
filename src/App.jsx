@@ -504,7 +504,7 @@ const handleCloseMenu = () => {
 
           {/* Admin Withdrawal Request List*/}
       <Route 
-        path="/admin/dashboard/withdrawals/confirm" 
+        path="/admin/dashboard/withdrawals/confirm/:withdrawalRequestId" 
         element={
           <SidebarLeft>
             <DashLayout>

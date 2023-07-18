@@ -222,7 +222,10 @@ const walletSlice = createSlice({
             state.isLoading = false;
             state.isSuccess = true;
             state.isError = false;
-            state.withdrawals.push(action.payload)
+            state.advert = action.payload
+            state.withdraw = action.payload
+            state.withdrawals.push(action.payload);
+            toast.success("Withdrawal Approved Successfully")
           })
           .addCase(handleConfirmUserWithdrawal.rejected, (state, action) => {
             state.isLoading = false;

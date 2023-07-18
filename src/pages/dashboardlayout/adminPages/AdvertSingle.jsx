@@ -168,7 +168,7 @@ const AdvertSingle = () => {
           
           <div className='flex gap-2'>
             <button onClick={handleDelete} className='py-2 px-5 bg-tertiary text-primary'>Delete</button>
-            <button className='py-2 px-5 bg-secondary text-primary'>Message Advertiser</button>
+            {/* <button className='py-2 px-5 bg-secondary text-primary'>Message Advertiser</button> */}
           </div> 
         </div>
       </div>
