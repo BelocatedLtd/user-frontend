@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom'
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
 import { socialMenu } from '../../../components/data/SocialData'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleGetALLUserAdverts, handleGetUserAdverts, selectAdverts, selectAllAdverts, selectIsLoading } from '../../../redux/slices/advertSlice'
+import { handleGetALLUserAdverts, handleGetUserAdverts, selectAdverts, selectAllAdverts, selectIsError, selectIsLoading, selectIsSuccess } from '../../../redux/slices/advertSlice'
 import { useState } from 'react'
 import Loader from '../../../components/loader/Loader'
 import { SET_USER, SET_USERNAME, selectUser } from '../../../redux/slices/authSlice'
 import { getUser } from '../../../services/authServices'
 import socialPlatforms from '../../../components/data/assets'
-import { toast } from 'react-hot-toast'
+import { LoaderIcon, toast } from 'react-hot-toast'
 
 
 const Earn = () => {
@@ -18,6 +18,8 @@ const Earn = () => {
     const adverts = useSelector(selectAllAdverts)
     const dispatch = useDispatch(selectAdverts)
     const isLoading = useSelector(selectIsLoading)
+    const isError = useSelector(selectIsError)
+    const isSuccess = useSelector(selectIsSuccess)
     const [toggleServices, setToggleServices] = useState(false)
     const [selectedPlatformObject, setSelectedPlatformObject] = useState()
     const user = useSelector(selectUser)
@@ -27,26 +29,36 @@ const Earn = () => {
     useRedirectLoggedOutUser('/login')
     const [taskList, setTaskList] = useState()
 
-
-    const getAllAdverts = async() => {
-       await dispatch(handleGetALLUserAdverts())
-    }
+    useEffect(() => {
+        const getAdverts = async() => {
+            await dispatch(handleGetALLUserAdverts())
+        }
+        getAdverts()
     
+        if (isError) {
+          toast.error("Failed to retrieve adverts, please reload page")
+          navigate(-1)
+        }
+
+        if (isSuccess) {
+            //Check if task performer is still eligible for free tasks so he will see only the adverts that are marked as free. If not, he will see paid adverts
+        if (user?.freeTaskCount > 0 ) {
+        
+            const freeAdverts = adverts?.filter(advert => advert.isFree === true)
+            setTaskList(freeAdverts)
+        } 
+
+        if (user?.freeTaskCount === 0) {
+        
+            const paidAdverts = adverts?.filter(advert => advert.isFree === false)
+            setTaskList(paidAdverts)
+        }
+        }
+      }, [dispatch]) 
 
 useEffect(() => {
 
-    getAllAdverts()
-
-    //Check if task performer is still eligible for free tasks so he will see only the adverts that are marked as free. If not, he will see paid adverts
-    if (user?.freeTaskCount > 0 ) {
-        const freeAdverts = adverts?.filter(advert => advert.isFree === true)
-        setTaskList(freeAdverts)
-    } 
-
-    if (user?.freeTaskCount === 0) {
-        const paidAdverts = adverts?.filter(advert => advert.isFree === false)
-        setTaskList(paidAdverts)
-    }
+    
 
 }, [])
 
@@ -119,7 +131,13 @@ useEffect(() => {
                                 <p className='pb-3 text-[14px] text-gray-500 font-semibold'><span className='font-extrabold'>Earning: </span> Starts from ₦{menu?.earn}/Task Completed & Approved</p>
                             </div>
                             <div className='w-full md:text-right'>
-                            <small className={`py-2 px-5 ${user?.freeTaskCount === 0 ? ('bg-secondary') : ('bg-tertiary')} text-primary rounded-2xl`}>{taskList?.filter(advert => advert?.platform === menu?.value).length} Tasks Available</small>
+                            <small className={`py-2 px-5 ${user?.freeTaskCount === 0 ? ('bg-secondary') : ('bg-tertiary')} text-primary rounded-2xl`}>
+                                
+                            
+                                {isLoading && (<LoaderIcon />)} 
+                                {!isLoading && (taskList?.filter(advert => advert?.platform === menu?.value).length)} 
+                                Tasks Available
+                            </small>
                             </div>
                         </div>
                         <p className='font-normal text-[14px] text-gray-700 mt-3'>{menu?.desc}</p>
@@ -144,7 +162,9 @@ useEffect(() => {
                             <li key={index} className='flex items-center gap-3 border-b border-gray-50 py-3'>
                             <div onClick={(e) => handleSelectAsset(e, service?.asset, service?.TD, service?.verification)} className='flex items-center gap-3 cursor-pointer hover:bg-gray-300'>
                                 {service.TD}
-                                <button className='bg-gray-200 p-2 border border-gray-200 rounded-full'>{selectedPlatformAds?.filter(advert => advert?.service === service?.asset).length}</button>
+                                <button className='bg-gray-200 p-2 border border-gray-200 rounded-full'>
+                                    {selectedPlatformAds?.filter(advert => advert?.service === service?.asset).length}
+                                </button>
                             </div>
                             </li>
                         </ul>

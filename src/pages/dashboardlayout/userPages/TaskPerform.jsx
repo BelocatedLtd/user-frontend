@@ -25,9 +25,11 @@ import { GiCancel } from 'react-icons/gi'
 import { handleGetUserTasks, selectTasks } from '../../../redux/slices/taskSlice'
 import ImageGallery from '../../../components/ImageGallery'
 import Loader from '../../../components/loader/Loader'
+import axios from 'axios'
 
 const TaskPerform = ({taskId, userSocialName, selectedImages, handleOnSubmit, handleInputChange, handleImageChange, handleImageRemove, isLoading, isError, icons}) => {
   const linkRef = useRef(null)
+  const adCaptionRef = useRef(null)
   const dispatch = useDispatch()
   const userId = useSelector(selectUserId)
   //const [icon, setIcon] = useState('')
@@ -108,21 +110,34 @@ useEffect(() => {
     toast.success('Resource copied to clipboard')
   }
 
+  const handleAdCaptionCopy = (e) => {
+    adCaptionRef.current.select();
+    document.execCommand('copy')
+    toast.success('Ad caption copied to clipboard')
+  }
+
   const handleDownload = async(mediaUrl, mediaName) => {
 
     try {
       setIsDownloading(true)
-      const response = await fetch(mediaUrl);
+      toast.success('Downloading media file...')
+      const response = await axios.get(mediaUrl, {responseType: 'blob'});
       setIsDownloading(false)
 
-      const blob = await response.blob();
-      const downloadLink = URL.createObjectURL(blob);
-      const anchorElement = document.createElement('a')
-      anchorElement.href = downloadLink;
-      anchorElement.download = mediaName;
+      if (response.data) {
+        toast.success('Download completed')
+      }
+     
 
-      document.body.appendChild(anchorElement);
-      URL.revokeObjectURL(downloadLink)
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'ad-image.jpg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChld(link);
+
+      
     } catch (error) {
       setIsDownloading(false)
       console.error('Error occured during download:', error)
@@ -176,6 +191,7 @@ useEffect(() => {
                 </div>
             </div>
 
+            {/* Message from Admin */}
             {newTask?.message ? (
               <div className='w-full md-w-500px text-center mb-[2rem]'>
                 <label  className='text-gray-500 font-bold text-center mb-[1rem]'>Message from Admin:</label>
@@ -189,7 +205,10 @@ useEffect(() => {
               {newTask?.caption ? (
                 <div className='w-fit flex flex-col md-w-500px text-center items-center mx-auto mb-[2rem]'>
                 <label  className='text-gray-500 font-bold text-center mb-[1rem]'>Message from Advertiser:</label>
-                {newTask?.caption}
+                  <div className='flex items-center gap-1'>
+                    <textarea ref={adCaptionRef} value={newTask?.caption} readOnly className='border border-gray-200 p-3'></textarea>
+                    <img src={copy} alt="click to copy ref link" className='w-[30px] h-[30px]' onClick={handleAdCaptionCopy}/>
+                  </div>
                 </div>
               ) : ""}
               
@@ -214,7 +233,8 @@ useEffect(() => {
             
 
             {/* Verification Instructions */}
-            <div className='w-full md-w-500px text-center mb-[2rem]'>
+            {newTask?.status === "Approved" ? "" : (
+              <div className='w-full md-w-500px text-center mb-[2rem]'>
               <h1 className='text-gray-500 font-bold text-center mb-[1rem]'>Verification Instructions</h1>
               {newTask?.platform === 'whatsapp' ? (
                 <div>
@@ -226,6 +246,8 @@ useEffect(() => {
                 </div>
               ) : (<p>{newTask?.taskVerification}</p>)}
             </div>
+            )}
+            
 
             {/* Task link */}
             {hideLinkInputFields ? "" : (
@@ -268,7 +290,10 @@ useEffect(() => {
                 )}
                 
 
-                <button type='submit' className='flex items-center justify-center gap-2 w-full md:w-[300px] bg-secondary text-gray-100 py-3 px-6 mt-5 rounded-full mx-auto hover:bg-tertiary'>Submit {isLoading && <LoaderIcon />}</button>
+                  {newTask?.status === "Approved" ? "" : (
+                    <button type='submit' className='flex items-center justify-center gap-2 w-full md:w-[300px] bg-secondary text-gray-100 py-3 px-6 mt-5 rounded-full mx-auto hover:bg-tertiary'>Submit {isLoading && <LoaderIcon />}</button>
+                  )}
+                
               </form>
             </div>
         </div>
