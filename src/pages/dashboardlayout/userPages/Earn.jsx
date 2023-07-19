@@ -30,9 +30,27 @@ const Earn = () => {
     const [taskList, setTaskList] = useState()
 
     useEffect(() => {
-        const getAdverts = async() => {
-            await dispatch(handleGetALLUserAdverts())
+        async function getAdverts() {
+            const data = await getUser()
+            await dispatch(SET_USER(data))
+           dispatch(SET_USERNAME(data?.username))
+
+           await dispatch(handleGetALLUserAdverts())
+
+                //Check if task performer is still eligible for free tasks so he will see only the adverts that are marked as free. If not, he will see paid adverts
+            if (user?.freeTaskCount > 0 ) {
+            
+                const freeAdverts = adverts?.filter(advert => advert.isFree === true)
+                setTaskList(freeAdverts)
+            } 
+    
+            if (user?.freeTaskCount === 0) {
+            
+                const paidAdverts = adverts?.filter(advert => advert.isFree === false)
+                setTaskList(paidAdverts)
+            }
         }
+
         getAdverts()
     
         if (isError) {
@@ -40,20 +58,6 @@ const Earn = () => {
           navigate(-1)
         }
 
-        if (isSuccess) {
-            //Check if task performer is still eligible for free tasks so he will see only the adverts that are marked as free. If not, he will see paid adverts
-        if (user?.freeTaskCount > 0 ) {
-        
-            const freeAdverts = adverts?.filter(advert => advert.isFree === true)
-            setTaskList(freeAdverts)
-        } 
-
-        if (user?.freeTaskCount === 0) {
-        
-            const paidAdverts = adverts?.filter(advert => advert.isFree === false)
-            setTaskList(paidAdverts)
-        }
-        }
       }, [dispatch]) 
 
 useEffect(() => {
@@ -132,10 +136,7 @@ useEffect(() => {
                             </div>
                             <div className='w-full md:text-right'>
                             <small className={`py-2 px-5 ${user?.freeTaskCount === 0 ? ('bg-secondary') : ('bg-tertiary')} text-primary rounded-2xl`}>
-                                
-                            
-                                {isLoading && (<LoaderIcon />)} 
-                                {!isLoading && (taskList?.filter(advert => advert?.platform === menu?.value).length)} 
+                                <span className='mr-1'>{taskList?.filter(advert => advert?.platform === menu?.value).length}</span> 
                                 Tasks Available
                             </small>
                             </div>

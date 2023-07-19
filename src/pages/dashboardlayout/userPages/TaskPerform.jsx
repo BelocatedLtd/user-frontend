@@ -26,6 +26,8 @@ import { handleGetUserTasks, selectTasks } from '../../../redux/slices/taskSlice
 import ImageGallery from '../../../components/ImageGallery'
 import Loader from '../../../components/loader/Loader'
 import axios from 'axios'
+import {saveAs} from 'file-saver'
+
 
 const TaskPerform = ({taskId, userSocialName, selectedImages, handleOnSubmit, handleInputChange, handleImageChange, handleImageRemove, isLoading, isError, icons}) => {
   const linkRef = useRef(null)
@@ -41,7 +43,7 @@ const TaskPerform = ({taskId, userSocialName, selectedImages, handleOnSubmit, ha
   const [createdAtDate, setCreatedAtDate] = useState()
   const [icon, setIcon] = useState()
   const [adMedia, setAdMedia] = useState()
-  const [isDownloading, setIsDownloading] = useState(true)
+  const [isDownloading, setIsDownloading] = useState(false)
 
   const getTask = async() => {
     await dispatch(handleGetUserTasks())
@@ -117,26 +119,17 @@ useEffect(() => {
   }
 
   const handleDownload = async(mediaUrl, mediaName) => {
+    
 
     try {
       setIsDownloading(true)
       toast.success('Downloading media file...')
-      const response = await axios.get(mediaUrl, {responseType: 'blob'});
-      setIsDownloading(false)
-
-      if (response.data) {
-        toast.success('Download completed')
-      }
+      const response = await fetch(mediaUrl);
+      const blob = await response.blob();
+      saveAs(blob, 'ad_image.jpg');
      
-
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'ad-image.jpg';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChld(link);
-
+      setIsDownloading(false)
+     toast.success("Ad image downloaded successfully!")
       
     } catch (error) {
       setIsDownloading(false)
