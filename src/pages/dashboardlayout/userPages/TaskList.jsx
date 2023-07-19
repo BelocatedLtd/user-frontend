@@ -70,8 +70,8 @@ const TaskList = () => {
             </div>
 
             <div className='md:px-8 mt-3 md:mt-8'>
-         {tasks?.map(task => (
-            <div className='flex items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
+         {tasks?.map((task, index) => (
+            <div key={index} className='flex items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
                 <div className='flex gap-2 items-center'>
                 <img src={icons?.find((icon) => icon.platform === task.platform)?.icon} alt={task.platform} className='hidden md:flex'/>
                     <div className=''>

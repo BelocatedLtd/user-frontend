@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import TaskPerform from './TaskPerform'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleSubmitTask, selectTasks, selectIsLoading, selectIsError } from '../../../redux/slices/taskSlice'
@@ -27,10 +27,7 @@ const TaskSubmit = () => {
     const tasks = useSelector(selectTasks)
     const [task, setTask] = useState()
     const [imageArray, setimageArray] = useState()
-    const [selectedImages, setSelectedImages] = useState([]);
-    const location = useLocation();
-    // const { newTask } = location.state || {};
-    const [verificationProcess, setVerificationProcess] = useState("")
+    const [selectedImages, setSelectedImages] = useState([])
     const [userSocialName, setUserSocialName] = useState("")
 
 

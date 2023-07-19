@@ -115,7 +115,7 @@ const Earn = () => {
             <div className='flex flex-col gap-[3rem] items-center justify-center mt-[1rem] px-3 py-5'>
                 {socialMenu.map((menu, index) => (
                 <div  key={index} className='w-fit md:w-full shadow-lg p-5'>
-                 <div className='flex flex-col md:flex-row items-center gap-5' key={index}>
+                 <div className='flex flex-col md:flex-row items-center gap-5'>
                     <div className='flex flex-col'>
                         <div className='hidden md:flex items-center justify-center w-[100px] h-[100px] bg-gray-50 rounded-t-xl rounded-b-2xl'>
                             <img src={menu?.icon} alt="" className='object-cover rounded-full p-2'/>
