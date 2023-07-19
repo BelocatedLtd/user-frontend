@@ -31,24 +31,8 @@ const Earn = () => {
 
     useEffect(() => {
         async function getAdverts() {
-            const data = await getUser()
-            await dispatch(SET_USER(data))
-           dispatch(SET_USERNAME(data?.username))
-
            await dispatch(handleGetALLUserAdverts())
 
-                //Check if task performer is still eligible for free tasks so he will see only the adverts that are marked as free. If not, he will see paid adverts
-            if (user?.freeTaskCount > 0 ) {
-            
-                const freeAdverts = adverts?.filter(advert => advert.isFree === true)
-                setTaskList(freeAdverts)
-            } 
-    
-            if (user?.freeTaskCount === 0) {
-            
-                const paidAdverts = adverts?.filter(advert => advert.isFree === false)
-                setTaskList(paidAdverts)
-            }
         }
 
         getAdverts()
@@ -60,11 +44,22 @@ const Earn = () => {
 
       }, [dispatch]) 
 
-useEffect(() => {
+    useEffect(() => {
 
+      //Check if task performer is still eligible for free tasks so he will see only the adverts that are marked as free. If not, he will see paid adverts
+      if (user?.freeTaskCount > 0 ) {
+            
+        const freeAdverts = adverts?.filter(advert => advert.isFree === true)
+        setTaskList(freeAdverts)
+    } 
+
+    if (user?.freeTaskCount === 0) {
     
+        const paidAdverts = adverts?.filter(advert => advert.isFree === false)
+        setTaskList(paidAdverts)
+    }
 
-}, [])
+}, [adverts])
 
 
 
