@@ -43,8 +43,6 @@ const Dashboard = () => {
         setProfile(data)
         await dispatch(SET_USER(data))
         await dispatch(getUserWallet(data._id))
-       dispatch(SET_USERNAME(data?.username))
-      
       }
     getUserData()
 
