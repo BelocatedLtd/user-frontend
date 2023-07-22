@@ -46,7 +46,7 @@ const Dashboard = () => {
     getUserData()
 
     const frontEndUrl = window.location.hostname;
-    setRefLink(`https://${frontEndUrl}/register/ref/${user.id}`)
+    setRefLink(`https://${frontEndUrl}/register/ref/${user?._id}`)
   }, [dispatch])
 
   const handleEarn = (e) => {
@@ -57,7 +57,7 @@ const Dashboard = () => {
     }
     if (!user.phone) {
       toast.error("Phone number not verified")
-      navigate(`/dashboard/account-settings/${user.username}`)
+      navigate(`/dashboard/account-settings/${user?.username}`)
     }
     if (user.phone && user.location && user.community && user.gender)
     (navigate('/dashboard/earn'))
