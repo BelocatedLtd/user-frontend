@@ -28,7 +28,7 @@ const Dashboard = () => {
   useRedirectLoggedOutUser('/')
 
   useEffect(() => {
-    if (!user.fullname || !user.phone || !user.location || !user.gender || !user.community || !user.religion) {
+    if (!user?.fullname || !user?.phone || !user?.location || !user?.gender || !user?.community || !user?.religion) {
       setProfileComplete(true)
     } else {
       setProfileComplete(false)
