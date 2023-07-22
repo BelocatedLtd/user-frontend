@@ -76,25 +76,25 @@ function App() {
   const [profile, setProfile] = useState(null)
   const [isLoggedin, setIsLoggedIn] = useState(false)
 
-  useEffect(() => {
-    async function loginStatus() {
-      const status = await getLoginStatus()
-      dispatch(SET_LOGIN(status))
-      setIsLoggedIn(status)
-    }
+  // useEffect(() => {
+  //   async function loginStatus() {
+  //     const status = await getLoginStatus()
+  //     dispatch(SET_LOGIN(status))
+  //     setIsLoggedIn(status)
+  //   }
     
-    loginStatus()
+  //   loginStatus()
 
-    if (isLoggedin === "true" && !user?.email) {
-      async function getUserData() {
-        const data = await getUser()
-        setProfile(data)
-        await dispatch(SET_USER(data))
-        await dispatch(SET_USERNAME(data?.username))
-      }
-      getUserData()
-    }
-  }, [])
+  //   if (isLoggedin === "true" && !user?.email) {
+  //     async function getUserData() {
+  //       const data = await getUser()
+  //       setProfile(data)
+  //       await dispatch(SET_USER(data))
+  //       await dispatch(SET_USERNAME(data?.username))
+  //     }
+  //     getUserData()
+  //   }
+  // }, [])
 
   const handleRegister = (e) => {
     e.preventDefault()
