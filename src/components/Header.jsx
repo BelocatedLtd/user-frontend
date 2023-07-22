@@ -48,7 +48,7 @@ export const Header = () => {
       }, [])
 
     const userDashboard = () => {
-         if (user.accountType === "Admin") {
+         if (user?.accountType === "Admin") {
             return (<button onClick={() => navigate(`/admin/dashboard/${user?.username}`)} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Dashboard</button>  )
          }
 

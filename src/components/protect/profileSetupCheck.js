@@ -4,7 +4,7 @@ import { selectUser } from "../../redux/slices/authSlice";
 export const ProfileInComplete = ({children}) => {
     const user = useSelector(selectUser)
 
-    if (!user.fullname || !user.phone || !user.location || !user.gender || !user.community || !user.religion) {
+    if (!user?.fullname || !user?.phone || !user?.location || !user?.gender || !user?.community || !user?.religion) {
       return children
     } 
     return null
@@ -13,7 +13,7 @@ export const ProfileInComplete = ({children}) => {
 export const ProfileComplete = ({children}) => {
     const user = useSelector(selectUser)
 
-    if (user.fullname || user.phone || user.location || user.gender || user.community || user.religion) {
+    if (user?.fullname || user?.phone || user?.location || user?.gender || user?.community || user?.religion) {
       return children
     } 
     return null

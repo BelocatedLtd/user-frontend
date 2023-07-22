@@ -92,8 +92,8 @@ const Dashboard = () => {
               <div className='hidden left w-full md:flex md:flex-1'>
                 <div className='w-full flex flex-col justify-center items-center'>
                   <img src={about} alt=""  className='w-[150px] border p-[1rem] rounded-full'/>
-                  <p className='mt-1'>Welcome, {user.fullname ? user.fullname : username}</p>
-                  <small className='mb-1'>@{username}</small>
+                  <p className='mt-1'>Welcome, {user?.fullname ? user?.fullname : user?.username}</p>
+                  <small className='mb-1'>@{user?.username}</small>
                   <small className='mb-5'>Referred: {user?.referrals?.length}</small>
 
                   <div className='flex gap-2'>

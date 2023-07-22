@@ -23,9 +23,9 @@ const Header = () => {
             <div className='flex flex-col justify-start md:hidden'>
               <div className='flex items-center gap-1'>
                 <h1 className='text-lg text-gray-600 font-bold'>Welcome, </h1>
-                <h4 className='text-lg text-gray-600 font-medium'>{user.fullname ? user.fullname : user.username}</h4>
+                <h4 className='text-lg text-gray-600 font-medium'>{user?.fullname ? user?.fullname : user?.username}</h4>
               </div>
-              <p className='text-gray-500 font-light text-sm'>@{user.username}</p>
+              <p className='text-gray-500 font-light text-sm'>@{user?.username}</p>
             </div>
       
             <form className='hidden md:flex'>
@@ -59,8 +59,8 @@ const Header = () => {
                     <Link to="/dashboard/advertise">Advertise</Link>
                     <Link to='/terms'>Terms</Link>
                     <ShowOnLogin>
-                        <Link to={`dashboard/account-settings/${user.username}`}>Settings</Link>
-                        <Link to={`/dashboard/${user.username}`} className='text-gray-800 cursor-pointer'>Dashboard
+                        <Link to={`dashboard/account-settings/${user?.username}`}>Settings</Link>
+                        <Link to={`/dashboard/${user?.username}`} className='text-gray-800 cursor-pointer'>Dashboard
                         </Link>
                     </ShowOnLogin>
                     <ShowOnLogin>

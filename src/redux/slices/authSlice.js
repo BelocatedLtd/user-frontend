@@ -2,37 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { updateUser } from '../../services/authServices';
 import { toast } from 'react-hot-toast';
 
-//const username = JSON.parse(localStorage.getItem("username"))
+
 
 const initialState = {
+    user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
     isLoggedIn: false,
-    //username: username ? username : "",
-    username: "",
-    user: {
-        id: "",
-        username: "",
-        fullname: "",
-        email: "",
-        phone: null,
-        location: "",
-        religion: "",
-        gender: "",
-        community: "",
-        accountType: "",
-        bankName: "",
-        bankAccountNumber: null,
-        accountHolderName: "",
-        isEmailVerified: false,
-       // isPhoneVerified: false,
-        taskCompleted: 0,
-        taskOngoing: 0,
-        adsCreated: 0,
-        freeTaskCount: 0,
-        walletId: {},
-        referrals: [],
-        referrersId: "",
-        token: ""
-    },
+    //username: JSON.parse(localStorage.getItem("username")),
+    //user: {},
     isLoading: false,
     isSuccess: false,
     isError: false,
@@ -58,8 +34,12 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    SET_USER: (state, action) => {
+        state.user = action.payload;
+        localStorage.setItem('user', JSON.stringify(action.payload))
+    },
     SET_LOGIN(state, action) {
-        state.isLoggedIn = action.payload
+        state.isLoggedIn = true
     },
     SET_USERNAME(state, action) {
         localStorage.setItem("username", JSON.stringify(action.payload))
@@ -68,45 +48,37 @@ const authSlice = createSlice({
     SET_USER_WALLET(state, action) {
         state.walletId = action.payload
     },
-    SET_USER(state, action) {
-        const profile = action.payload
-        state.user.id = profile?._id
-        state.user.fullname = profile?.fullname
-        state.user.username = profile?.username
-        state.user.email = profile?.email
-        state.user.phone = profile?.phone
-        state.user.location = profile?.location
-        state.user.religion = profile?.religion
-        state.user.community = profile?.community
-        state.user.gender = profile?.gender
-        state.user.accountType = profile?.accountType
-        state.user.bankName = profile?.bankName,
-        state.user.bankAccountNumber = profile?.bankAccountNumber,
-        state.user.accountHolderName = profile?.accountHolderName,
-        state.user.isEmailVerified = profile?.isEmailVerified
-       // state.user.isPhoneVerified = profile?.isPhoneVerified,
-        state.user.taskCompleted = profile?.taskCompleted,
-        state.user.taskOngoing = profile?.taskOngoing,
-        state.user.adsCreated = profile?.adsCreated,
-        state.user.freeTaskCount = profile?.freeTaskCount,
-        state.user.walletId = profile?.walletId,
-        state.user.referrersId = profile?.referrersId,
-        state.user.referrals = profile?.referrals,
-        state.user.token = profile?.token
-    },
-    // SET_LOGOUT(state) {
-    //     state.username = ""
-    //     state.user.id = ""
-    //     state.user.fullname = ""
-    //     state.user.username = ""
-    //     state.user.email = ""
-    //     state.user.phone = ""
-    //     state.user.location = ""
-    //     state.user.religion = ""
-    //     state.user.community = ""
-    //     state.user.gender = ""
-    //     state.user.token = ""
+    // SET_USER(state, action) {
+    //     const profile = action.payload
+    //     state.user.id = profile?._id
+    //     state.user.fullname = profile?.fullname
+    //     state.user.username = profile?.username
+    //     state.user.email = profile?.email
+    //     state.user.phone = profile?.phone
+    //     state.user.location = profile?.location
+    //     state.user.religion = profile?.religion
+    //     state.user.community = profile?.community
+    //     state.user.gender = profile?.gender
+    //     state.user.accountType = profile?.accountType
+    //     state.user.bankName = profile?.bankName,
+    //     state.user.bankAccountNumber = profile?.bankAccountNumber,
+    //     state.user.accountHolderName = profile?.accountHolderName,
+    //     state.user.isEmailVerified = profile?.isEmailVerified
+    //    // state.user.isPhoneVerified = profile?.isPhoneVerified,
+    //     state.user.taskCompleted = profile?.taskCompleted,
+    //     state.user.taskOngoing = profile?.taskOngoing,
+    //     state.user.adsCreated = profile?.adsCreated,
+    //     state.user.freeTaskCount = profile?.freeTaskCount,
+    //     state.user.walletId = profile?.walletId,
+    //     state.user.referrersId = profile?.referrersId,
+    //     state.user.referrals = profile?.referrals,
+    //     state.user.token = profile?.token
     // },
+    SET_LOGOUT(state, action) {
+        state.user = null;
+        state.isLoggedIn = false
+        localStorage.removeItem('user');
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -141,7 +113,7 @@ const authSlice = createSlice({
 });
 
 
-export const {SET_LOGIN, SET_USERNAME, SET_USER_WALLET, SET_USER} = authSlice.actions
+export const {SET_LOGIN, SET_USERNAME, SET_USER_WALLET, SET_USER, SET_LOGOUT} = authSlice.actions
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn
 export const selectUser = (state) => state.auth.user
 export const selectUserId = (state) => state.auth?.user?.id
