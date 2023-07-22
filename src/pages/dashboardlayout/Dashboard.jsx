@@ -14,6 +14,7 @@ import { getUser } from '../../services/authServices'
 import { toast } from 'react-hot-toast'
 import FreeTaskCount from '../../components/dashboard/FreeTaskCount'
 import copy from '../../assets/copy.png'
+import { getUserWallet } from '../../redux/slices/walletSlice'
 
 const Dashboard = () => {
   const inputRef = useRef(null)
@@ -36,12 +37,12 @@ const Dashboard = () => {
 
   useEffect(() => {
       async function getUserData() {
-        if (!user.email) {
         const data = await getUser()
         setProfile(data)
         await dispatch(SET_USER(data))
+        await dispatch(getUserWallet(data._id))
        dispatch(SET_USERNAME(data?.username))
-        }
+      
       }
     getUserData()
 

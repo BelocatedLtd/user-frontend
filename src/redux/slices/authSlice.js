@@ -5,10 +5,10 @@ import { toast } from 'react-hot-toast';
 
 
 const initialState = {
-    user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
+    //user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
     isLoggedIn: false,
     //username: JSON.parse(localStorage.getItem("username")),
-    //user: {},
+    user: {},
     isLoading: false,
     isSuccess: false,
     isError: false,
