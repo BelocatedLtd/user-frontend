@@ -6,10 +6,11 @@ import axios from "axios"
 export const getWallet = async(userId) => {
     try {
          const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/user/${userId}`)
+         toast.success("User wallet retrieved successfully")
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-         toast.error(message)
+         toast.error(`${message}, Error retrieving user wallet`)
      }         
 }
 

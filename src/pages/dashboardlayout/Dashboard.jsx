@@ -30,8 +30,10 @@ const Dashboard = () => {
   useEffect(() => {
     if (!user.fullname || !user.phone || !user.location || !user.gender || !user.community || !user.religion) {
       setProfileComplete(true)
-    } 
-  }, [profileComplete])
+    } else {
+      setProfileComplete(false)
+    }
+  }, [user])
   
   
 
