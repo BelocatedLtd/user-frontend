@@ -6,11 +6,11 @@ import Login from '../pages/authLayout/Login'
 import { ShowOnLogin, ShowOnLogout } from './protect/hiddenLinks'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectUsername } from '../redux/slices/authSlice'
+import { selectUser } from '../redux/slices/authSlice'
 
 const Jumbotron = ({handleRegister, handleLogin, handleCloseMenu, loginBtn, regBtn}) => {
   const navigate = useNavigate()
-  const username = useSelector(selectUsername)
+  const user = useSelector(selectUser)
 
   return (
     <section className='w-full h-[85vh] flex flex-col items-center mt-[8rem]'>
@@ -29,7 +29,7 @@ const Jumbotron = ({handleRegister, handleLogin, handleCloseMenu, loginBtn, regB
 
         <ShowOnLogin>
         <button onClick={() => navigate(`/dashboard/${username}`)} className='bg-tertiary text-primary font-bold px-10 py-3 mt-[5rem] rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Go to Dashboard</button>
-          <small onClick={() => navigate('/logout')} className='mt-3 font-medium text-gray-500'>Welcome, @{username}. <span className='text-secondary cursor-pointer'>Logout</span></small>
+          <small onClick={() => navigate('/logout')} className='mt-3 font-medium text-gray-500'>Welcome, @{user?.username}. <span className='text-secondary cursor-pointer'>Logout</span></small>
         </ShowOnLogin>
         
     </section>

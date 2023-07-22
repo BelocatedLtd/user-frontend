@@ -27,16 +27,12 @@ const SidebarLeft = ({children}) => {
     const user = useSelector(selectUser)
     const [isOpen, setIsOpen] = useState(false)
     const toggleSidebar = () => setIsOpen(!isOpen)
-    const username = useSelector(selectUsername)
 
 
     useEffect(() => {
       async function getUserData() {
-        if (!user.email) {
         const data = await getUser()
         await dispatch(SET_USER(data))
-       dispatch(SET_USERNAME(data?.username))
-        }
       }
     getUserData()
   }, [dispatch])
@@ -88,42 +84,42 @@ const SidebarLeft = ({children}) => {
       {
         title: "Dashboard",
         icon: <FaHome className='mr-2'/>,
-        path:  `/admin/dashboard/${username}`,
+        path:  `/admin/dashboard/${user?.username}`,
       },
       {
         title: "All Users",
         icon: <FaUsers className='mr-2'/>,
-        path: `/admin/dashboard/users/${username}`,
+        path: `/admin/dashboard/users/${user?.username}`,
       },
       {
         title: "All Adverts",
         icon: <FaAdversal className='mr-2'/>,
-        path: `/admin/dashboard/adverts/${username}`,
+        path: `/admin/dashboard/adverts/${user?.username}`,
       },
       {
         title: "All Tasks",
         icon: <FaTasks className='mr-2'/>,
-        path: `/admin/dashboard/tasks/${username}`,
+        path: `/admin/dashboard/tasks/${user?.username}`,
       },
       {
         title: "All Transactions",
         icon: <GrTransaction className='mr-2'/>,
-        path: `/admin/dashboard/transactions/${username}`,
+        path: `/admin/dashboard/transactions/${user?.username}`,
       },
       {
         title: "All Withdrawals",
         icon: <GrTransaction className='mr-2'/>,
-        path: `/admin/dashboard/withdrawals/${username}`,
+        path: `/admin/dashboard/withdrawals/${user?.username}`,
       },
       {
         title: "Account Settings",
         icon: <GrSettingsOption className='mr-2'/>,
-        path: `/admin/dashboard/account-settings/${username}`,
+        path: `/admin/dashboard/account-settings/${user?.username}`,
       },
       {
         title: "Support Messages",
         icon: <BiMessageRoundedDetail className='mr-2'/>,
-        path: `/admin/dashboard/support-messages/${username}`,
+        path: `/admin/dashboard/support-messages/${user?.username}`,
       },
     ]
 
@@ -143,11 +139,6 @@ const SidebarLeft = ({children}) => {
     //   }
     //   }
 
-    useEffect(() => {
-      // sidebarAccountType()
-
-     
-    }, [])
   
 
   return ( 
@@ -166,7 +157,7 @@ const SidebarLeft = ({children}) => {
          
           {user?.accountType === "User" && (
              <>
-              {menu.map((item, index) => { 
+              {menu?.map((item, index) => { 
                 return <SidebarItems key={index} item={item} isOpen={isOpen} />
              })}
             </>
@@ -174,7 +165,7 @@ const SidebarLeft = ({children}) => {
 
           {user?.accountType === "Admin" && (
               <>
-              {adminMenu.map((item, index) => { 
+              {adminMenu?.map((item, index) => { 
                 return <SidebarItems key={index} item={item} isOpen={isOpen} />
              })}
              </>
