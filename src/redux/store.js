@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit"
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit"
 import authReducer from './slices/authSlice'
 import userReducer from './slices/userSlice'
 import advertReducer from './slices/advertSlice'
@@ -17,6 +17,7 @@ const store = configureStore ({
         transaction: transactionReducer,
         feed: feedReducer
     },
+    devTools: true
 })
 
 export default store
