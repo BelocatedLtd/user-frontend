@@ -1,12 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import SidebarItems from './SidebarItems'
-//import menu from '../../components/data/SidebarData'
-import { FaAdversal, FaGrinHearts, FaHome, FaStar, FaTasks, FaUsers } from 'react-icons/fa'
-import { AiOutlineUser, AiOutlineLogout } from 'react-icons/ai'
-import { MdCreateNewFolder, MdOutlineWorkHistory } from 'react-icons/md'
-import {GiPublicSpeaker } from 'react-icons/gi'
+import { FaAdversal, FaHome, FaTasks, FaUsers } from 'react-icons/fa'
 import { GrSettingsOption, GrTransaction } from 'react-icons/gr'
 import { BiMenuAltRight, BiMessageRoundedDetail } from 'react-icons/bi'
 import { useDispatch, useSelector } from 'react-redux'
@@ -27,12 +23,16 @@ const SidebarLeft = ({children}) => {
     const user = useSelector(selectUser)
     const [isOpen, setIsOpen] = useState(false)
     const toggleSidebar = () => setIsOpen(!isOpen)
+    const username = useSelector(selectUsername)
 
 
     useEffect(() => {
       async function getUserData() {
+        if (!user?.email) {
         const data = await getUser()
         await dispatch(SET_USER(data))
+       dispatch(SET_USERNAME(data?.username))
+        }
       }
     getUserData()
   }, [dispatch])
@@ -84,42 +84,42 @@ const SidebarLeft = ({children}) => {
       {
         title: "Dashboard",
         icon: <FaHome className='mr-2'/>,
-        path:  `/admin/dashboard/${user?.username}`,
+        path:  `/admin/dashboard/${username}`,
       },
       {
         title: "All Users",
         icon: <FaUsers className='mr-2'/>,
-        path: `/admin/dashboard/users/${user?.username}`,
+        path: `/admin/dashboard/users/${username}`,
       },
       {
         title: "All Adverts",
         icon: <FaAdversal className='mr-2'/>,
-        path: `/admin/dashboard/adverts/${user?.username}`,
+        path: `/admin/dashboard/adverts/${username}`,
       },
       {
         title: "All Tasks",
         icon: <FaTasks className='mr-2'/>,
-        path: `/admin/dashboard/tasks/${user?.username}`,
+        path: `/admin/dashboard/tasks/${username}`,
       },
       {
         title: "All Transactions",
         icon: <GrTransaction className='mr-2'/>,
-        path: `/admin/dashboard/transactions/${user?.username}`,
+        path: `/admin/dashboard/transactions/${username}`,
       },
       {
         title: "All Withdrawals",
         icon: <GrTransaction className='mr-2'/>,
-        path: `/admin/dashboard/withdrawals/${user?.username}`,
+        path: `/admin/dashboard/withdrawals/${username}`,
       },
       {
         title: "Account Settings",
         icon: <GrSettingsOption className='mr-2'/>,
-        path: `/admin/dashboard/account-settings/${user?.username}`,
+        path: `/admin/dashboard/account-settings/${username}`,
       },
       {
         title: "Support Messages",
         icon: <BiMessageRoundedDetail className='mr-2'/>,
-        path: `/admin/dashboard/support-messages/${user?.username}`,
+        path: `/admin/dashboard/support-messages/${username}`,
       },
     ]
 
@@ -139,6 +139,11 @@ const SidebarLeft = ({children}) => {
     //   }
     //   }
 
+    useEffect(() => {
+      // sidebarAccountType()
+
+     
+    }, [])
   
 
   return ( 
@@ -157,7 +162,7 @@ const SidebarLeft = ({children}) => {
          
           {user?.accountType === "User" && (
              <>
-              {menu?.map((item, index) => { 
+              {menu.map((item, index) => { 
                 return <SidebarItems key={index} item={item} isOpen={isOpen} />
              })}
             </>
@@ -165,7 +170,7 @@ const SidebarLeft = ({children}) => {
 
           {user?.accountType === "Admin" && (
               <>
-              {adminMenu?.map((item, index) => { 
+              {adminMenu.map((item, index) => { 
                 return <SidebarItems key={index} item={item} isOpen={isOpen} />
              })}
              </>

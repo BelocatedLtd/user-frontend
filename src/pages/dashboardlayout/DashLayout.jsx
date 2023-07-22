@@ -2,10 +2,10 @@ import React from 'react'
 import Header from './Header'
 import Footer from '../../components/Footer'
 import { Outlet } from 'react-router-dom'
-import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser'
+//import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser'
 
 const DashLayout = ({children}) => {
-  useRedirectLoggedOutUser('/login')
+ // useRedirectLoggedOutUser('/login')
   return (
     <div>
         <Header />
