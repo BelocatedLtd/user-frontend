@@ -69,10 +69,11 @@ export const getLoginStatus = async() => {
 export const getUser = async() => {
     try {
          const response = await axios.get(`${BACKEND_URL}/api/user`)
+         toast.success("User retrieved successfully")
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-         toast.error(message)
+         toast.error(`${message}, Error retrieving user details`)
      }
             
 }
