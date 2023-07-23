@@ -6,8 +6,7 @@ import { FaAdversal, FaHome, FaTasks, FaUsers } from 'react-icons/fa'
 import { GrSettingsOption, GrTransaction } from 'react-icons/gr'
 import { BiMenuAltRight, BiMessageRoundedDetail } from 'react-icons/bi'
 import { useDispatch, useSelector } from 'react-redux'
-import { SET_LOGIN, SET_USER, SET_USERNAME, selectUser } from '../../redux/slices/authSlice'
-import { selectUsername } from '../../redux/slices/authSlice'
+import { SET_LOGIN, SET_USER, selectUser } from '../../redux/slices/authSlice'
 import { getUser, logoutUser } from '../../services/authServices'
 import { toast } from 'react-hot-toast'
 import { useEffect } from 'react'
@@ -29,7 +28,6 @@ const SidebarLeft = ({children}) => {
       if (!user?.email) {
       const data = await getUser()
       await dispatch(SET_USER(data))
-     dispatch(SET_USERNAME(data?.username))
       }
     }
 
@@ -51,7 +49,7 @@ const SidebarLeft = ({children}) => {
       {
         title: "My Ongoing Tasks",
         icon: <FaTasks size={30} className='mr-2 text-gray-800'/>,
-        path: `/dashboard/tasks/${user?.id}`,
+        path: `/dashboard/tasks/${user?._id}`,
       },
       {
         title: "Transactions",

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ProfileForm from '../../../components/forms/ProfileForm'
 import { useDispatch, useSelector } from 'react-redux'
-import { SET_USER, SET_USERNAME, selectUser } from '../../../redux/slices/authSlice'
+import { SET_USER, selectUser } from '../../../redux/slices/authSlice'
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
 import Loader from '../../../components/loader/Loader'
 import { useEffect } from 'react'
@@ -22,7 +22,6 @@ const Profile = () => {
       setProfile(data)
       setIsLoading(false)
       await dispatch(SET_USER(data))
-      await dispatch(SET_USERNAME(data.username))
     }
     getUserData()
   }, [dispatch])

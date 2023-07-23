@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import Loader from '../../../../components/loader/Loader';
 import { confirmEmailOTP, resendOTPVerificationEmail, updateUserAccountDetails } from '../../../../services/authServices';
-import { SET_USER, SET_USERNAME } from '../../../../redux/slices/authSlice';
+import { SET_USER } from '../../../../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 
 const initialState = {
@@ -92,7 +92,6 @@ const VerifyAccountOTP = ({accountDetailsData, handleModal, email}) => {
                 
         if(updatedUserDetails) {
             setIsUpdating(false)
-            await dispatch(SET_USERNAME(updatedUserDetails.username))
             await dispatch(SET_USER(updatedUserDetails))
     
             navigate(`/dashboard/profile`)

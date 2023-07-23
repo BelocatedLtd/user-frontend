@@ -2,13 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { updateUser } from '../../services/authServices';
 import { toast } from 'react-hot-toast';
 
-
+const user = JSON.parse(localStorage.getItem('user'))
 
 const initialState = {
-    //user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
     isLoggedIn: false,
-    //username: JSON.parse(localStorage.getItem("username")),
-    user: {},
+    user: user ? user : null,
+    username: '',
     isLoading: false,
     isSuccess: false,
     isError: false,
@@ -42,7 +41,6 @@ const authSlice = createSlice({
         state.isLoggedIn = true
     },
     SET_USERNAME(state, action) {
-        localStorage.setItem("username", JSON.stringify(action.payload))
         state.username = action.payload
     },
     SET_USER_WALLET(state, action) {
@@ -113,10 +111,10 @@ const authSlice = createSlice({
 });
 
 
-export const {SET_LOGIN, SET_USERNAME, SET_USER_WALLET, SET_USER, SET_LOGOUT} = authSlice.actions
+export const {SET_LOGIN, SET_USER_WALLET, SET_USER, SET_LOGOUT, SET_USERNAME} = authSlice.actions
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn
 export const selectUser = (state) => state.auth.user
-export const selectUserId = (state) => state.auth?.user?.id
 export const selectUsername = (state) => state.auth.username
+export const selectUserId = (state) => state.auth?.user?._id
 
 export default authSlice.reducer

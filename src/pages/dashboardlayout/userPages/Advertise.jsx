@@ -5,7 +5,7 @@ import { socialMenu } from '../../../components/data/SocialData'
 import { useState } from 'react'
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
 import { getUser } from '../../../services/authServices'
-import { SET_USER, SET_USERNAME, selectUser } from '../../../redux/slices/authSlice'
+import { SET_USER, selectUser } from '../../../redux/slices/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import socialPlatforms from '../../../components/data/assets'
@@ -19,16 +19,15 @@ const Advertise = () => {
     const [selectedPlatformObject, setSelectedPlatformObject] = useState()
     useRedirectLoggedOutUser('/login')
 
-    useEffect(() => {
-        async function getUserData() {
-          if (!user.email) {
-          const data = await getUser()
-          await dispatch(SET_USER(data))
-         dispatch(SET_USERNAME(data.username))
-          }
-        }
-      getUserData()
-    }, [dispatch])
+    // useEffect(() => {
+    //     async function getUserData() {
+    //       if (!user.email) {
+    //       const data = await getUser()
+    //       await dispatch(SET_USER(data))
+    //       }
+    //     }
+    //   getUserData()
+    // }, [dispatch])
 
     const handleSelect = (e, platform) => {
         e.preventDefault(e)

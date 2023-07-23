@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast';
 import { useState } from 'react';
 import { createNewUser, resendVerificationEmail } from '../../services/authServices';
 import { useDispatch } from 'react-redux';
-import { SET_LOGIN, SET_USER, SET_USERNAME } from '../../redux/slices/authSlice';
+import { SET_LOGIN, SET_USER } from '../../redux/slices/authSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../../components/loader/Loader';
 import RetrievePassword from './RetrievePassword';

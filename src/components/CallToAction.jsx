@@ -6,11 +6,11 @@ import { MdArrowRightAlt } from 'react-icons/md'
 import Register from '../pages/authLayout/Register'
 import { ShowOnLogin, ShowOnLogout } from './protect/hiddenLinks'
 import { useSelector } from 'react-redux'
-import { selectUsername } from '../redux/slices/authSlice'
+import { selectUser } from '../redux/slices/authSlice'
 import { useNavigate } from 'react-router-dom'
 
 const CallToAction = ({handleRegister, regBtn}) => {
-  const username = useSelector(selectUsername)
+  const user = useSelector(selectUser)
   const navigate = useNavigate()
   return (
     <div className='w-full h-fit'>
@@ -23,7 +23,7 @@ const CallToAction = ({handleRegister, regBtn}) => {
                 <h1 className='text-[18px] md:text-[40px] text-red-400 font-extrabold leading-[1.4]'>Sounds too good to be true?</h1>
                 <ShowOnLogin>
                   <p className='text-gray-700 font-light text-[20px] md:text-[40px] leading-[1.4]'>Head to your dashboard let us prove you wrong</p>
-                  <button onClick={() => navigate(`/dashboard/${username}`)} className='mt-[2rem]  md:w-[200px] bg-transparent border border-gray-600 px-[1rem] py-3 flex items-center justify-center gap-1 font-light rounded-2xl'>Go to Dashboard <span><MdArrowRightAlt size={20} className='text-gray-600' /></span></button>
+                  <button onClick={() => navigate(`/dashboard/${user?.username}`)} className='mt-[2rem]  md:w-[200px] bg-transparent border border-gray-600 px-[1rem] py-3 flex items-center justify-center gap-1 font-light rounded-2xl'>Go to Dashboard <span><MdArrowRightAlt size={20} className='text-gray-600' /></span></button>
                 </ShowOnLogin>
 
                 <ShowOnLogout>

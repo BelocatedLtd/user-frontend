@@ -4,7 +4,7 @@ import  ReactDOM  from 'react-dom'
 import { MdCancel } from 'react-icons/md'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { SET_LOGIN, SET_USER, SET_USERNAME } from '../../redux/slices/authSlice'
+import { SET_LOGIN, SET_USER } from '../../redux/slices/authSlice'
 import { useDispatch } from 'react-redux'
 import { CheckmarkIcon, toast } from 'react-hot-toast'
 import { loginUser, resendVerificationEmail } from '../../services/authServices'
@@ -84,7 +84,6 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
         
     if(response.isEmailVerified === true) {
       await dispatch(SET_LOGIN(true))
-      await dispatch(SET_USERNAME(response.username))
       await dispatch(SET_USER(response))
       const username = response.username
 

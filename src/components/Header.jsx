@@ -6,7 +6,7 @@ import Login from '../pages/authLayout/Login'
 import { ShowOnLogin, ShowOnLogout } from './protect/hiddenLinks'
 import Logout from '../pages/authLayout/Logout'
 import { useDispatch, useSelector } from 'react-redux'
-import { SET_LOGIN, SET_USER, SET_USERNAME, selectUser, selectUsername } from '../redux/slices/authSlice'
+import { SET_LOGIN, SET_USER,  selectUser, selectUsername } from '../redux/slices/authSlice'
 import { MdMenu, MdOutlineCancel } from 'react-icons/md'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import { useEffect } from 'react'
@@ -25,11 +25,10 @@ export const Header = () => {
     const [profile, setProfile] = useState(null)
     const [isLoggedin, setIsLoggedIn] = useState(false)
 
-    const getUserData = async() => {
-        const data = await getUser()
-        await dispatch(SET_USER(data))
-        await dispatch(SET_USERNAME(data?.username))
-      }
+    // const getUserData = async() => {
+    //     const data = await getUser()
+    //     await dispatch(SET_USER(data))
+    //   }
 
     useEffect(() => {
         // async function loginStatus() {
@@ -43,7 +42,7 @@ export const Header = () => {
     
         //if (isLoggedin === "true" && !user?.email) {
           
-          getUserData()
+          //getUserData()
        // }
       }, [])
 

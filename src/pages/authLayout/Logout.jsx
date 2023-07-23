@@ -18,7 +18,6 @@ const Logout = () => {
       setIsLoading(true)
       try {
           await logoutUser()
-          //await dispatch(SET_LOGIN(false))
           await dispatch(SET_LOGOUT())
           navigate('/')
           toast.success('User logged out')

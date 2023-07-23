@@ -5,7 +5,7 @@ import about from '../../assets/about.png'
 import Wallet from '../../components/dashboard/Wallet'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectUsername, selectUser, SET_USER, SET_USERNAME } from '../../redux/slices/authSlice'
+import { selectUser, SET_USER } from '../../redux/slices/authSlice'
 import { ProfileComplete, ProfileInComplete } from '../../components/protect/profileSetupCheck'
 import { useEffect } from 'react'
 import { useState } from 'react'
@@ -21,7 +21,6 @@ const Dashboard = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [profile, setProfile] = useState(null)
-  const username = useSelector(selectUsername)
   const user = useSelector(selectUser)
   const [profileComplete, setProfileComplete] = useState(false)
   const [refLink, setRefLink] = useState('')
@@ -38,29 +37,29 @@ const Dashboard = () => {
   
 
   useEffect(() => {
-      async function getUserData() {
-        const data = await getUser()
-        setProfile(data)
-        await dispatch(SET_USER(data))
-        await dispatch(getUserWallet(data._id))
-      }
-    getUserData()
+    //   async function getUserData() {
+    //     const data = await getUser()
+    //     setProfile(data)
+    //     await dispatch(SET_USER(data))
+    //     await dispatch(getUserWallet(data._id))
+    //   }
+    // getUserData()
 
     const frontEndUrl = window.location.hostname;
     setRefLink(`https://${frontEndUrl}/register/ref/${user?._id}`)
-  }, [dispatch])
+  }, [])
 
   const handleEarn = (e) => {
     e.preventDefault()
-    if (!user.location || !user.community || !user.gender) {
+    if (!user?.location || !user?.community || !user?.gender) {
       toast.error("Please, complete your profile before you can perform tasks")
       navigate('/dashboard/update-profile')
     }
-    if (!user.phone) {
+    if (!user?.phone) {
       toast.error("Phone number not verified")
       navigate(`/dashboard/account-settings/${user?.username}`)
     }
-    if (user.phone && user.location && user.community && user.gender)
+    if (user?.phone && user?.location && user?.community && user?.gender)
     (navigate('/dashboard/earn'))
   }
 

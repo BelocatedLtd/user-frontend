@@ -5,11 +5,11 @@ import Register from '../pages/authLayout/Register'
 import { ShowOnLogin, ShowOnLogout } from './protect/hiddenLinks'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectUsername } from '../redux/slices/authSlice'
+import { selectUser } from '../redux/slices/authSlice'
 
 const MembersTab = ({handleRegister, regBtn}) => {
   const navigate = useNavigate()
-  const username = useSelector(selectUsername)
+  const user = useSelector(selectUser)
   return (
     <section className='w-full h-fit mb-[4rem] '>
       {regBtn && <Register handleRegister={handleRegister} regBtn={regBtn} />}
@@ -30,7 +30,7 @@ const MembersTab = ({handleRegister, regBtn}) => {
                     <button onClick={handleRegister} className='bg-tertiary text-primary font-bold px-10 py-3 mt-[2rem] rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Start Earning!</button>
                     </ShowOnLogout>
                     <ShowOnLogin>
-                    <button onClick={() => navigate(`/dashboard/${username}`)} className='bg-tertiary text-primary font-bold px-10 py-3 mt-[2rem] rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Start Earning!</button>
+                    <button onClick={() => navigate(`/dashboard/${user?.username}`)} className='bg-tertiary text-primary font-bold px-10 py-3 mt-[2rem] rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Start Earning!</button>
                     </ShowOnLogin>
             </div>
 
@@ -45,7 +45,7 @@ const MembersTab = ({handleRegister, regBtn}) => {
                     <button onClick={handleRegister} className='bg-tertiary text-primary font-bold px-10 py-3 mt-[2rem] rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Start Advertising!</button>
                     </ShowOnLogout>
                     <ShowOnLogin>
-                    <button onClick={() => navigate(`/dashboard/${username}`)} className='bg-tertiary text-primary font-bold px-10 py-3 mt-[2rem] rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Start Advertising!</button>
+                    <button onClick={() => navigate(`/dashboard/${user?.username}`)} className='bg-tertiary text-primary font-bold px-10 py-3 mt-[2rem] rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Start Advertising!</button>
                     </ShowOnLogin>
             </div>
           </div>
