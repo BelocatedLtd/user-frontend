@@ -3,9 +3,9 @@ import { BACKEND_URL } from '../../utils/globalConfig'
 import axios from "axios"
 
 // Get User Wallet Details
-export const getWallet = async(userId) => {
+export const getWallet = async() => {
     try {
-         const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/user/${userId}`)
+         const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/user`)
          toast.success("User wallet retrieved successfully")
         return response.data
      } catch (error) {

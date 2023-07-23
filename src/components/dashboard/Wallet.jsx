@@ -36,7 +36,7 @@ setTogleWithdrawBtn(!togleWithdrawBtn)
 
   useEffect(() => {
     async function getWallet() {
-      await dispatch(getUserWallet(user._id))
+      await dispatch(getUserWallet())
       if (isError) {
         toast.error("There was a problem getting user wallet values")
       }

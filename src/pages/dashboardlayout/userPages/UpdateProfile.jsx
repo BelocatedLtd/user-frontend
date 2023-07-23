@@ -18,10 +18,8 @@ const UpdateProfile = () => {
   const user = useSelector(selectUser)
   const username = useSelector(selectUsername)
 
-  const { email } = user
-
   const nullProfile = async () => {
-    if (!email) {
+    if (user?.email === null) {
       return redirect('/') 
      }
   }
