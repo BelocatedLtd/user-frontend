@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom"
 import MainLayout from "./pages/mainlayout/MainLayout"
 import axios from 'axios'
 import { Home } from "./pages/mainlayout/Home"
@@ -23,7 +23,7 @@ import ContactSupport from "./pages/dashboardlayout/userPages/ContactSupport";
 import AdBuy from "./pages/dashboardlayout/userPages/AdBuy";
 import CampaignStats from "./pages/dashboardlayout/userPages/CampaignStats";
 import PaymentMethod from "./components/PaymentMethod";
-import { SET_LOGIN, selectUser } from "./redux/slices/authSlice";
+import { SET_LOGIN, SET_LOGOUT, selectUser } from "./redux/slices/authSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoginStatus, getUser } from "./services/authServices";
@@ -67,33 +67,29 @@ import WithdrawalModal from "./components/adminComponents/WithdrawalModal";
 
 axios.defaults.withCredentials = true 
 
+
+
 function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser)
   const [regBtn, setRegBtn] = useState(false)
   const [loginBtn, setLoginBtn] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false) 
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [profile, setProfile] = useState(null)
   const [isLoggedin, setIsLoggedIn] = useState(false)
 
-  // useEffect(() => {
-  //   async function loginStatus() {
-  //     const status = await getLoginStatus()
-  //     dispatch(SET_LOGIN(status))
-  //     setIsLoggedIn(status)
-  //   }
-    
-  //   loginStatus()
 
-  //   if (isLoggedin === "true" && !user?.email) {
-  //     async function getUserData() {
-  //       const data = await getUser()
-  //       setProfile(data)
-  //       await dispatch(SET_USER(data))
-  //     }
-  //     getUserData()
-  //   }
-  // }, [])
+  const logOutOnUndefined = async() => {
+    const userDetails = localStorage.getItem('user')
+    if (userDetails === undefined) {
+      localStorage.removeItem('user')
+      dispatch(SET_LOGOUT())
+    }
+  }
+  
+  useEffect(() => {
+    logOutOnUndefined()
+  }, [user])
 
   const handleRegister = (e) => {
     e.preventDefault()
