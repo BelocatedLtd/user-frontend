@@ -35,10 +35,10 @@ export const getTasks = async() => {
 }
 
 // Submit task
-export const submitTask = async (formData) => {
+export const submitTask = async (formData, token) => {
     const response = await axios.post(`${BACKEND_URL}/api/tasks/submit`, formData, {
         headers: {
-            'Authorization': `Bearer ${user?.token}`
+            'Authorization': `Bearer ${token}`
         }
      })
   return response.data   

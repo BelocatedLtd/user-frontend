@@ -4,7 +4,7 @@ import TaskPerform from './TaskPerform'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleSubmitTask, selectTasks, selectIsLoading, selectIsError } from '../../../redux/slices/taskSlice'
+import { handleSubmitTask, selectTasks, selectIsLoading, selectIsError, selectIsSuccess } from '../../../redux/slices/taskSlice'
 import { selectUser, selectUserId } from '../../../redux/slices/authSlice'
 import { useEffect } from 'react'
 import { icons} from '../../../components/data/socialIcon'
@@ -20,6 +20,7 @@ const TaskSubmit = () => {
     const dispatch = useDispatch()
     const userId = useSelector(selectUserId)
     const isLoading = useSelector(selectIsLoading)
+    const isSuccess = useSelector(selectIsSuccess)
     const isError = useSelector(selectIsError)
     const navigate = useNavigate
     const user = useSelector(selectUser)
@@ -97,9 +98,9 @@ const TaskSubmit = () => {
       
       
 
-      const response = await dispatch(handleSubmitTask(formData))  
+      await dispatch(handleSubmitTask({formData, token: user?.token}))  
 
-        if (response.payload) {
+        if (isSuccess) {
           navigate(`dashboard/tasks/${task.taskPerformerId}`)
            //Emit socket io event to the backend
             const emitData = {
@@ -110,6 +111,10 @@ const TaskSubmit = () => {
           //Emit Socket event to update activity feed
           socket.emit('sendActivity', emitData) 
         }  
+
+        if (isError) {
+          toast.error('Task not submitted')
+        }
       }
 
 
