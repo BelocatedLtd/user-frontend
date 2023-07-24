@@ -1,7 +1,7 @@
 import React from 'react'
 import ProfileForm from '../../../components/forms/ProfileForm'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleUpdateUser, selectUser, selectUsername } from '../../../redux/slices/authSlice'
+import { SET_USER, handleUpdateUser, selectUser, selectUsername } from '../../../redux/slices/authSlice'
 import { useState } from 'react'
 import Loader from '../../../components/loader/Loader'
 import { redirect, useNavigate } from 'react-router-dom'
@@ -16,18 +16,19 @@ const UpdateProfile = () => {
   const navigate = useNavigate
   const dispatch = useDispatch()
   const user = useSelector(selectUser)
-  const username = useSelector(selectUsername)
 
-  const nullProfile = async () => {
-    if (user?.email === null) {
-      return redirect('/') 
-     }
-  }
+
+
+  async function getUserData() {
+    const data = await getUser(user?.token)
+   await dispatch(SET_USER(data))
+ }
+  
  
 
   useEffect(() => {
-    nullProfile()
-  }, [redirect])
+    getUserData()
+  }, [user])
   
 
   const initialState = {
@@ -46,7 +47,7 @@ const UpdateProfile = () => {
   }
 
   const formData = {
-    userId: user.id,
+    userId: user?.id,
     fullname: profile?.fullname,
     location: profile?.location,
     community: profile?.community,

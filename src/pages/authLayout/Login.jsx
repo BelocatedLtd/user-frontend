@@ -49,6 +49,9 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
    
     const response = await loginUser(formData)
 
+    // console.log(response)
+    // return
+
     if (!response.token) {
       setIsLoading(false)
       toast.error("Login failure...")

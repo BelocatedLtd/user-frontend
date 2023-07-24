@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { SET_USER, SET_USERNAME, selectUser } from '../../../redux/slices/authSlice'
+import { SET_USER, selectUser } from '../../../redux/slices/authSlice'
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
 import { getUser } from '../../../services/authServices'
 import { useState } from 'react'
@@ -26,7 +26,6 @@ const PasswordUpdate = () => {
     async function getUserData() {
       const data = await getUser()
       await dispatch(SET_USER(data))
-      await dispatch(SET_USERNAME(data.username))
       setIsLoading(false)
     }
     setIsLoading(false)

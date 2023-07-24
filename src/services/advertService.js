@@ -5,10 +5,10 @@ import axios from "axios"
 const user = JSON.parse(localStorage.getItem('user'))
 
 // Create Advert
-export const createAdvert = async (paymentFormData) => {
+export const createAdvert = async (paymentFormData, token) => {
     const response = await axios.post(`${BACKEND_URL}/api/adverts/create`, paymentFormData, {
         headers: {
-            'Authorization': `Bearer ${user?.token}`
+            'Authorization': `Bearer ${token}`
         }
      })
    return response.data

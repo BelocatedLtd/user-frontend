@@ -37,7 +37,7 @@ const handleBankInputChange = (e) => {
   const {bankName, bankAccountNumber, accountHolderName} = bankAccountDetails
 
   const accountDetailsData = {
-    userId: user.id,
+    userId: user?.id,
     bankName,
     bankAccountNumber,
     accountHolderName

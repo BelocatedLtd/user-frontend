@@ -30,7 +30,7 @@ const AccountDetailsSettings = ({user}) => {
   }
   
   const accountDetailsData = {
-    userId: user.id,
+    userId: user?.id,
     username: accountDetails?.username,
     email: accountDetails?.email,
     phone: accountDetails?.phone,
