@@ -76,7 +76,6 @@ export const getUser = async() => {
                 'Authorization': `Bearer ${user?.token}`
             }
          })
-         toast.success("User data retrieved successfully")
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
