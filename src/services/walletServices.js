@@ -15,9 +15,9 @@ export const getWallet = async() => {
 }
 
 // Get Wallet Details
-export const getUserWallet = async(userId) => {
+export const getUserWallet = async() => {
     try {
-         const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/${userId}`)
+         const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/user`)
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
