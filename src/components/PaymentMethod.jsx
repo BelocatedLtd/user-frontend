@@ -80,9 +80,7 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
     if (canPay) {
         const response = await dispatch(createNewAdvert(paymentFormData))
 
-        console.log(response.payload)
-
-        if(response.payload) {
+        if(isSuccess) {
             //Emit socket io event to the backend
             const emitData = {
                 userId: user?.id,
@@ -94,9 +92,10 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
 
             navigate('/dashboard/campaign-stats')
         }
-        if(!response.payload) {
+        if(isError) {
             toast.error("Error creating advert, failed to make payment")
-            navigate('/dashboard/campaign-stats')
+            //navigate('/dashboard/campaign-stats')
+            togglePaymentSelect()
         }
         
     } else {

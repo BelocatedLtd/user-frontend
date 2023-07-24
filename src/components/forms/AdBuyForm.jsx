@@ -256,7 +256,7 @@ const AdBuyForm = ({advert, service, adTitle, platform, selectedImages, imageArr
                             <label htmlFor="upload proof of work" className='text-gray-500 font-bold text-center mb-[1rem]'>Upload Ad Media Contents</label>
                                 <div className='w-full h-fit flex flex-wrap items-center justify-center gap-2 p-5'>
                                 {selectedImages?.map((item, index) => (   
-                                  <div className='relative w-[200px] h-[200px]'>
+                                  <div key={index} className='relative w-[200px] h-[200px]'>
                                     <img  src={item} alt="preview" className='w-full h-full object-cover'/>
                                     <GiCancel  size={20} className='absolute text-tertiary top-0 right-0 pr-1 pt-1' onClick={(e) => handleImageRemove(item)}/>
                                   </div> 
