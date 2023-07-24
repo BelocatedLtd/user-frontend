@@ -37,13 +37,12 @@ const Dashboard = () => {
   
 
   useEffect(() => {
-    //   async function getUserData() {
-    //     const data = await getUser()
-    //     setProfile(data)
-    //     await dispatch(SET_USER(data))
-    //     await dispatch(getUserWallet(data._id))
-    //   }
-    // getUserData()
+       async function getUserData() {
+        //  const data = await getUser()
+        // await dispatch(SET_USER(data))
+        await dispatch(getUserWallet())
+       }
+     getUserData()
 
     const frontEndUrl = window.location.hostname;
     setRefLink(`https://${frontEndUrl}/register/ref/${user?._id}`)
