@@ -5,11 +5,11 @@ import axios from "axios"
 const user = JSON.parse(localStorage.getItem('user'))
 
 // Get User Wallet Details
-export const getWallet = async() => {
+export const getWallet = async(token) => {
     try {
          const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/user`,  {
             headers: {
-                'Authorization': `Bearer ${user?.token}`
+                'Authorization': `Bearer ${token}`
             }
          })
          toast.success("User wallet retrieved successfully")
