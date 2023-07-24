@@ -18,9 +18,9 @@ const ServicesPage = () => {
         
 
         <div className='w-full h-fit flex justify-center bg-blue-200 py-[5rem]'>
-          <div className='services-list flex flex-wrap md:w-[80%] h-fit px-[3rem] md:px-0' >
+          <div className='services-list flex flex-wrap w-fit md:w-[80%] h-fit px-[3rem] md:px-0' >
           {services?.map((item, index) => (
-            <div key={index} className='w-1/2 min-w-[400px] py-6'>
+            <div key={index} className='w-1/2 min-w-[400px] py-6 px-[1.5rem] md:px-0'>
               <div className='flex items-center gap-2'>
                 <div>
                 <img src={item?.icon} alt="social Icon" className='w-[25px] h-[25px] rounded-full'/>
@@ -29,7 +29,7 @@ const ServicesPage = () => {
               <h1 className='text-[25px] font-bold leading-[1.4em]'>{item?.service}</h1>
               <AiOutlineHolder className='rotate-90 text-2xl text-tertiary'/>
               </div>
-              <p className='w-[450px] mt-1 text-[18px] my-6'>{item?.desc}</p>
+              <p className='w-fit md:w-[450px] mt-1 text-[18px] my-6'>{item?.desc}</p>
 
               {item.assets?.map((asset, assetIndex) => (
                 <ul key={assetIndex} className='my-6'>

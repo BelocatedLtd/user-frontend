@@ -58,7 +58,7 @@ const Dashboard = () => {
     if (!user?.phone) {
       toast.error("Phone number not verified")
       navigate(`/dashboard/account-settings/${user?.username}`)
-    }adver
+    }
     if (user?.phone && user?.location && user?.community && user?.gender)
     (navigate('/dashboard/earn'))
   }
