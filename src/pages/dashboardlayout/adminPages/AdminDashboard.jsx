@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { handleGetTransactions, selectTransactions } from '../../../redux/slices/transactionSlice';
 import { handleGetTasks, selectTasks } from '../../../redux/slices/taskSlice';
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser';
-import { SET_USER, SET_USERNAME, selectUser } from '../../../redux/slices/authSlice';
+import { SET_USER, selectUser } from '../../../redux/slices/authSlice';
 import { getUser } from '../../../services/authServices';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -28,14 +28,13 @@ const AdminDashboard = () => {
 
     useEffect(() => {
         async function getUserData() {
-            await dispatch(handleGetAllUser())
-            await dispatch(handleGetALLUserAdverts())
-            await dispatch(handleGetTransactions())
-            await dispatch(handleGetTasks())
+            await dispatch(handleGetAllUser(user?.token))
+            await dispatch(handleGetALLUserAdverts(user?.token))
+            await dispatch(handleGetTransactions(user?.token))
+            await dispatch(handleGetTasks(user?.token))
           if (!user.email) {
           const data = await getUser()
           await dispatch(SET_USER(data))
-        await dispatch(SET_USERNAME(data.username))
           }
         }
       getUserData()

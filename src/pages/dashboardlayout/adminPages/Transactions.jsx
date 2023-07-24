@@ -6,9 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { selectTransactions, selectIsError, selectIsLoading, handleGetTransactions } from '../../../redux/slices/transactionSlice';
 import { selectUsers } from '../../../redux/slices/userSlice';
 import { toast } from 'react-hot-toast';
+import { selectUser } from '../../../redux/slices/authSlice';
 
 const Transactions = () => {
   const navigate = useNavigate()
+  const user = useSelector(selectUser)
   const users = useSelector(selectUsers)
   const dispatch = useDispatch()
   const transactions = useSelector(selectTransactions)

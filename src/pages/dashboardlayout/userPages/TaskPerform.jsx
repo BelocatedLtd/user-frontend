@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { selectUserId } from '../../../redux/slices/authSlice'
+import { selectUser, selectUserId } from '../../../redux/slices/authSlice'
 import { CheckmarkIcon, LoaderIcon, toast } from 'react-hot-toast'
 import {formatDate} from '../../../../utils/formatDate'
 import { useRef } from 'react'
@@ -27,11 +27,13 @@ import ImageGallery from '../../../components/ImageGallery'
 import Loader from '../../../components/loader/Loader'
 import axios from 'axios'
 import {saveAs} from 'file-saver'
+import { BsGlobe } from 'react-icons/bs'
 
 
 const TaskPerform = ({taskId, userSocialName, selectedImages, handleOnSubmit, handleInputChange, handleImageChange, handleImageRemove, isLoading, isError, icons}) => {
   const linkRef = useRef(null)
   const adCaptionRef = useRef(null)
+  const user = useSelector(selectUser)
   const dispatch = useDispatch()
   const userId = useSelector(selectUserId)
   //const [icon, setIcon] = useState('')
@@ -46,7 +48,7 @@ const TaskPerform = ({taskId, userSocialName, selectedImages, handleOnSubmit, ha
   const [isDownloading, setIsDownloading] = useState(false)
 
   const getTask = async() => {
-    await dispatch(handleGetUserTasks())
+    await dispatch(handleGetUserTasks(user?.token))
   }
   
 
@@ -109,7 +111,7 @@ useEffect(() => {
   const handleRefLinkCopy = (e) => {
     linkRef.current.select();
     document.execCommand('copy')
-    toast.success('Resource copied to clipboard')
+    toast.success('Redirecting to task link...')
   }
 
   const handleAdCaptionCopy = (e) => {
@@ -245,11 +247,11 @@ useEffect(() => {
             {/* Task link */}
             {hideLinkInputFields ? "" : (
             <div className='flex flex-col gap-2'>
-              <label htmlFor="task link" className='text-gray-500 font-bold text-center '>Task Link/Username</label>
-              <div className='w-full md:w-[500px] flex items-center justify-center mx-auto gap-2'>
+              <label htmlFor="task link" className='text-gray-500 font-bold text-center '>Task Link</label>
+              <div className='w-full md:w-[500px] flex items-center justify-center mx-auto'>
                 <input type="link" value={newTask?.socialPageLink} readOnly ref={linkRef} className='w-full h-[20px] px-6 py-5 text-gray-800 bg-gray-200 rounded-r rounded-2xl'/>
 
-                <img src={copy} alt="click to copy ref link" className='w-[30px] h-[30px]' onClick={handleRefLinkCopy}/>
+                <div className='w-[4rem] h-[20px] px-5 py-5 bg-secondary text-primary text-[9px]' onClick={handleRefLinkCopy}>Visit</div>
               </div>
               <small className='w-full md:w-[500px] mx-auto text-gray-400 text-[12px] text-center'>Remember, the task you were given is {newTask?.service} on {newTask?.platform}, use the link or username to perform this task</small>
             </div>)}

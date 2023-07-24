@@ -374,7 +374,7 @@ const handleCloseMenu = () => {
           <SidebarLeft>
             <DashLayout>
               <UserSingle />
-              <SidebarRight />
+           
             </DashLayout>
           </SidebarLeft>
         }

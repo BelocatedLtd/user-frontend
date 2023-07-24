@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectUser, selectUserId } from '../../redux/slices/authSlice'
+import { selectUser } from '../../redux/slices/authSlice'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { getUserWallet, selectIsError, selectIsLoading, selectUserWallet } from '../../redux/slices/walletSlice'
