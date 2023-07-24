@@ -1,7 +1,6 @@
 import React from 'react'
-import { logoutUser } from '../../services/authServices'
 import { useDispatch } from 'react-redux'
-import { SET_LOGIN, SET_LOGOUT } from '../../redux/slices/authSlice'
+import {SET_LOGOUT } from '../../redux/slices/authSlice'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../../components/loader/Loader'
 import { useState } from 'react'
@@ -17,10 +16,9 @@ const Logout = () => {
     const handleLogout = async () => {
       setIsLoading(true)
       try {
-          await logoutUser()
           await dispatch(SET_LOGOUT())
           navigate('/')
-          toast.success('User logged out')
+          toast.success('User successfully logged out')
           setIsLoading(false)
       } catch (error) {
         setIsLoading(false)

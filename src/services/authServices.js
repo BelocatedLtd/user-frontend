@@ -46,15 +46,15 @@ export const loginUser = async(formData) => {
 }
 
 //Logout User
-export const logoutUser = async() => {
-    try {
-         await axios.get(`${BACKEND_URL}/api/user/logout`)
-     } catch (error) {
-         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-         toast.error(message)
-     }
+// export const logoutUser = async() => {
+//     try {
+//          await axios.get(`${BACKEND_URL}/api/user/logout`)
+//      } catch (error) {
+//          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+//          toast.error(message)
+//      }
             
-}
+// }
 
 //Get Login Status
 export const getLoginStatus = async() => {

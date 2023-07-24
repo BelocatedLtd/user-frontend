@@ -49,9 +49,10 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
    
     const response = await loginUser(formData)
 
-    if (!response) {
+    if (!response.token) {
       setIsLoading(false)
       toast.error("Login failure...")
+      return
     }
 
     if(response.isEmailVerified === false) {
@@ -91,7 +92,7 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
 
           //Emit socket io event to the backend
           const emitData = {
-            userId: response?._id,
+            userId: response?.id,
             action: `@${username} just logged in`
           }
 

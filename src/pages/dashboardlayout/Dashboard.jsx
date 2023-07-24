@@ -34,20 +34,18 @@ const Dashboard = () => {
       setProfileComplete(false)
     }
   }, [user])
-  
-  
 
   useEffect(() => {
        async function getUserData() {
-          //const data = await getUser(user?.token)
-        // await dispatch(SET_USER(data))
+          const data = await getUser(user?.token)
+         await dispatch(SET_USER(data))
         await dispatch(getUserWallet(user?.token))
        }
      getUserData()
 
     const frontEndUrl = window.location.hostname;
-    setRefLink(`https://${frontEndUrl}/register/ref/${user?._id}`)
-  }, [user, dispatch])
+    setRefLink(`https://${frontEndUrl}/register/ref/${user?.id}`)
+  }, [dispatch])
 
   const handleEarn = (e) => {
     e.preventDefault()

@@ -65,7 +65,7 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
      paymentFormData.append('gender', gender);
      paymentFormData.append('state', state);
      paymentFormData.append('lga', lga);
-     paymentFormData.append('userId', user._id);
+     paymentFormData.append('userId', user.id);
      paymentFormData.append('costPerTask', costPerTask);
      paymentFormData.append('earnPerTask', earnPerTask);
      paymentFormData.append('socialPageLink', socialPageLink);
