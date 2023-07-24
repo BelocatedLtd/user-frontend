@@ -8,7 +8,7 @@ const user = JSON.parse(localStorage.getItem('user'))
 export const createAdvert = async (paymentFormData) => {
     const response = await axios.post(`${BACKEND_URL}/api/adverts/create`, paymentFormData, {
         headers: {
-            'Authorization': `Bearer ${user?.token}`
+            'Authorization': `Bearer ${user.token}`
         }
      })
    return response.data
@@ -32,7 +32,11 @@ export const getAllUserAdverts = async() => {
 
 // Set Advert to be Free
 export const setAdvertFree = async(id) => {
-        const response = await axios.patch(`${BACKEND_URL}/api/adverts/setadfree/${id}`)
+        const response = await axios.patch(`${BACKEND_URL}/api/adverts/setadfree/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${user?.token}`
+            }
+         })
         return response.data
 }
 

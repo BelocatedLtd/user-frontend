@@ -14,13 +14,14 @@ import { getUser } from '../../services/authServices'
 import { toast } from 'react-hot-toast'
 import FreeTaskCount from '../../components/dashboard/FreeTaskCount'
 import copy from '../../assets/copy.png'
-import { getUserWallet } from '../../redux/slices/walletSlice'
+import { getUserWallet, selectUserWallet } from '../../redux/slices/walletSlice'
 
 const Dashboard = () => {
   const inputRef = useRef(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [profile, setProfile] = useState(null)
+  const wallet = useSelector(selectUserWallet)
   const user = useSelector(selectUser)
   const [profileComplete, setProfileComplete] = useState(false)
   const [refLink, setRefLink] = useState('')
@@ -57,7 +58,7 @@ const Dashboard = () => {
     if (!user?.phone) {
       toast.error("Phone number not verified")
       navigate(`/dashboard/account-settings/${user?.username}`)
-    }
+    }adver
     if (user?.phone && user?.location && user?.community && user?.gender)
     (navigate('/dashboard/earn'))
   }

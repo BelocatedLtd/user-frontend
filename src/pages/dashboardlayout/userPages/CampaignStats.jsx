@@ -23,10 +23,12 @@ const CampaignStats = () => {
   const navigate = useNavigate()
   useRedirectLoggedOutUser('/login')
 
+  const getAdverts = async() => {
+    await dispatch(handleGetUserAdverts(user?.token)) 
+  }
+
   useEffect(() => {
-    const getAdverts = async() => {
-      await dispatch(handleGetUserAdverts(user?.token)) 
-    }
+    
     getAdverts()
 
     if (isError) {
