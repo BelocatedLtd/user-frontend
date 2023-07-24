@@ -72,7 +72,7 @@ const Transactions = () => {
   }
 
    useEffect(() => {
-    dispatch(handleGetTransactions())
+    dispatch(handleGetTransactions(user?.token))
 
     if (isError) {
       toast.error("failed to fetch users")

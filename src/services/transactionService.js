@@ -15,14 +15,22 @@ export const adBuy = async() => {
 }
 
 // Get User Transactions List
-export const getUserTransactions = async() => {
-         const response = await axios.get(`${BACKEND_URL}/api/transactions/userall`)
+export const getUserTransactions = async(token) => {
+         const response = await axios.get(`${BACKEND_URL}/api/transactions/userall`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+         })
         return response.data       
 }
 
 // Get Transactions List
-export const getAllTransactions = async() => {
-    const response = await axios.get(`${BACKEND_URL}/api/transactions/all`)
+export const getAllTransactions = async(token) => {
+    const response = await axios.get(`${BACKEND_URL}/api/transactions/all`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+     })
    return response.data       
 }
 

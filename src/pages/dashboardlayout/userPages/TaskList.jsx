@@ -9,10 +9,12 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import {formatDate} from '../../../../utils/formatDate'
 import { toast } from 'react-hot-toast'
+import { selectUser } from '../../../redux/slices/authSlice'
 
 const TaskList = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const user = useSelector(selectUser)
     const [icon, setIcon] = useState('')
     const [platform, setPlatform] = useState("")
     const tasks = useSelector(selectTasks)
@@ -21,7 +23,7 @@ const TaskList = () => {
 
     useEffect(() => {
         const getUserTasks = async() => {
-            await dispatch(handleGetUserTasks())
+            await dispatch(handleGetUserTasks(user?.token))
         }
         getUserTasks()
     }, [dispatch])

@@ -13,9 +13,9 @@ const initialState = {
 // Get User Transactions
 export const handleGetUserTransactions = createAsyncThunk(
     "get/handleGetUserTransactions",
-    async(__, thunkAPI) => {
+    async(token, thunkAPI) => {
         try {
-          return await getUserTransactions()
+          return await getUserTransactions(token)
         } catch(error) {
             const message = 
         (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -28,9 +28,9 @@ export const handleGetUserTransactions = createAsyncThunk(
   // Get All Transactions
 export const handleGetTransactions = createAsyncThunk(
   "get/handleGetTransactions",
-  async(__, thunkAPI) => {
+  async(token, thunkAPI) => {
       try {
-        return await getAllTransactions()
+        return await getAllTransactions(token)
       } catch(error) {
           const message = 
       (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

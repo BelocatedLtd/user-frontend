@@ -8,9 +8,13 @@ import { BsFillPlusCircleFill } from 'react-icons/bs'
 import Loader from '../../../components/loader/Loader'
 import { toast } from 'react-hot-toast'
 import TransactionList from '../../../components/dashboard/TransactionList'
+import { selectUser } from '../../../redux/slices/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 const TransHistory = () => {
   const transactions = useSelector(selectTransactions)
+  const navigate = useNavigate()
+  const user = useSelector(selectUser)
   const isLoading = useSelector(selectIsLoading)
   const isError = useSelector(selectIsError)
   const dispatch = useDispatch()
@@ -18,7 +22,7 @@ const TransHistory = () => {
 
   useEffect(() => {
     const getTransactions = async() => {
-      await dispatch(handleGetUserTransactions())
+      await dispatch(handleGetUserTransactions(user?.token))
     }
     getTransactions()
 

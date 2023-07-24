@@ -18,7 +18,7 @@ const Profile = () => {
   useEffect(() => {
     setIsLoading(true) 
     async function getUserData() {
-      const data = await getUser()
+      const data = await getUser(user?.token)
       setProfile(data)
       setIsLoading(false)
       await dispatch(SET_USER(data))

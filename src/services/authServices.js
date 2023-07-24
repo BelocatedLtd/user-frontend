@@ -2,6 +2,9 @@ import axios from "axios"
 import { toast } from "react-hot-toast"
 import { BACKEND_URL } from '../../utils/globalConfig'
 
+const user = JSON.parse(localStorage.getItem('user'))
+
+
 //Create New User
 export const createNewUser = async(formData) => {
     try {
@@ -66,11 +69,11 @@ export const getLoginStatus = async() => {
 }
 
 //Get User
-export const getUser = async(token) => {
+export const getUser = async() => {
     try {
          const response = await axios.get(`${BACKEND_URL}/api/user`, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${user?.token}`
             }
          })
          toast.success("User data retrieved successfully")
@@ -84,14 +87,22 @@ export const getUser = async(token) => {
 
 //Update user details
 export const updateUser = async (formData) => {
-    const response = await axios.patch(`${BACKEND_URL}/api/user/update`, formData) 
+    const response = await axios.patch(`${BACKEND_URL}/api/user/update`, formData, {
+        headers: {
+            'Authorization': `Bearer ${user?.token}`
+        }
+     }) 
     return response.data
 }
 
 //Update user account details
 export const updateUserAccountDetails = async (verificationData) => {
     try {
-        const response = await axios.patch(`${BACKEND_URL}/api/user/update/accountdetails`, verificationData) 
+        const response = await axios.patch(`${BACKEND_URL}/api/user/update/accountdetails`, verificationData, {
+            headers: {
+                'Authorization': `Bearer ${user?.token}`
+            }
+         }) 
          return response.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -102,7 +113,11 @@ export const updateUserAccountDetails = async (verificationData) => {
 //Update user account details
 export const updateUserBankAccountDetails = async (verificationData) => {
     try {
-        const response = await axios.patch(`${BACKEND_URL}/api/user/update/bankaccountdetails`, verificationData) 
+        const response = await axios.patch(`${BACKEND_URL}/api/user/update/bankaccountdetails`, verificationData, {
+            headers: {
+                'Authorization': `Bearer ${user?.token}`
+            }
+         }) 
          return response.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -126,7 +141,11 @@ export const verifyUserPassword = async(data) => {
 //Verify Old User Password
 export const verifyOldUserPassword = async(data) => {
     try {
-         const response = await axios.post(`${BACKEND_URL}/api/user/verifyoldpassword`, data)
+         const response = await axios.post(`${BACKEND_URL}/api/user/verifyoldpassword`, data, {
+            headers: {
+                'Authorization': `Bearer ${user?.token}`
+            }
+         })
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -227,7 +246,11 @@ export const confirmOTP = async(OTPData) => {
 //Delete User
 export const deleteUser = async(userId) => {
     try {
-        const response = await axios.delete(`${BACKEND_URL}/api/user/delete/${userId}`)
+        const response = await axios.delete(`${BACKEND_URL}/api/user/delete/${userId}`, {
+            headers: {
+                'Authorization': `Bearer ${user?.token}`
+            }
+         })
         return response.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

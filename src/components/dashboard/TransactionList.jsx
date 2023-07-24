@@ -9,9 +9,11 @@ import { selectIsLoading } from '../../redux/slices/transactionSlice';
 import { selectIsError } from '../../redux/slices/transactionSlice';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import { selectUser } from '../../redux/slices/authSlice';
 
 const TransactionList = () => {
     const dispatch = useDispatch()
+    const user = useSelector(selectUser)
     //const {transactions, isLoading, isError, message} = useSelector((state) => state.transactions)
     const transactions = useSelector(selectTransactions)
     const isLoading = useSelector(selectIsLoading)
@@ -61,7 +63,7 @@ const TransactionList = () => {
     //   }
     
        useEffect(() => {
-        dispatch(handleGetUserTransactions())
+        dispatch(handleGetUserTransactions(user?.token))
     
       if (isError) {
         toast.error("failed to fetch transactions")

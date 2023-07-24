@@ -34,6 +34,7 @@ const AccountDetailsSettings = ({user}) => {
     username: accountDetails?.username,
     email: accountDetails?.email,
     phone: accountDetails?.phone,
+    token: user?.token
   }
 
   const handleSubmit = async (e) => {

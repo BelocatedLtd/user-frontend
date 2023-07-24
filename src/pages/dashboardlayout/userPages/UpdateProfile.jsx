@@ -27,7 +27,7 @@ const UpdateProfile = () => {
 
   useEffect(() => {
     nullProfile()
-  }, [email, redirect])
+  }, [redirect])
   
 
   const initialState = {
@@ -51,7 +51,7 @@ const UpdateProfile = () => {
     location: profile?.location,
     community: profile?.community,
     gender: profile?.gender,
-    religion: profile?.religion, 
+    religion: profile?.religion,
 
   }
 
@@ -65,7 +65,6 @@ const UpdateProfile = () => {
       setIsLoading(false)
     } catch (error) {
       setIsLoading(false)
-      console.log(error)
     }
 
   }
@@ -76,7 +75,7 @@ const UpdateProfile = () => {
 
     {/* User profile */}
     <div>
-      <ProfileForm user={user} email={email} username={username} profile={profile} handleProfileUpdate={handleProfileUpdate} handleInputChange={handleInputChange} />
+      <ProfileForm user={user} email={user?.email} username={user?.username} profile={profile} handleProfileUpdate={handleProfileUpdate} handleInputChange={handleInputChange} />
     </div>
 
     {/* User profile */}

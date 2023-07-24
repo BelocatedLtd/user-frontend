@@ -2,12 +2,14 @@ import { toast } from 'react-hot-toast'
 import { BACKEND_URL } from '../../utils/globalConfig'
 import axios from "axios"
 
+const user = JSON.parse(localStorage.getItem('user'))
+
 // Get User Wallet Details
-export const getWallet = async(token) => {
+export const getWallet = async() => {
     try {
          const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/user`,  {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${user?.token}`
             }
          })
          toast.success("User wallet retrieved successfully")

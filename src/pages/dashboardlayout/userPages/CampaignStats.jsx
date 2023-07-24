@@ -12,8 +12,10 @@ import { useEffect } from 'react'
 import { LoaderIcon, toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../../../components/loader/Loader'
+import { selectUser } from '../../../redux/slices/authSlice'
 
 const CampaignStats = () => {
+  const user = useSelector(selectUser)
   const adverts = useSelector(selectAdverts)
   const isLoading = useSelector(selectIsLoading)
   const isError = useSelector(selectIsError)
@@ -23,7 +25,7 @@ const CampaignStats = () => {
 
   useEffect(() => {
     const getAdverts = async() => {
-      await dispatch(handleGetUserAdverts()) 
+      await dispatch(handleGetUserAdverts(user?.token)) 
     }
     getAdverts()
 
