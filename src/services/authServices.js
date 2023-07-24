@@ -66,9 +66,13 @@ export const getLoginStatus = async() => {
 }
 
 //Get User
-export const getUser = async() => {
+export const getUser = async(token) => {
     try {
-         const response = await axios.get(`${BACKEND_URL}/api/user`)
+         const response = await axios.get(`${BACKEND_URL}/api/user`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+         })
          toast.success("User data retrieved successfully")
         return response.data
      } catch (error) {

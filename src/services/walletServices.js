@@ -3,9 +3,13 @@ import { BACKEND_URL } from '../../utils/globalConfig'
 import axios from "axios"
 
 // Get User Wallet Details
-export const getWallet = async() => {
+export const getWallet = async(token) => {
     try {
-         const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/user`)
+         const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/user`,  {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+         })
          toast.success("User wallet retrieved successfully")
         return response.data
      } catch (error) {
@@ -15,9 +19,13 @@ export const getWallet = async() => {
 }
 
 // Get Wallet Details
-export const getUserWallet = async() => {
+export const getUserWallet = async(token) => {
     try {
-         const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/user`)
+         const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/user`,  {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+         })
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
