@@ -12,7 +12,6 @@ export const getWallet = async(token) => {
                 'Authorization': `Bearer ${token}`
             }
          })
-         toast.success("User wallet retrieved successfully")
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

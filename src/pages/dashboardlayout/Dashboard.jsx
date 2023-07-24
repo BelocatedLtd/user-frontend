@@ -46,7 +46,7 @@ const Dashboard = () => {
 
     const frontEndUrl = window.location.hostname;
     setRefLink(`https://${frontEndUrl}/register/ref/${user?._id}`)
-  }, [])
+  }, [user, dispatch])
 
   const handleEarn = (e) => {
     e.preventDefault()

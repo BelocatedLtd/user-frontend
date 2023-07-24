@@ -15,10 +15,10 @@ export const createAdvert = async (paymentFormData) => {
 }
 
 // Get User Adverts
-export const getUserAdverts = async() => {
+export const getUserAdverts = async(token) => {
        const response = await axios.get(`${BACKEND_URL}/api/adverts`, {
         headers: {
-            'Authorization': `Bearer ${user?.token}`
+            'Authorization': `Bearer ${token}`
         }
      })
       return response.data      
