@@ -30,20 +30,22 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
    const user = useSelector(selectUser)
    const wallet = useSelector(selectUserWallet)
 
+   const getWallet = async() => {
+    await dispatch(getUserWallet(user?.token))
+}
+
    useEffect(() => {
-    const getWallet = async() => {
-        await dispatch(getUserWallet())
-    }
+    
     getWallet()
-   }, [dispatch, wallet])
+   }, [dispatch])
 
    const {platform, service, adTitle, desiredROI, costPerTask, earnPerTask, gender, state, lga, caption, imageArray, socialPageLink, expBudget} = formData
    
 
    useEffect(() => {
-    if (wallet.value >= expBudget) {
+    if (wallet?.value >= expBudget) {
         setCanPay(true)
-    }else if (wallet.value < expBudget) {
+    }else if (wallet?.value < expBudget) {
         setCanPay(false)
     }
    }, [wallet, expBudget])
@@ -63,7 +65,7 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
      paymentFormData.append('gender', gender);
      paymentFormData.append('state', state);
      paymentFormData.append('lga', lga);
-     paymentFormData.append('userId', user.id);
+     paymentFormData.append('userId', user._id);
      paymentFormData.append('costPerTask', costPerTask);
      paymentFormData.append('earnPerTask', earnPerTask);
      paymentFormData.append('socialPageLink', socialPageLink);
@@ -76,9 +78,11 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
     e.preventDefault()
 
     if (canPay) {
-        await dispatch(createNewAdvert(paymentFormData))
+        const response = await dispatch(createNewAdvert(paymentFormData))
 
-        if(isSuccess) {
+        console.log(response.payload)
+
+        if(response.payload) {
             //Emit socket io event to the backend
             const emitData = {
                 userId: user?.id,
@@ -90,7 +94,7 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
 
             navigate('/dashboard/campaign-stats')
         }
-        if(isError) {
+        if(!response.payload) {
             toast.error("Error creating advert, failed to make payment")
             navigate('/dashboard/campaign-stats')
         }
