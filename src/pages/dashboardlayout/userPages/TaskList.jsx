@@ -22,12 +22,11 @@ const TaskList = () => {
     const [platform, setPlatform] = useState("")
     const tasks = useSelector(selectTasks)
    
-
+    const getUserTasks = async() => {
+        await dispatch(handleGetUserTasks())
+    }
 
     useEffect(() => {
-        const getUserTasks = async() => {
-            await dispatch(handleGetUserTasks())
-        }
         getUserTasks()
     }, [dispatch])
 
