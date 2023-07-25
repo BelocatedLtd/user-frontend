@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 const CallToAction = ({handleRegister, regBtn}) => {
   const user = useSelector(selectUser)
   const navigate = useNavigate()
+  
   return (
     <div className='w-full h-fit'>
       {regBtn && <Register handleRegister={handleRegister} regBtn={regBtn} />}
