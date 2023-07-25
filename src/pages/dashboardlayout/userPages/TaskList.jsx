@@ -3,7 +3,7 @@ import { icons} from '../../../components/data/socialIcon'
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../../../components/loader/Loader'
-import { handleGetUserTasks, selectIsLoading, selectTasks } from '../../../redux/slices/taskSlice'
+import { handleGetUserTasks, selectIsError, selectIsLoading, selectIsSuccess, selectTasks } from '../../../redux/slices/taskSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -14,16 +14,19 @@ import { selectUser } from '../../../redux/slices/authSlice'
 const TaskList = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const isLoading = useSelector(selectIsLoading)
+    const isSuccess = useSelector(selectIsSuccess)
+    const isError = useSelector(selectIsError)
     const user = useSelector(selectUser)
     const [icon, setIcon] = useState('')
     const [platform, setPlatform] = useState("")
     const tasks = useSelector(selectTasks)
-    const isLoading = useSelector(selectIsLoading)
+   
 
 
     useEffect(() => {
         const getUserTasks = async() => {
-            await dispatch(handleGetUserTasks(user?.token))
+            await dispatch(handleGetUserTasks())
         }
         getUserTasks()
     }, [dispatch])

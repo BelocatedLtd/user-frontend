@@ -14,20 +14,23 @@ import spotify from '../../../assets/animated icons/spotify.svg'
 import { useNavigate, useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { useState } from 'react'
 import { LoaderIcon, toast } from 'react-hot-toast'
-import { selectUser, selectUserId, selectUsername } from '../../../redux/slices/authSlice'
+import { selectUser, selectUsername } from '../../../redux/slices/authSlice'
 import socialPlatforms from '../../../components/data/assets'
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
-import { createNewTask, handleGetUserTasks, selectIsError, selectIsLoading, selectTasks } from '../../../redux/slices/taskSlice'
+import { createNewTask, handleGetUserTasks, selectIsError, selectIsLoading, selectIsSuccess, selectTasks } from '../../../redux/slices/taskSlice'
 import {formatDate} from '../../../../utils/formatDate'
+import Loader from '../../../components/loader/Loader'
 
 const TaskEarn = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const user = useSelector(selectUser)
-    const userId = useSelector(selectUserId)
     const username = useSelector(selectUsername)
+    const isError = useSelector(selectIsError)
+    const isSuccess = useSelector(selectIsSuccess)
+    const isLoading = useSelector(selectIsLoading)
     const [icon, setIcon] = useState(null)
     const [newTask, setNewTask] = useState()
     const tasks = useSelector(selectTasks)
@@ -106,9 +109,9 @@ const TaskEarn = () => {
     //Check if user has already opted in to perform a task, any task he/she is already performing will be marked submit task and new unperformed tasks marked perform task.
     const checkTaskExistence = (advert_Id) => {
        const existingTask = tasks?.find((task) => 
-            task.taskPerformerId === userId && task.advertId === advert_Id)
+            task.taskPerformerId === user.id && task.advertId === advert_Id)
             if (existingTask) {
-               return ( <button onClick={() => goToTaskPage(existingTask._id)} className='flex justify-center gap-1 text-primary text-[12px] md:text-[15px] py-2 px-5 rounded-2xl bg-secondary'>Submit Task</button>);
+               return ( <button onClick={() => goToTaskPage(existingTask._id)} className='flex justify-center gap-1 text-primary text-[12px] md:text-[15px] py-2 px-5 rounded-2xl bg-secondary'>View Task</button>);
             } else {
                 return ( <button onClick={() => handleSelect(advert_Id)} className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-tertiary text-[12px] md:text-[15px]'>Perform Task</button>);
             } 
@@ -133,7 +136,7 @@ const TaskEarn = () => {
                     const taskData = {
                         advertId: taskToPerform._id,
                         advertiserId: taskToPerform.userId,
-                        taskPerformerId: userId,
+                        taskPerformerId: user?.id,
                         title: taskTitle,
                         platform: taskToPerform.platform,
                         service: taskToPerform.service,
@@ -151,8 +154,18 @@ const TaskEarn = () => {
                     
                         const response = await dispatch(createNewTask(taskData))
                         setNewTask(response.payload)
+
+                        if (isError) {
+                            toast.error('Error Creating a Task from this advert')
+                            return
+                        }
+
+                        if (isSuccess) {
+                            toast.success('Successfully created a Task from this advert')
+                            navigate(`/dashboard/submittask/${response?.payload?._id}`)
+                        }
                         
-                        navigate(`/dashboard/submittask/${response?.payload?._id}`)
+                       
                 }
     
                 if (!taskToPerform) {
@@ -166,12 +179,13 @@ const TaskEarn = () => {
 
   return (
     <div className='w-full h-fit'>
+        {isLoading && <Loader />}
         <div>
             <div className='flex items-center gap-3 border-b border-gray-200 pb-6'>
                     <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))}/>
                     <div className='flex flex-col'>
                         <p className='font-semibold text-xl text-gray-700'>Perform Social Tasks on {platformName} and Earn Money</p>
-                        <small className='font-medium text-gray-500'>Click <span onClick={() => (navigate(`/dashboard/tasks/${userId}`))} className='text-secondary'>here</span> to see and monitor your Tasks</small>
+                        <small className='font-medium text-gray-500'>Click <span onClick={() => (navigate(`/dashboard/tasks/${user?.id}`))} className='text-secondary'>here</span> to see and monitor your Tasks</small>
                     </div>
             </div>
 
@@ -199,6 +213,8 @@ const TaskEarn = () => {
                             <ul className='flex gap-3 text-[12px] font-light'>
                                 <li><span className='font-bold'>State:</span> {task.state}</li> 
                                 <li><span className='font-bold'>LGA:</span> {task.lga}</li>
+                                <li><span className='font-bold'>Status:</span> {tasks?.find((task) => 
+            task.taskPerformerId === user.id && task.advertId === task._id)?.status}</li>
                             </ul>
                             <img src={icon} alt={platformName} className='flex w-[20px] h-[20px] md:hidden'/>
                             </div>

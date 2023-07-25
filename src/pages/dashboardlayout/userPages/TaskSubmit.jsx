@@ -10,6 +10,7 @@ import { useEffect } from 'react'
 import { icons} from '../../../components/data/socialIcon'
 import io from 'socket.io-client'
 import { BACKEND_URL } from '../../../../utils/globalConfig'
+import Loader from '../../../components/loader/Loader'
 
 
 const socket = io.connect(`${BACKEND_URL}`)
@@ -18,7 +19,6 @@ const socket = io.connect(`${BACKEND_URL}`)
 
 const TaskSubmit = () => {
     const dispatch = useDispatch()
-    const userId = useSelector(selectUserId)
     const isLoading = useSelector(selectIsLoading)
     const isSuccess = useSelector(selectIsSuccess)
     const isError = useSelector(selectIsError)
@@ -30,6 +30,7 @@ const TaskSubmit = () => {
     const [imageArray, setimageArray] = useState()
     const [selectedImages, setSelectedImages] = useState([])
     const [userSocialName, setUserSocialName] = useState("")
+    const [taskSubmitted, setTaskSubmitted] = useState(false)
 
 
     //const { userSocialName } = taskSubmitData
@@ -98,10 +99,15 @@ const TaskSubmit = () => {
       
       
 
-      await dispatch(handleSubmitTask({formData, token: user?.token}))  
+      await dispatch(handleSubmitTask({formData, token: user?.token})) 
+      
+      if (isError) {
+        toast.error('Error submitting task')
+      }
 
         if (isSuccess) {
-          navigate(`dashboard/tasks/${task.taskPerformerId}`)
+         
+          setTaskSubmitted(true)
            //Emit socket io event to the backend
             const emitData = {
               userId: user?.id,
@@ -109,23 +115,24 @@ const TaskSubmit = () => {
           }
 
           //Emit Socket event to update activity feed
-          socket.emit('sendActivity', emitData) 
+         socket.emit('sendActivity', emitData) 
+        
+         navigate(`dashboard/tasks/${user?.id}`)
         }  
 
-        if (isError) {
-          toast.error('Task not submitted')
-        }
       }
 
 
   return (
     <div className='w-full h-fit'>
+      {isLoading && <Loader />}
         <TaskPerform 
             taskId = {taskId}
             // newTask= {task}
             isLoading = {isLoading}
             isError = {isError}
             icons={icons}
+            taskSubmitted = {taskSubmitted}
             userSocialName= {userSocialName}
             selectedImages={selectedImages}
             handleOnSubmit={handleOnSubmit} 

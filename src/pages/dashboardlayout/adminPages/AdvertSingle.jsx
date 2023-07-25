@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { selectAllAdverts, handleGetALLUserAdverts, handleToggleFreeAdvert, selectIsLoading } from '../../../redux/slices/advertSlice';
+import { selectAllAdverts, handleGetALLUserAdverts, handleToggleFreeAdvert, selectIsLoading, selectIsSuccess, selectIsError } from '../../../redux/slices/advertSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { selectUsers } from '../../../redux/slices/userSlice';
@@ -11,15 +11,21 @@ import placeholder from '../../../assets/placeholder.jpg'
 import DeleteAdvertModal from '../../../components/adminComponents/DeleteAdvertModal';
 import { BsCheck, BsCheckAll } from 'react-icons/bs';
 import { SwipeableDrawer } from '@mui/material';
-import { LoaderIcon } from 'react-hot-toast';
+import { LoaderIcon, toast } from 'react-hot-toast';
 import ImageGallery from '../../../components/ImageGallery';
+import { selectUser } from '../../../redux/slices/authSlice';
+import { setAdvertFree } from '../../../services/advertService';
+import Loader from '../../../components/loader/Loader';
 
 const AdvertSingle = () => {
     const {id} = useParams()
     const adverts = useSelector(selectAllAdverts)
+    const user = useSelector(selectUser)
     const users = useSelector(selectUsers)
     const dispatch = useDispatch()
-    const isLoading = useSelector(selectIsLoading)
+    const [isLoading, setIsLoading] = useState(false)
+    const isSuccess = useSelector(selectIsSuccess)
+    const isError = useSelector(selectIsError)
     const [ad, setAd] = useState()
     const navigate = useNavigate()
     const [adverter, setAdverter] = useState()
@@ -39,17 +45,26 @@ const AdvertSingle = () => {
       const handleFreetaskCheck = async(e) => {
         e.preventDefault()
 
-        setIsFree(!isFree)
-    
-        try {
-          const response = await dispatch(handleToggleFreeAdvert(id))
+          setIsFree(!isFree)
 
-          console.log(response)
-          return
+          setIsLoading(true)
+          const response = await setAdvertFree({advertId: id})
 
-        } catch (error) {
-          toast.error('Failed to switch advert free status')
+          setIsLoading(false)
+
+          if (!response) {
+            setIsLoading(false)
+            console.error(response.data)
+            toast.error("Error switching ad type")
         }
+
+        if (response) {
+          setIsLoading(false)
+            toast.error("Advert type changed")
+            navigate(-1)
+        }
+
+        setIsLoading(false)
        
       } 
 
@@ -62,6 +77,7 @@ const AdvertSingle = () => {
 
   return (
     <div className='w-full h-fit'>
+      {isLoading && <Loader />}
       {delBtn && <DeleteAdvertModal handleDelete={handleDelete} data={ad}/>}
       <div className='flex items-center gap-3 border-b border-gray-200 pb-6'>
           <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))}/>

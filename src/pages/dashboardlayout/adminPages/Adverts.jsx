@@ -20,7 +20,7 @@ const columns = [
   {
     name: 'Advertiser',
     selector: (row) => {
-    const advertiser = users.find(user => user._id === row.userId)
+    const advertiser = users?.find(user => user._id === row?.userId)
           return (
             
               <div className='font-bold text-[13px]'>{advertiser?.fullname}</div>

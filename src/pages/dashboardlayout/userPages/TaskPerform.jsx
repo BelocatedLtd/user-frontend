@@ -30,7 +30,7 @@ import {saveAs} from 'file-saver'
 import { BsGlobe } from 'react-icons/bs'
 
 
-const TaskPerform = ({taskId, userSocialName, selectedImages, handleOnSubmit, handleInputChange, handleImageChange, handleImageRemove, isLoading, isError, icons}) => {
+const TaskPerform = ({taskId, userSocialName, selectedImages, taskSubmitted, handleOnSubmit, handleInputChange, handleImageChange, handleImageRemove, isLoading, isError, icons}) => {
   const linkRef = useRef(null)
   const adCaptionRef = useRef(null)
   const user = useSelector(selectUser)
@@ -112,6 +112,7 @@ useEffect(() => {
     linkRef.current.select();
     document.execCommand('copy')
     toast.success('Redirecting to task link...')
+    navigate(`${linkRef}`)
   }
 
   const handleAdCaptionCopy = (e) => {
@@ -173,7 +174,9 @@ useEffect(() => {
                           {/* Status badge */}
                           <div className='md:hidden md:flex-col md:w-[30%] gap-1 text-gray-100 py-2 rounded-2xl'>
                             <label htmlFor="status" className='font-bold text-[12px] text-gray-600'>Status:</label>
-                            <p className={`w-full text-[12px] flex  justify-center items-center py-2 px-3 gap-2 ${newTask?.status === "Approved" ? ('bg-secondary') : ('bg-red-700') } rounded-2xl`}>{newTask?.status}<span>{newTask?.status === "Approved" ? <CheckmarkIcon /> : <LoaderIcon />}</span></p>
+                            <p className={`w-full text-[12px] flex  justify-center items-center py-2 px-3 gap-2 
+                            ${newTask?.status === "Approved" ? ('bg-secondary') : ('bg-red-700') } rounded-2xl`}>{newTask?.status}<span>{newTask?.status === "Approved" && <CheckmarkIcon />}</span>
+                            </p>
                           </div>
                         </div>
                     </div>
@@ -182,7 +185,7 @@ useEffect(() => {
                 {/* Status badge */}
                 <div className='hidden md:flex md:flex-col md:w-[30%] items-center gap-1 text-gray-100 py-2 px-4 rounded-2xl'>
                   <label htmlFor="status" className='font-bold text-[12px] text-gray-600'>Status:</label>
-                  <p className={`w-full text-[12px] flex text-center justify-center items-center py-2 px-3 gap-2 ${newTask?.status === "Approved" ? ('bg-secondary') : ('bg-red-700') } rounded-2xl`}>{newTask?.status}<span>{newTask?.status === "Approved" ? <CheckmarkIcon /> : <LoaderIcon />}</span></p>
+                  <p className={`w-full text-[12px] flex text-center justify-center items-center py-2 px-3 gap-2 ${newTask?.status === "Approved" ? ('bg-secondary') : ('bg-red-700') } rounded-2xl`}>{newTask?.status}<span>{newTask?.status === "Approved" && <CheckmarkIcon />}</span></p>
                 </div>
             </div>
 
@@ -213,14 +216,14 @@ useEffect(() => {
                 <div className='w-fit flex flex-col text-center items-center mx-auto md-w-500px mb-[2rem]'>
                 <label  className='text-gray-500 font-bold text-center mb-[1rem]'>Download Media:</label>
                 {adMedia?.map((image, index) => (
-                  <>
-                  <img key={index} src={image?.secure_url} alt={`Image ${index}`} />
+                  <div key={index} className='my-[2rem]'>
+                  <img src={image?.secure_url} alt={`Image ${index}`} />
 
                   <button onClick={() => handleDownload(image?.secure_url, image?.public_id)} className='bg-green-700 text-gray-50 px-5 py-2 rounded-2xl mt-[1rem] hover:bg-tertiary'>
                     {!isDownloading && ('Download')}
                     {isDownloading && ('Downloading...')}
                   </button>
-                  </>
+                  </div>
                 ))}
                 </div>
               ) : ""}
@@ -228,7 +231,6 @@ useEffect(() => {
             
 
             {/* Verification Instructions */}
-            {newTask?.status === "Approved" ? "" : (
               <div className='w-full md-w-500px text-center mb-[2rem]'>
               <h1 className='text-gray-500 font-bold text-center mb-[1rem]'>Verification Instructions</h1>
               {newTask?.platform === 'whatsapp' ? (
@@ -241,7 +243,6 @@ useEffect(() => {
                 </div>
               ) : (<p>{newTask?.taskVerification}</p>)}
             </div>
-            )}
             
 
             {/* Task link */}
@@ -259,12 +260,14 @@ useEffect(() => {
             <div className='flex flex-col items-center gap-3 mt-[4rem]'>
               {/* Submition Form */}
               <form onSubmit={handleOnSubmit} className='flex flex-col'>
+
                 {/* Upload ScreenSHot */}
-                <div className='w-full h-full flex flex-col pt-[1rem] items-center border-gray-200'>
+                {newTask?.status === "Approved" || newTask?.status === "Submitted" ? "" : (
+                  <div className='w-full h-full flex flex-col pt-[1rem] items-center border-gray-200'>
                   <label htmlFor="upload proof of work" className='text-gray-500 font-bold text-center mb-[1rem]'>Upload Proof of work</label>
                       <div className='w-full h-fit flex flex-wrap items-center justify-center gap-2 p-5'>
                       {selectedImages?.map((item, index) => (   
-                        <div className='relative w-[200px] h-[200px]'>
+                        <div key={index} className='relative w-[200px] h-[200px]'>
                           <img  src={item} alt="preview" className='w-full h-full object-cover'/>
                           <GiCancel  size={20} className='absolute text-tertiary top-0 right-0 pr-1 pt-1' onClick={(e) => handleImageRemove(item)}/>
                         </div> 
@@ -274,7 +277,9 @@ useEffect(() => {
 
                         {/* File Upload Input Tag  */}
                       <input type="file"  name="images"  placeholder='Upload Screenshots' multiple  onChange={handleImageChange} className='w-full p-3 shadow-inner rounded-2xl bg-gray-50 md:w-[300px]' />
-                </div>
+                  </div>)
+                }
+                
 
                 {/* Social Account Link */}
                 {hideUsernameDisplayField ? "" : (
@@ -284,12 +289,16 @@ useEffect(() => {
                 </div>
                 )}
                 
-
-                  {newTask?.status === "Approved" ? "" : (
-                    <button type='submit' className='flex items-center justify-center gap-2 w-full md:w-[300px] bg-secondary text-gray-100 py-3 px-6 mt-5 rounded-full mx-auto hover:bg-tertiary'>Submit {isLoading && <LoaderIcon />}</button>
+                 
+                  {newTask?.status === "Approved" || newTask?.status === "Submitted" ? "" : (
+                    <button type='submit' className='flex items-center justify-center gap-2 w-full md:w-[300px] bg-secondary text-gray-100 py-3 px-6 mt-5 rounded-full mx-auto hover:bg-tertiary'>
+                      {!isLoading && "Submit"}
+                      {isLoading && "Submitting..."}
+                    </button>
                   )}
                 
               </form>
+              {taskSubmitted ? (<button onClick={() => navigate(`/dashboard/tasks/${user.id}`)} className='bg-green-700 text-primary px-6 py-2'>See all your submitted tasks</button>) : ""}
             </div>
         </div>
     </div>

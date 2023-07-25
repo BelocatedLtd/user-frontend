@@ -25,6 +25,8 @@ const DeleteAdvertModal = ({handleDelete, data}) => {
         setIsLoading(true)
         const response = await deleteAdvert(_id)
 
+        setIsLoading(false)
+
         if (!response) {
             toast.error("Failed to delete Advert")
         }

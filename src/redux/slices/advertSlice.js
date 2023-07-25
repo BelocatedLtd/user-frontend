@@ -29,9 +29,9 @@ export const createNewAdvert = createAsyncThunk(
 // Toggle Free Ad State
 export const handleToggleFreeAdvert = createAsyncThunk(
   "freeAd/adType",
-  async (id, thunkAPI) => {
+  async ({id, token}, thunkAPI) => {
     try {
-      return await setAdvertFree(id)
+      return await setAdvertFree(id, token)
     } catch (error) {
       const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       return thunkAPI.rejectWithValue(message)
