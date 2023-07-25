@@ -117,7 +117,7 @@ const TaskSubmit = () => {
           //Emit Socket event to update activity feed
          socket.emit('sendActivity', emitData) 
         
-         navigate(`dashboard/tasks/${user?.id}`)
+         navigate('dashboard/tasks')
         }  
 
       }

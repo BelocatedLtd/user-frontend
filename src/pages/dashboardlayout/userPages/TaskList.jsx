@@ -23,7 +23,7 @@ const TaskList = () => {
     const tasks = useSelector(selectTasks)
    
     const getUserTasks = async() => {
-        await dispatch(handleGetUserTasks(user?.token))
+        await dispatch(handleGetUserTasks())
     }
 
     useEffect(() => {

@@ -49,7 +49,7 @@ const SidebarLeft = ({children}) => {
       {
         title: "My Ongoing Tasks",
         icon: <FaTasks size={30} className='mr-2 text-gray-800'/>,
-        path: `/dashboard/tasks/${user?.id}`,
+        path: `/dashboard/tasks`,
       },
       {
         title: "Transactions",

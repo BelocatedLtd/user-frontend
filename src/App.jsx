@@ -193,7 +193,7 @@ const handleCloseMenu = () => {
 
          {/* Dashboard Tasks List */}
       <Route 
-        path="/dashboard/tasks/:userId" 
+        path="/dashboard/tasks" 
         element={
           <SidebarLeft>
             <DashLayout>

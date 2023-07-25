@@ -12,7 +12,7 @@ import audiomack from '../../../assets/animated icons/audiomack.svg'
 import boomplay from '../../../assets/animated icons/boomplay.svg'
 import spotify from '../../../assets/animated icons/spotify.svg'
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react'
 import { useEffect } from 'react'
@@ -103,17 +103,6 @@ useEffect(() => {
       setHideUsernameDisplayField(true)
     }
   }, [newTask?.platform, newTask?.service])
-
-
-  
-  
-
-  const handleRefLinkCopy = (e) => {
-    linkRef.current.select();
-    document.execCommand('copy')
-    toast.success('Redirecting to task link...')
-    navigate(`${linkRef}`)
-  }
 
   const handleAdCaptionCopy = (e) => {
     adCaptionRef.current.select();
@@ -252,7 +241,7 @@ useEffect(() => {
               <div className='w-full md:w-[500px] flex items-center justify-center mx-auto'>
                 <input type="link" value={newTask?.socialPageLink} readOnly ref={linkRef} className='w-full h-[20px] px-6 py-5 text-gray-800 bg-gray-200 rounded-r rounded-2xl'/>
 
-                <div className='w-[4rem] h-[20px] px-5 py-5 bg-secondary text-primary text-[9px]' onClick={handleRefLinkCopy}>Visit</div>
+                <Link to={newTask?.socialPageLink} target="_blank" rel="noopener noreferrer" className='w-[4rem] h-[20px] px-5 py-5 bg-secondary text-primary text-[9px]'>Visit</Link>
               </div>
               <small className='w-full md:w-[500px] mx-auto text-gray-400 text-[12px] text-center'>Remember, the task you were given is {newTask?.service} on {newTask?.platform}, use the link or username to perform this task</small>
             </div>)}

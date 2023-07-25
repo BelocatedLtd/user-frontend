@@ -8,17 +8,20 @@ const user = JSON.parse(localStorage.getItem('user'))
 export const createTask = async (taskData) => {
     const response = await axios.post(`${BACKEND_URL}/api/tasks/create`, taskData, {
         headers: {
-            'Authorization': `Bearer ${user?.token}`
+            'Authorization': `Bearer ${user?.token}`,
         }
      })
    return response.data   
 }
 
 // Get User Tasks
-export const getUserTasks = async(token) => {
+export const getUserTasks = async() => {
     const response = await axios.get(`${BACKEND_URL}/api/tasks/task`, {
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${user?.token}`,
+            'Content-Type': 'application/json', 
+            'Accept': 'application/json', 
+            'Custom-Header': 'custom-value'
         }
         })
    return response.data      
