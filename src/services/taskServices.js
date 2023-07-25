@@ -15,10 +15,10 @@ export const createTask = async (taskData) => {
 }
 
 // Get User Tasks
-export const getUserTasks = async() => {
+export const getUserTasks = async(token) => {
     const response = await axios.get(`${BACKEND_URL}/api/tasks/task`, {
         headers: {
-            'Authorization': `Bearer ${user?.token}`
+            'Authorization': `Bearer ${token}`
         }
         })
    return response.data      

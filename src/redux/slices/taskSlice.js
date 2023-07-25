@@ -27,9 +27,9 @@ export const createNewTask = createAsyncThunk(
 // Get User Tasks 
 export const handleGetUserTasks = createAsyncThunk(
   "get/handleGetUserTasks",
-  async(__, thunkAPI) => {
+  async(token, thunkAPI) => {
       try {
-        return await getUserTasks()
+        return await getUserTasks(token)
       } catch(error) {
           const message = 
       (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
