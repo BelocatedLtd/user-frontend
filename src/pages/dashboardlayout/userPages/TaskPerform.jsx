@@ -138,7 +138,7 @@ useEffect(() => {
                   <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))} className='mr-1'/>
                       <div className='flex flex-col'>
                           <p className='font-semibold text-xl text-gray-700'></p>
-                          <small className='font-medium text-gray-500'>Click <span onClick={() => (navigate(`/dashboard/tasks/${userId}`))} className='text-secondary'>here</span> to see all your Tasks</small>
+                          <small className='font-medium text-gray-500'>Click <span onClick={() => (navigate(`/dashboard/tasks`))} className='text-secondary'>here</span> to see all your Tasks</small>
                       </div>
                 </div>          
       </div>
@@ -193,6 +193,7 @@ useEffect(() => {
                 <div className='w-fit flex flex-col md-w-500px text-center items-center mx-auto mb-[2rem]'>
                 <label  className='text-gray-500 font-bold text-center mb-[1rem]'>Message from Advertiser:</label>
                   <div className='flex items-center gap-1'>
+                    <p><span className='text-tertiary'>NOTE:</span> Kindly include the caption below in your post on your WhatsApp Status</p>
                     <textarea ref={adCaptionRef} value={newTask?.caption} readOnly className='border border-gray-200 p-3'></textarea>
                     <img src={copy} alt="click to copy ref link" className='w-[30px] h-[30px]' onClick={handleAdCaptionCopy}/>
                   </div>
@@ -204,6 +205,7 @@ useEffect(() => {
               {adMedia?.length > 0 ? (
                 <div className='w-fit flex flex-col text-center items-center mx-auto md-w-500px mb-[2rem]'>
                 <label  className='text-gray-500 font-bold text-center mb-[1rem]'>Download Media:</label>
+                <p><span className='text-tertiary'>NOTE:</span> Download the media below and post on your WhatsApp status</p>
                 {adMedia?.map((image, index) => (
                   <div key={index} className='my-[2rem]'>
                   <img src={image?.secure_url} alt={`Image ${index}`} />
@@ -222,6 +224,7 @@ useEffect(() => {
             {/* Verification Instructions */}
               <div className='w-full md-w-500px text-center mb-[2rem]'>
               <h1 className='text-gray-500 font-bold text-center mb-[1rem]'>Verification Instructions</h1>
+              <p><span className='text-tertiary'>NOTE:</span> Immediately you post, take a screenshot of your post on your WhatsApp Status</p>
               {newTask?.platform === 'whatsapp' ? (
                 <div>
                   <p><span className='text-tertiary font-bold'>1st stage -</span> Screenshot showing you posted on WhatsApp. User is notified 4 hrs after posting to move to stage 2. If stage 1 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason.</p> <br/><br/>
