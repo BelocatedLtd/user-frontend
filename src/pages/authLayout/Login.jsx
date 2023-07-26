@@ -102,13 +102,8 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
           //Emit Socket event to update activity feed
           socket.emit('sendActivity', emitData) 
 
-          if (response.phone === null) {
-            navigate(`/dashboard/account-settings/${username}`)
-          } 
           
-          if (response.phone) {
             navigate(`/dashboard/${username}`)
-          }
   
       } 
       

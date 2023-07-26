@@ -1,7 +1,7 @@
 import React from 'react'
 import ProfileForm from '../../../components/forms/ProfileForm'
 import { useDispatch, useSelector } from 'react-redux'
-import { SET_USER, handleUpdateUser, selectUser, selectUsername } from '../../../redux/slices/authSlice'
+import { SET_USER, handleUpdateUser, selectUser } from '../../../redux/slices/authSlice'
 import { useState } from 'react'
 import Loader from '../../../components/loader/Loader'
 import { redirect, useNavigate } from 'react-router-dom'
