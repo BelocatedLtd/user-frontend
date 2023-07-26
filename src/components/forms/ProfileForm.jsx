@@ -13,12 +13,6 @@ const ProfileForm = ({profile, email, username, handleProfileUpdate, handleInput
    const user = useSelector(selectUser)
    const dispatch = useDispatch()
    const navigate = useNavigate()
-
-  useEffect(() => {
-      if (!user.email) {
-        navigate('/dashboard/profile')
-      }
-}, [dispatch, email])
     
   return (
     <div className='w-full h-fit flex flex-col md:flex-row'>
