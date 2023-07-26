@@ -65,7 +65,7 @@ const AccountDetailsSettings = ({user}) => {
   return (
     <div>
       {isLoading && <Loader />}
-      {toggleOTPVerify && <VerifyAccountOTP accountDetailsData={accountDetailsData} handleModal={handleModal} email={user.email}/>}
+      {toggleOTPVerify && <VerifyAccountOTP accountDetailsData={accountDetailsData} handleModal={handleModal} email={user?.email}/>}
         <form onSubmit={handleSubmit} className='w-full box p-6 shadow-lg'>
         
           <label htmlFor="accountDetails reset" className='font-bold'>Authentication Details</label>

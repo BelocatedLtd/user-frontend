@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 import PasswordChange from './settings/PasswordChange'
 import BankDetailsSettings from './settings/BankDetailsSettings'
 import AccountDetailsSettings from './settings/AccountDetailsSettings'
+import { getUser } from '../../../services/authServices'
 
 
 const UpdateProfile = () => {
@@ -28,7 +29,7 @@ const UpdateProfile = () => {
 
   useEffect(() => {
     getUserData()
-  }, [user])
+  }, [dispatch])
   
 
   const initialState = {

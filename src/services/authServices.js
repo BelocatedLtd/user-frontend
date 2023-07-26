@@ -73,7 +73,7 @@ export const getUser = async(token) => {
     try {
          const response = await axios.get(`${BACKEND_URL}/api/user`, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token ? token : user?.token}`
             }
          })
         return response.data
