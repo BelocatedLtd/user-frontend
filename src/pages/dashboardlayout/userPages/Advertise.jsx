@@ -9,6 +9,7 @@ import { SET_USER, selectUser } from '../../../redux/slices/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import socialPlatforms from '../../../components/data/assets'
+import { toast } from 'react-hot-toast'
 
 const Advertise = () => {
     const navigate = useNavigate()
@@ -19,15 +20,12 @@ const Advertise = () => {
     const [selectedPlatformObject, setSelectedPlatformObject] = useState()
     useRedirectLoggedOutUser('/login')
 
-    // useEffect(() => {
-    //     async function getUserData() {
-    //       if (!user.email) {
-    //       const data = await getUser()
-    //       await dispatch(SET_USER(data))
-    //       }
-    //     }
-    //   getUserData()
-    // }, [dispatch])
+     useEffect(() => {
+        if (!user?.location || !user?.community || !user?.gender) {
+        toast.error("Please, complete your profile before you can perform tasks")
+        navigate('/dashboard/update-profile')
+    }
+     }, [])
 
     const handleSelect = (e, platform) => {
         e.preventDefault(e)

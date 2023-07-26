@@ -42,6 +42,11 @@ const Earn = () => {
           navigate(-1)
         }
 
+        if (!user?.location || !user?.community || !user?.gender) {
+            toast.error("Please, complete your profile before you can perform tasks")
+            navigate('/dashboard/update-profile')
+          }
+
       }, [dispatch]) 
 
     useEffect(() => {
