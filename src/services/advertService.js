@@ -10,16 +10,17 @@ const getAuthHeaders = () => {
     if (token) {
         return {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded',
             }
         }
     }
 }
 
 // Create Advert
-export const createAdvert = async (paymentFormData) => {
+export const createAdvert = async (adFormData) => {
     const headers = getAuthHeaders();
-    const response = await axios.post(`${BACKEND_URL}/api/adverts/create`, paymentFormData, headers)
+    const response = await axios.post(`${BACKEND_URL}/api/adverts/create`, adFormData, headers)
    return response.data
 }
 

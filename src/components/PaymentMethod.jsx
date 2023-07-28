@@ -10,10 +10,9 @@ import { selectUser } from '../redux/slices/authSlice'
 import { fundUserWallet, getUserWallet, selectUserWallet } from '../redux/slices/walletSlice'
 import { useEffect } from 'react'
 import { createNewAdvert, selectIsLoading, selectIsSuccess, selectIsError } from '../redux/slices/advertSlice'
-import { CheckmarkIcon, LoaderIcon } from 'react-hot-toast'
-import Loader from './loader/Loader'
 import io from 'socket.io-client'
 import { BACKEND_URL } from '../../utils/globalConfig'
+import { createAdvert } from '../services/advertService'
 
 
 const socket = io.connect(`${BACKEND_URL}`)
@@ -21,7 +20,7 @@ const socket = io.connect(`${BACKEND_URL}`)
 
 
 const PaymentMethod = ({togglePaymentSelect, formData}) => {
-    const dispatch = useDispatch()
+   const dispatch = useDispatch()
    const [canPay, setCanPay] = useState(false)
    const navigate = useNavigate()
    const isLoading = useSelector(selectIsLoading)
@@ -31,7 +30,7 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
    const wallet = useSelector(selectUserWallet)
 
    const getWallet = async() => {
-    await dispatch(getUserWallet(user?.token))
+    await dispatch(getUserWallet())
 }
 
    useEffect(() => {
@@ -51,6 +50,8 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
    }, [wallet, expBudget])
 
    const title = `Buy ${desiredROI} ${platform} ${service}`
+
+   
 
    //Append and prepare form data for transport
    const paymentFormData = new FormData();
@@ -77,10 +78,35 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
    const handlePayment = async (e) => {
     e.preventDefault()
 
-    if (canPay) {
-        await dispatch(createNewAdvert(paymentFormData))
+    const adFormData = {
+        service,
+        adTitle,
+        desiredROI,
+        gender,
+        state,
+        lga,
+        userId: user.id,
+        costPerTask,
+        earnPerTask,
+        socialPageLink,
+        caption,
+        expBudget
+       }
 
-        if(isSuccess) {
+    // for (var pair of paymentFormData.entries()) {
+    //     console.log(pair[0]+ ', ' + pair[1])
+    // }
+    // return
+
+   
+
+    if (canPay) {
+        //const response = await dispatch(createNewAdvert(adFormData))
+
+        const response = await createAdvert(paymentFormData)
+        
+
+        if(response) {
             //Emit socket io event to the backend
             const emitData = {
                 userId: user?.id,
@@ -92,9 +118,9 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
 
             navigate('/dashboard/campaign-stats')
         }
-        if(isError) {
+        if(!response) {
             toast.error("Error creating advert, failed to make payment")
-            //navigate('/dashboard/campaign-stats')
+            navigate('/dashboard/campaign-stats')
             togglePaymentSelect()
         }
         

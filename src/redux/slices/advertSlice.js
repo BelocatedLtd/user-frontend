@@ -16,9 +16,9 @@ const initialState = {
 // Creat New Ad
 export const createNewAdvert = createAsyncThunk(
   "create/createNewAdvert",
-  async ({paymentFormData}, thunkAPI) => {
+  async ({adFormData}, thunkAPI) => {
     try {
-      return await createAdvert(paymentFormData)
+      return await createAdvert(adFormData)
     } catch (error) {
       const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       return thunkAPI.rejectWithValue(message)
