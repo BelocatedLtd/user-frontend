@@ -23,9 +23,10 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
    const dispatch = useDispatch()
    const [canPay, setCanPay] = useState(false)
    const navigate = useNavigate()
-   const isLoading = useSelector(selectIsLoading)
-   const isSuccess = useSelector(selectIsSuccess)
-   const isError = useSelector(selectIsError)
+//    const isLoading = useSelector(selectIsLoading)
+//    const isSuccess = useSelector(selectIsSuccess)
+//    const isError = useSelector(selectIsError)
+   const [isLoading, setIsLoading] = useState(false)
    const user = useSelector(selectUser)
    const wallet = useSelector(selectUserWallet)
 
@@ -50,8 +51,6 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
    }, [wallet, expBudget])
 
    const title = `Buy ${desiredROI} ${platform} ${service}`
-
-   
 
    //Append and prepare form data for transport
    const paymentFormData = new FormData();
@@ -78,33 +77,17 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
    const handlePayment = async (e) => {
     e.preventDefault()
 
-    const adFormData = {
-        service,
-        adTitle,
-        desiredROI,
-        gender,
-        state,
-        lga,
-        userId: user.id,
-        costPerTask,
-        earnPerTask,
-        socialPageLink,
-        caption,
-        expBudget
-       }
-
     // for (var pair of paymentFormData.entries()) {
     //     console.log(pair[0]+ ', ' + pair[1])
     // }
     // return
 
-   
-
     if (canPay) {
         //const response = await dispatch(createNewAdvert(adFormData))
 
+        setIsLoading(true)
         const response = await createAdvert(paymentFormData)
-        
+        setIsLoading(false)
 
         if(response) {
             //Emit socket io event to the backend
