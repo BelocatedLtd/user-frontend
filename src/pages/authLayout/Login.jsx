@@ -20,12 +20,15 @@ const initialState = {
   password: '',
 }
 
-const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
+const Login = ({showRegModal, closeModal}) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
   const [values, setValues] = useState(initialState)
+  
+
   const {email, password } = values
+
 
 
   const handleInputChange = (e) => {
@@ -131,7 +134,7 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
       <div className='wrapper'>
         {isLoading && <Loader />}
           <div className='relative modal w-[350px] h-[550px] bg-primary md:w-[400px]'>
-            <img src={close} alt="close" onClick={handleLogin} size={40} className='absolute top-[-1rem] right-[-1rem] text-tertiary' />
+            <img src={close} alt="close" onClick={closeModal} size={40} className='absolute top-[-1rem] right-[-1rem] text-tertiary' />
             <div className='modal__header__text flex flex-col items-center my-[3rem]'>
             <h2 className='text-sm text-gray-400 font-medium px-6 text-center'><span className='text-secondary font-extrabold'>200+</span> simple and profitable tasks posted today!</h2>
             <h3 className='text-2xl text-gray-800 font-bold px-6 mt-2 text-center'><span className='text-red-500'>Login</span> to start making money on <span className='text-secondary font-extrabold'>Belocated</span></h3>
@@ -148,7 +151,7 @@ const Login = ({handleLogin, loginBtn, setLoginBtn }) => {
                 <button type="submit" className='w-full mt-4 py-2 mt-1 mb-[-0rem] text-md rounded-xl bg-secondary text-gray-100 mb-5'>Login!</button>
             </form>
             <small onClick={handleRetrievePass} className='text-gray-700 font-bold text-[12px] cursor-pointer'>Forgot Password</small>
-            <p className='text-sm text-gray-500 text-center cursor-pointer'>No account yet? <span className='text-btn' onClick={() => navigate('/auth/cpanel/login')}>Sign Up</span></p>
+            <p onClick={showRegModal} className='text-sm text-gray-500 text-center cursor-pointer'>No account yet? <span className='text-btn'>Sign Up</span></p>
         </div>
           </div>
       </div>,

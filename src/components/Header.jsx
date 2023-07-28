@@ -17,34 +17,28 @@ import { getLoginStatus, getUser } from '../services/authServices'
 export const Header = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [regBtn, setRegBtn] = useState(false)
-    const [loginBtn, setLoginBtn] = useState(false)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false) 
     const user = useSelector(selectUser)
-    const username = useSelector(selectUsername)
-    const [profile, setProfile] = useState(null)
-    const [isLoggedin, setIsLoggedIn] = useState(false)
+    const [isReg, setIsReg] = useState(false)
+    const [isLogin, setIsLogIn] = useState(false)
 
-    // const getUserData = async() => {
-    //     const data = await getUser()
-    //     await dispatch(SET_USER(data))
-    //   }
+    const showRegModal = () => {
+        setIsReg(true)
+        setIsLogIn(false)
+    };
 
-    useEffect(() => {
-        // async function loginStatus() {
-        //   const status = await getLoginStatus()
-        //   dispatch(SET_LOGIN(status))
-        //   setIsLoggedIn(status)
-        // }
+    const showLoginModal = () => {
+        setIsReg(false)
+        setIsLogIn(true)
         
-        //loginStatus()
-
+    }
     
-        //if (isLoggedin === "true" && !user?.email) {
-          
-          //getUserData()
-       // }
-      }, [])
+    const closeModal = () => {
+        setIsLogIn(false)
+        setIsReg(false)
+    }
+
+
 
     const userDashboard = () => {
          if (user?.accountType === "Admin") {
@@ -59,26 +53,19 @@ export const Header = () => {
     useEffect(() => {
         userDashboard()
     }, [user])
-    
-
-    const handleRegister = (e) => {
-        e.preventDefault()
-        setRegBtn(!regBtn)
-    }
-
-    const handleLogin = (e) => {
-        e.preventDefault()
-        setLoginBtn(!loginBtn)
-    }
 
     const handleCloseMenu = () => {
         setMobileMenuOpen(!mobileMenuOpen)
     }
+    
+
 
   return (
     <header className='w-full border-b border-gray-200'>
-        {regBtn && <Register handleRegister={handleRegister} setRegBtn={setRegBtn} regBtn={regBtn} />}
-        {loginBtn && <Login handleLogin={handleLogin} setLoginBtn={setLoginBtn} loginBtn={loginBtn}/>}
+        {isReg && (<Register  showRegModal={showRegModal} showLoginModal={showLoginModal} closeModal={closeModal }/>)}
+        {isLogin && (<Login showLoginModal={showLoginModal} showRegModal={showRegModal} closeModal={closeModal }/>)}
+
+        
 
         <div className='relative container px-6 py-6 flex justify-between items-center mx-auto md:px-0'>
             <Link to='/' className='logo cursor-pointer text-4xl font-extrabold text-secondary w-[150px] md:w-[170px]'>
@@ -95,8 +82,8 @@ export const Header = () => {
 
             <ShowOnLogout>
             <div className='hidden gap-2 md:flex'>
-                <button onClick={handleLogin} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Login</button>
-                <button onClick={handleRegister} className='bg-tertiary text-primary px-6 py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Create Account</button>
+                <button onClick={showLoginModal} className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>Login</button>
+                <button onClick={showRegModal} className='bg-tertiary text-primary px-6 py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Create Account</button>
             </div>
             </ShowOnLogout>
 
@@ -125,10 +112,10 @@ export const Header = () => {
                             
 
                             <ShowOnLogout>
-                                <p onClick={handleLogin} className='text-gray-800 cursor-pointer'>Login</p>
+                                <p onClick={handleToggleAuth} className='text-gray-800 cursor-pointer'>Login</p>
                             </ShowOnLogout>
                             <ShowOnLogout>
-                                <p onClick={handleRegister} className='text-gray-50 cursor-pointer bg-secondary px-8 rounded-full py-2'>Get Started Free </p>
+                                <p onClick={handleToggleAuth} className='text-gray-50 cursor-pointer bg-secondary px-8 rounded-full py-2'>Get Started Free </p>
                             </ShowOnLogout>
 
                             <ShowOnLogin>

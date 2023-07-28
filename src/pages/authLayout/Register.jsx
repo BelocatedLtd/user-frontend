@@ -13,6 +13,7 @@ import RetrievePassword from './RetrievePassword';
 import VerifyEmail from './VerifyEmail';
 import io from 'socket.io-client'
 import { BACKEND_URL } from '../../../utils/globalConfig'
+import Login from './Login';
 
 
 const socket = io.connect(`${BACKEND_URL}`)
@@ -23,7 +24,7 @@ const initialState = {
   password: '',
 }
 
-const Register = ({handleRegister, setRegBtn, regBtn}) => {
+const Register = ({showLoginModal, closeModal}) => {
   const referrerId = useParams()
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
@@ -112,17 +113,12 @@ const Register = ({handleRegister, setRegBtn, regBtn}) => {
       
     }
 
-    const handleAuthSwitch = () => {
-      handleRegister()
-   
-    }
-
 
   return ReactDOM.createPortal(
     <div className='wrapper'>
       {isLoading && <Loader />}
         <div className='relative modal w-[350px] h-[600px] bg-primary md:w-[400px]'>
-          <img src={close} alt="close" onClick={handleRegister} size={40} className='absolute top-[-1rem] right-[-1rem] text-tertiary' />
+          <img src={close} alt="close" onClick={closeModal} size={40} className='absolute top-[-1rem] right-[-1rem] text-tertiary' />
           <div className='modal__header__text flex flex-col items-center mt-[3rem] mb-[1.7rem]'>
             <h2 className='text-sm text-gray-400 font-medium px-6 text-center'><span className='text-secondary font-extrabold'>200+</span> simple and profitable tasks posted today!</h2>
             <h3 className='text-xl text-gray-800 font-bold px-6 mt-2 text-center'><span className='text-red-500'>Register</span> to start making money on <span className='text-secondary font-extrabold'>Belocated</span></h3>
@@ -151,7 +147,7 @@ const Register = ({handleRegister, setRegBtn, regBtn}) => {
                 <button type="submit" className='w-full mt-1 mb-[-0rem] py-2 text-md rounded-xl bg-secondary text-gray-100 mb-5'>Sign Up!</button>
             </form>
            
-            <p onClick={handleAuthSwitch} className='text-sm text-gray-500 text-center cursor-pointer mt-[2.5rem]'>Already Registered? <span className='text-btn'>Sign In</span></p>
+            <p onClick={showLoginModal} className='text-sm text-gray-500 text-center cursor-pointer mt-[2.5rem]'>Already Registered? <span className='text-btn'>Sign In</span></p>
         </div>
         </div>
     </div>,
