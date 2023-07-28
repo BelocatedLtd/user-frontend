@@ -52,11 +52,6 @@ const Users = () => {
       sortable: true
     },
     {
-      name: 'LGA',
-      selector: row => row.community, 
-      sortable: true
-    },
-    {
       name: 'Gender',
       selector: row => row.gender, 
       sortable: true

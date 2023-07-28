@@ -30,7 +30,7 @@ import {saveAs} from 'file-saver'
 import { BsGlobe } from 'react-icons/bs'
 
 
-const TaskPerform = ({taskId, userSocialName, selectedImages, taskSubmitted, handleOnSubmit, handleInputChange, handleImageChange, handleImageRemove, isLoading, isError, icons}) => {
+const TaskPerform = ({taskId, userSocialName, selectedImages, taskSubmitted, handleOnSubmit, handleInputChange, handleImageChange, handleImageRemove, isLoading, icons}) => {
   const linkRef = useRef(null)
   const adCaptionRef = useRef(null)
   const user = useSelector(selectUser)
@@ -192,10 +192,14 @@ useEffect(() => {
               {newTask?.caption ? (
                 <div className='w-fit flex flex-col md-w-500px text-center items-center mx-auto mb-[2rem]'>
                 <label  className='text-gray-500 font-bold text-center mb-[1rem]'>Message from Advertiser:</label>
-                  <div className='flex items-center gap-1'>
+                  <div className='flex flex-col items-center gap-1'>
                     <p><span className='text-tertiary'>NOTE:</span> Kindly include the caption below in your post on your WhatsApp Status</p>
-                    <textarea ref={adCaptionRef} value={newTask?.caption} readOnly className='border border-gray-200 p-3'></textarea>
+
+                    <div className='flex gap-1 items-center justify-center w-full'>
+                    <textarea ref={adCaptionRef} value={newTask?.caption} readOnly className='border border-gray-200 p-3 w-full md:w-[400px] h-fit'></textarea>
                     <img src={copy} alt="click to copy ref link" className='w-[30px] h-[30px]' onClick={handleAdCaptionCopy}/>
+                    </div>
+                    
                   </div>
                 </div>
               ) : ""}

@@ -11,6 +11,7 @@ import { icons} from '../../../components/data/socialIcon'
 import io from 'socket.io-client'
 import { BACKEND_URL } from '../../../../utils/globalConfig'
 import Loader from '../../../components/loader/Loader'
+import { submitTask } from '../../../services/taskServices'
 
 
 const socket = io.connect(`${BACKEND_URL}`)
@@ -19,9 +20,10 @@ const socket = io.connect(`${BACKEND_URL}`)
 
 const TaskSubmit = () => {
     const dispatch = useDispatch()
-    const isLoading = useSelector(selectIsLoading)
-    const isSuccess = useSelector(selectIsSuccess)
-    const isError = useSelector(selectIsError)
+    // const isLoading = useSelector(selectIsLoading)
+    // const isSuccess = useSelector(selectIsSuccess)
+    // const isError = useSelector(selectIsError)
+    const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate
     const user = useSelector(selectUser)
     const { taskId } = useParams()
@@ -30,7 +32,6 @@ const TaskSubmit = () => {
     const [imageArray, setimageArray] = useState()
     const [selectedImages, setSelectedImages] = useState([])
     const [userSocialName, setUserSocialName] = useState("")
-    const [taskSubmitted, setTaskSubmitted] = useState(false)
 
 
     //const { userSocialName } = taskSubmitData
@@ -97,28 +98,35 @@ const TaskSubmit = () => {
         return
       }
       
-      
+     
 
-      await dispatch(handleSubmitTask(formData)) 
+      //await dispatch(handleSubmitTask(formData)) 
+
+      setIsLoading(true)
+      const response = await submitTask(formData)
+      setIsLoading(false)
+
+      if (response) {
+        setIsLoading(false)
+        navigate('/dashboard/tasks')
+         //Emit socket io event to the backend
+          const emitData = {
+            userId: user?.id,
+            action: `@${user?.username} just performed a task on ${task?.platform}`
+        }
+
+        //Emit Socket event to update activity feed
+       socket.emit('sendActivity', emitData) 
+
+       return
+       
+      }  
       
-      if (isError) {
+      if (!response) {
+        setIsLoading(false)
         toast.error('Error submitting task')
+        return
       }
-
-        if (isSuccess) {
-         
-          setTaskSubmitted(true)
-           //Emit socket io event to the backend
-            const emitData = {
-              userId: user?.id,
-              action: `@${user?.username} just performed a task on ${task?.platform}`
-          }
-
-          //Emit Socket event to update activity feed
-         socket.emit('sendActivity', emitData) 
-        
-         navigate('dashboard/tasks')
-        }  
 
       }
 
@@ -130,9 +138,7 @@ const TaskSubmit = () => {
             taskId = {taskId}
             // newTask= {task}
             isLoading = {isLoading}
-            isError = {isError}
             icons={icons}
-            taskSubmitted = {taskSubmitted}
             userSocialName= {userSocialName}
             selectedImages={selectedImages}
             handleOnSubmit={handleOnSubmit} 

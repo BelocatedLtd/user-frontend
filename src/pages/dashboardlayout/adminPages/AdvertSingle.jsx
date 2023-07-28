@@ -35,7 +35,7 @@ const AdvertSingle = () => {
 
     useEffect(() => {
       const advert = adverts?.find(advert => advert?._id === id)
-      const advertiser = users?.find(user => user._id === advert.userId)
+      const advertiser = users?.find(user => user._id === advert?.userId)
       setAd(advert)
       setSlides(advert?.mediaURL)
       setAdverter(advertiser)
