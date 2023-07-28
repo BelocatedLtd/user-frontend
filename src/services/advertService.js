@@ -1,26 +1,32 @@
 import { toast } from 'react-hot-toast'
 import { BACKEND_URL } from '../../utils/globalConfig'
 import axios from "axios"
+import { getToken } from '../../utils/tokenHandler'
 
-const user = JSON.parse(localStorage.getItem('user'))
+
+const getAuthHeaders = () => {
+    const token = getToken()
+
+    if (token) {
+        return {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    }
+}
 
 // Create Advert
-export const createAdvert = async (paymentFormData, token) => {
-    const response = await axios.post(`${BACKEND_URL}/api/adverts/create`, paymentFormData, {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-     })
+export const createAdvert = async (paymentFormData) => {
+    const headers = getAuthHeaders();
+    const response = await axios.post(`${BACKEND_URL}/api/adverts/create`, paymentFormData, headers)
    return response.data
 }
 
 // Get User Adverts
-export const getUserAdverts = async(token) => {
-       const response = await axios.get(`${BACKEND_URL}/api/adverts`, {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-     })
+export const getUserAdverts = async() => {
+    const headers = getAuthHeaders();
+       const response = await axios.get(`${BACKEND_URL}/api/adverts`, headers)
       return response.data      
 }
 
@@ -32,22 +38,16 @@ export const getAllUserAdverts = async() => {
 
 // Set Advert to be Free
 export const setAdvertFree = async(advertId) => {
-        const response = await axios.post(`${BACKEND_URL}/api/adverts/setadfree`, advertId, {
-            headers: {
-                'Authorization': `Bearer ${user?.token}`
-            }
-         })
+    const headers = getAuthHeaders();
+        const response = await axios.post(`${BACKEND_URL}/api/adverts/setadfree`, advertId, headers)
         return response.data
 }
 
 // Delete Advert
 export const deleteAdvert = async(advertId) => {
+    const headers = getAuthHeaders();
     try {
-        const response = await axios.delete(`${BACKEND_URL}/api/adverts/delete/${advertId}`, {
-            headers: {
-                'Authorization': `Bearer ${user?.token}`
-            }
-         })
+        const response = await axios.delete(`${BACKEND_URL}/api/adverts/delete/${advertId}`, headers)
         return response.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

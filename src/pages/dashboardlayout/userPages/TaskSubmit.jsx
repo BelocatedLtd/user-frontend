@@ -99,7 +99,7 @@ const TaskSubmit = () => {
       
       
 
-      await dispatch(handleSubmitTask({formData, token: user?.token})) 
+      await dispatch(handleSubmitTask(formData)) 
       
       if (isError) {
         toast.error('Error submitting task')

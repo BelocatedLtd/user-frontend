@@ -16,9 +16,9 @@ const initialState = {
 // Creat New Ad
 export const createNewAdvert = createAsyncThunk(
   "create/createNewAdvert",
-  async ({paymentFormData, token}, thunkAPI) => {
+  async ({paymentFormData}, thunkAPI) => {
     try {
-      return await createAdvert(paymentFormData, token)
+      return await createAdvert(paymentFormData)
     } catch (error) {
       const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       return thunkAPI.rejectWithValue(message)
@@ -29,9 +29,9 @@ export const createNewAdvert = createAsyncThunk(
 // Toggle Free Ad State
 export const handleToggleFreeAdvert = createAsyncThunk(
   "freeAd/adType",
-  async ({id, token}, thunkAPI) => {
+  async ({id}, thunkAPI) => {
     try {
-      return await setAdvertFree(id, token)
+      return await setAdvertFree(id)
     } catch (error) {
       const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
       return thunkAPI.rejectWithValue(message)

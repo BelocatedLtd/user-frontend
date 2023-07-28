@@ -78,7 +78,7 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
     e.preventDefault()
 
     if (canPay) {
-        await dispatch(createNewAdvert({paymentFormData, token: user?.token}))
+        await dispatch(createNewAdvert(paymentFormData))
 
         if(isSuccess) {
             //Emit socket io event to the backend

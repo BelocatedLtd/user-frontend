@@ -2,79 +2,69 @@ import { toast } from 'react-hot-toast'
 import { BACKEND_URL } from '../../utils/globalConfig'
 import axios from "axios"
 
-const user = JSON.parse(localStorage.getItem('user'))
+import { getToken } from '../../utils/tokenHandler'
+
+
+const getAuthHeaders = () => {
+    const token = getToken()
+
+    if (token) {
+        return {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    }
+}
+
 
 // Create Task
 export const createTask = async (taskData) => {
-    const response = await axios.post(`${BACKEND_URL}/api/tasks/create`, taskData, {
-        headers: {
-            'Authorization': `Bearer ${user?.token}`,
-        }
-     })
+    const headers = getAuthHeaders();
+    const response = await axios.post(`${BACKEND_URL}/api/tasks/create`, taskData, headers)
    return response.data   
 }
 
 // Get User Tasks
 export const getUserTasks = async() => {
-    const response = await axios.get(`${BACKEND_URL}/api/tasks/task`, {
-        headers: {
-            'Authorization': `Bearer ${user?.token}`,
-            'Content-Type': 'application/json', 
-            'Accept': 'application/json', 
-            'Custom-Header': 'custom-value'
-        }
-        })
+    const headers = getAuthHeaders();
+    const response = await axios.get(`${BACKEND_URL}/api/tasks/task`, headers)
    return response.data      
 }
 
 // Get All Tasks
 export const getTasks = async() => {
-    const response = await axios.get(`${BACKEND_URL}/api/tasks`, {
-        headers: {
-            'Authorization': `Bearer ${user?.token}`
-        }
-     })
+    const headers = getAuthHeaders();
+    const response = await axios.get(`${BACKEND_URL}/api/tasks`, headers)
    return response.data      
 }
 
 // Submit task
-export const submitTask = async (formData, token) => {
-    const response = await axios.post(`${BACKEND_URL}/api/tasks/submit`, formData, {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-     })
+export const submitTask = async (formData) => {
+    const headers = getAuthHeaders();
+    const response = await axios.post(`${BACKEND_URL}/api/tasks/submit`, formData, headers)
   return response.data   
 }
 
 // Approve task
 export const approveTask = async (taskData) => {
-    const response = await axios.post(`${BACKEND_URL}/api/tasks/approve`, taskData, {
-        headers: {
-            'Authorization': `Bearer ${user?.token}`
-        }
-     })
+    const headers = getAuthHeaders();
+    const response = await axios.post(`${BACKEND_URL}/api/tasks/approve`, taskData, headers)
    return response.data   
 }
 
 // Reject task
 export const rejectTask = async (taskData) => {
-    const response = await axios.post(`${BACKEND_URL}/api/tasks/reject`, taskData, {
-        headers: {
-            'Authorization': `Bearer ${user?.token}`
-        }
-     })
+    const headers = getAuthHeaders();
+    const response = await axios.post(`${BACKEND_URL}/api/tasks/reject`, taskData, headers)
    return response.data   
 }
 
 // Delete task
 export const deleteTask = async (taskId) => {
+    const headers = getAuthHeaders();
     try {
-        const response = await axios.delete(`${BACKEND_URL}/api/tasks/delete/${taskId}`, {
-            headers: {
-                'Authorization': `Bearer ${user?.token}`
-            }
-         })
+        const response = await axios.delete(`${BACKEND_URL}/api/tasks/delete/${taskId}`, headers)
         return response.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

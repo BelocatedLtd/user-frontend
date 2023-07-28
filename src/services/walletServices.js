@@ -1,17 +1,28 @@
 import { toast } from 'react-hot-toast'
 import { BACKEND_URL } from '../../utils/globalConfig'
 import axios from "axios"
+import { getToken } from '../../utils/tokenHandler'
 
-const user = JSON.parse(localStorage.getItem('user'))
+
+const getAuthHeaders = () => {
+    const token = getToken()
+
+    if (token) {
+        return {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    }
+}
+
+
 
 // Get User Wallet Details
-export const getWallet = async(token) => {
+export const getWallet = async() => {
+    const headers = getAuthHeaders();
     try {
-         const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/user`,  {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-         })
+         const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/user`,  headers)
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -21,12 +32,9 @@ export const getWallet = async(token) => {
 
 // Get Wallet Details
 export const getUserWallet = async() => {
+    const headers = getAuthHeaders();
     try {
-         const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/user`,  {
-            headers: {
-                'Authorization': `Bearer ${user?.token}`
-            }
-         })
+         const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/user`,  headers)
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -36,12 +44,9 @@ export const getUserWallet = async() => {
 
 // Fund User Wallet
 export const fundWallet = async(trxData) => { 
+    const headers = getAuthHeaders();
     try {
-        const response = await axios.patch(`${BACKEND_URL}/api/transactions/fund`, trxData, {
-            headers: {
-                'Authorization': `Bearer ${user?.token}`
-            }
-         })
+        const response = await axios.patch(`${BACKEND_URL}/api/transactions/fund`, trxData, headers)
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -52,12 +57,9 @@ export const fundWallet = async(trxData) => {
 
 // Withdraw User Wallet 
 export const withdrawWallet = async(trxData) => { 
+    const headers = getAuthHeaders();
     try {
-        const response = await axios.post(`${BACKEND_URL}/api/transactions/withdraw`, trxData, {
-            headers: {
-                'Authorization': `Bearer ${user?.token}`
-            }
-         })
+        const response = await axios.post(`${BACKEND_URL}/api/transactions/withdraw`, trxData, headers)
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -67,12 +69,9 @@ export const withdrawWallet = async(trxData) => {
 
 // Get All Withdrawals
 export const getWithdrawals = async() => {
+    const headers = getAuthHeaders();
     try {
-         const response = await axios.get(`${BACKEND_URL}/api/transactions/withdrawals`, {
-            headers: {
-                'Authorization': `Bearer ${user?.token}`
-            }
-         })
+         const response = await axios.get(`${BACKEND_URL}/api/transactions/withdrawals`, headers)
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -84,12 +83,9 @@ export const getWithdrawals = async() => {
 
 // Get User Withdrawals
 export const getUserWithdrawals = async(userId) => {
+    const headers = getAuthHeaders();
     try {
-         const response = await axios.get(`${BACKEND_URL}/api/transactions/withdrawals/${userId}`, {
-            headers: {
-                'Authorization': `Bearer ${user?.token}`
-            }
-         })
+         const response = await axios.get(`${BACKEND_URL}/api/transactions/withdrawals/${userId}`, headers)
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -99,12 +95,9 @@ export const getUserWithdrawals = async(userId) => {
 
 // Get User Withdrawals
 export const confirmWithdrawal = async(withdrawalRequestId) => {
+    const headers = getAuthHeaders();
     try {
-         const response = await axios.patch(`${BACKEND_URL}/api/transactions/withdrawals/confirm/${withdrawalRequestId}`, {
-            headers: {
-                'Authorization': `Bearer ${user?.token}`
-            }
-         })
+         const response = await axios.patch(`${BACKEND_URL}/api/transactions/withdrawals/confirm/${withdrawalRequestId}`, headers)
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -114,12 +107,9 @@ export const confirmWithdrawal = async(withdrawalRequestId) => {
 
 // Get User Withdrawals
 export const deleteWithdrawal = async(withdrawalRequestId) => {
+    const headers = getAuthHeaders();
     try {
-         const response = await axios.delete(`${BACKEND_URL}/api/transactions/withdrawals/delete/${withdrawalRequestId}`, {
-            headers: {
-                'Authorization': `Bearer ${user?.token}`
-            }
-         })
+         const response = await axios.delete(`${BACKEND_URL}/api/transactions/withdrawals/delete/${withdrawalRequestId}`, headers)
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();

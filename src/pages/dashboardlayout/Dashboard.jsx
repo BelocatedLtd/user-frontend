@@ -37,9 +37,9 @@ const Dashboard = () => {
 
   useEffect(() => {
        async function getUserData() {
-          const data = await getUser(user?.token)
+          const data = await getUser()
          await dispatch(SET_USER(data))
-        await dispatch(getUserWallet(user?.token))
+        await dispatch(getUserWallet())
        }
      getUserData()
 

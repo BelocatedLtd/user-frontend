@@ -11,6 +11,7 @@ import { loginUser, resendVerificationEmail } from '../../services/authServices'
 import Loader from '../../components/loader/Loader'
 import io from 'socket.io-client'
 import { BACKEND_URL } from '../../../utils/globalConfig'
+import {setToken} from '../../../utils/tokenHandler'
 
 
 const socket = io.connect(`${BACKEND_URL}`)
@@ -52,14 +53,15 @@ const Login = ({showRegModal, closeModal}) => {
    
     const response = await loginUser(formData)
 
-    // console.log(response)
-    // return
+    const {token} = response
 
-    if (!response.token) {
+    if (!token) {
       setIsLoading(false)
-      toast.error("Login failure...")
+      toast.error("Login failure...user not authorized")
       return
     }
+
+    setToken(token)
 
     if(response.isEmailVerified === false) {
       toast.error('User Exist but not verified')
