@@ -99,7 +99,6 @@ const Register = ({showLoginModal, closeModal}) => {
         })
         .then((res) =>  {
           navigate('/verify-email', { state:{ formData } })
-          setRegBtn(!regBtn)
           setIsLoading(false)
         })
         

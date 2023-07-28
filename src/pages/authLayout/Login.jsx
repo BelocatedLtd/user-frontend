@@ -72,7 +72,6 @@ const Login = ({showRegModal, closeModal}) => {
       })
       .then((res) =>  {
         navigate('/verify-email', { state:{ formData } })
-        setLoginBtn(!loginBtn)
         setIsLoading(false)
       })
       
