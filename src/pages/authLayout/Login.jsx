@@ -25,7 +25,7 @@ const Login = ({showRegModal, closeModal}) => {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
   const [values, setValues] = useState(initialState)
-  
+
 
   const {email, password } = values
 
@@ -123,8 +123,6 @@ const Login = ({showRegModal, closeModal}) => {
   const handleRetrievePass = (e) => {
     e.preventDefault()
     
-    
-      setLoginBtn(!loginBtn)
     navigate('/retrieve-pass')
   }
 
