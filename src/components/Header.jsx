@@ -112,10 +112,10 @@ export const Header = () => {
                             
 
                             <ShowOnLogout>
-                                <p onClick={handleToggleAuth} className='text-gray-800 cursor-pointer'>Login</p>
+                                <p onClick={showLoginModal} className='text-gray-800 cursor-pointer'>Login</p>
                             </ShowOnLogout>
                             <ShowOnLogout>
-                                <p onClick={handleToggleAuth} className='text-gray-50 cursor-pointer bg-secondary px-8 rounded-full py-2'>Get Started Free </p>
+                                <p onClick={showRegModal} className='text-gray-50 cursor-pointer bg-secondary px-8 rounded-full py-2'>Get Started Free </p>
                             </ShowOnLogout>
 
                             <ShowOnLogin>
