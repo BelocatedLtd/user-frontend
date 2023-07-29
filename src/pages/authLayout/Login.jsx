@@ -53,22 +53,12 @@ const Login = ({showRegModal, closeModal}) => {
    
     const response = await loginUser(formData)
 
-    const {token} = response
-
-    if (!token) {
-      setIsLoading(false)
-      toast.error("Login failure...user not authorized")
-      return
-    }
-
-    setToken(token)
-
     if(response.isEmailVerified === false) {
       toast.error('User Exist but not verified')
 
-
       //Proceeding to send verification link
       const emailResponse = resendVerificationEmail(email)
+      closeModal()
       .catch((error)=> {
         toast.error("Failed to send verification email")
       })
