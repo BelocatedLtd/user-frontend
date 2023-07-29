@@ -56,6 +56,7 @@ const Login = ({showRegModal, closeModal}) => {
     if(response.isEmailVerified === false) {
       toast.error('User Exist but not verified')
 
+
       //Proceeding to send verification link
       const emailResponse = resendVerificationEmail(email)
       .catch((error)=> {
@@ -73,8 +74,6 @@ const Login = ({showRegModal, closeModal}) => {
         }
       );
 
-      closeModal()
-
       setIsLoading(false)
       }
       setIsLoading(false)
@@ -82,14 +81,20 @@ const Login = ({showRegModal, closeModal}) => {
     
         
     if(response.isEmailVerified === true) {
+
+      if (!token) {
+        setIsLoading(false)
+        toast.error("Login failure...user not authorized")
+        return
+      }
+
+      const {token} = response
+  
+      setToken(token)
+
       await dispatch(SET_LOGIN(true))
       await dispatch(SET_USER(response))
       const username = response.username
-
-      if (!response.token) {
-        toast.error('Login failure... user not authorized')
-        return
-      }
 
       if (response.accountType === "User") {
 
