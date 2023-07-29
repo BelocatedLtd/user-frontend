@@ -85,6 +85,11 @@ const Login = ({showRegModal, closeModal}) => {
       await dispatch(SET_USER(response))
       const username = response.username
 
+      if (!response.token) {
+        toast.error('Login failure... user not authorized')
+        return
+      }
+
       if (response.accountType === "User") {
 
           //Emit socket io event to the backend
