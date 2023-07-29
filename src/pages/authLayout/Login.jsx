@@ -58,7 +58,6 @@ const Login = ({showRegModal, closeModal}) => {
 
       //Proceeding to send verification link
       const emailResponse = resendVerificationEmail(email)
-      closeModal()
       .catch((error)=> {
         toast.error("Failed to send verification email")
       })
@@ -73,6 +72,8 @@ const Login = ({showRegModal, closeModal}) => {
           error: <b>Failed to send email</b>
         }
       );
+
+      closeModal()
 
       setIsLoading(false)
       }
