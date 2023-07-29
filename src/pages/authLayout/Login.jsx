@@ -52,6 +52,7 @@ const Login = ({showRegModal, closeModal}) => {
     setIsLoading(true)
    
     const response = await loginUser(formData)
+    setIsLoading(false)
 
     if(response.isEmailVerified === false) {
       toast.error('User Exist but not verified')
