@@ -84,13 +84,15 @@ const Login = ({showRegModal, closeModal}) => {
         
     if(response.isEmailVerified === true) {
 
+      const {token} = response
+
       if (!token) {
         setIsLoading(false)
         toast.error("Login failure...user not authorized")
         return
       }
 
-      const {token} = response
+     
   
       setToken(token)
 
