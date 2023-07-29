@@ -42,6 +42,19 @@ export const getUserWallet = async() => {
      }         
 }
 
+// Get Wallet Details
+export const getSingleUserWallet = async(id) => {
+    const headers = getAuthHeaders();
+    try {
+         const response = await axios.get(`${BACKEND_URL}/api/transactions/wallet/user/${id}`,  headers)
+        return response.data
+     } catch (error) {
+         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+     }         
+}
+
+
 // Fund User Wallet
 export const fundWallet = async(trxData) => { 
     const headers = getAuthHeaders();

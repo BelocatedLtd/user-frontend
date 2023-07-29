@@ -10,7 +10,7 @@ import { selectTasks } from '../../../redux/slices/taskSlice'
 import { MdKeyboardDoubleArrowRight, MdOutlineCancel, MdOutlineKeyboardArrowLeft, MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md'
 import { selectTransactions } from '../../../redux/slices/transactionSlice'
 import DeleteModal from '../../../components/adminComponents/DeleteModal'
-import { getUserWallet } from '../../../services/walletServices'
+import { getSingleUserWallet, getUserWallet } from '../../../services/walletServices'
 import { CheckmarkIcon } from 'react-hot-toast'
 
 const UserSingle = () => {
@@ -30,7 +30,7 @@ const UserSingle = () => {
   const [userWallet, setUserWallet] = useState()
 
   const getWallet = async() => {
-    const wallet = await getUserWallet(id)
+    const wallet = await  getSingleUserWallet(id)
     setUserWallet(wallet)
   }
 
