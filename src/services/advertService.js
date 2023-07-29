@@ -40,7 +40,7 @@ export const getAllUserAdverts = async() => {
 // Set Advert to be Free
 export const setAdvertFree = async(advertId) => {
     const headers = getAuthHeaders();
-        const response = await axios.post(`${BACKEND_URL}/api/adverts/setadfree`, advertId, headers)
+        const response = await axios.post(`${BACKEND_URL}/api/adverts/setadfree/${advertId}`, advertId, headers)
         return response.data
 }
 

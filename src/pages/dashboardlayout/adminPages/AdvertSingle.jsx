@@ -35,11 +35,26 @@ const AdvertSingle = () => {
 
     useEffect(() => {
       const advert = adverts?.find(advert => advert?._id === id)
-      const advertiser = users?.find(user => user._id === advert?.userId)
+      const advertiser = users?.find(user => user?._id === advert?.userId)
       setAd(advert)
       setSlides(advert?.mediaURL)
       setAdverter(advertiser)
     }, [adverts])
+
+    useEffect(() => {
+      dispatch(handleGetALLUserAdverts())
+    
+      if (isError) {
+        toast.error("failed to fetch adverts")
+      }
+    
+    }, [isError, dispatch])
+
+    const adIdData = {
+      advertId: ad?._id
+    }
+
+    const {advertId} = adIdData
 
       //Handle Input
       const handleFreetaskCheck = async(e) => {
@@ -48,20 +63,21 @@ const AdvertSingle = () => {
           setIsFree(!isFree)
 
           setIsLoading(true)
-          const response = await setAdvertFree({advertId: id})
+
+          const response = await setAdvertFree(advertId)
 
           setIsLoading(false)
+
+          if (response) {
+            setIsLoading(false)
+              toast.success("Advert type changed")
+              navigate(-1)
+          }
+      
 
           if (!response) {
             setIsLoading(false)
-            console.error(response.data)
-            toast.error("Error switching ad type")
-        }
-
-        if (response) {
-          setIsLoading(false)
-            toast.error("Advert type changed")
-            navigate(-1)
+            toast.error("Error switching advert type")
         }
 
         setIsLoading(false)
@@ -94,7 +110,7 @@ const AdvertSingle = () => {
         <div className='flex flex-col items-center gap-3 mt-3 md:flex-row'>
           <FaUser size={300} className='text-gray-800 border border-gray-100 p-[2rem] rounded-full'/>
           <div className='flex flex-col text-center gap-1 md:text-left'>
-            <h3 className='text-[3rem]'>{adverter?.fullname}</h3>
+            <h3 className='text-[3rem]'>{adverter?.fullname ? adverter?.fullname : adverter?.username}</h3>
             <small className='text-gray-700 mt-[-0.7rem] mb-[1rem] font-semibold'>@{adverter?.username}</small>
             <button onClick={() => navigate(`/admin/dashboard/user/${adverter?._id}`)} className='px-4 py-2 bg-secondary text-primary hover:bg-gray-900 mt-2'>View Advertiser</button>
           </div>

@@ -4,7 +4,7 @@ import TaskPerform from './TaskPerform'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { handleSubmitTask, selectTasks, selectIsLoading, selectIsError, selectIsSuccess } from '../../../redux/slices/taskSlice'
+import { handleSubmitTask, selectTasks, selectIsLoading, selectIsError, selectIsSuccess, handleGetUserTasks, handleGetTasks } from '../../../redux/slices/taskSlice'
 import { selectUser, selectUserId } from '../../../redux/slices/authSlice'
 import { useEffect } from 'react'
 import { icons} from '../../../components/data/socialIcon'
@@ -22,7 +22,7 @@ const TaskSubmit = () => {
     const dispatch = useDispatch()
     // const isLoading = useSelector(selectIsLoading)
     // const isSuccess = useSelector(selectIsSuccess)
-    // const isError = useSelector(selectIsError)
+    const isError = useSelector(selectIsError)
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate
     const user = useSelector(selectUser)
@@ -36,11 +36,13 @@ const TaskSubmit = () => {
 
     //const { userSocialName } = taskSubmitData
 
-    useEffect(() => {
-      if (!user.email || !tasks) {
-        navigate(-1)
-      }
-      }, [])
+    // useEffect(() => {
+    //   //dispatch(handleGetUserTasks())
+    //   dispatch(handleGetTasks())
+    
+
+    
+    // }, [dispatch])
     
 
     useEffect(() => {
