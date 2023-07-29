@@ -25,6 +25,13 @@ export const createTask = async (taskData) => {
    return response.data   
 }
 
+// Get Task
+export const getTask = async(taskId) => {
+    const headers = getAuthHeaders();
+    const response = await axios.get(`${BACKEND_URL}/api/tasks/task/${taskId}`, headers)
+   return response.data      
+}
+
 // Get User Tasks
 export const getUserTasks = async() => {
     const headers = getAuthHeaders();
