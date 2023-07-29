@@ -172,6 +172,29 @@ const AdvertSingle = () => {
                     </p>
                   </div>
                 </div>
+
+                <div className='right flex flex-col gap-1 md:gap-[4rem] mt-3'>
+                  <div className='flex flex-col border-b border-gray-50 py-3'>
+                    <label htmlFor="" className='font-bold'>Target State:</label>
+                    <div className='flex gap-1 items-baseline'>
+                      <p>{ad?.state}</p>
+                      <small className='text-[9px] text-gray-700 font-bold'>Nigeria</small>
+                    </div>
+                    
+                  </div>
+
+                  <div className='flex flex-col border-b border-gray-50 py-3'>
+                    <label htmlFor="" className='font-bold'>Target LGA:</label>
+                    <p>{ad?.lga}</p>
+                  </div>
+
+                  <div className='flex flex-col border-b border-gray-50 py-3'>
+                    <label htmlFor="" className='font-bold'>Gender:</label>
+                    <p className=''>
+                      {ad?.gender}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 

@@ -32,17 +32,18 @@ const TaskSubmit = () => {
     const [imageArray, setimageArray] = useState()
     const [selectedImages, setSelectedImages] = useState([])
     const [userSocialName, setUserSocialName] = useState("")
+    const [taskSubmitted, setTaskSubmitted] = useState(false)
 
 
     //const { userSocialName } = taskSubmitData
 
-    // useEffect(() => {
-    //   //dispatch(handleGetUserTasks())
-    //   dispatch(handleGetTasks())
+    const getTask = async() => {
+      await dispatch(handleGetUserTasks())
+    }
     
-
-    
-    // }, [dispatch])
+    useEffect(() => {
+      getTask()
+  }, [dispatch])
     
 
     useEffect(() => {
@@ -106,12 +107,16 @@ const TaskSubmit = () => {
 
       setIsLoading(true)
       const response = await submitTask(formData)
+
       setIsLoading(false)
 
-      if (response) {
+      if (response === "Task submitted successfully, wait for Admin's Approval") {
+
         setIsLoading(false)
-        navigate('/dashboard/tasks')
-         //Emit socket io event to the backend
+        setTaskSubmitted(true)
+        toast.success('Task submitted, wait for admins response')
+        
+      //Emit socket io event to the backend
           const emitData = {
             userId: user?.id,
             action: `@${user?.username} just performed a task on ${task?.platform}`
@@ -120,12 +125,14 @@ const TaskSubmit = () => {
         //Emit Socket event to update activity feed
        socket.emit('sendActivity', emitData) 
 
+       navigate('/dashboard/tasks')
        return
        
       }  
       
       if (!response) {
         setIsLoading(false)
+        setTaskSubmitted(false)
         toast.error('Error submitting task')
         return
       }
@@ -141,6 +148,7 @@ const TaskSubmit = () => {
             // newTask= {task}
             isLoading = {isLoading}
             icons={icons}
+            taskSubmitted={taskSubmitted}
             userSocialName= {userSocialName}
             selectedImages={selectedImages}
             handleOnSubmit={handleOnSubmit} 

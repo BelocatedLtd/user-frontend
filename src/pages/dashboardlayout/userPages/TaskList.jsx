@@ -83,7 +83,7 @@ const TaskList = () => {
                         <h1 className='text-[15px] md:text-[18px] font-bold md:my-[-5px] p-0'>{task?.title}</h1>
                         <small className='text-gray-400 text-[9px]'>To Earn: {task.toEarn} Per {task.asset}</small>
 
-                        <p className='text-gray-500 text-[15px]'>{task.caption}</p>
+                        {/* <p className='text-gray-500 text-[15px]'>{task.caption}</p> */}
 
                         <div className='flex items-center gap-2'>
                         <ul className='flex gap-3 text-[13px]'>

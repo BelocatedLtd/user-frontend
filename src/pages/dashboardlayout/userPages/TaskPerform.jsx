@@ -28,6 +28,7 @@ import Loader from '../../../components/loader/Loader'
 import axios from 'axios'
 import {saveAs} from 'file-saver'
 import { BsGlobe } from 'react-icons/bs'
+import { BiArrowToLeft } from 'react-icons/bi'
 
 
 const TaskPerform = ({taskId, userSocialName, selectedImages, taskSubmitted, handleOnSubmit, handleInputChange, handleImageChange, handleImageRemove, isLoading, icons}) => {
@@ -48,22 +49,26 @@ const TaskPerform = ({taskId, userSocialName, selectedImages, taskSubmitted, han
   const [isDownloading, setIsDownloading] = useState(false)
 
   const getTask = async() => {
-    await dispatch(handleGetUserTasks(user?.token))
+    await dispatch(handleGetUserTasks())
   }
   
 
   useEffect(() => {
     getTask()
+}, [dispatch])
 
-    const selecectTask = tasks?.find(obj => obj._id === taskId)
+useEffect(() => {
+  const selecectTask = tasks?.find(obj => obj._id === taskId)
 
-    setNewTask(selecectTask)
+  setNewTask(selecectTask)
 
-    const selectedPlatformIcon = icons?.find((icon) => icon.platform === newTask?.platform)
-    setIcon(selectedPlatformIcon?.icon)
+  const selectedPlatformIcon = icons?.find((icon) => icon.platform === newTask?.platform)
+  setIcon(selectedPlatformIcon?.icon)
 
-    setAdMedia(selecectTask?.adMedia)
+  setAdMedia(selecectTask?.adMedia)
 }, [])
+
+
 
 
 //Filter for different services and platforms
@@ -294,7 +299,7 @@ useEffect(() => {
                   )}
                 
               </form>
-              {taskSubmitted ? (<button onClick={() => navigate(`/dashboard/tasks/${user.id}`)} className='bg-green-700 text-primary px-6 py-2'>See all your submitted tasks</button>) : ""}
+              {taskSubmitted ? (<button onClick={() => navigate(`/dashboard/tasks`)} className='text-green-700 text-[14px] px-6 py-2 flex items-center gap-1'><span><BiArrowToLeft /></span>Go to your task list page</button>) : ""}
             </div>
         </div>
     </div>
