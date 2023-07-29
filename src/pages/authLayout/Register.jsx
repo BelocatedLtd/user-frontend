@@ -68,15 +68,16 @@ const Register = ({showLoginModal, closeModal}) => {
 
       if (!response) {
         toast.error("Error trying to register user")
+        return
       }
 
       if (response.message === "Email has already been registered, please login") {
         toast.error("Email has already been registered, please login")
-        navigate('/login')
+        closeModal()
       }
 
       if (!response._id) {
-        toast.error("user not registered")
+        toast.error("Error registering user")
       }
 
       if (response._id) {
@@ -108,6 +109,7 @@ const Register = ({showLoginModal, closeModal}) => {
             error: <b>Failed to send email</b>
           }
         );
+        closeModal()
       }
       
     }
