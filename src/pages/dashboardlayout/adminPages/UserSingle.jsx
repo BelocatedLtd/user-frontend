@@ -36,9 +36,9 @@ const UserSingle = () => {
 
   useEffect(() => {
    const userDetails = users?.find(user => user?._id === id) 
-   const userAdList = adverts?.filter(ads => ads.userId === id)
-   const userTasks = tasksList?.filter(task => task.taskPerformerId === id)
-   const userTrx = transactionsList?.filter(trx => trx.userId === id)
+   const userAdList = adverts?.filter(ads => ads?.userId === id)
+   const userTasks = tasksList?.filter(task => task?.taskPerformerId === id)
+   const userTrx = transactionsList?.filter(trx => trx?.userId === id)
    getWallet()
    setUser(userDetails)
    setUserAds(userAdList )
