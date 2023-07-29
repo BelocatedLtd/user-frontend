@@ -74,6 +74,8 @@ const Login = ({showRegModal, closeModal}) => {
         }
       );
 
+      closeModal()
+
       setIsLoading(false)
       }
       setIsLoading(false)
