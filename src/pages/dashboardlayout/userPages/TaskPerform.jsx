@@ -101,6 +101,7 @@ useEffect(() => {
     //Hide username
     if (
       newTask?.service === "Download App" ||
+      newTask?.service === "Video Views" ||
       newTask?.service === "Download App and Review" ||
       newTask?.service === "Download App Review and Register" ||
       newTask?.platform === "whatsapp"
@@ -233,7 +234,7 @@ useEffect(() => {
             {/* Verification Instructions */}
               <div className='w-full md-w-500px text-center mb-[2rem]'>
               <h1 className='text-gray-500 font-bold text-center mb-[1rem]'>Verification Instructions</h1>
-              <p><span className='text-tertiary'>NOTE:</span> Immediately you post, take a screenshot of your post on your WhatsApp Status</p>
+              <p><span className='text-tertiary'>NOTE:</span> Immediately you perform the task, take a screenshot of the task performed on {newTask?.platform}</p>
               {newTask?.platform === 'whatsapp' ? (
                 <div>
                   <p><span className='text-tertiary font-bold'>1st stage -</span> Screenshot showing you posted on WhatsApp. User is notified 4 hrs after posting to move to stage 2. If stage 1 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason.</p> <br/><br/>

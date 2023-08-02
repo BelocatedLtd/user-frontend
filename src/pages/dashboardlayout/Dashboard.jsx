@@ -15,6 +15,8 @@ import { toast } from 'react-hot-toast'
 import FreeTaskCount from '../../components/dashboard/FreeTaskCount'
 import copy from '../../assets/copy.png'
 import { getUserWallet, selectUserWallet } from '../../redux/slices/walletSlice'
+import { BiArrowToLeft } from 'react-icons/bi'
+import {HiOutlineArrowLeft, HiOutlineArrowRight} from 'react-icons/hi'
 
 const Dashboard = () => {
   const inputRef = useRef(null)
@@ -105,6 +107,12 @@ const Dashboard = () => {
               <div className='right flex-1 w-full mt-6'>
               <p className='text-center text-gray-600 text-[12px]'><span className='text-tertiary'>{user?.freeTaskCount}</span> free tasks remaining this Week</p>
                 <Wallet />
+              </div>
+
+              <div className='flex items-center justify-center gap-[2rem] mt-3 md:hidden'>
+                    <button onClick={handleEarn} className='flex items-center gap-1 text-green-600'><HiOutlineArrowLeft /> Earn</button>
+
+                    <button onClick={handleAdvertise} className='flex items-center gap-1 text-secondary'>Advertise <HiOutlineArrowRight /> </button>
               </div>
             </div>
 

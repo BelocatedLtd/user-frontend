@@ -81,7 +81,7 @@ const Advertise = () => {
                                 <p className='border-b border-gray-100 pb-3 text-[14px] text-gray-500 font-semibold'><span className='font-extrabold'>Pricing:</span> Starts at ₦{menu.price}/Task Performed</p>
                             </div>
                         </div>
-                        <p className='font-normal text-[14px] text-gray-700 mt-3'>{menu.desc}</p>
+                        <p className='font-normal text-[14px] text-gray-700 mt-3'>{menu?.descAd}</p>
 
                         {/* Select button and logo for mobile */}
                         <div className='w-full flex items-center gap-2'>
