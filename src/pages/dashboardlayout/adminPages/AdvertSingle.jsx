@@ -16,11 +16,13 @@ import ImageGallery from '../../../components/ImageGallery';
 import { selectUser } from '../../../redux/slices/authSlice';
 import { setAdvertFree } from '../../../services/advertService';
 import Loader from '../../../components/loader/Loader';
+import { selectTasks } from '../../../redux/slices/taskSlice';
 
 const AdvertSingle = () => {
     const {id} = useParams()
     const adverts = useSelector(selectAllAdverts)
     const user = useSelector(selectUser)
+    const tasks = useSelector(selectTasks)
     const users = useSelector(selectUsers)
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(false)
@@ -136,9 +138,12 @@ const AdvertSingle = () => {
 
                   <div className='flex flex-col border-b border-gray-50 py-3'>
                     <label htmlFor="" className='font-bold'>Ad Tasks:</label>
-                    <div className='flex gap-1 items-baseline'>
-                      <p>{ad?.tasks}</p>
+                    <div className='flex flex-col gap-1'>
+                      <div className='flex gap-1 items-baseline'>
+                      <p>{tasks?.filter(task => task?.advertId === ad?._id)?.length}</p>
                       <small className='text-[9px] text-gray-700 font-bold'>₦{ad?.earnPerTask}/task</small>
+                      </div>
+                      <small onClick={() => navigate(`/admin/dashboard/advert/tasks/${ad?._id}`)} className='text-secondary text-[13px]'>View Tasks</small>
                     </div>
                   </div>
 

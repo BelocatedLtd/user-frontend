@@ -62,6 +62,7 @@ import PasswordChangeSuccess from "./pages/dashboardlayout/userPages/settings/Pa
 import FAQ from "./pages/mainlayout/FAQ";
 import WithdrawalRequests from "./pages/dashboardlayout/adminPages/WithdrawalRequests";
 import WithdrawalModal from "./components/adminComponents/WithdrawalModal";
+import AdsTasksList from "./pages/dashboardlayout/adminPages/AdsTasksList";
 
 
 
@@ -396,6 +397,18 @@ const handleCloseMenu = () => {
             <DashLayout>
               <AdvertSingle />
               <SidebarRight />
+            </DashLayout>
+          </SidebarLeft>
+        }
+        />
+
+        {/* Admin single advert tasks list*/}
+        <Route 
+        path="/admin/dashboard/advert/tasks/:id" 
+        element={
+          <SidebarLeft>
+            <DashLayout>
+              <AdsTasksList />
             </DashLayout>
           </SidebarLeft>
         }

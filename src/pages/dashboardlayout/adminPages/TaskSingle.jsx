@@ -14,11 +14,14 @@ import Loader from '../../../components/loader/Loader';
 import DeleteTaskModal from '../../../components/adminComponents/DeleteTaskModal';
 import Carousel from '../../../components/Carousel';
 import ImageGallery from '../../../components/ImageGallery';
+import { selectAllAdverts } from '../../../redux/slices/advertSlice';
+import { toast } from 'react-hot-toast';
 
 const TaskSingle = () => {
     const {id} = useParams()
     const tasks = useSelector(selectTasks)
     const users = useSelector(selectUsers)
+    const adverts = useSelector(selectAllAdverts)
     const [task, settask] = useState()
     const navigate = useNavigate()
     const [taskPerformer, setTaskPerformer] = useState()
@@ -27,20 +30,39 @@ const TaskSingle = () => {
     const [modalBtn, setModalBtn] = useState(false)
     const [delBtn, setDelBtn] = useState(false)
     const [slides, setSlides] = useState([])
+    const [ad, setAd] = useState()
 
     useEffect(() => {
       const taskDetails = tasks?.find(task => task?._id === id)
       const taskPerformerDetails = users?.find(user => user._id === taskDetails?.taskPerformerId)
       const advertiserDetails = users?.find(user => user._id === taskDetails?.advertiserId)
+      const advert = adverts?.find(ad => ad._id === taskDetails?.advertId)
 
       settask(taskDetails)
       setSlides(taskDetails?.proofOfWorkMediaURL)
       setTaskPerformer(taskPerformerDetails)
       setAdvertiser(advertiserDetails)
+      setAd(advert)
     }, [])
 
-    const handleModal = (e) => {
-      //e.preventDefault()
+    //console.log(ad)
+
+    const handleModal = () => {
+      if (ad?.status === 'Completed') {
+        toast.error('Ad unit is completed and ad is no more running')
+        return
+      }
+
+      if (ad?.status === 'Pending Payment') {
+        toast.error('Ad unit is completed and ad is no more running')
+        return
+      }
+
+      if (task?.status === 'Awaiting Submission') {
+        toast.error('Task has not being performed yet')
+        return
+      }
+ 
       setModalBtn(!modalBtn)
     }
 
@@ -52,6 +74,7 @@ const TaskSingle = () => {
   return (
     <div className = 'w-full h-fit'>
       {modalBtn && <TaskModal handleModal={handleModal} task={task} taskPerformer={taskPerformer} />}
+
       {delBtn && <DeleteTaskModal handleDelete={handleDelete} task={task}/>}
       {isLoading && <Loader />}
       <div className='flex items-center gap-3 border-b border-gray-200 pb-6'>
@@ -91,7 +114,7 @@ const TaskSingle = () => {
                       <div className='border-b border-gray-50 pb-6 md:border-0'>
                         <label htmlFor="" className='font-bold'>Advertiser Name:</label>
                         <div onClick={() => navigate(`/admin/dashboard/user/${advertiser._id}`)} className='flex items-center cursor-pointer gap-1 hover:text-secondary'>
-                          <p>{advertiser?.fullname}</p>
+                          <p>{users?.find(user => user?._id === task?.advertiserId)?.username}</p>
                           <MdKeyboardDoubleArrowRight className='text-secondary '/>
                         </div>
                       </div>
@@ -140,8 +163,15 @@ const TaskSingle = () => {
               </div>
 
               <div className='flex flex-col border-b border-gray-50 py-3'>
+                <label htmlFor="" className='font-bold'>Ad Status:</label>
+                <div className='flex gap-1 items-baseline'>
+                  <p>{adverts?.find(ad => ad._id === task?.advertId)?.status}</p>
+                </div>
+              </div>
+
+              <div className='flex flex-col border-b border-gray-50 py-3'>
                 <label htmlFor="" className='font-bold'>Amount to Earn:</label>
-                <p>{task?.toEarn}</p>
+                <p>₦{task?.toEarn}</p>
               </div>
 
               <div className='flex flex-col border-b border-gray-50 py-3'>
@@ -171,14 +201,19 @@ const TaskSingle = () => {
             </div>
           )}
 
-            <div className='max-w-lg '>
-                <Carousel autoSlide={true} >
-                    {slides?.map((s, index) => (
-                        <img key={index} src={s.secure_url} className='w-full h-full object-cover'/>
-                    ))}
-                </Carousel>
+          {task?.proofOfWorkMediaURL?.length === 1 && (
+            <div className='w-full h-[400px]'>
+                <img src={task?.proofOfWorkMediaURL[0]?.secure_url} className='w-full h-full object-cover'/>
             </div>
-    
+          )}
+
+          {task?.proofOfWorkMediaURL?.length > 1 && (
+            <Carousel autoSlide={true} >
+            {slides?.map((s, index) => (
+                <img key={index} src={s.secure_url} className='w-full h-full object-cover'/>
+            ))}
+            </Carousel>
+          )}
           </div>
           </div>
         </div>

@@ -67,8 +67,6 @@ const Earn = () => {
         setTaskList(paidAdverts)
     }
 
-    console.log(taskList)
-
 }, [adverts])
 
 
