@@ -51,18 +51,23 @@ const Earn = () => {
 
     useEffect(() => {
 
+        //Get the list of only adverts that are still running
+        const runningAdsList = adverts?.filter(ad => ad.status !== "Completed" && ad.status !== "Pending Payment")
+
       //Check if task performer is still eligible for free tasks so he will see only the adverts that are marked as free. If not, he will see paid adverts
       if (user?.freeTaskCount > 0 ) {
             
-        const freeAdverts = adverts?.filter(advert => advert.isFree === true)
+        const freeAdverts = runningAdsList?.filter(advert => advert.isFree === true)
         setTaskList(freeAdverts)
     } 
 
     if (user?.freeTaskCount === 0) {
     
-        const paidAdverts = adverts?.filter(advert => advert.isFree === false)
+        const paidAdverts = runningAdsList?.filter(advert => advert.isFree === false)
         setTaskList(paidAdverts)
     }
+
+    console.log(taskList)
 
 }, [adverts])
 

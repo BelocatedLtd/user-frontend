@@ -202,7 +202,7 @@ const TaskEarn = () => {
                     <div className='flex flex-col'>
                         {/* Ad details to perform as Task */}
                         <div className='flex flex-col gap-[0.9rem]'>
-                            <small className='mb-[0.4rem] text-[9px] '>{formatDate(task.createdAt)}</small>
+                            <small className='mb-[0.4rem] text-[9px] '>{formatDate(task?.createdAt)}</small>
                             <h4 className='text-gray-600 text-[15px] md:text-[18px] font-bold my-[-5px] p-0'>{taskTitle}</h4>
                             <small className='text-gray-600 text-[9px] mb-[1rem]'><span className='font-bold'>To Earn:</span> {task.toEarn ? task.toEarn : "₦3"} Per {task.service}</small>
                         </div>
