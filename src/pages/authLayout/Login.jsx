@@ -95,8 +95,7 @@ const Login = ({showRegModal, closeModal}) => {
 
      
   
-      setToken(token)
-
+      await setToken(token)
       await dispatch(SET_LOGIN(true))
       await dispatch(SET_USER(response))
       const username = response.username

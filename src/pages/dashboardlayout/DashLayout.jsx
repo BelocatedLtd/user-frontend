@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom'
 //import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser'
 
 const DashLayout = ({children}) => {
- // useRedirectLoggedOutUser('/login')
+ //useRedirectLoggedOutUser('/')
   return (
     <div>
         <Header />

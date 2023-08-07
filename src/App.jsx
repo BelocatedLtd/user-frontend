@@ -78,19 +78,14 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [profile, setProfile] = useState(null)
   const [isLoggedin, setIsLoggedIn] = useState(false)
-
-
-  const logOutOnUndefined = async() => {
-    const userDetails = localStorage.getItem('user')
-    if (userDetails === undefined) {
-      localStorage.removeItem('user')
-      dispatch(SET_LOGOUT())
-    }
-  }
   
   useEffect(() => {
-    logOutOnUndefined()
-  }, [user])
+    const setLoginStatus = async() => {
+      const status = await getLoginStatus();
+      dispatch(SET_LOGIN(status))
+    }
+    setLoginStatus()
+  }, [dispatch])
 
   const handleRegister = (e) => {
     e.preventDefault()

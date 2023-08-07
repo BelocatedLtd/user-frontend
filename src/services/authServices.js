@@ -56,21 +56,11 @@ export const loginUser = async(formData) => {
             
 }
 
-//Logout User
-// export const logoutUser = async() => {
-//     try {
-//          await axios.get(`${BACKEND_URL}/api/user/logout`)
-//      } catch (error) {
-//          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-//          toast.error(message)
-//      }
-            
-// }
-
 //Get Login Status
 export const getLoginStatus = async() => {
+    const headers = getAuthHeaders();
     try {
-         const response = await axios.get(`${BACKEND_URL}/api/user/loggedin`)
+         const response = await axios.get(`${BACKEND_URL}/api/user/loggedin`, headers)
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
@@ -249,5 +239,17 @@ export const deleteUser = async(userId) => {
          toast.error(message)
     }
 }
+
+//Logout User
+// export const logoutUser = async() => {
+//     try {
+//          await axios.get(`${BACKEND_URL}/api/user/logout`)
+//      } catch (error) {
+//          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+//          toast.error(message)
+//      }
+            
+// }
+
 
 
