@@ -75,9 +75,9 @@ const ProfileForm = ({profile, email, username, handleProfileUpdate, handleInput
                                 <label htmlFor="religion" className='text-left mb-1 ml-1'>Religion</label>
                                 <select name="religion" id="religion" placeholder={profile?.religion} value={profile?.religion} onChange={handleInputChange} className='w-full shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'>
                                   <option>Select Religion</option>
-                                  <option value="Christians">Christians</option>
-                                  <option value="Muslims">Muslims</option>
-                                  <option value="Athiests">Athiests</option>
+                                  <option value="Christians">Christian</option>
+                                  <option value="Muslims">Muslim</option>
+                                  <option value="Athiests">Athiest</option>
                                   </select>
                               </div>
                           </div>

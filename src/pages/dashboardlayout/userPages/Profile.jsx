@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ProfileForm from '../../../components/forms/ProfileForm'
 import { useDispatch, useSelector } from 'react-redux'
-import { SET_USER, selectUser } from '../../../redux/slices/authSlice'
+import { SET_LOGOUT, SET_USER, selectUser } from '../../../redux/slices/authSlice'
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
 import Loader from '../../../components/loader/Loader'
 import { useEffect } from 'react'
 import { getUser } from '../../../services/authServices'
+import { getUserWallet } from '../../../redux/slices/walletSlice'
+import { toast } from 'react-hot-toast'
 
 const Profile = () => {
   const [profile, setProfile] = useState(null)
@@ -21,7 +23,16 @@ const Profile = () => {
       const data = await getUser(user?.token)
       setProfile(data)
       setIsLoading(false)
+
+      if (!data || data === undefined) {
+        toast.error('Unable to retrieve user data, session will be terminated, please login again')
+        await dispatch(SET_LOGOUT())
+        navigate('/')
+        return
+      }
+
       await dispatch(SET_USER(data))
+      await dispatch(getUserWallet())
     }
     getUserData()
   }, [dispatch])

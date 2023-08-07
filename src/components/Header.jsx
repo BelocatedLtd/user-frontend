@@ -106,9 +106,9 @@ export const Header = () => {
                         <div onClick={() => handleCloseMenu()} className='flex h-[200px] flex-col justify-center items-center gap-[1rem] font-extrabold text-gray-700'>
                             <Link to="/">Home</Link>
                             <Link to="/about">About</Link>
-                            <Link to="/">FAQ</Link>
+                            <Link to="/faq">FAQ</Link>
                             <Link to="/services">Services</Link>
-                            <Link to="/">Contact</Link>
+                            <Link to="/contact">Contact</Link>
                             
 
                             <ShowOnLogout>

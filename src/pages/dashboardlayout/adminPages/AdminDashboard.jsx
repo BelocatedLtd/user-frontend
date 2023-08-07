@@ -7,12 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { handleGetTransactions, selectTransactions } from '../../../redux/slices/transactionSlice';
 import { handleGetTasks, selectTasks } from '../../../redux/slices/taskSlice';
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser';
-import { SET_USER, selectUser } from '../../../redux/slices/authSlice';
+import { SET_LOGOUT, SET_USER, selectUser } from '../../../redux/slices/authSlice';
 import { getUser } from '../../../services/authServices';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import Widgets from '../../../components/adminComponents/Widgets';
 import Chart from '../../../components/adminComponents/Chart';
+import { toast } from 'react-hot-toast';
 
 
 const AdminDashboard = () => {
@@ -32,8 +33,16 @@ const AdminDashboard = () => {
             await dispatch(handleGetALLUserAdverts(user?.token))
             await dispatch(handleGetTransactions(user?.token))
             await dispatch(handleGetTasks(user?.token))
-          if (!user.email) {
+          if (!user) {
           const data = await getUser()
+
+          if (!data || data === undefined) {
+            toast.error('Unable to retrieve user data, session will be terminated')
+            await dispatch(SET_LOGOUT())
+            navigate('/')
+            return
+          }
+
           await dispatch(SET_USER(data))
           }
         }

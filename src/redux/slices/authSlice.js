@@ -2,11 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { updateUser } from '../../services/authServices';
 import { toast } from 'react-hot-toast';
 
-const user = JSON.parse(localStorage.getItem('user'))
+const storedUser = localStorage.getItem('user')
+const userData = JSON.parse(storedUser)
 
 const initialState = {
     isLoggedIn: false,
-    user: user ? user : null,
+    user: userData ? userData : null,
     username: '',
     isLoading: false,
     isSuccess: false,
