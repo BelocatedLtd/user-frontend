@@ -42,7 +42,7 @@ const Profile = () => {
   return (
     <div className='w-full h-fit mr-[1rem]'>
       {isLoading && <Loader />}
-      <div className='user__data__wrapper flex flex-col w-full h-fit shadow-xl rounded-2xl p-6'>
+      <div className='user__data__wrapper flex flex-col w-full h-fit shadow-xl rounded-2xl md:p-6'>
         {
           !isLoading && profile === null ? (
             <p>Something went wrong, please reload the page...</p>
