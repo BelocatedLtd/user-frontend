@@ -235,15 +235,9 @@ useEffect(() => {
               <div className='w-full md-w-500px text-center mb-[2rem]'>
               <h1 className='text-gray-500 font-bold text-center mb-[1rem]'>Verification Instructions</h1>
               <p><span className='text-tertiary'>NOTE:</span> Immediately you perform the task, take a screenshot of the task performed on {newTask?.platform}</p>
-              {newTask?.platform === 'whatsapp' ? (
-                <div>
-                  <p><span className='text-tertiary font-bold'>1st stage -</span> Screenshot showing you posted on WhatsApp. User is notified 4 hrs after posting to move to stage 2. If stage 1 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason.</p> <br/><br/>
-                
-                <p><span className='text-tertiary font-bold'>2nd Stage -</span> Screenshot showing your post has been posted for over 6 hours on your status. User is notified to moves to State 3 if stage 2 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason.</p> <br/><br/>
-                
-                <p><span className='text-tertiary font-bold'>3rd Stage -</span> Screenshot showing you post has been posted for over 12 hrs on your status. User’s wallet is credited if stage 3 is approved from back end by admin else user is notified to try again uploading appropriate screenshot if task is still available else user is notified that task wasn’t approved with reason</p>
+                <div className='mt-2'>
+                  <p>{newTask?.taskVerification}</p>
                 </div>
-              ) : (<p>{newTask?.taskVerification}</p>)}
             </div>
             
 

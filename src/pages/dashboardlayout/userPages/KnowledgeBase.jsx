@@ -1,10 +1,22 @@
 import React from 'react'
 import { FaAngleDoubleRight, FaEnvelope, FaTelegram, FaWhatsapp } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
+import { Link, useNavigate } from 'react-router-dom'
 
 const KnowledgeBase = () => {
+    const navigate = useNavigate()
+
   return (
     <section className='w-full h-fit'>
+        <div className='flex items-center justify-between gap-3 border-b border-gray-200 pb-6'>
+                <div className='flex items-center'>
+                  <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))} className='mr-1'/>
+                      <div className='flex flex-col'>
+                          <p className='font-semibold text-xl text-gray-700'></p>
+                          <small onClick={() => (navigate(-1))} className='font-medium text-gray-500'>Go back to dashboard</small>
+                      </div>
+                </div>          
+        </div>
         <div className='container mt-[2rem] md:px-[1rem]'>
             <div className='text__area w-full h-fit px-1 py-1'>
                 <h2 className='font-extrabold text-xl md:text-2xl'>How it works</h2>

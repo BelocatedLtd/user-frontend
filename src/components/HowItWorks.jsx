@@ -1,10 +1,14 @@
 import React from 'react'
 import happy from '../assets/happy.png'
 import advertisment from '../assets/advertisment.png'
+import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
+import { useNavigate } from 'react-router-dom'
 
 const HowItWorks = () => {
+    
   return (
     <section className='w-full h-full mt-[5rem] mb-[5rem]'>
+        
         <div className='container flex justify-center  gap-7 mx-auto'>
             <div className='w-full h-[800px] flex-1'>
                 <img src={happy} alt="" className='w-full h-full object-cover'/>
