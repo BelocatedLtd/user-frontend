@@ -16,8 +16,8 @@ const CallToAction = ({handleRegister, regBtn}) => {
   return (
     <div className='w-full h-fit'>
       {regBtn && <Register handleRegister={handleRegister} regBtn={regBtn} />}
-        <div className='container flex items-center mx-auto leading-[1.2] mb-[3rem] mt-[4rem]'>
-            <div className='flex-1'>
+        <div className='container flex items-center mx-auto px-[2rem] leading-[1.2] mb-[3rem] mt-[4rem]'>
+            <div className='hidden flex-1 md:flex'>
                 <img src={callToAction} alt="call to action" />
             </div>
             <div className='flex-1 w-full pr-5'>

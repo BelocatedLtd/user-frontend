@@ -325,7 +325,6 @@ const handleCloseMenu = () => {
           <SidebarLeft>
             <DashLayout>
               <ContactSupport />
-              <SidebarRight />
             </DashLayout>
           </SidebarLeft>
         }

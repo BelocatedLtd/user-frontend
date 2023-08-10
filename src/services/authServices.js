@@ -172,7 +172,7 @@ export const resendVerificationEmail = async(email) => {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
          toast.error(message)
     }
-}
+} 
 
 export const resendOTPVerificationEmail = async(email) => {
     try {
