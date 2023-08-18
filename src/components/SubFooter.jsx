@@ -9,6 +9,7 @@ import twitter from '../assets/twitter.svg'
 import instagram from '../assets/instagram.svg'
 import whatsapp from '../assets/whatsapp.svg'
 import logo from '../assets/belocated-logo.png'
+import { FaTelegram } from 'react-icons/fa'
 
 
 const SubFooter = () => {
@@ -63,13 +64,29 @@ const SubFooter = () => {
                         <ul className='text-lg flex flex-col gap-3'>
                             <li className='flex items-center gap-2'><BsFillTelephoneFill className='text-tertiary border border-tertiary rounded-full p-1 text-2xl'/> +234 703 193 5276</li>
                             <li className='flex items-center gap-2'><MdOutlineEmail  className='text-tertiary border border-tertiary rounded-full p-1 text-2xl'/>cs@belocated.ng</li>
-                            <div className="flex items-center gap-2  w-[30px] h-[30px]">
-                                <img src={facebook} alt="facebook" className='w-full h-full hover:bg-red-100 rounded-full' onClick={() => navigate('/')}/>
-                                <img src={twitter} alt="twitter" className='w-full h-full hover:bg-red-100 rounded-full' onClick={() => navigate('/')}/>
-                                <img src={instagram} alt="instagram" className='w-full h-full hover:bg-red-100 rounded-full' onClick={() => navigate('/')}/>
-                                <img src={whatsapp} alt="whatsapp" className='w-full h-full hover:bg-red-100 rounded-full' onClick={() => navigate('/')}/>
-                            </div>
                         </ul>
+
+                        <div className="flex items-center gap-2 mt-[-2.5rem]  w-[150px] h-[150px]">
+                            <Link to={'https://www.facebook.com/belocatedng'} target="_blank" rel="noopener noreferrer">
+                                <img src={facebook} alt="facebook" className='w-full h-full hover:bg-red-100 rounded-full'/>
+                            </Link>
+
+                            <Link to={'https://twitter.com/belocatedng'} target="_blank" rel="noopener noreferrer">
+                                <img src={twitter} alt="twitter" className='w-full h-full hover:bg-red-100 rounded-full'/>
+                            </Link>
+
+                            <Link to={'https://instagram.com/belocatedng'} target="_blank" rel="noopener noreferrer">
+                                <img src={instagram} alt="instagram" className='w-full h-full hover:bg-red-100 rounded-full'/>
+                            </Link>
+
+                            <Link to={'https://wa.me/2347031935276'} target="_blank" rel="noopener noreferrer">
+                                <img src={whatsapp} alt="whatsapp" className='w-full h-full hover:bg-red-100 rounded-full'/> 
+                            </Link>
+
+                            <Link to={'https://t.me/belocated'} target="_blank" rel="noopener noreferrer">
+                                <FaTelegram size={40} className='w-full h-full hover:bg-red-100 rounded-full text-secondary'/> 
+                            </Link>
+                        </div>
             </div>
 
         </div>
