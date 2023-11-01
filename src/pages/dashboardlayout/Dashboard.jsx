@@ -122,7 +122,7 @@ const Dashboard = () => {
               <div className='flex flex-col justify-center items-center gap-2'>
               <p onClick={() => navigate('/how-it-works')} className='text-[12px] text-tertiary hover:text-gray-600 cursor-pointer text-center flex items-center gap-1 md:hidden'>Click to see how Belocated Works <FaAngleDoubleRight className='text-[10px] text-secondary'/></p>
 
-              <p className='text-center text-gray-600 text-[12px]'><span className='text-tertiary'>{user?.freeTaskCount}</span> free tasks remaining this Week</p>
+              {/* <p className='text-center text-gray-600 text-[12px]'><span className='text-tertiary'>{user?.freeTaskCount}</span> free tasks remaining this Week</p> */}
               </div>
                 <Wallet />
               </div>
@@ -137,11 +137,12 @@ const Dashboard = () => {
           
 
             <ProfileComplete className='flex flex-col justify-center'>
-              <FreeTaskCount className="w-full bg-black mx-auto"/>
+              {/* Free task reset count down timer */}
+              {/* <FreeTaskCount className="w-full bg-black mx-auto"/> */}
 
-              <div className='w-full flex flex-col items-center gap-2 justify-center md:flex-row md:justify-center md:items-center md:mx-auto'>
-                  <label>Referral Link:</label>
-                  <div className='flex items-center gap-2  w-[60%]'>
+              <div className='w-full flex flex-col items-center gap-2 justify-center mt-[1rem]  md:gap-0'>
+                  <label className=''>Referral Link:</label>
+                  <div className='flex items-center justify-center gap-2  w-[60%]'>
                     <input type="link" value={refLink} readOnly ref={inputRef} className='w-fit md:w-1/2 p-3 border border-gray-200 rounded-lg items-center'/>
                     <img src={copy} alt="click to copy ref link" className='w-[20px] h-[20px]' onClick={handleRefLinkCopy}/>
                   </div>

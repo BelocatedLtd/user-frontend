@@ -55,13 +55,20 @@ const Earn = () => {
         const runningAdsList = adverts?.filter(ad => ad.status !== "Completed" && ad.status !== "Pending Payment")
 
       //Check if task performer is still eligible for free tasks so he will see only the adverts that are marked as free. If not, he will see paid adverts
+      
       if (user?.freeTaskCount > 0 ) {
+
+        // User still hasnt fulfilled 2free task for the week so the users ad earning list should be populated with 
+        // Both free and paid ads that are still running
             
-        const freeAdverts = runningAdsList?.filter(advert => advert.isFree === true)
-        setTaskList(freeAdverts)
+        //const freeAdverts = runningAdsList?.filter(advert => advert.isFree === true)
+        setTaskList(runningAdsList)
     } 
 
     if (user?.freeTaskCount === 0) {
+
+        // User has completed his 2 free task for the week. So the user should be seeing only paid tasks
+        // Only paid ads that are still running
     
         const paidAdverts = runningAdsList?.filter(advert => advert.isFree === false)
         setTaskList(paidAdverts)

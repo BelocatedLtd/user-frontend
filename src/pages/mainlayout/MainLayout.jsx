@@ -7,7 +7,7 @@ import SubFooter from '../../components/SubFooter'
 
 const MainLayout = ({handleRegister, regBtn}) => {
   return (
-    <div className='bg-gradient-to-r from-[#BEE2F2]'>
+    <div className='w-full h-full bg-gradient-to-r from-[#BEE2F2]'>
         <Header />
         <Outlet />
         <CallToAction handleRegister={handleRegister}  regBtn={regBtn}/>

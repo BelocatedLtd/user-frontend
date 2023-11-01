@@ -56,9 +56,11 @@ const handleSubmit = async(e) => {
         }
      
      if (oldPasswordOk === "Password is Correct") {
+      setIsLoading(true)
 
       //Sending Email Verification OTP
       const OTPSent = await resendOTPVerificationEmail(user.email)
+      
       setIsLoading(false)
 
       if (!OTPSent) {

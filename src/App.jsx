@@ -64,6 +64,7 @@ import WithdrawalRequests from "./pages/dashboardlayout/adminPages/WithdrawalReq
 import WithdrawalModal from "./components/adminComponents/WithdrawalModal";
 import AdsTasksList from "./pages/dashboardlayout/adminPages/AdsTasksList";
 import KnowledgeBase from "./pages/dashboardlayout/userPages/KnowledgeBase";
+import Maintainance from "./pages/mainlayout/Maintainance";
 
 
 
@@ -111,6 +112,7 @@ const handleCloseMenu = () => {
       <Route path="/success" element={<PasswordChangeSuccess handleLogin={handleLogin} handleRegister={handleRegister} loginBtn={loginBtn} regBtn={regBtn} handleCloseMenu={handleCloseMenu}/>} />
         <Route path="/" element={<MainLayout handleRegister={handleRegister} regBtn={regBtn}/>}>
           <Route index element={<Home handleLogin={handleLogin} handleRegister={handleRegister} loginBtn={loginBtn} regBtn={regBtn} handleCloseMenu={handleCloseMenu}/>}/>
+          {/* <Route index element={<Maintainance />}/> */}
           <Route path="/about" element={<About handleRegister={handleRegister} regBtn={regBtn} />}/>
           <Route path="/contact" element={<Contact />}/>
           <Route path="/services" element={<ServicesPage />}/>

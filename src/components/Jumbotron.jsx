@@ -45,12 +45,12 @@ const closeModal = () => {
 
         <ShowOnLogout>
           <button onClick={showRegModal} className='bg-tertiary text-primary font-bold px-10 py-3 mt-[5rem] rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Get Started</button>
-          <small onClick={showLoginModal} className='mt-3 font-medium text-gray-500'>Already a Member? <span className='text-secondary cursor-pointer'>Login</span></small>
+          <small onClick={showLoginModal} className='mt-3 font-medium text-gray-500 mb-3'>Already a Member? <span className='text-secondary cursor-pointer'>Login</span></small>
         </ShowOnLogout>
 
         <ShowOnLogin>
         <button onClick={() => navigate(`/dashboard/${user?.username}`)} className='bg-tertiary text-primary font-bold px-10 py-3 mt-[5rem] rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Go to Dashboard</button>
-          <small onClick={() => navigate('/logout')} className='mt-3 font-medium text-gray-500'>Welcome, @{user?.username}. <span className='text-secondary cursor-pointer'>Logout</span></small>
+          <small onClick={() => navigate('/logout')} className='mt-3 font-medium text-gray-500 mb-3'>Welcome, @{user?.username}. <span className='text-secondary cursor-pointer'>Logout</span></small>
         </ShowOnLogin>
         
     </section>
