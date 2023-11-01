@@ -123,8 +123,8 @@ const Earn = () => {
             <div className='flex flex-col justify-center gap-3 border-b border-gray-200 py-6'>
                 <p className='font-normal text-[14px] text-gray-700 px-6'>You can earn consistently by posting adverts of various businesses and top brands on your social media accounts and performing simple social media tasks. To get started, simply click on any of the earning options shown below:</p>
 
-                {user?.freeTaskCount > 0 && (<p className='text-tertiary font-normal px-6'>Complete your 2 free tasks for the week and get access to paid tasks</p>)}
-                {user?.freeTaskCount === 0 && (<p className='text-secondary font-normal px-6'>Free tasks completed for the week, you are eligible to earn from the tasks you perform</p>)}
+                {/* {user?.freeTaskCount > 0 && (<p className='text-tertiary font-normal px-6'>Complete your 2 free tasks for the week and get access to paid tasks</p>)}
+                {user?.freeTaskCount === 0 && (<p className='text-secondary font-normal px-6'>Free tasks completed for the week, you are eligible to earn from the tasks you perform</p>)} */}
             </div>
 
             <div className='flex flex-col gap-[3rem] items-center justify-center mt-[1rem] px-3 py-5'>
