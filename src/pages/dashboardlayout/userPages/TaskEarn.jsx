@@ -217,6 +217,7 @@ const TaskEarn = () => {
                                 <li><span className='font-bold'>LGA:</span> {task.lga}</li>
                                 <li><span className='font-bold'>Status:</span> {tasks?.find((task) => 
             task.taskPerformerId === user.id && task.advertId === task._id)?.status}</li>
+            <li>Free:{task.isFree ? ("Free") : ("Paid")}</li>
                             </ul>
                             <img src={icon} alt={platformName} className='flex w-[20px] h-[20px] md:hidden'/>
                             </div>
