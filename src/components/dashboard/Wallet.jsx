@@ -9,9 +9,10 @@ import { useNavigate } from 'react-router-dom'
 import FundWallet from '../FundWallet'
 import FundingForm from '../../components/forms/FundingForm'
 import WithdrawalForm from '../forms/WithdrawalForm'
+import {HiOutlineArrowLeft, HiOutlineArrowRight} from 'react-icons/hi'
 
 
-const Wallet = () => {
+const Wallet = ({handleEarn, handleAdvertise}) => {
   const [selectFundingBtn, setSelectFundingBtn] = useState(false)
   const [togleWithdrawBtn, setTogleWithdrawBtn] = useState(false)
   const dispatch = useDispatch()
@@ -55,9 +56,24 @@ setTogleWithdrawBtn(!togleWithdrawBtn)
       <div className='mt-[1.5rem]'>
         <h1 className='text-3xl text-gray-800 font-extrabold'>{isLoading ? (<LoaderIcon />) : (<span>₦{wallet?.value}</span>)}</h1>
       </div>
-      <div className='flex gap-2 mt-[1.5rem]'>
+
+      {/* Withdraw and fund button */}
+      <div className='hidden md:flex gap-2 mt-[1.5rem]'>
         <button onClick={toggleFundingSelect} className='flex-1 bg-secondary text-[9px] md:text-[12px] text-gray-100  px-7 py-0 md:py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border md:px-10'>Fund</button>
         <button  onClick={handleWithdrawFunds} className='flex-1 bg-transparent border border-gray-500 text-[12px] text-gray-600 px-4 py-2 md:py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Withdraw</button>
+      </div>
+
+      {/* Earn and advertise button */}
+      <div className='flex items-center justify-center gap-[2rem] mt-3 md:hidden'>
+            <button onClick={handleEarn} className='flex-1 bg-secondary text-[12px] text-gray-100  px-7 py-2 md:py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border md:px-10'>Earn</button>
+
+            <button onClick={handleAdvertise} className='flex-1 bg-transparent border border-gray-500 text-[12px] text-gray-600 px-4 py-2 md:py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Advertise</button>
+      </div>
+
+      {/* Fund and withdraw mobile */}
+      <div className='md:hidden flex gap-2 mt-[1.5rem]'>
+        <button onClick={toggleFundingSelect} className='flex items-center gap-1 text-sm text-green-600 mr-[2rem]'><HiOutlineArrowLeft /> Fund</button>
+        <button  onClick={handleWithdrawFunds} className='flex items-center gap-1 text-sm text-secondary'>Withdraw<HiOutlineArrowRight /></button>
       </div>
 
       <div className='flex px-6 items-center justify-center mt-[4rem] pb-4 gap-5 md:flex'>

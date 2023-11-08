@@ -124,13 +124,7 @@ const Dashboard = () => {
 
               {/* <p className='text-center text-gray-600 text-[12px]'><span className='text-tertiary'>{user?.freeTaskCount}</span> free tasks remaining this Week</p> */}
               </div>
-                <Wallet />
-              </div>
-
-              <div className='flex items-center justify-center gap-[2rem] mt-3 md:hidden'>
-                    <button onClick={handleEarn} className='flex items-center gap-1 text-green-600'><HiOutlineArrowLeft /> Earn</button>
-
-                    <button onClick={handleAdvertise} className='flex items-center gap-1 text-secondary'>Advertise <HiOutlineArrowRight /> </button>
+                <Wallet handleAdvertise={handleAdvertise} handleEarn={handleEarn}/>
               </div>
             </div>
 
