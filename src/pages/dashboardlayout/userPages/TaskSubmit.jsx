@@ -99,9 +99,7 @@ const TaskSubmit = () => {
       if (!imageArray) {
         toast.error("Please upload a screenshot to prove you performed the Task")
         return
-      }
-      
-     
+      }    
 
       //await dispatch(handleSubmitTask(formData)) 
 

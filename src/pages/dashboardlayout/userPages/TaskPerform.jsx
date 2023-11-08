@@ -286,7 +286,7 @@ useEffect(() => {
                 )}
                 
                  
-                  {newTask?.status === "Approved" || newTask?.status === "Submitted" ? "" : (
+                  {newTask?.status === "Approved" || newTask?.status === "Submitted" || taskSubmitted ? "" : (
                     <button type='submit' className='flex items-center justify-center gap-2 w-full md:w-[300px] bg-secondary text-gray-100 py-3 px-6 mt-5 rounded-full mx-auto hover:bg-tertiary'>
                       {!isLoading && "Submit"}
                       {isLoading && "Submitting..."}
