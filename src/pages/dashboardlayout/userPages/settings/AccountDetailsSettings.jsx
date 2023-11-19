@@ -6,10 +6,12 @@ import { toast } from 'react-hot-toast'
 import Loader from '../../../../components/loader/Loader'
 import { handlesendingPhoneOTP, resendOTPVerificationEmail, updateUserAccountDetails } from '../../../../services/authServices'
 import VerifyAccountOTP from './VerifyAccountOTP'
+import { useNavigate } from 'react-router-dom'
 
 
 
 const AccountDetailsSettings = ({user}) => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(false)
     const [toggleOTPVerify, setToggleOTPVerify] = useState(false)
@@ -40,7 +42,38 @@ const AccountDetailsSettings = ({user}) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsLoading(true)
-    const OTPSent = await resendOTPVerificationEmail(user.email)
+    
+    if (accountDetails?.phone == user.phone && accountDetails?.email == user.email && accountDetails?.username == user.username) {
+      // User wants to change nothing...
+      toast.success("No changes made")
+      setIsLoading(false)
+      
+    } else if (accountDetails?.phone !== user.phone && accountDetails?.email == user.email && accountDetails?.username == user.username) {
+      // User wants to change only  phone
+      toast.success("Changing User Phone Number...")
+       setIsLoading(true)
+        
+        const updatedUserDetails = await updateUserAccountDetails(accountDetailsData)
+    
+        setIsLoading(false)
+        if (!updatedUserDetails) {
+        toast.error("Failed to update user phone number")
+        return
+        }
+                
+        if(updatedUserDetails) {
+            await dispatch(SET_USER(updatedUserDetails))
+    
+            navigate(`/dashboard/profile`)
+            toast.success('User Phone number Updated!')
+            setIsLoading(false)
+        }
+        setIsLoading(false)
+
+    } else {
+      // User wants to change both phone and username or just username
+
+      const OTPSent = await resendOTPVerificationEmail(user.email)
 
     setIsLoading(false)
     if (!OTPSent) {
@@ -55,6 +88,8 @@ const AccountDetailsSettings = ({user}) => {
       toast.success('Please, verify your account')
       return
     }
+    }
+    setIsLoading(false)
   }
 
   const handleModal = () => {
