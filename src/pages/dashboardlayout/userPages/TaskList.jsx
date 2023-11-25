@@ -28,9 +28,7 @@ const TaskList = () => {
 
     useEffect(() => {
         getUserTasks()
-    }, [dispatch])
-
-   
+    }, [dispatch]) 
 
 
     const handleSelect = async(e) => {
@@ -89,6 +87,7 @@ const TaskList = () => {
                         <ul className='flex gap-3 text-[13px]'>
                             <li>State: {task.state}</li>
                             <li>LGA: {task.lga}</li>
+                            
                         </ul>
                         <img src={icons?.find((icon) => icon.platform === task.platform)?.icon} alt={task?.platform} className='flex md:hidden w-[20px] h-[20px]'/>
 

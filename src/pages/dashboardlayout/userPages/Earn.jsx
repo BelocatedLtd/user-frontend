@@ -87,7 +87,7 @@ const Earn = () => {
     const sortedPlatforms = platformsWithTasks?.sort((a, b) => b.taskCount - a.taskCount)
     setTheSortedSocials(sortedPlatforms)
 
-      }, [adverts])
+      }, [adverts]) 
 
 
     // When user selects a platform

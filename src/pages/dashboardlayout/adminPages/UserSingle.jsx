@@ -50,6 +50,8 @@ const UserSingle = () => {
     e.preventDefault()
     setDelBtn(!delBtn)
   }
+
+  console.log(user)
   
 
   return (
@@ -91,6 +93,13 @@ const UserSingle = () => {
               <div onClick={() => navigate(`/admin/dashboard/transactions/user/${user._id}`)} className='flex items-center justify-center gap-2 cursor-pointer hover:text-secondary md:justify-start'>
                 <label htmlFor="">Transactions:</label>
                 <p>{trxs?.length}</p>
+                <MdOutlineKeyboardDoubleArrowRight size={12} className='text-secondary'/>
+              </div>
+
+              {/* No. of users referred */}
+              <div onClick={() => navigate(`/admin/dashboard/transactions/user/${user._id}`)} className='flex items-center justify-center gap-2 cursor-pointer hover:text-secondary md:justify-start'>
+                <label htmlFor="">Referred:</label>
+                <p>{user?.referrals?.length}</p>
                 <MdOutlineKeyboardDoubleArrowRight size={12} className='text-secondary'/>
               </div>
             </div>
