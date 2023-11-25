@@ -13,6 +13,8 @@ import { AiFillDelete } from 'react-icons/ai';
 import { trashAllUserActivities } from '../../../services/feedService';
 import Loader from '../../../components/loader/Loader';
 import { useState } from 'react';
+import DataSearch from '../../../components/adminComponents/DataSearch'
+
 
 
 const Users = () => {
@@ -24,6 +26,7 @@ const Users = () => {
   const isError = useSelector(selectIsError)
   const sortIcon = <MdArrowDownward />;
   const [activityIsLoading, setactivityIsLoading] = useState(false)
+  const [filteredData, setFilteredData] = useState(users)
 
   useEffect(() => {
     dispatch(handleGetAllUser())
@@ -59,6 +62,14 @@ const trashAllActivities = async() => {
       error: <b>Failed to emptying activity feed</b>
     }
   );
+}
+
+const handleFilter = (e) => {
+  e.preventDefault()
+  const newData = users?.filter(row => {
+    return row?.username?.toLowerCase()?.includes(e?.target?.value?.toLowerCase())
+  })
+  setFilteredData(newData)
 }
 
 
@@ -145,11 +156,15 @@ const trashAllActivities = async() => {
                   <p>{activities.length}</p>
                   <AiFillDelete className='text-secondary hover:text-tertiary' onClick={trashAllActivities}/>
                 </div>
+
+                
           </div>
+
+          <DataSearch placeholder="Search User..." handleFilter={handleFilter}/>
 
         <DataTable 
         columns={columns} 
-        data={users}
+        data={filteredData}
         progressPending={isLoading}
         pagination
         selectableRows

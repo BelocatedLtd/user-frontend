@@ -7,6 +7,7 @@ import { MdArrowDownward } from 'react-icons/md';
 import { handleGetTasks, selectIsError, selectIsLoading, selectTasks } from '../../../redux/slices/taskSlice';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import { useState } from 'react';
 
 
 const Tasks = () => {
@@ -17,6 +18,7 @@ const Tasks = () => {
   const isLoading = useSelector(selectIsLoading)
   const isError = useSelector(selectIsError)
   const sortIcon = <MdArrowDownward />;
+  const [sortedTasks, setSortedTasks] = useState()
 
   useEffect(() => {
     dispatch(handleGetTasks())
@@ -24,6 +26,10 @@ const Tasks = () => {
     if (isError) {
       toast.error("failed to fetch tasks")
     }
+
+    const filteredTasks = tasks?.filter(task => task?.status !== 'Awaiting Submission')
+    setSortedTasks(filteredTasks)
+
   
   }, [isError, dispatch])
 
@@ -118,7 +124,7 @@ const Tasks = () => {
     <div className='w-full mx-auto mt-[2rem]'>
       <DataTable 
       columns={columns} 
-      data={tasks}
+      data={sortedTasks}
       progressPending={isLoading}
       pagination
       selectableRows

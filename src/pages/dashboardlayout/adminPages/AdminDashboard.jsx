@@ -53,7 +53,6 @@ const AdminDashboard = () => {
   return (
     <div className='w-full h-fit flex flex-col'>
       
-
       <div className='widgets flex flex-wrap p-[20px] gap-[20px]'>
         <Widgets type="users" totalUsers={users} />
         <Widgets type="adverts" totalAdverts={adverts} />
