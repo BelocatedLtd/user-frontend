@@ -28,6 +28,8 @@ const Earn = () => {
     const [platformName, setPlatformName] = useState("")
     useRedirectLoggedOutUser('/login')
     const [taskList, setTaskList] = useState()
+    const [theSortedSocials, setTheSortedSocials] = useState()
+
 
     useEffect(() => {
         async function getAdverts() {
@@ -74,10 +76,24 @@ const Earn = () => {
         setTaskList(paidAdverts)
     }
 
-}, [adverts])
+      }, [adverts])
+
+    useEffect(() => {
+        //Calculate the number of tasks for each platform 
+        const platformsWithTasks = socialMenu?.map(platform => {
+            const platformTasks = taskList?.filter(task => task?.platform === platform?.value)
+
+            return {...platform, taskCount: platformTasks?.length};
+        })
+
+        // Sort platform based on task count in decending order
+        const sortedPlatforms = platformsWithTasks?.sort((a, b) => b.taskCount - a.taskCount)
+        setTheSortedSocials(sortedPlatforms)
+        
+    }, [])
 
 
-
+    // When user selects a platform
     const handleSelect = (e, platform) => { 
         e.preventDefault()
 
@@ -97,6 +113,7 @@ const Earn = () => {
    
     }
 
+    // When user selects a service/asset inside a platform
     const handleSelectAsset = (e, asset, taskTitle, taskVerification) => {
         e.preventDefault()
 
@@ -128,7 +145,7 @@ const Earn = () => {
             </div>
 
             <div className='flex flex-col gap-[3rem] items-center justify-center mt-[1rem] px-3 py-5'>
-                {socialMenu.map((menu, index) => (
+                {theSortedSocials?.map((menu, index) => (
                 <div  key={index} className='w-fit md:w-full shadow-lg p-5'>
                  <div className='flex flex-col md:flex-row items-center gap-5'>
                     <div className='flex flex-col'>
