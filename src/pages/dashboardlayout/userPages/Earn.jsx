@@ -76,21 +76,18 @@ const Earn = () => {
         setTaskList(paidAdverts)
     }
 
+     //Calculate the number of tasks for each platform 
+     const platformsWithTasks = socialMenu?.map(platform => {
+        const platformTasks = taskList?.filter(task => task?.platform === platform?.value)
+
+        return {...platform, taskCount: platformTasks?.length};
+    })
+
+    // Sort platform based on task count in decending order
+    const sortedPlatforms = platformsWithTasks?.sort((a, b) => b.taskCount - a.taskCount)
+    setTheSortedSocials(sortedPlatforms)
+
       }, [adverts])
-
-    useEffect(() => {
-        //Calculate the number of tasks for each platform 
-        const platformsWithTasks = socialMenu?.map(platform => {
-            const platformTasks = taskList?.filter(task => task?.platform === platform?.value)
-
-            return {...platform, taskCount: platformTasks?.length};
-        })
-
-        // Sort platform based on task count in decending order
-        const sortedPlatforms = platformsWithTasks?.sort((a, b) => b.taskCount - a.taskCount)
-        setTheSortedSocials(sortedPlatforms)
-        
-    }, [])
 
 
     // When user selects a platform
