@@ -65,6 +65,7 @@ const Register = ({showLoginModal, closeModal}) => {
       setIsLoading(true)
       
       const response = await createNewUser(formData)
+      setIsLoading(false)
 
       if (!response) {
         toast.error("Error trying to register user")

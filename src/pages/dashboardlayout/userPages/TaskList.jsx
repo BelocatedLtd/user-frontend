@@ -10,6 +10,7 @@ import { useEffect } from 'react'
 import {formatDate} from '../../../../utils/formatDate'
 import { toast } from 'react-hot-toast'
 import { selectUser } from '../../../redux/slices/authSlice'
+import moment from 'moment'
 
 const TaskList = () => {
     const navigate = useNavigate()
@@ -21,6 +22,7 @@ const TaskList = () => {
     const [icon, setIcon] = useState('')
     const [platform, setPlatform] = useState("")
     const tasks = useSelector(selectTasks)
+    const [sortedTasks, setSortedTasks] = useState()
    
     const getUserTasks = async() => {
         await dispatch(handleGetUserTasks())
@@ -28,6 +30,13 @@ const TaskList = () => {
 
     useEffect(() => {
         getUserTasks()
+        //console.log(tasks)
+    }, [dispatch]) 
+
+
+    useEffect(() => {
+        const sortedTaskList = [...tasks].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        setSortedTasks(sortedTaskList)
     }, [dispatch]) 
 
 
@@ -72,12 +81,12 @@ const TaskList = () => {
             </div>
 
             <div className='md:px-8 mt-3 md:mt-8'>
-         {tasks?.map((task, index) => (
+         {sortedTasks?.map((task, index) => (
             <div key={index} className='flex items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
                 <div className='flex gap-2 items-center'>
                 <img src={icons?.find((icon) => icon.platform === task.platform)?.icon} alt={task.platform} className='hidden md:flex'/>
                     <div className=''>
-                        {/* <small>{formatDate(task.createdAt)}</small> */}
+                        <small>{formatDate(task.createdAt)}</small>
                         <h1 className='text-[15px] md:text-[18px] font-bold md:my-[-5px] p-0'>{task?.title}</h1>
                         <small className='text-gray-400 text-[9px]'>To Earn: ₦{task?.toEarn}/task</small>
 
@@ -87,6 +96,9 @@ const TaskList = () => {
                         <ul className='flex gap-3 text-[13px]'>
                             <li>State: {task.state}</li>
                             <li>LGA: {task.lga}</li>
+                            {task.socialPageLink
+ ? (<li>Link: <a href={task.socialPageLink} className='text-blue-600'>{task.socialPageLink}</a></li>) : ("")}
+
                             
                         </ul>
                         <img src={icons?.find((icon) => icon.platform === task.platform)?.icon} alt={task?.platform} className='flex md:hidden w-[20px] h-[20px]'/>

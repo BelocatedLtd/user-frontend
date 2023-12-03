@@ -50,78 +50,155 @@ const Login = ({showRegModal, closeModal}) => {
     }
 
     setIsLoading(true)
-   
-    const response = await loginUser(formData)
-    setIsLoading(false)
 
-    if(response.isEmailVerified === false) {
-      toast.error('User Exist but not verified')
+    try {
+      const response = await loginUser(formData)
+      setIsLoading(false)
 
 
-      //Proceeding to send verification link
-      const emailResponse = resendVerificationEmail(email)
-      .catch((error)=> {
-        toast.error("Failed to send verification email")
-      })
-      .then((res) =>  {
-        navigate('/verify-email', { state:{ formData } })
-        setIsLoading(false)
-      })
+      // When user email is not verified
+      if(response.isEmailVerified === false) {
+          toast.error('User Exist but not verified')
+    
+    
+          //Proceeding to send verification link
+          const emailResponse = resendVerificationEmail(email)
+          .catch((error)=> {
+            toast.error("Failed to send verification email")
+          })
+          .then((res) =>  {
+            navigate('/verify-email', { state:{ formData } })
+            setIsLoading(false)
+          })
+          
+          toast.promise(emailResponse, {
+              loading: 'Sending verification email...',
+              success: <b>Email sent</b>,
+              error: <b>Failed to send email</b>
+            }
+          );
+    
+          closeModal()
+    
+          setIsLoading(false)
+          }
+
+        // When user email is  verified
+        if(response.isEmailVerified === true) {
+
+            const {token} = response
       
-      toast.promise(emailResponse, {
-          loading: 'Sending verification email...',
-          success: <b>Email sent</b>,
-          error: <b>Failed to send email</b>
-        }
-      );
-
-      closeModal()
-
+            if (!token) {
+              setIsLoading(false)
+              toast.error("Login failure...user not authorized")
+              return
+            }
+      
+           
+        
+            await setToken(token)
+            await dispatch(SET_LOGIN(true))
+            await dispatch(SET_USER(response))
+            const username = response.username
+      
+            if (response.accountType === "User") {
+      
+                //Emit socket io event to the backend
+                const emitData = {
+                  userId: response?.id,
+                  action: `@${username} just logged in`
+                }
+      
+                //Emit Socket event to update activity feed
+                socket.emit('sendActivity', emitData) 
+      
+                
+                  navigate(`/dashboard/${username}`)
+        
+            } 
+            
+            if (response.accountType === "Admin") {
+              navigate(`/admin/dashboard/${username}`)
+            }
+      
+            setIsLoading(false)
+          } 
+    } catch (error) {
       setIsLoading(false)
-      }
-      setIsLoading(false)
+      toast.error("Error trying to login")
+    }
+   
+    // const response = await loginUser(formData)
+    // setIsLoading(false)
+
+    // if(response.isEmailVerified === false) {
+    //   toast.error('User Exist but not verified')
+
+
+    //   //Proceeding to send verification link
+    //   const emailResponse = resendVerificationEmail(email)
+    //   .catch((error)=> {
+    //     toast.error("Failed to send verification email")
+    //   })
+    //   .then((res) =>  {
+    //     navigate('/verify-email', { state:{ formData } })
+    //     setIsLoading(false)
+    //   })
+      
+    //   toast.promise(emailResponse, {
+    //       loading: 'Sending verification email...',
+    //       success: <b>Email sent</b>,
+    //       error: <b>Failed to send email</b>
+    //     }
+    //   );
+
+    //   closeModal()
+
+    //   setIsLoading(false)
+    //   }
+    //   setIsLoading(false)
 
     
         
-    if(response.isEmailVerified === true) {
+    // if(response.isEmailVerified === true) {
 
-      const {token} = response
+    //   const {token} = response
 
-      if (!token) {
-        setIsLoading(false)
-        toast.error("Login failure...user not authorized")
-        return
-      }
+    //   if (!token) {
+    //     setIsLoading(false)
+    //     toast.error("Login failure...user not authorized")
+    //     return
+    //   }
 
      
   
-      await setToken(token)
-      await dispatch(SET_LOGIN(true))
-      await dispatch(SET_USER(response))
-      const username = response.username
+    //   await setToken(token)
+    //   await dispatch(SET_LOGIN(true))
+    //   await dispatch(SET_USER(response))
+    //   const username = response.username
 
-      if (response.accountType === "User") {
+    //   if (response.accountType === "User") {
 
-          //Emit socket io event to the backend
-          const emitData = {
-            userId: response?.id,
-            action: `@${username} just logged in`
-          }
+    //       //Emit socket io event to the backend
+    //       const emitData = {
+    //         userId: response?.id,
+    //         action: `@${username} just logged in`
+    //       }
 
-          //Emit Socket event to update activity feed
-          socket.emit('sendActivity', emitData) 
+    //       //Emit Socket event to update activity feed
+    //       socket.emit('sendActivity', emitData) 
 
           
-            navigate(`/dashboard/${username}`)
+    //         navigate(`/dashboard/${username}`)
   
-      } 
+    //   } 
       
-      if (response.accountType === "Admin") {
-        navigate(`/admin/dashboard/${username}`)
-      }
+    //   if (response.accountType === "Admin") {
+    //     navigate(`/admin/dashboard/${username}`)
+    //   }
 
-      setIsLoading(false)
-    }
+    //   setIsLoading(false)
+    // }
 
     setIsLoading(false)
   }
