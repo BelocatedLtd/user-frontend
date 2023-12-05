@@ -218,6 +218,8 @@ const TaskEarn = () => {
                                 <li><span className='font-bold'>Status:</span> {tasks?.find((task) => 
             task.taskPerformerId === user.id && task.advertId === task._id)?.status}</li>
             {/* <li>Free:{task.isFree ? ("Free") : ("Paid")}</li> */}
+            {task.socialPageLink
+ ? (<li><span className='font-bold'>Link:</span> <a href={task.socialPageLink} className='text-blue-600'>{task.socialPageLink}</a></li>) : ("")}
                             </ul>
                             <img src={icon} alt={platformName} className='flex w-[20px] h-[20px] md:hidden'/>
                             </div>
