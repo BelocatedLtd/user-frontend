@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import { formatDate } from '../../../utils/formatDate'
 import { icons} from '../../components/data/socialIcon'
 
-const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, tasks, item }) => {
+const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, tasks, item, url }) => {
     const [payBtn, setPayBtn] = useState('Pay Now')
 
     useEffect(() => {
@@ -55,6 +55,11 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
                 <label className='font-extrabold text-[12px] text-gray-700 md:text-[14px] md:font-bold'>Amount Paid:</label>
                 <small className='text-gray-500 font-bold'>₦{adBudget}</small> 
             </div>
+            
+            <div className='flex flex-col mt-[1rem]'>
+            <label className='font-extrabold text-[12px] text-gray-700 md:text-[14px] md:font-bold'>Link</label>
+            {url ? ( <small className='text-gray-500 font-bold'><a href={url} className='text-blue-600'>{url}</a></small>) : ("N/A")}
+            </div>
             </div>
 
             <div className='flex flex-col'>
@@ -87,6 +92,7 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
                         <label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>LGA:</label>
                         <p className='text-[12px]'>{item?.lga}</p>
                     </li>
+                    
                     <li>
                          {/* Social media icon  right */}
                         <div className='flex md:hidden w-[25px] h-[25px]'>

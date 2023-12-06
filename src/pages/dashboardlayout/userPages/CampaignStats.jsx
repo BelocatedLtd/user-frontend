@@ -70,6 +70,7 @@ const CampaignStats = () => {
             lga={item.lga}
             religion={item.religion}
             item={item}
+            url={item.socialPageLink}
           />
         ))}
       </div>
