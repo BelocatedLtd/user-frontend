@@ -26,6 +26,9 @@ const AdminDashboard = () => {
     const tasks = useSelector(selectTasks)
     const [tableSwitch, setTableSwitch] = useState('users')
     useRedirectLoggedOutUser('/')
+    const [adsList, setAdsList] = useState()
+    const [tasksList, setTasksList] = useState()
+
 
     useEffect(() => {
         async function getUserData() {
@@ -49,15 +52,23 @@ const AdminDashboard = () => {
       getUserData()
     }, [dispatch, user])
 
+    useEffect(() => {
+      const adList = adverts.filter(ad => ad.status == "Running")
+      setAdsList(adList)
+
+      const taskList = tasks.filter(task => task.status == "Submitted")
+      setTasksList(taskList)
+    }, [])
+
 
   return (
     <div className='w-full h-fit flex flex-col'>
       
       <div className='widgets flex flex-wrap p-[20px] gap-[20px]'>
         <Widgets type="users" totalUsers={users} />
-        <Widgets type="adverts" totalAdverts={adverts} />
+        <Widgets type="adverts" totalAdverts={adsList} />
         <Widgets type="transactions" totalTrx={transactions} />
-        <Widgets type="tasks" totalTasks={tasks} />
+        <Widgets type="tasks" totalTasks={tasksList} />
       </div>
 
       {/* <div className='charts flex w-full px-[20px] py-[5px] gap-[20px]'>

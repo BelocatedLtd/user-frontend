@@ -50,6 +50,26 @@ const AccountDetailsSettings = ({user}) => {
       
     } else if (accountDetails?.phone !== user.phone && accountDetails?.email == user.email && accountDetails?.username == user.username) {
       // User wants to change only  phone
+
+      if (accountDetails.phone.length > 11 || accountDetails.phone.length < 10) {
+        toast.error("Invalid phone number, check number and try again")
+        setIsLoading(false)
+        return
+      }
+
+      if (accountDetails.phone.length == 11) {
+        const phoneNumber = accountDetails.phone
+        const firstDigit = parseInt(phoneNumber.toString()[0]);
+        
+        if (firstDigit !== 0) {
+          toast.error("Invalid phone number, check number and try again")
+        }
+        setIsLoading(false)
+        return
+      }
+
+
+
       toast.success("Changing User Phone Number...")
        setIsLoading(true)
         

@@ -28,12 +28,12 @@ const Dashboard = () => {
   const user = useSelector(selectUser)
   const [profileComplete, setProfileComplete] = useState(false)
   const [refLink, setRefLink] = useState('')
-  useRedirectLoggedOutUser('/')
+  useRedirectLoggedOutUser('/') 
 
   useEffect(() => {
     if (!user?.fullname || !user?.phone || !user?.location || !user?.gender || !user?.community || !user?.religion) {
       navigate(`/dashboard/account-settings/${user?.username}`)
-      setProfileComplete(true)
+      setProfileComplete(true) 
     } else {
       setProfileComplete(false)
     }
