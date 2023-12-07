@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectUser } from '../../../../redux/slices/authSlice'
+import { SET_USER, selectUser } from '../../../../redux/slices/authSlice'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import Loader from '../../../../components/loader/Loader'
@@ -10,12 +10,13 @@ import bankNames from '../../../../components/data/banks'
 import PasswordVerify from './PasswordVerify'
 import VerifyOTP from './VerifyOTP'
 import { useEffect } from 'react'
-import { resendOTPVerificationEmail } from '../../../../services/authServices'
+import { resendOTPVerificationEmail, updateUserBankAccountDetails } from '../../../../services/authServices'
 
 const BankDetailsSettings = ({user}) => {
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
     const [toggleOTPVerify, setToggleOTPVerify] = useState(false)
+    const dispatch = useDispatch()
     
 
 
@@ -67,33 +68,55 @@ const handleBankInputChange = (e) => {
         return
       }
 
-      //Sending OTP to email
+      if (bankAccountNumber.length > 10 || bankAccountNumber.length < 10) {
+        toast.error("Please enter a valid Nigerian Bank Account Number")
+        return
+      }
+
       setIsLoading(true)
-      const OTPSent = await resendOTPVerificationEmail(user.email)
+      const updatedUserDetails = await updateUserBankAccountDetails(accountDetailsData)
       setIsLoading(false)
-
-      if (!OTPSent) {
-        setIsLoading(false)
-        toast.error('Error Sending Verification Email')
+    
+        if (!updatedUserDetails) {
+        toast.error("Failed to update Bank Details")
         return
-      }
+        }
+                
+        if(updatedUserDetails) {
+            await dispatch(SET_USER(updatedUserDetails))
+    
+            navigate(`/dashboard/profile`)
+            toast.success('User Account Details Updated!')
+            setIsLoading(false)
+        }
 
-      if (OTPSent && OTPSent.message === "Verification OTP Sent") {
-        setIsLoading(false)
+      //Sending OTP to email
+      // setIsLoading(true)
+      // const OTPSent = await resendOTPVerificationEmail(user.email)
+      // setIsLoading(false)
 
-        setToggleOTPVerify(true)
-        toast.success('Please, verify your account')
-        return
-      }
+      // if (!OTPSent) {
+      //   setIsLoading(false)
+      //   toast.error('Error Sending Verification Email')
+      //   return
+      // }
+
+      // if (OTPSent && OTPSent.message === "Verification OTP Sent") {
+      //   setIsLoading(false)
+
+      //   setToggleOTPVerify(true)
+      //   toast.success('Please, verify your account')
+      //   return
+      // }
     }
 
-      const handleModal = () => {
-        setToggleOTPVerify(!toggleOTPVerify)
-      }
+      // const handleModal = () => {
+      //   setToggleOTPVerify(!toggleOTPVerify)
+      // }
 
   return (
     <div className='box p-6 shadow-lg'>
-      {toggleOTPVerify && <VerifyOTP accountDetailsData={accountDetailsData} handleModal={handleModal} email={user.email}/>}
+      {/* {toggleOTPVerify && <VerifyOTP accountDetailsData={accountDetailsData} handleModal={handleModal} email={user.email}/>} */}
       <form onSubmit={handleSubmit} >
         {isLoading && <Loader />}
             <label htmlFor="accountDetails reset" className='font-bold'>Bank Details</label>

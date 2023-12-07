@@ -60,7 +60,17 @@ const columns = [
   },
   {
     name: 'Tasks',
-    selector: row => row.tasks, 
+    selector: row => row?.tasks, 
+    sortable: true
+  },
+  {
+    name: 'Ad Url',
+    cell: (row) => (
+      <div className='w-full'>
+        <a href={row?.socialPageLink} target="_blank" className='text-blue-600'>{row?.socialPageLink}</a>
+      </div>
+  ),
+    selector: row => row?.tasks, 
     sortable: true
   },
   {

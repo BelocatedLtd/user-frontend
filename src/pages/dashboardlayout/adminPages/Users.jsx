@@ -106,7 +106,7 @@ const handleFilter = (e) => {
     },
     {
       name: 'Ads Created',
-      selector: row => row.adsCreated, 
+      selector: row => row.adsCreated,  
       sortable: true
     },
     {

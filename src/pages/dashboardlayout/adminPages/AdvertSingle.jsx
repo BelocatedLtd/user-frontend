@@ -123,9 +123,12 @@ const AdvertSingle = () => {
 
         {/* Advert Details */}
         <div className='flex flex-col  md:flex-row'>
+        {/* Ad Content */}
             <div className='box flex flex-col border-b border-gray-100 p-3 pb-6'>
               <label htmlFor="adverter" className='text-secondary text-[25px] font-bold'>Advert Details</label>
               <div className='user__details__container flex flex-col gap-1 md:gap-[4rem] md:flex-row'>
+
+                {/* First Column */}
                 <div className='left flex flex-col gap-1 md:gap-[4rem] mt-3'>
                   <div className='flex flex-col border-b border-gray-50 py-3'>
                     <label htmlFor="" className='font-bold'>Platform:</label>
@@ -150,6 +153,7 @@ const AdvertSingle = () => {
 
                 </div>
 
+                {/* Second Column */}
                 <div className='right flex flex-col gap-1 md:gap-[4rem] mt-3'>
                   <div className='flex flex-col border-b border-gray-50 py-3'>
                     <label htmlFor="" className='font-bold'>Ad Units:</label>
@@ -179,6 +183,7 @@ const AdvertSingle = () => {
                   </div>
                 </div>
 
+                {/* Third COlumn */}
                 <div className='right flex flex-col gap-1 md:gap-[4rem] mt-3'>
                   <div className='flex flex-col border-b border-gray-50 py-3'>
                     <label htmlFor="" className='font-bold'>Target State:</label>
@@ -201,21 +206,20 @@ const AdvertSingle = () => {
                     </p>
                   </div>
                 </div>
+              </div>
 
-                <div className='right flex flex-col gap-1 md:gap-[4rem] mt-3'>
+              {/* Ad URL */}
+              <div className='right flex flex-col gap-1 md:gap-[4rem] mt-3'>
                 <div className='flex flex-col border-b border-gray-50 py-3'>
                     <label htmlFor="" className='font-bold'>URL:</label>
                     <div className='flex gap-1 items-baseline'>
-                      <p>{ad?.socialPageLink}</p>
-                    </div>
+                      <a href={ad?.socialPageLink} target="_blank" className='text-blue-600'>{ad?.socialPageLink}</a>
+                    </div> 
                   </div>
                 </div>
-              </div>
             </div>
 
-
-
-
+        {/* Media File */}
             <div className='w-full h-full mx-auto mt-6 md:w-[400px] md:h-[400px]'>
               {slides?.map((image, index) => (
                   <img key={index} src={image?.secure_url} alt={`Image ${index}`} />
