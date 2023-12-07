@@ -7,6 +7,7 @@ import { selectTransactions, selectIsError, selectIsLoading, handleGetTransactio
 import { selectUsers } from '../../../redux/slices/userSlice';
 import { toast } from 'react-hot-toast';
 import { selectUser } from '../../../redux/slices/authSlice';
+import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 
 const Transactions = () => {
   const navigate = useNavigate()
@@ -85,6 +86,12 @@ const Transactions = () => {
 
   return (
         <div className='w-full mx-auto mt-[2rem]'>
+          <div className='flex items-center justify-between mb-[2rem]'>
+                <div className='flex items-center'>
+                <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))} className='mr-1'/>
+                    <p className='font-semibold text-xl text-gray-700'>Transactions</p>
+                </div>
+          </div>
         <DataTable 
         columns={columns} 
         data={transactions}

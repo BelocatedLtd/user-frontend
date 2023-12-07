@@ -3,7 +3,7 @@ import DataTable from 'react-data-table-component';
 import { useSelector, useDispatch } from 'react-redux';
 import { handleGetAllUser, selectUsers } from '../../../redux/slices/userSlice';
 import { useNavigate } from 'react-router-dom';
-import { MdArrowDownward } from 'react-icons/md';
+import { MdArrowDownward, MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { handleGetTasks, selectIsError, selectIsLoading, selectTasks } from '../../../redux/slices/taskSlice';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
@@ -122,6 +122,12 @@ const Tasks = () => {
 
   return (
     <div className='w-full mx-auto mt-[2rem]'>
+      <div className='flex items-center justify-between mb-[2rem]'>
+                <div className='flex items-center'>
+                <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))} className='mr-1'/>
+                    <p className='font-semibold text-xl text-gray-700'>Tasks</p>
+                </div>
+          </div>
       <DataTable 
       columns={columns} 
       data={sortedTasks}

@@ -67,7 +67,8 @@ const trashAllActivities = async() => {
 const handleFilter = (e) => {
   e.preventDefault()
   const newData = users?.filter(row => {
-    return row?.username?.toLowerCase()?.includes(e?.target?.value?.toLowerCase())
+    return row?.username?.toLowerCase()?.includes(e?.target?.value?.toLowerCase()) || 
+    row?.email?.toLowerCase()?.includes(e?.target?.value?.toLowerCase())
   })
   setFilteredData(newData)
 }
@@ -155,9 +156,7 @@ const handleFilter = (e) => {
                   <label>User Activities:</label>
                   <p>{activities.length}</p>
                   <AiFillDelete className='text-secondary hover:text-tertiary' onClick={trashAllActivities}/>
-                </div>
-
-                
+                </div>  
           </div>
 
           <DataSearch placeholder="Search User..." handleFilter={handleFilter}/>

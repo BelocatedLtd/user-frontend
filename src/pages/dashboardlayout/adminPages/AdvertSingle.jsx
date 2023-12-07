@@ -41,6 +41,7 @@ const AdvertSingle = () => {
       setAd(advert)
       setSlides(advert?.mediaURL)
       setAdverter(advertiser)
+      console.log(ad)
     }, [adverts])
 
     useEffect(() => {
@@ -198,6 +199,15 @@ const AdvertSingle = () => {
                     <p className=''>
                       {ad?.gender}
                     </p>
+                  </div>
+                </div>
+
+                <div className='right flex flex-col gap-1 md:gap-[4rem] mt-3'>
+                <div className='flex flex-col border-b border-gray-50 py-3'>
+                    <label htmlFor="" className='font-bold'>URL:</label>
+                    <div className='flex gap-1 items-baseline'>
+                      <p>{ad?.socialPageLink}</p>
+                    </div>
                   </div>
                 </div>
               </div>
