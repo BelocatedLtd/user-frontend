@@ -58,7 +58,7 @@ const AdminDashboard = () => {
 
       const taskList = tasks.filter(task => task.status == "Submitted")
       setTasksList(taskList)
-    }, [])
+    }, [adverts, tasks])
 
 
   return (

@@ -57,13 +57,17 @@ const WithdrawalModal = () => {
     
        const response =  await dispatch(handleConfirmUserWithdrawal(_id))
 
+    //    console.log(response)
+    //    return
+
         if (isError) {
             toast.error("Error confirming withdrawal request")
+            return
         }
 
         if (isSuccess) {
            
-            console.log(response.payload)
+           console.log(response)
             const emitData = {
                 userId: userId,
                 action: `@${wdUser?.username} from ${wdUser?.location} just withdrew from their Belocated wallet`

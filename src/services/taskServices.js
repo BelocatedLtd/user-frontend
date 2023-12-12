@@ -64,7 +64,7 @@ export const approveTask = async (taskData) => {
 export const rejectTask = async (taskData) => {
     const headers = getAuthHeaders();
     const response = await axios.post(`${BACKEND_URL}/api/tasks/reject`, taskData, headers)
-   return response.data   
+    return response.data   
 }
 
 // Delete task

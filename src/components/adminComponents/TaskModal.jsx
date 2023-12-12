@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { CheckmarkIcon, toast } from 'react-hot-toast'
-import { handleApproveTask, handleRejectTask } from '../../redux/slices/taskSlice'
+import { handleApproveTask, handleRejectTask, selectIsError, selectIsSuccess } from '../../redux/slices/taskSlice'
 import Loader from '../loader/Loader'
 import { useEffect } from 'react'
 //import socket from '../../services/socket'
@@ -20,6 +20,8 @@ const socket = io.connect(`${BACKEND_URL}`)
 const TaskModal = ({handleModal, task, taskPerformer}) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const isError = useSelector(selectIsError)
+    const isSuccess = useSelector(selectIsSuccess)
     const [isLoading, setIsLoading] = useState(false)
     const [rejectMessage, setRejectMessage] = useState(false)
 
@@ -84,16 +86,16 @@ const TaskModal = ({handleModal, task, taskPerformer}) => {
             }
 
             setIsLoading(true)
-           const response = await dispatch(handleRejectTask(rejectTaskData))
+           await dispatch(handleRejectTask(rejectTaskData))
            setIsLoading(false)
 
 
-            if (!response.payload) {
+            if (isError) {
                 toast.error("Error Rejecting Task")
                 setIsLoading(false)
             }
     
-            if (response.payload) {
+            if (isSuccess) {
                 toast.error("Task Rejected")
                 setIsLoading(false)
                 navigate(-1)

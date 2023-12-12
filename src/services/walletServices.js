@@ -110,7 +110,7 @@ export const getUserWithdrawals = async(userId) => {
 export const confirmWithdrawal = async(withdrawalRequestId) => {
     const headers = getAuthHeaders();
     try {
-         const response = await axios.patch(`${BACKEND_URL}/api/transactions/withdrawals/confirm/${withdrawalRequestId}`, headers)
+         const response = await axios.post(`${BACKEND_URL}/api/transactions/withdrawals/confirm/${withdrawalRequestId}`, headers) 
         return response.data
      } catch (error) {
          const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
