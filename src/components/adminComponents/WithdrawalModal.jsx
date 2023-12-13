@@ -47,18 +47,10 @@ const WithdrawalModal = () => {
      const {_id, userId, withdrawAmount, withdrawMethod} = wdItem || {}
 
 
-
-    
-   
-
-
     const handleOnSubmit = async(e) => {
         e.preventDefault()
     
-       const response =  await dispatch(handleConfirmUserWithdrawal(_id))
-
-    //    console.log(response)
-    //    return
+       await dispatch(handleConfirmUserWithdrawal(_id))
 
         if (isError) {
             toast.error("Error confirming withdrawal request")
@@ -67,7 +59,6 @@ const WithdrawalModal = () => {
 
         if (isSuccess) {
            
-           console.log(response)
             const emitData = {
                 userId: userId,
                 action: `@${wdUser?.username} from ${wdUser?.location} just withdrew from their Belocated wallet`
@@ -86,14 +77,14 @@ const WithdrawalModal = () => {
         e.preventDefault()
 
     
-        const response = await dispatch(handleDeleteWithdrawal(_id))
+        await dispatch(handleDeleteWithdrawal(_id))
 
-        if (!response.payload) {
+        if (isError) {
           
             toast.error("Error deleting withdrawal request")
         }
 
-        if (response.payload) {
+        if (isSuccess) {
             toast.success("Withdrawal Rejected")
          
 

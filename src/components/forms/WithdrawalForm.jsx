@@ -92,6 +92,16 @@ const WithdrawalForm = ({handleWithdrawFunds, wallet, user}) => {
     const handleOnSubmit = async(e) => {
         e.preventDefault()
 
+        if (withdrawMethod == "bank transfer" && parseFloat(amount) < 5000) {
+            toast.error('Minimum withdrawal via bank transfer is 5,000 Naira')
+            return
+        }
+
+        if (withdrawMethod == "airtime" && parseFloat(amount) < 1000) {
+            toast.error('Minimum withdrawal via airtime is 1,000 Naira')
+            return
+        }
+
         if (parseFloat(amount) > wallet?.value) {
             toast.error('Withdrawal amount exceeds account balance')
             return
