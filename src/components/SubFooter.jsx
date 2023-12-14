@@ -79,7 +79,7 @@ const SubFooter = () => {
                                 <img src={instagram} alt="instagram" className='w-full h-full hover:bg-red-100 rounded-full'/>
                             </Link>
 
-                            <Link to={'https://wa.me/2347031935276'} target="_blank" rel="noopener noreferrer">
+                            <Link to={'https://www.whatsapp.com/channel/0029Va7JRtyEVccRNhgObL3E'} target="_blank" rel="noopener noreferrer">
                                 <img src={whatsapp} alt="whatsapp" className='w-full h-full hover:bg-red-100 rounded-full'/> 
                             </Link>
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
 import contactus from '../../../assets/contactus.png'
-import { FaFacebook, FaLinkedin, FaTelegram, FaTwitter, FaWhatsapp } from 'react-icons/fa'
-import { BsFacebook, BsInstagram, BsTwitter, BsYoutube } from 'react-icons/bs'
+import { FaLinkedin, FaTelegram, FaTwitter, FaWhatsapp } from 'react-icons/fa'
+import { BsFacebook } from 'react-icons/bs'
 import { MdEmail, MdOutlineKeyboardArrowLeft } from 'react-icons/md'
 import { BiPhoneCall } from 'react-icons/bi'
 import { Link, useNavigate } from 'react-router-dom'
@@ -82,7 +82,7 @@ const ContactSupport = () => {
           {/* WhatsApp and telegram */}
           <ul className='flex flex-wrap items-center gap-[2rem]'>
             <li className='flex items-center gap-2 bg-transparent hover:bg-gray-200 p-4'>
-              <Link to={'https://wa.me/2347031935276'} target="_blank" rel="noopener noreferrer" className='flex items-center gap-2'>
+              <Link to={'https://www.whatsapp.com/channel/0029Va7JRtyEVccRNhgObL3E'} target="_blank" rel="noopener noreferrer" className='flex items-center gap-2'>
                 <FaWhatsapp className='text-green-50 text-[40px] bg-green-500 p-2 rounded-full'/>
                 <div>
                   <p>Chat on WhatsApp</p>
