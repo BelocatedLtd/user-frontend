@@ -68,7 +68,8 @@ const handleFilter = (e) => {
   e.preventDefault()
   const newData = users?.filter(row => {
     return row?.username?.toLowerCase()?.includes(e?.target?.value?.toLowerCase()) || 
-    row?.email?.toLowerCase()?.includes(e?.target?.value?.toLowerCase())
+    row?.email?.toLowerCase()?.includes(e?.target?.value?.toLowerCase()) || 
+    row?.phone?.toString()?.toLowerCase()?.includes(e?.target?.value?.toLowerCase())
   })
   setFilteredData(newData)
 }
@@ -117,6 +118,11 @@ const handleFilter = (e) => {
     {
       name: 'Tasks Completed',
       selector: row => row.taskCompleted, 
+      sortable: true
+    },
+    {
+      name: 'Referred Users',
+      selector: row => row.referrals?.length, 
       sortable: true
     },
     {
