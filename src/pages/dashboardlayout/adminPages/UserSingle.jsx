@@ -50,8 +50,6 @@ const UserSingle = () => {
     e.preventDefault()
     setDelBtn(!delBtn)
   }
-
-  console.log(user)
   
 
   return (

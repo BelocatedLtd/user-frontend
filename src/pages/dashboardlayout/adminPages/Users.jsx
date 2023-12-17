@@ -14,6 +14,8 @@ import { trashAllUserActivities } from '../../../services/feedService';
 import Loader from '../../../components/loader/Loader';
 import { useState } from 'react';
 import DataSearch from '../../../components/adminComponents/DataSearch'
+import { selectTasks } from '../../../redux/slices/taskSlice';
+import { selectAllAdverts } from '../../../redux/slices/advertSlice';
 
 
 
@@ -21,6 +23,8 @@ const Users = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const users = useSelector(selectUsers)
+  const tasks = useSelector(selectTasks)
+  const adverts = useSelector(selectAllAdverts)
   const activities = useSelector(selectActivities)
   const isLoading = useSelector(selectIsLoading)
   const isError = useSelector(selectIsError)
@@ -107,17 +111,42 @@ const handleFilter = (e) => {
     },
     {
       name: 'Ads Created',
-      selector: row => row.adsCreated,  
+      cell: (row) => {
+        const userAds = adverts?.filter(ad => ad.userId == row?._id)
+              return (
+                
+                  <div className='font-bold text-[13px]'>{userAds?.length}</div>
+                
+              )
+        },   
       sortable: true
     },
     {
       name: 'Task On Going',
-      selector: row => row.taskOngoing, 
+      cell: (row) => {
+        const userTasks = tasks?.filter(task => task.taskPerformerId == row?._id)
+        const userTasksRunning = userTasks?.filter(task => task.status == "Awaiting Submission" || task.status == "Pending Approval" || task.status == "Submitted")
+        
+              return (
+                
+                  <div className='font-bold text-[13px]'>{userTasksRunning?.length}</div>
+                
+              )
+        }, 
       sortable: true
     },
     {
       name: 'Tasks Completed',
-      selector: row => row.taskCompleted, 
+      cell: (row) => {
+        const userTasks = tasks?.filter(task => task.taskPerformerId == row?._id)
+        const userTasksCompleted = userTasks?.filter(task => task.status == "Approved")
+        
+              return (
+                
+                  <div className='font-bold text-[13px]'>{userTasksCompleted?.length}</div>
+                
+              )
+        },
       sortable: true
     },
     {
