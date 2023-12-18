@@ -32,7 +32,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!user?.fullname || !user?.phone || !user?.location || !user?.gender || !user?.community || !user?.religion) {
-      navigate(`/dashboard/account-settings/${user?.username}`)
+      navigate(`/dashboard/update-profile`)
       setProfileComplete(true) 
     } else {
       setProfileComplete(false)
@@ -77,12 +77,12 @@ const Dashboard = () => {
     e.preventDefault()
     if (!user.location || !user.community || !user.gender) {
       toast.error("Please, complete your profile before you can create Adverts")
-      navigate(`/dashboard/account-settings/${user?.username}`)
+      navigate(`/dashboard/update-profile`) 
     }
 
     if (!user.phone) {
       toast.error("Phone number not verified")
-      navigate(`/dashboard/account-settings/${user.username}`)
+      navigate(`/dashboard/update-profile`)
     }
     if (user.phone && user.location && user.community && user.gender)
     navigate('/dashboard/advertise')
