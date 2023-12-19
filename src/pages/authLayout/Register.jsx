@@ -56,8 +56,8 @@ const Register = ({showLoginModal, closeModal}) => {
       }
 
       const formData = {
-        username, 
-        email,
+        username: username.toLowerCase(), 
+        email: email.toLowerCase(),
         password,
         referrerId: referrerId ? referrerId : ''
       }

@@ -42,8 +42,8 @@ const RefRegister = () => {
       }
 
       const formData = {
-        username, 
-        email,
+        username: username.toLowerCase(), 
+        email: email.toLowerCase(),
         password,
         referrerId
       }
