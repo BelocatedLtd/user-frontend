@@ -13,6 +13,7 @@ import { createNewAdvert, selectIsLoading, selectIsSuccess, selectIsError } from
 import io from 'socket.io-client'
 import { BACKEND_URL } from '../../utils/globalConfig'
 import { createAdvert } from '../services/advertService'
+import { toast } from 'react-hot-toast'
 
 
 const socket = io.connect(`${BACKEND_URL}`)
