@@ -120,6 +120,11 @@ const AdBuyForm = ({advert, service, adTitle, platform, selectedImages, imageArr
     const togglePaymentSelect = (e) => {
       e.preventDefault()
 
+      if (hideImageInputFields === false && formData?.imageArray?.length === 0 || formData?.imageArray === undefined) {
+        toast.error("images or videos must be uploaded")
+        return
+      }
+
       if (!service || !adTitle || !advert.roi || !advert.gender || !selectedState || !selectedCommunity || !expBudget ) {
         toast.error("Some required fields are empty, please fill in all the fields")
       } else {
