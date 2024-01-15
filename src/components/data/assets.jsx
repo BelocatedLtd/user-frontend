@@ -68,7 +68,7 @@ const socialPlatforms = [
                 TD: 'Get Paid For Posting a User’s Content on your Facebook',
                 verification: 'Screenshot of the clients content being posted on their page',
                 CostToOrder: 100,
-                amountForTask: 3,
+                amountForTask: 50,
             },
         ]
     },
