@@ -87,6 +87,23 @@ const AdvertSingle = () => {
        
       } 
 
+
+  const renderMedia = (url) => {
+    if (url.endsWith('.jpg') || url.endsWith('.png') || url.endsWith('.jpeg')) {
+      return <img src={url} alt="Image" />;
+    } else if (url.endsWith('.mp4') || url.endsWith('.webm') || url.endsWith('.ogg')) {
+      return (
+        <video width="320" height="240" controls>
+          <source src={url} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      );
+    } else {
+      // Handle other media types if needed
+      return 'Unsupported media type';
+    }
+  };
+
     
 
     const handleDelete = (e) => {
@@ -221,9 +238,17 @@ const AdvertSingle = () => {
 
         {/* Media File */}
             <div className='w-full h-full mx-auto mt-6 md:w-[400px] md:h-[400px]'>
-              {slides?.map((image, index) => (
+              {/* {slides?.map((image, index) => (
                   <img key={index} src={image?.secure_url} alt={`Image ${index}`} />
+              ))} */}
+
+        <div className="media-slider">
+              {slides.map((url, index) => (
+                <div key={index} className="media-item">
+                  {renderMedia(url?.secure_url)}
+                </div>
               ))}
+            </div>
             </div>
         </div>
         

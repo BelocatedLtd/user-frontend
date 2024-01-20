@@ -88,6 +88,7 @@ const PaymentMethod = ({togglePaymentSelect, formData}) => {
 
         setIsLoading(true)
         const response = await createAdvert(paymentFormData)
+        console.log(response)
         setIsLoading(false)
 
         if(response) {
