@@ -17,8 +17,8 @@ const initialState = {
 const AdBuy = () => {
     const navigate = useNavigate()
     const [advert, setAdvert] = useState(initialState)
-    const [imageArray, setimageArray] = useState()
-    const [selectedImages, setSelectedImages] = useState([]);
+    const [fileArray, setFileArray] = useState([]);
+    const [selectedFiles, setSelectedFiles] = useState([]);
     const [expBudget, setExpBudget] = useState(0)
     const [costToPay, setCostToPay] = useState()
     const [earnPerTask, setEarnPerTask] = useState()
@@ -36,29 +36,45 @@ const AdBuy = () => {
       }
 
 
-   // Upload and preview multiple screenshots
+// Upload and preview multiple screenshots
 const handleImageChange = (e) => {
   const files = Array.from(e.target.files);
-  setimageArray(files)
+  setFileArray(files)
 
+  // Create an array of file previews
+  const filePreviews = files.map((file) => {
+    if (file.type.startsWith('image/')) {
+      // For image files, create preview using FileReader API
+      const reader = new FileReader();
+      return new Promise((resolve) => {
+        reader.onloadend = () => {
+          resolve(reader.result);
+        };
+        reader.readAsDataURL(file);
+      });
 
-  //Create an array of files previews
-  const filePreviews = Array.from(files).map((file) => 
-  URL.createObjectURL(file));
+    } else if (file.type.startsWith('video/')) {
+      // For video files, create preview using FileReader API
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      return new Promise((resolve) => {
+        reader.onloadend = () => {
+          resolve(reader.result);
+        };
+      });
+    }
+    // Handle other file types as needed
+    return null;
+  });
 
-  setSelectedImages(filePreviews);
-}
+  // Update state with the array of previews
+  Promise.all(filePreviews).then((previews) => {
+    setSelectedFiles((prevFiles) => [...prevFiles, ...previews]);
+  });
+};
 
-//Remove uploaded images
-const handleImageRemove = (imagePreview) => {
-  //filter out the selected image and update the state
-  const updatedImages = selectedImages.filter((preview) => preview !== imagePreview);
-
-  setSelectedImages(updatedImages);
-
-  //Revoke the object URL to release memory
-  URL.revokeObjectURL(imagePreview);
-  toast.success("Image discarded successfully")
+const handleImageRemove = (itemToRemove) => {
+  setSelectedFiles((prevFiles) => prevFiles.filter((item) => item !== itemToRemove));
 };
 
 
@@ -85,8 +101,8 @@ const handleImageRemove = (imagePreview) => {
        adTitle={adTitle}
        advert={advert} 
        handleImageRemove={handleImageRemove}
-       selectedImages={selectedImages}
-       imageArray={imageArray}
+       selectedFiles={selectedFiles}
+       fileArray={fileArray}
        handleInputChange={handleInputChange} 
        handleImageChange={handleImageChange} 
        expBudget= {expBudget}

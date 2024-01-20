@@ -21,6 +21,8 @@ const getAuthHeaders = () => {
 export const createAdvert = async (adFormData) => {
     const headers = getAuthHeaders();
     const response = await axios.post(`${BACKEND_URL}/api/adverts/create`, adFormData, headers)
+    // console.log(response.data)
+    // return
    return response.data
 }
 

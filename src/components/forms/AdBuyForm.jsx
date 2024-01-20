@@ -12,7 +12,7 @@ import { selectUser } from '../../redux/slices/authSlice'
 import { GiCancel } from 'react-icons/gi'
 
 
-const AdBuyForm = ({advert, service, adTitle, platform, selectedImages, imageArray, socialService, handleImageRemove, expBudget, costToPay, earnPerTask, handleInputChange, handleImageChange }) => {
+const AdBuyForm = ({advert, service, adTitle, platform, selectedFiles, fileArray, socialService, handleImageRemove, expBudget, costToPay, earnPerTask, handleInputChange, handleImageChange }) => {
     const [mediaTypeImage, setMediaTypeImage] = useState('image')
     const [selectPaymentBtn, setSelectPaymentBtn] = useState(false)
     const [hideCommentInputFields, setHideCommentInputFields] = useState(false)
@@ -108,7 +108,7 @@ const AdBuyForm = ({advert, service, adTitle, platform, selectedImages, imageArr
       desiredROI: advert.roi,
       gender: advert.gender,
       state: selectedState,
-      imageArray: imageArray,
+      imageArray: fileArray,
       lga: selectedCommunity,
       caption: advert.adText,
       socialPageLink: advert.socialPageLink,
@@ -119,6 +119,13 @@ const AdBuyForm = ({advert, service, adTitle, platform, selectedImages, imageArr
 
     const togglePaymentSelect = (e) => {
       e.preventDefault()
+
+      if (expBudget < 1000) {
+        toast.error("Cost of Ad too low, increase your Unit")
+        return
+      }
+
+
 
       if (hideImageInputFields === true) {
         if (!service || !adTitle || !advert.roi || !advert.gender || !selectedState || !selectedCommunity || !expBudget ) {
@@ -152,7 +159,7 @@ const AdBuyForm = ({advert, service, adTitle, platform, selectedImages, imageArr
   return (
     <div className='w-full h-fit'>
       {selectPaymentBtn && <PaymentMethod togglePaymentSelect={togglePaymentSelect} formData={formData} />}
-       <form onSubmit={togglePaymentSelect} className='w-fit md:w-full p-6 border border-semi_tertiary rounded-2xl flex flex-col text-center gap-6'>
+       <form onSubmit={togglePaymentSelect} enctype="multipart/form-data" className='w-fit md:w-full p-6 border border-semi_tertiary rounded-2xl flex flex-col text-center gap-6'>
                 <div className='form__container flex flex-col w-full md:flex-row'>
                   <div className='left flex-1 md:border-r md:border-gray-100 md:pr-5'>
 
@@ -174,13 +181,13 @@ const AdBuyForm = ({advert, service, adTitle, platform, selectedImages, imageArr
                             </div>
 
                              {/* Unit's total cost */}
-                            <div className='flex flex-col mb-3 justify-center'>
-                            <label className='text-left mb-1 ml-1 text-sm'>You will Pay:</label>
+                            <div className='flex flex-col justify-center'>
+                            <label className='text-left ml-1 text-sm'>You will Pay:</label>
                             <div className='flex items-center ml-2'>
                             <span>₦</span>
                             <input type="number" placeholder='' value={expBudget} disabled className='w-fit md:w-full text-gray-800 bg-transparent text-sm font-extrabold'/>
                             </div>
-                              
+                            <small className='text-[9px] text-left ml-2 text-red-600'>Minimum ₦1,000</small>
                             </div>
                           </div>
                           
@@ -271,16 +278,32 @@ const AdBuyForm = ({advert, service, adTitle, platform, selectedImages, imageArr
                     <div className=''>
                         <label htmlFor="media" className='my-6'>Campaign Media</label>
                         <div className='w-full h-full flex flex-col pt-[1rem] items-center border-gray-200'>
+
                             {/* Upload Ad Media Contents */}
                             <label htmlFor="upload proof of work" className='text-gray-500 font-bold text-center mb-[1rem]'>Upload Ad Media Contents</label>
                                 <div className='w-full h-fit flex flex-wrap items-center justify-center gap-2 p-5'>
-                                {selectedImages?.map((item, index) => (   
-                                  <div key={index} className='relative w-[200px] h-[200px]'>
-                                    <img  src={item} alt="preview" className='w-full h-full object-cover'/>
-                                    <GiCancel  size={20} className='absolute text-tertiary top-0 right-0 pr-1 pt-1' onClick={(e) => handleImageRemove(item)}/>
-                                  </div> 
-                                    
-                                ))}
+                                
+                {/* Display image and video previews */}
+                {selectedFiles?.map((item, index) => {
+                if (item && typeof item === 'string') {
+                  // Image or video preview
+                  return (
+                    <div key={index} className='relative w-[200px] h-[200px]'>
+                      {item.startsWith('data:image') ? (
+                        <img src={item} alt="preview" className='w-full h-full object-cover'/>
+                      ) : item.startsWith('data:video') ? (
+                        <video controls className='w-full h-full object-cover'>
+                          <source src={item} type='video/mp4' />
+                          Your browser does not support the video tag.
+                        </video>
+                      ) : null}
+                      <GiCancel size={20} className='absolute text-tertiary top-0 right-0 pr-1 pt-1' onClick={() => handleImageRemove(item)}/>
+                    </div>
+                  );
+                }
+                // Handle other file types as needed
+                return null;
+              })}
                                 </div>
                                 
                             {/* File Upload Input Tag  */}
