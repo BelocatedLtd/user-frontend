@@ -117,21 +117,37 @@ useEffect(() => {
   }
 
   const handleDownload = async(mediaUrl, mediaName) => {
-    
+    // try {
+    //   setIsDownloading(true)
+    //   toast.success('Downloading media file...')
+    //   const response = await fetch(mediaUrl);
+    //   const blob = await response.blob();
+    //   saveAs(blob, 'ad_image.jpg');
+     
+    //   setIsDownloading(false)
+    //  toast.success("Ad image downloaded successfully!")
+      
+    // } catch (error) {
+    //   setIsDownloading(false)
+    //   console.error('Error occured during download:', error)
+    // }
 
     try {
-      setIsDownloading(true)
-      toast.success('Downloading media file...')
+      setIsDownloading(true);
+      toast.success('Downloading media file...');
+  
       const response = await fetch(mediaUrl);
+      const contentType = response.headers.get('content-type');
+      const fileExtension = contentType.includes('image') ? '.jpg' : contentType.includes('video') ? '.mp4' : '';
+  
       const blob = await response.blob();
-      saveAs(blob, 'ad_image.jpg');
-     
-      setIsDownloading(false)
-     toast.success("Ad image downloaded successfully!")
-      
+      saveAs(blob, `${mediaName}${fileExtension}`);
+  
+      setIsDownloading(false);
+      toast.success("Media file downloaded successfully!");
     } catch (error) {
-      setIsDownloading(false)
-      console.error('Error occured during download:', error)
+      setIsDownloading(false);
+      console.error('Error occurred during download:', error);
     }
   }
  
@@ -216,7 +232,7 @@ useEffect(() => {
                 <div className='w-fit flex flex-col text-center items-center mx-auto md-w-500px mb-[2rem]'>
                 <label  className='text-gray-500 font-bold text-center mb-[1rem]'>Download Media:</label>
                 <p><span className='text-tertiary'>NOTE:</span> Download the media below and post on your WhatsApp status</p>
-                {adMedia?.map((image, index) => (
+                {/* {adMedia?.map((image, index) => (
                   <div key={index} className='my-[2rem]'>
                   <img src={image?.secure_url} alt={`Image ${index}`} />
 
@@ -225,7 +241,31 @@ useEffect(() => {
                     {isDownloading && ('Downloading...')}
                   </button>
                   </div>
-                ))}
+                ))} */}
+
+                {/* Display image and video previews */}
+                {adMedia?.map((item, index) => {
+                  // Image or video preview
+                  return (
+                    <div key={index} className='my-[2rem]'>
+                      {item?.secure_url.endsWith('.jpg') || item?.secure_url.endsWith('.png') || item?.secure_url.endsWith('.jpeg') ? (
+                        <img src={item?.secure_url} alt="preview" className='w-full h-full object-cover'/>
+                      ) : item?.secure_url.endsWith('.mp4') || item?.secure_url.endsWith('.webm') || item?.secure_url.endsWith('.ogg') ? (
+                        <video controls className='w-full h-full object-cover'>
+                          <source src={item?.secure_url} type='video/mp4' />
+                          Your browser does not support the video tag.
+                        </video>
+                      ) : null}
+                   
+                   <button onClick={() => handleDownload(item?.secure_url, item?.public_id)} className='bg-green-700 text-gray-50 px-5 py-2 rounded-2xl mt-[1rem] hover:bg-tertiary'>
+                    {!isDownloading && ('Download')}
+                    {isDownloading && ('Downloading...')}
+                  </button>
+                    </div>
+                  );
+                // Handle other file types as needed
+                return null;
+              })}
                 </div>
               ) : ""}
               

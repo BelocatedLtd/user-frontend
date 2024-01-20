@@ -50,7 +50,7 @@ const TaskEarn = () => {
 
         getAllTasks()
         
-  }, [dispatch, user.email])
+  }, [dispatch, user?.email])
 
 
     useEffect(() => {
