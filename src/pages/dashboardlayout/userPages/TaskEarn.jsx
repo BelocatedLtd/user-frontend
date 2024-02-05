@@ -198,7 +198,7 @@ const TaskEarn = () => {
 
         <div className='md:px-8 mt-3 md:mt-8'>
          {finalFilteredTasks?.map((task, index) => (
-            <div key={index} className='w-full flex flex-col md:flex-row pl-[3rem] md:items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
+            <div key={index} className='w-full flex flex-col md:flex-row pl-[1rem] md:items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
                 <div className='w-[70%] flex flex-col gap-2 md:items-center md:flex-row'>
                     <img src={icon} alt={platformName} className='hidden md:flex'/>
                     <div className='flex flex-col'>
