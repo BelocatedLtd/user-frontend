@@ -33,6 +33,16 @@ const Tasks = () => {
   
   }, [isError, dispatch])
 
+  useEffect(() => {
+
+    const filteredTasks = tasks?.filter(task => task?.status !== 'Awaiting Submission')
+    setSortedTasks(filteredTasks)
+
+  
+  }, [tasks])
+
+  
+
   const columns = [
     {
       name: 'Title',

@@ -172,7 +172,7 @@ useEffect(() => {
                     <div className='flex flex-col gap-3'>
                     {/* {setCreatedAtDate(formatDate(newTask?.createdAt))} */}
                         {/* <small>{createdAtDate}</small> */}
-                        <p className='text-gray-500 text-[15px]'>{newTask?.title}</p>
+                        <p className='text-gray-800 text-sm md:text-[15px]'>{newTask?.title}</p>
                         <div className='flex flex-col gap-2'>
                           <div className='flex items-center gap-2'>
                             <div className='text-gray-600 text-[9px] flex gap-1 items-center mt-2'>
@@ -202,7 +202,7 @@ useEffect(() => {
 
             {/* Message from Admin */}
             {newTask?.message ? (
-              <div className='w-full md-w-500px text-center mb-[2rem]'>
+              <div className='w-full md:w-[500px] text-center mb-[2rem]'>
                 <label  className='text-gray-500 font-bold text-center mb-[1rem]'>Message from Admin:</label>
                 <p className='text-gray-600 font-normal'>
                   {newTask?.message}

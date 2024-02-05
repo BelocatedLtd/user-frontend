@@ -24,7 +24,7 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
     
 
   return (
-    <div className='relative shadow-lg flex w-full md:w-[95%] h-fit mt-5 mb-[2rem] bg-[#fcfcfc] p-[2rem] rounded-2xl rounded-tr-none md:p-[3rem]'>
+    <div className='relative shadow-lg flex md:w-[95%] h-fit mt-5 mb-[2rem] bg-[#fcfcfc] p-[1.5rem] rounded-2xl rounded-tr-none md:p-[3rem]'>
         {/* Close icon to delete ad campaign */}
         {status == 'pending' && 
         <img src={close}  alt="close" size={20} className='absolute top-[-0.4rem] right-[-0.4rem] text-tertiary w-[28px] h-[28px]' />}
@@ -35,13 +35,13 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
         </div>
 
         {/* ad details left */}
-        <div className='w-[92%] flex flex-3 flex-col'>
+        <div className='w-full md:w-[92%] flex flex-3 flex-col'>
 
         {/* ad details first layer */}
         <div className='flex flex-col mb-[1.5rem] border-b border-gray-100 pb-4'>
             <small className='text-gray-400 font-semibold'>{formatDate(date)}</small>
-            <h1 className='w-fit px-2 font-bold text-lg'>{title}</h1>
-            <small className='text-gray-400 font-semibold'>Pricing: ₦{adperPostAmt} per advert post</small>
+            <h1 className='w-fit px-2 font-bold text-sm md:text-lg'>{title}</h1>
+            <small className='text-[9px] text-gray-400 font-semibold'>Pricing: ₦{adperPostAmt} per advert post</small>
         </div>
 
         <div className='flex flex-col md:flex-row gap-2 justify-between'>

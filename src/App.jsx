@@ -109,7 +109,11 @@ const handleCloseMenu = () => {
       
       <Routes>
       
-      <Route path="/success" element={<PasswordChangeSuccess handleLogin={handleLogin} handleRegister={handleRegister} loginBtn={loginBtn} regBtn={regBtn} handleCloseMenu={handleCloseMenu}/>} />
+      <Route path="/success" element={<PasswordChangeSuccess handleLogin={handleLogin} handleRegister={handleRegister} 
+      loginBtn={loginBtn} regBtn={regBtn} handleCloseMenu={handleCloseMenu}/>} />
+
+      <Route path="/register/ref/:refusername" element={<RefRegister />}/>
+      
         <Route path="/" element={<MainLayout handleRegister={handleRegister} regBtn={regBtn}/>}>
           <Route index element={<Home handleLogin={handleLogin} handleRegister={handleRegister} loginBtn={loginBtn} regBtn={regBtn} handleCloseMenu={handleCloseMenu}/>}/>
           {/* <Route index element={<Maintainance />}/> */}
@@ -127,7 +131,7 @@ const handleCloseMenu = () => {
         </Route>
 
         <Route path="/" element={<AuthLayout />}>
-          <Route path="/register/ref/:referrerId" element={<RefRegister />}/>
+          {/* <Route path="/register/ref/:refusername" element={<RefRegister />}/> */}
           <Route path="/login" element={<Login />}/>
           <Route path="/logout" element={<Logout />}/>
           <Route path="/confirm-pass" element={<ConfirmPassword />}/>

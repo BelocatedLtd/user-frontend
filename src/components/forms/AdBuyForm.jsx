@@ -157,9 +157,9 @@ const AdBuyForm = ({advert, service, adTitle, platform, selectedFiles, fileArray
 
 
   return (
-    <div className='w-full h-fit'>
+    <div className='w-full h-fit '>
       {selectPaymentBtn && <PaymentMethod togglePaymentSelect={togglePaymentSelect} formData={formData} />}
-       <form onSubmit={togglePaymentSelect} enctype="multipart/form-data" className='w-fit md:w-full p-6 border border-semi_tertiary rounded-2xl flex flex-col text-center gap-6'>
+       <form onSubmit={togglePaymentSelect} enctype="multipart/form-data" className='w-fit md:w-full p-5 md:p-6 m-1 md:m-0 md:mr-6 border border-semi_tertiary rounded-2xl flex flex-col text-center gap-6'>
                 <div className='form__container flex flex-col w-full md:flex-row'>
                   <div className='left flex-1 md:border-r md:border-gray-100 md:pr-5'>
 

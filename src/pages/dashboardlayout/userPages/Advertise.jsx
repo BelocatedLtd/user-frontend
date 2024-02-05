@@ -50,7 +50,7 @@ const Advertise = () => {
     
   return (
     <div className='w-full h-fit'>
-        <div className='justify-between mx-auto mr-5'>
+        <div className='justify-between mx-auto md:mr-5'>
             <div className='flex items-center gap-3 border-b border-gray-200 pb-6'>
                 <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))}/>
                 <div className='flex flex-col'>

@@ -12,7 +12,7 @@ const SidebarItems = ({item, isOpen}) => {
             <div className='sidebar-title'>
                 <span>
                 {item.icon && <div className='icon'>{item.icon}</div>}
-                {isOpen && <div>{item.title}</div>}
+                {isOpen && <div className=''>{item.title}</div>}
                 </span>
             </div>
 

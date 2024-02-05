@@ -25,7 +25,7 @@ const initialState = {
 }
 
 const Register = ({showLoginModal, closeModal}) => {
-  const referrerId = useParams()
+  const refusername = useParams()
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
@@ -56,10 +56,10 @@ const Register = ({showLoginModal, closeModal}) => {
       }
 
       const formData = {
-        username: username.toLowerCase(), 
-        email: email.toLowerCase(),
+        username: username?.toLowerCase(), 
+        email: email?.toLowerCase(),
         password,
-        referrerId: referrerId ? referrerId : ''
+        refusername: refusername ? refusername : ''
       }
 
       setIsLoading(true)

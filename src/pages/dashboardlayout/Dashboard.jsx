@@ -44,7 +44,7 @@ const Dashboard = () => {
           const data = await getUser()
 
           if (!data || data === undefined) {
-            toast.error('Unable to retrieve user data, session will be terminated')
+           // toast.error('Unable to retrieve user data, session will be terminated')
             await dispatch(SET_LOGOUT())
             navigate('/')
             return
@@ -56,7 +56,7 @@ const Dashboard = () => {
      getUserData()
 
     const frontEndUrl = window.location.hostname;
-    setRefLink(`https://${frontEndUrl}/register/ref/${user?.id}`)
+    setRefLink(`https://${frontEndUrl}/register/ref/${user?.username}`)
   }, [dispatch])
 
   const handleEarn = (e) => {
@@ -97,7 +97,7 @@ const Dashboard = () => {
 
   return (
     <div className='w-full h-fit'>
-        <div className='justify-between mx-auto mr-3'>
+        <div className='justify-between mx-auto md:mr-3'>
         
             <div className={`hero__section flex flex-col w-full h-fit px-5 py-[3rem]  border ${profileComplete ? ('border-tertiary') : ('border-gray-200')} md:flex-row`}>
               <div className='hidden left w-full md:flex md:flex-1'>

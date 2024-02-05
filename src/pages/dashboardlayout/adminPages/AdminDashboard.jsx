@@ -64,7 +64,7 @@ const AdminDashboard = () => {
   return (
     <div className='w-full h-fit flex flex-col'>
       
-      <div className='widgets flex flex-wrap p-[20px] gap-[20px]'>
+      <div className='widgets flex flex-wrap md:p-[20px] mb-[3rem] gap-[20px]'>
         <Widgets type="users" totalUsers={users} />
         <Widgets type="adverts" totalAdverts={adsList} />
         <Widgets type="transactions" totalTrx={transactions} />
@@ -76,7 +76,7 @@ const AdminDashboard = () => {
         <ActivityFeed />
       </div> */}
 
-      <div className='listContainer shadow-lg m-[20px]'>
+      <div className='listContainer shadow-lg md:m-[20px]'>
         <div className="listTitle font-semibold text-gray-600 m-[15px]">
           Latest Adverts
         </div>

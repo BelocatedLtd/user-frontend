@@ -45,7 +45,7 @@ const Login = ({showRegModal, closeModal}) => {
     }
 
     const formData = {
-      email: email.toLowerCase(), 
+      email: email?.toLowerCase(), 
       password
     }
 

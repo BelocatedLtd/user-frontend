@@ -126,7 +126,7 @@ const AdvertSingle = () => {
       <div className='container shadow-xl py-[2rem] px-[2rem] mt-[2rem]'>
         {/* Advertiser Details */}
         <div className='box flex flex-col border-b border-gray-100 p-3 pb-6'>
-        <label htmlFor="adverter" className='text-secondary text-[25px] font-bold'>Avertiser</label>
+        <label htmlFor="adverter" className='text-center md:text-start text-secondary text-[25px] font-bold'>Avertiser</label>
         <div className='flex flex-col items-center gap-3 mt-3 md:flex-row'>
           <FaUser size={300} className='text-gray-800 border border-gray-100 p-[2rem] rounded-full'/>
           <div className='flex flex-col text-center gap-1 md:text-left'>

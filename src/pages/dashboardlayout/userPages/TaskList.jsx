@@ -92,8 +92,8 @@ const TaskList = () => {
 
                         {/* <p className='text-gray-500 text-[15px]'>{task.caption}</p> */}
 
-                        <div className='flex items-center gap-2'>
-                        <ul className='flex gap-3 text-[13px]'>
+                        <div className='flex flex-col gap-2'>
+                        <ul className='flex flex-col gap-3 text-[13px]'>
                             <li>State: {task.state}</li>
                             <li>LGA: {task.lga}</li>
                             {task.socialPageLink
@@ -101,11 +101,15 @@ const TaskList = () => {
 
                             
                         </ul>
-                        <img src={icons?.find((icon) => icon.platform === task.platform)?.icon} alt={task?.platform} className='flex md:hidden w-[20px] h-[20px]'/>
 
-                        <div className='flex md:hidden'>
-                            {checkTaskStatus(task?._id, task.status)}
+                        <div className='flex gap-2 items-center'>
+                            <img src={icons?.find((icon) => icon.platform === task.platform)?.icon} alt={task?.platform} className='flex md:hidden w-[20px] h-[20px]'/>
+
+                            <div className='flex md:hidden'>
+                                {checkTaskStatus(task?._id, task.status)}
+                            </div>
                         </div>
+                        
                     </div>
                     </div>
                 </div>

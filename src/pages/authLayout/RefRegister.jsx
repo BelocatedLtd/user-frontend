@@ -17,7 +17,7 @@ const initialState = {
 }
 
 const RefRegister = () => {
-  const {referrerId} = useParams()
+  const {refusername} = useParams()
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
@@ -36,16 +36,16 @@ const RefRegister = () => {
         setValues({ ...values, [name]: value })
       }
 
-      if (!referrerId) {
+      if (!refusername) {
         toast.error("Error trying to register")
         return 
       }
 
       const formData = {
-        username: username.toLowerCase(), 
-        email: email.toLowerCase(),
+        username: username?.toLowerCase(), 
+        email: email?.toLowerCase(),
         password,
-        referrerId
+        refusername
       }
 
     const toggleEmailVerifyModal = async (e) => {
@@ -68,7 +68,7 @@ const RefRegister = () => {
       setIsLoading(true)
       const response = await createNewUserRef(formData)
 
-      console.log(response)
+      // console.log(response)
 
       if (!response) {
         toast.error("Error trying to register user")
@@ -80,7 +80,7 @@ const RefRegister = () => {
         return
       }
 
-      if (!response._id) {
+      if (!response?._id) {
         toast.error("user not registered")
         return
       }
@@ -163,7 +163,7 @@ const RefRegister = () => {
                 <div className='w-full mt-[3rem]'>
                     <div className='flex gap-1 justify-center text-[9px]'>
                     <label>Referred By:</label>
-                    <p>@{referrerId}</p>
+                    <p>@{refusername}</p>
                     </div>
                 </div>
             </div>

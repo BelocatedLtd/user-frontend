@@ -74,7 +74,7 @@ html,
 body {
   height: 100%;
   width: 100%;
-    font-family: GT Walsheim Pro, sans-serif;
+  font-family: GT Walsheim Pro, sans-serif;
 }
 
 .wrapper {
@@ -139,7 +139,7 @@ button {
     padding: 0.75em 1em;
     display: block;
     border-radius: 5px;
-    border-bottom: 2px solid #ccc;
+    /* border-bottom: 2px solid #ccc; */
     background-color: rgba(255, 255, 255, 0.1);
     transition: background-color 0.15s;
   }

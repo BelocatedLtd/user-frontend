@@ -162,8 +162,8 @@ const socialPlatforms = [
             },
             {
                 asset: 'Comment',
-                SC: 'Get People To Comment on Your Instagram Post',
-                TD: 'Get Paid For Commenting on User’s Instagram Post',
+                SC: 'Get People To Comment on Your Tweet',
+                TD: 'Get Paid For Commenting on User’s Tweet',
                 verification: 'Screenshot showing user commented based on comment options and samples sent by client or something close',
                 CostToOrder: 20,
                 amountForTask: 10,

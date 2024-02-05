@@ -63,7 +63,7 @@ const UserSingle = () => {
               <small className='font-medium text-gray-500'>Here you can see the user details and perform all sorts of actions on it.</small>
           </div>
       </div>
-      <div className='box flex flex-col border-b border-gray-100 p-3 pb-6 ml-5'>
+      <div className='box flex flex-col border-b border-gray-100 p-3 pb-6 md:ml-5'>
         <div className='flex flex-col items-center gap-3 mt-3 md:flex-row'>
           <FaUser size={300} className='text-gray-800 border border-gray-100 p-[2rem] rounded-full'/>
           {/* User Details Hero Section */}

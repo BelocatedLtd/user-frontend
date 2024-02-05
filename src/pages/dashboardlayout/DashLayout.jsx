@@ -13,9 +13,9 @@ const DashLayout = ({children}) => {
  //useRedirectLoggedOutUser('/')
 
   return (
-    <div className=''>
+    <div className='w-full'>
         <Header />
-        <div style={{minHeight: "80vh"}} className='flex p-6'>
+        <div style={{minHeight: "80vh"}} className='flex p-1 md:p-6 w-full'>
         {children}
         </div>
         <Footer />

@@ -52,7 +52,7 @@ const CampaignStats = () => {
                   <button onClick={() => navigate('/dashboard/advertise')} className='flex items-center gap-1 bg-secondary text-primary rounded-full px-5 py-2 mr-5 text-[12px] md:text-[15px] hover:bg-tertiary'><BsFillPlusCircleFill />Campaign</button>
       </div>
 
-      <div className='w-fit md:w-full'>
+      <div className='w-full'>
         {adverts.map((item) => (
           <AdItem  
             key={item._id}
