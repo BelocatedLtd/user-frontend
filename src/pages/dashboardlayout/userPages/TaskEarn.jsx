@@ -192,27 +192,27 @@ const TaskEarn = () => {
             </div>
 
             <div className='flex items-center gap-3 border-b border-gray-200'>
-                <p className='font-normal text-[14px] text-gray-700 p-6'>You can earn consistently by posting adverts of various businesses and top brands on your social media accounts and performing simple social media tasks. There are <span className='text-tertiary font-bold'>({finalFilteredTasks.length})</span> tasks you are qualified to perform on {platformName}. To get started, simply click on any of the earning options shown below:</p>
+                <p className='font-normal text-[14px] text-gray-700 p-6'>You can earn consistently by posting adverts of various businesses and top brands on your social media accounts and performing simple social media tasks. There are <span className='text-tertiary font-bold'>({finalFilteredTasks.length})</span> tasks you are qualified to perform on {platformName}. To get started, simply click on any of the earning options shown below:</p> 
             </div>
         </div>
 
-        <div className='w-full mt-5 md:px-8 md:mt-8'>
+        <div className='md:px-8 mt-3 md:mt-8'>
          {finalFilteredTasks?.map((task, index) => (
-            <div key={index} className='w-full flex flex-col md:flex-row items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
-                <div className='w-[70%] flex flex-col gap-2 items-center md:flex-row'>
+            <div key={index} className='w-full flex flex-col md:flex-row pl-[3rem] md:items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
+                <div className='w-[70%] flex flex-col gap-2 md:items-center md:flex-row'>
                     <img src={icon} alt={platformName} className='hidden md:flex'/>
                     <div className='flex flex-col'>
                         {/* Ad details to perform as Task */}
                         <div className='flex flex-col gap-[0.9rem]'>
                             <small className='mb-[0.4rem] text-[9px] '>{formatDate(task?.createdAt)}</small>
                             <h4 className='text-gray-600 text-[15px] md:text-[18px] font-bold my-[-5px] p-0'>{taskTitle}</h4>
-                            <small className='text-gray-600 text-[9px] mb-[1rem]'><span className='font-bold'>To Earn:</span> ₦{task?.earnPerTask}</small>
+                            <small className='text-gray-600 text-[12px] mb-[1rem]'><span className='font-bold'>To Earn:</span> ₦{task?.earnPerTask}</small>
                         </div>
 
                         {/* Demographics and platform and create task button */}
                         <div className='flex flex-col w-full gap-3 md:flex-row'>
                             <div className='flex w-full items-center gap-[2rem]'>
-                            <ul className='flex gap-3 text-[12px] font-light'>
+                            <ul className='flex flex-col md:flex-row gap-3 text-[12px] font-light'>
                                 <li><span className='font-bold'>State:</span> {task.state}</li> 
                                 <li><span className='font-bold'>LGA:</span> {task.lga}</li>
                                 <li><span className='font-bold'>Status:</span> {tasks?.find((task) => 
@@ -221,10 +221,11 @@ const TaskEarn = () => {
             {task.socialPageLink
  ? (<li><span className='font-bold'>Link:</span> <a href={task.socialPageLink} className='text-blue-600'>{task.socialPageLink}</a></li>) : ("")}
                             </ul>
-                            <img src={icon} alt={platformName} className='flex w-[20px] h-[20px] md:hidden'/>
+                            
                             </div>
 
-                            <div className='md:hidden w-fit flex md:mt-0 md:w-full md:justify-end'>
+                            <div className='md:hidden w-fit flex gap-3 items-center md:mt-0 md:w-full md:justify-end'>
+                                <img src={icon} alt={platformName} className='flex w-[20px] h-[20px] md:hidden'/>
                                 {checkTaskExistence(task._id)}
                             </div>
                         </div>
