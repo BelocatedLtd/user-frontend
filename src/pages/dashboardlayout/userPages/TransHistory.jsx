@@ -35,7 +35,7 @@ const TransHistory = () => {
   return (
     <div className='w-full h-fit'>
       {isLoading && <Loader />}
-      <div className='flex items-center justify-between gap-3 border-b border-gray-200 pb-6'>
+      <div className='flex items-center justify-between gap-3 border-b border-gray-200 py-5'>
                 <div className='flex items-center'>
                   <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))} className='mr-1'/>
                       <div className='flex flex-col'>

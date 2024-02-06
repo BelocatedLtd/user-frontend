@@ -132,7 +132,7 @@ const Tasks = () => {
 
   return (
     <div className='w-full mx-auto mt-[2rem]'>
-      <div className='flex items-center justify-between mb-[2rem]'>
+      <div className='flex items-center justify-between mb-[2rem] py-5'>
                 <div className='flex items-center'>
                 <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))} className='mr-1'/>
                     <p className='font-semibold text-xl text-gray-700'>Tasks</p>

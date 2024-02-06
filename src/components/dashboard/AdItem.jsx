@@ -39,8 +39,8 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
 
         {/* ad details first layer */}
         <div className='flex flex-col mb-[1.5rem] border-b border-gray-100 pb-4'>
-            <small className='text-gray-400 font-semibold'>{formatDate(date)}</small>
-            <h1 className='w-fit px-2 font-bold text-sm md:text-lg'>{title}</h1>
+            <small className='text-gray-400 font-semibold text-[9px]'>{formatDate(date)}</small>
+            <h1 className='font-bold text-sm md:text-lg text-gray-800'>{title}</h1>
             <small className='text-[9px] text-gray-400 font-semibold'>Pricing: ₦{adperPostAmt} per advert post</small>
         </div>
 

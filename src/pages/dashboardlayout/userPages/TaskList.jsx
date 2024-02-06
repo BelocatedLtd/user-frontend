@@ -72,7 +72,7 @@ const TaskList = () => {
     <div className='w-full h-fit'>
     {isLoading && <Loader />}
         <div>
-            <div className='flex items-center gap-3 border-b border-gray-200 pb-6'>
+            <div className='flex items-center gap-3 border-b border-gray-200 py-5'>
                     <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))}/>
                     <div className='flex flex-col'>
                         <p className='font-semibold text-xl text-gray-700'>Your Ongoing Tasks</p>

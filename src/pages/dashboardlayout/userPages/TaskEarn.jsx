@@ -183,7 +183,7 @@ const TaskEarn = () => {
     <div className='w-full h-fit'>
         {isLoading && <Loader />}
         <div>
-            <div className='flex items-center gap-3 border-b border-gray-200 pb-6'>
+            <div className='flex items-center gap-3 border-b border-gray-200 py-5'>
                     <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))}/>
                     <div className='flex flex-col'>
                         <p className='font-semibold text-xl text-gray-700'>Perform Social Tasks on {platformName} and Earn Money</p>
@@ -198,14 +198,14 @@ const TaskEarn = () => {
 
         <div className='md:px-8 mt-3 md:mt-8'>
          {finalFilteredTasks?.map((task, index) => (
-            <div key={index} className='w-full flex flex-col md:flex-row pl-[1rem] md:items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
-                <div className='w-[70%] flex flex-col gap-2 md:items-center md:flex-row'>
+            <div key={index} className='w-full flex flex-col md:flex-row  md:items-center justify-between bg-gray-50 md:p-6 mb-[2rem] shadow-lg'>
+                <div className='w-full md:w-[70%] flex flex-col px-6 py-8 gap-2 md:items-center md:flex-row'>
                     <img src={icon} alt={platformName} className='hidden md:flex'/>
-                    <div className='flex flex-col'>
+                    <div className='w-full flex flex-col'>
                         {/* Ad details to perform as Task */}
                         <div className='flex flex-col gap-[0.9rem]'>
-                            <small className='mb-[0.4rem] text-[9px] '>{formatDate(task?.createdAt)}</small>
-                            <h4 className='text-gray-600 text-[15px] md:text-[18px] font-bold my-[-5px] p-0'>{taskTitle}</h4>
+                            <small className='md:mb-[0.4rem] text-[9px] '>{formatDate(task?.createdAt)}</small>
+                            <h4 className='text-gray-600 text-[15px] md:text-[18px] font-bold my-[-5px] p-0 border-b border-gray-200 pb-2'>{taskTitle}</h4>
                             <small className='text-gray-600 text-[12px] mb-[1rem]'><span className='font-bold'>To Earn:</span> ₦{task?.earnPerTask}</small>
                         </div>
 
