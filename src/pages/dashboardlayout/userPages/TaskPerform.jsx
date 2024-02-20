@@ -31,7 +31,7 @@ import { BsGlobe } from 'react-icons/bs'
 import { BiArrowToLeft } from 'react-icons/bi'
 
 
-const TaskPerform = ({taskId, userSocialName, selectedImages, taskSubmitted, handleOnSubmit, handleInputChange, handleImageChange, handleImageRemove, isLoading, icons}) => {
+const TaskPerform = ({taskId, ad, userSocialName, selectedImages, taskSubmitted, handleOnSubmit, handleInputChange, handleImageChange, handleImageRemove, isLoading, icons}) => {
   const linkRef = useRef(null)
   const adCaptionRef = useRef(null)
   const user = useSelector(selectUser)
@@ -67,8 +67,6 @@ useEffect(() => {
 
   setAdMedia(selecectTask?.adMedia)
 }, [])
-
-
 
 
 //Filter for different services and platforms
@@ -117,21 +115,6 @@ useEffect(() => {
   }
 
   const handleDownload = async(mediaUrl, mediaName) => {
-    // try {
-    //   setIsDownloading(true)
-    //   toast.success('Downloading media file...')
-    //   const response = await fetch(mediaUrl);
-    //   const blob = await response.blob();
-    //   saveAs(blob, 'ad_image.jpg');
-     
-    //   setIsDownloading(false)
-    //  toast.success("Ad image downloaded successfully!")
-      
-    // } catch (error) {
-    //   setIsDownloading(false)
-    //   console.error('Error occured during download:', error)
-    // }
-
     try {
       setIsDownloading(true);
       toast.success('Downloading media file...');
@@ -174,10 +157,20 @@ useEffect(() => {
                         {/* <small>{createdAtDate}</small> */}
                         <p className='text-gray-800 text-sm md:text-[15px]'>{newTask?.title}</p>
                         <div className='flex flex-col gap-2'>
-                          <div className='flex items-center gap-2'>
+                          <div className='flex flex-col items-center gap-2 md:flex-row'>
                             <div className='text-gray-600 text-[9px] flex gap-1 items-center mt-2'>
                               <label htmlFor="pricing" className='font-bold'>To Earn:</label>
                               <p>₦{newTask?.toEarn}/task</p> 
+                            </div>
+
+                            <div className='text-gray-600 text-[9px] flex gap-1 items-center mt-2'>
+                              <label htmlFor="pricing" className='font-bold'>Tasks Submitted Already:</label>
+                              <p>{ad?.tasks}</p> 
+                            </div>
+
+                            <div className='text-gray-600 text-[9px] flex gap-1 items-center mt-2'>
+                              <label htmlFor="pricing" className='font-bold'>Units Left:</label>
+                              <p className={`${ad?.desiredROI < 2 ? ('text-red-800 font-bold') : ('text-green-800')}`}>{ad?.desiredROI}</p> 
                             </div>
                             <img src={icons?.find((icon) => icon.platform === newTask?.platform)?.icon} alt={newTask?.platform} className='md:hidden w-[25px] h-[25px]'/>
                           </div>
@@ -232,16 +225,6 @@ useEffect(() => {
                 <div className='w-fit flex flex-col text-center items-center mx-auto md-w-500px mb-[2rem]'>
                 <label  className='text-gray-500 font-bold text-center mb-[1rem]'>Download Media:</label>
                 <p><span className='text-tertiary'>NOTE:</span> Download the media below and post on your WhatsApp status</p>
-                {/* {adMedia?.map((image, index) => (
-                  <div key={index} className='my-[2rem]'>
-                  <img src={image?.secure_url} alt={`Image ${index}`} />
-
-                  <button onClick={() => handleDownload(image?.secure_url, image?.public_id)} className='bg-green-700 text-gray-50 px-5 py-2 rounded-2xl mt-[1rem] hover:bg-tertiary'>
-                    {!isDownloading && ('Download')}
-                    {isDownloading && ('Downloading...')}
-                  </button>
-                  </div>
-                ))} */}
 
                 {/* Display image and video previews */}
                 {adMedia?.map((item, index) => {

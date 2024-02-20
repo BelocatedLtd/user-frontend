@@ -12,6 +12,7 @@ import io from 'socket.io-client'
 import { BACKEND_URL } from '../../../../utils/globalConfig'
 import Loader from '../../../components/loader/Loader'
 import { submitTask } from '../../../services/taskServices'
+import { handleGetALLUserAdverts, selectAllAdverts } from '../../../redux/slices/advertSlice'
 
 
 const socket = io.connect(`${BACKEND_URL}`)
@@ -29,6 +30,8 @@ const TaskSubmit = () => {
     const { taskId } = useParams()
     const tasks = useSelector(selectTasks)
     const [task, setTask] = useState()
+    const adverts = useSelector(selectAllAdverts)
+    const [ad, setAd] = useState()
     const [imageArray, setimageArray] = useState()
     const [selectedImages, setSelectedImages] = useState([])
     const [userSocialName, setUserSocialName] = useState("")
@@ -39,6 +42,7 @@ const TaskSubmit = () => {
 
     const getTask = async() => {
       await dispatch(handleGetUserTasks())
+      await dispatch(handleGetALLUserAdverts())
     }
     
     useEffect(() => {
@@ -49,6 +53,10 @@ const TaskSubmit = () => {
     useEffect(() => {
       setTask(tasks?.find(obj => obj._id === taskId))
     }, [])
+
+    useEffect(() => {
+      setAd(adverts?.find(obj => obj._id === task?.advertId))
+    }, [task, adverts])
 
     //Handle Input
     const handleInputChange = (e) => {
@@ -95,6 +103,11 @@ const TaskSubmit = () => {
 
     const handleOnSubmit = async (e) => {
       e.preventDefault()
+
+      if (ad.desiredROI === 0 || ad.status === "Completed") {
+        toast.error("Unfortunately, you cannot submit this task again because the advert has already being completed")
+        return
+      }
 
       if (!imageArray) {
         toast.error("Please upload a screenshot to prove you performed the Task")
@@ -144,6 +157,7 @@ const TaskSubmit = () => {
         <TaskPerform 
             taskId = {taskId}
             // newTask= {task}
+            ad= {ad}
             isLoading = {isLoading}
             icons={icons}
             taskSubmitted={taskSubmitted}
