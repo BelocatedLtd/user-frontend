@@ -23,6 +23,7 @@ const TaskList = () => {
     const [platform, setPlatform] = useState("")
     const tasks = useSelector(selectTasks)
     const [sortedTasks, setSortedTasks] = useState()
+    // const itemsPerPage = 5;
    
     const getUserTasks = async() => {
         await dispatch(handleGetUserTasks())
@@ -120,6 +121,8 @@ const TaskList = () => {
             </div>
         ))}
         </div>
+
+
         </div>
     </div>
   )
