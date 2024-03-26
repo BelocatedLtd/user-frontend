@@ -85,6 +85,7 @@ const Header = () => {
                       <Link to={`/admin/dashboard/transactions/${user?.username}`}>Transactions</Link>
                       <Link to={`/admin/dashboard/withdrawals/${user?.username}`}>Withdrawals</Link>
                       <Link to={'/dashboard/update-profile'}>Settings</Link>
+                      <Link to={`/dashboard/ref-cha/${user?.username}`}>Refferal Challenge</Link>
                       <Link to={`/dashboard/${user?.username}`} className='text-gray-800 cursor-pointer'>User Dashboard
                       </Link>
                   </ShowOnLogin>

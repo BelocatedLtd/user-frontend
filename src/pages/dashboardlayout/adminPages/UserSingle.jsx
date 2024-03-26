@@ -9,9 +9,9 @@ import { selectAllAdverts } from '../../../redux/slices/advertSlice'
 import { selectTasks } from '../../../redux/slices/taskSlice'
 import { MdKeyboardDoubleArrowRight, MdOutlineCancel, MdOutlineKeyboardArrowLeft, MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md'
 import { selectTransactions } from '../../../redux/slices/transactionSlice'
-import DeleteModal from '../../../components/adminComponents/DeleteModal'
 import { getSingleUserWallet, getUserWallet } from '../../../services/walletServices'
 import { CheckmarkIcon } from 'react-hot-toast'
+import ManageUserModal from '../../../components/adminComponents/ManageUserModal'
 
 const UserSingle = () => {
   const {id} = useParams()
@@ -26,7 +26,7 @@ const UserSingle = () => {
   const [tasks, setTasks] = useState()
   const [trxs, setTrxs] = useState()
   const [isLoading, setIsLoading] = useState(false)
-  const [delBtn, setDelBtn] = useState(false)
+  const [manageUserBtn, setManageUserBtn] = useState(false)
   const [userWallet, setUserWallet] = useState()
 
   const getWallet = async() => {
@@ -46,15 +46,15 @@ const UserSingle = () => {
    setTrxs(userTrx)
   }, [])
 
-  const handleDelete = (e) => {
+  const manageUser = (e) => {
     e.preventDefault()
-    setDelBtn(!delBtn)
+    setManageUserBtn(!manageUserBtn)
   }
   
 
   return (
     <div className='w-full h-fit'>
-      {delBtn && <DeleteModal handleDelete={handleDelete} user={user}/>}
+      {manageUserBtn && <ManageUserModal manageUser={manageUser} user={user}/>}
       {isLoading && <Loader />}
       <div className='flex items-center gap-3 border-b border-gray-200 pb-6'>
           <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))}/>
@@ -99,6 +99,18 @@ const UserSingle = () => {
                 <label htmlFor="">Referred:</label>
                 <p>{user?.referrals?.length}</p>
                 <MdOutlineKeyboardDoubleArrowRight size={12} className='text-secondary'/>
+              </div>
+
+              {/* User Account Status */}
+              <div className='flex items-center justify-center gap-2 cursor-pointer hover:text-secondary md:justify-start'>
+                <label htmlFor="">Account Status:</label>
+                <p className={
+                    `${user?.accountStatus === "Active" ? 'text-green-600' :
+                    user?.accountStatus === "Suspended" ? 'text-yellow-600' :
+                    user?.accountStatus === "Banned" ? 'text-red-600' : ''}`
+                  }>
+                    {user?.accountStatus}
+                  </p>
               </div>
             </div>
         </div>
@@ -205,7 +217,7 @@ const UserSingle = () => {
         {/* Advert Controls */}
         <div className='mt-[1rem]'>
           <div className='flex gap-2'>
-            <button onClick={handleDelete} className='py-2 px-5 bg-tertiary text-primary'>Delete User</button>
+            <button onClick={manageUser} className='py-2 px-5 bg-tertiary text-primary'>Manage User</button>
             <button className='py-2 px-5 bg-secondary text-primary'>Message Advertiser</button>
           </div>
         </div>

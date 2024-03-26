@@ -6,6 +6,7 @@ import walletReducer from './slices/walletSlice'
 import taskReducer from './slices/taskSlice'
 import transactionReducer from './slices/transactionSlice'
 import feedReducer from './slices/feedSlice'
+import refChallengeReducer from './slices/refChallSlice'
 
 const store = configureStore ({
     reducer: {
@@ -15,7 +16,8 @@ const store = configureStore ({
         wallet: walletReducer,
         task: taskReducer,
         transaction: transactionReducer,
-        feed: feedReducer
+        feed: feedReducer,
+        refChallenge: refChallengeReducer
     },
     devTools: true
 })

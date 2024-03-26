@@ -15,6 +15,7 @@ import adCampaigns from '../../assets/adscampaign.png'
 import transactions from '../../assets/transactions.png'
 import userprofile from '../../assets/userprofile.png'
 import customersupport from '../../assets/customersupport.png'
+import { IoTrophyOutline } from 'react-icons/io5'
 
 const SidebarLeft = ({children}) => {
     const navigate = useNavigate()
@@ -67,6 +68,11 @@ const SidebarLeft = ({children}) => {
         path: `/dashboard/update-profile/`,
       },
       {
+        title: "Ref Challenge",
+        icon: <IoTrophyOutline className='md:mr-2 text-[15px] md:text-[30px]'/>,
+        path: `/dashboard/ref-cha/${user?.username}`,
+      },
+      {
         title: "Contact Support",
         icon: <img src={customersupport} alt="ad campaigns" className='md:mr-2 w-[15px] h-[15px] md:w-[30px] md:h-[30px]'/>,
         path: "/dashboard/contact-support",
@@ -109,10 +115,15 @@ const SidebarLeft = ({children}) => {
         icon: <GrSettingsOption className='md:mr-2 text-[15px] md:text-[30px]'/>,
         path: `/admin/dashboard/account-settings/${user?.username}`,
       },
+      // {
+      //   title: "Support Messages",
+      //   icon: <BiMessageRoundedDetail className='md:mr-2 text-[15px] md:text-[30px]'/>,
+      //   path: `/admin/dashboard/support-messages/${user?.username}`,
+      // },
       {
-        title: "Support Messages",
-        icon: <BiMessageRoundedDetail className='md:mr-2 text-[15px] md:text-[30px]'/>,
-        path: `/admin/dashboard/support-messages/${user?.username}`,
+        title: "Referral Challenge",
+        icon: <IoTrophyOutline className='md:mr-2 text-[15px] md:text-[30px]'/>,
+        path: `/admin/dashboard/ref-challenge/${user?.username}`,
       },
     ]
   

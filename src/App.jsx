@@ -65,6 +65,9 @@ import WithdrawalModal from "./components/adminComponents/WithdrawalModal";
 import AdsTasksList from "./pages/dashboardlayout/adminPages/AdsTasksList";
 import KnowledgeBase from "./pages/dashboardlayout/userPages/KnowledgeBase";
 import Maintainance from "./pages/mainlayout/Maintainance";
+import RefChallenge from "./pages/dashboardlayout/userPages/RefChallenge";
+import RefChaRegister from "./pages/authLayout/RefChaRegister";
+import RefChallengeAdmin from "./pages/dashboardlayout/adminPages/RefChallengeAdmin";
 
 
 
@@ -112,7 +115,11 @@ const handleCloseMenu = () => {
       <Route path="/success" element={<PasswordChangeSuccess handleLogin={handleLogin} handleRegister={handleRegister} 
       loginBtn={loginBtn} regBtn={regBtn} handleCloseMenu={handleCloseMenu}/>} />
 
-      <Route path="/register/ref/:refusername" element={<RefRegister />}/>
+      {/* Referral Programme Reg Page */}
+      <Route path="/register/ref/:refusername" element={<RefRegister />} />
+
+      {/* Referral Programme Reg Page */}
+      <Route path="/ref-cha/:refusername" element={<RefChaRegister />} />
       
         <Route path="/" element={<MainLayout handleRegister={handleRegister} regBtn={regBtn}/>}>
           <Route index element={<Home handleLogin={handleLogin} handleRegister={handleRegister} loginBtn={loginBtn} regBtn={regBtn} handleCloseMenu={handleCloseMenu}/>}/>
@@ -331,6 +338,19 @@ const handleCloseMenu = () => {
           <SidebarLeft>
             <DashLayout>
               <ContactSupport />
+            </DashLayout>
+          </SidebarLeft>
+        }
+        />
+
+        {/* Ref Challenge */}
+        <Route 
+        path="/dashboard/ref-cha/:username" 
+        element={
+          <SidebarLeft>
+            <DashLayout>
+              <RefChallenge />
+              <SidebarRight />
             </DashLayout>
           </SidebarLeft>
         }
@@ -557,6 +577,18 @@ const handleCloseMenu = () => {
           <SidebarLeft>
             <DashLayout>
               <AccountSettings />
+            </DashLayout>
+          </SidebarLeft>
+        }
+        />
+
+         {/* Admin Support messages*/}
+      <Route 
+        path="/admin/dashboard/ref-challenge/:username" 
+        element={
+          <SidebarLeft>
+            <DashLayout>
+              <RefChallengeAdmin />
             </DashLayout>
           </SidebarLeft>
         }

@@ -8,11 +8,13 @@ import { handleGetTasks, selectIsError, selectIsLoading, selectTasks } from '../
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { useState } from 'react';
+import { selectAllAdverts } from '../../../redux/slices/advertSlice';
 
 
 const Tasks = () => {
   const users = useSelector(selectUsers)
   const tasks = useSelector(selectTasks)
+  const adverts = useSelector(selectAllAdverts)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const isLoading = useSelector(selectIsLoading)
@@ -22,6 +24,7 @@ const Tasks = () => {
 
   useEffect(() => {
     dispatch(handleGetTasks())
+    dispatch(handleGetAllUser())
   
     if (isError) {
       toast.error("failed to fetch tasks")
@@ -64,7 +67,17 @@ const Tasks = () => {
       selector: (row) => {
       const advertiser = users?.find(user => user._id === row.advertiserId)
             return (
-                <div className='font-bold text-[13px]'>{advertiser?.fullname}</div>
+                <div className='font-bold text-[13px]'>{advertiser?.username}</div>
+              
+            )
+      }
+    },
+    {
+      name: 'Moderator',
+      selector: (row) => {
+      const advert = adverts?.find(ad => ad._id === row.advertId)
+            return (
+                <div className='font-bold text-[13px]'>{advert?.tasksModerator ? advert?.tasksModerator : "N/A"}</div>
               
             )
       }
@@ -85,7 +98,7 @@ const Tasks = () => {
         <p>₦{row.toEarn}</p>
         ),
       sortable: true
-    },
+    }, 
     {
       name: 'Status',
       sortable: true,

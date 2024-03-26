@@ -6,9 +6,11 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { formatDate } from '../../../utils/formatDate'
 import { icons} from '../../components/data/socialIcon'
+import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md'
 
-const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, tasks, item, url }) => {
+const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, tasks, item, url, taskPerformers }) => {
     const [payBtn, setPayBtn] = useState('Pay Now')
+    const [toggleTaskPerformers, settoggleTaskPerformers] = useState(false)
 
     useEffect(() => {
         if(status == 'Pending') {
@@ -21,7 +23,11 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
                 return setPayBtn('Edit Campaign')
             }
     }, [status, payBtn])
-    
+
+    const handleToggleTaskPerformers = () => {
+        console.log(taskPerformers)
+        settoggleTaskPerformers(!toggleTaskPerformers)
+    }
 
   return (
     <div className='relative shadow-lg flex md:w-[95%] h-fit mt-5 mb-[2rem] bg-[#fcfcfc] p-[1.5rem] rounded-2xl rounded-tr-none md:p-[3rem]'>
@@ -100,10 +106,21 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
                         </div>
                     </li>
                 </ul>
+                {/* Task Performer Button */}
+                <button onClick={handleToggleTaskPerformers} className='flex gap-1 items-center justify-center bg-secondary px-3 py-1 mt-1 text-primary rounded-2xl hover:bg-tertiary'>See Task Performers <span>{taskPerformers.length}</span></button>
             </div>
 
             </div>
+            
         </div>
+        
+        {toggleTaskPerformers && (
+            <div className='flex flex-col gap-3'>
+                    {taskPerformers.map(tp => (
+                        <p key={tp}>{tp}</p>
+                    ))}
+            </div>
+        )}
         </div>
     </div>
   )

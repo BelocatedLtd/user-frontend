@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { CheckmarkIcon, toast } from 'react-hot-toast'
 import Loader from '../loader/Loader'
 import { selectUser } from '../../redux/slices/authSlice'
-import { deleteUser } from '../../services/authServices'
 import { deleteAdvert } from '../../services/advertService'
 import { deleteTask } from '../../services/taskServices'
 

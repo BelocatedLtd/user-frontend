@@ -71,6 +71,7 @@ const CampaignStats = () => {
             religion={item.religion}
             item={item}
             url={item.socialPageLink}
+            taskPerformers={item.taskPerformers}
           />
         ))}
       </div>

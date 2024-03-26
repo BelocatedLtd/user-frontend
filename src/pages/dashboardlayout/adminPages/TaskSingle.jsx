@@ -48,13 +48,13 @@ const TaskSingle = () => {
     //console.log(ad)
 
     const handleModal = () => {
-      if (ad?.status === 'Completed') {
-        toast.error('Ad unit is completed and ad is no more running')
-        return
-      }
+      // if (ad?.status === 'Completed') {
+      //   toast.error('Ad unit is completed and ad is no more running')
+      //   return
+      // }
 
       if (ad?.status === 'Pending Payment') {
-        toast.error('Ad unit is completed and ad is no more running')
+        toast.error('Task is yet to start running')
         return
       }
 

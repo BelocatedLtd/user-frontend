@@ -8,7 +8,7 @@ import { GrMoney } from 'react-icons/gr'
 import { BsDatabaseFillGear } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { SET_LOGOUT, selectUser } from '../../redux/slices/authSlice'
+import { SET_LOGOUT, SET_USER, selectUser } from '../../redux/slices/authSlice'
 import { getUser } from '../../services/authServices'
 
 const Widgets = ({type, totalUsers, totalAdverts, totalTrx, totalTasks}) => {

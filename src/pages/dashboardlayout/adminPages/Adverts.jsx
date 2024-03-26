@@ -49,16 +49,6 @@ const columns = [
     sortable: true
   },
   {
-    name: 'Ad Type',
-    cell: (row) => (
-        <div className='w-full'>
-          <p className=''>{row.isFree === true && "Free Ad"}</p>
-          <p>{row.isFree === false && "Paid Ad"}</p>
-        </div>
-    ),
-    sortable: true
-  },
-  {
     name: 'Tasks',
     selector: row => row?.tasks, 
     sortable: true
@@ -71,6 +61,11 @@ const columns = [
       </div>
   ),
     selector: row => row?.tasks, 
+    sortable: true
+  },
+  {
+    name: 'Moderator',
+    selector: row => row?.tasksModerator, 
     sortable: true
   },
   {

@@ -133,6 +133,11 @@ const AdvertSingle = () => {
             <h3 className='text-[3rem]'>{adverter?.fullname ? adverter?.fullname : adverter?.username}</h3>
             <small className='text-gray-700 mt-[-0.7rem] mb-[1rem] font-semibold'>@{adverter?.username}</small>
             <button onClick={() => navigate(`/admin/dashboard/user/${adverter?._id}`)} className='px-4 py-2 bg-secondary text-primary hover:bg-gray-900 mt-2'>View Advertiser</button>
+
+            <div>
+              <label>Moderator</label>
+              <p>{ad?.tasksModerator}</p>
+            </div>
           </div>
           
         </div>

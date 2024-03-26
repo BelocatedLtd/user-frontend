@@ -44,6 +44,21 @@ export const createNewUserRef = async(formData) => {
             
 }
 
+//Create New User From Ref Challenge
+export const createNewUserRefChal = async(formData) => {
+    try {
+         const response = await axios.post(`${BACKEND_URL}/api/user/refchalregister`, formData )
+         if (response.statusText === "Created") {
+          }
+        //   console.log(response.data)
+        return response.data 
+     } catch (error) {
+         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+         toast.error(message)
+     }
+            
+}
+
 //Login User
 export const loginUser = async(formData) => {
     try {
@@ -229,14 +244,20 @@ export const confirmOTP = async(OTPData) => {
 }
 
 //Delete User
-export const deleteUser = async(userId) => {
+export const handleManageUser = async(formData) => {
     const headers = getAuthHeaders();
+    console.log(formData)
+    if (formData.status == "") {
+        toast.error("Please select an option")
+        return
+    }
+    
     try {
-        const response = await axios.delete(`${BACKEND_URL}/api/user/delete/${userId}`, headers)
+        const response = await axios.post(`${BACKEND_URL}/api/user/manage/${formData.userId}`, formData, headers)
         return response.data
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-         toast.error(message)
+         toast.error(message) 
     }
 }
 

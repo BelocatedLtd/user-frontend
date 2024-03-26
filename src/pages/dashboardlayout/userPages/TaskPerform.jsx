@@ -281,9 +281,11 @@ useEffect(() => {
               <form onSubmit={handleOnSubmit} className='flex flex-col'>
 
                 {/* Upload ScreenSHot */}
+
                 {newTask?.status === "Approved" || newTask?.status === "Submitted" ? "" : (
                   <div className='w-full h-full flex flex-col pt-[1rem] items-center border-gray-200'>
                   <label htmlFor="upload proof of work" className='text-gray-500 font-bold text-center mb-[1rem]'>Upload Proof of work</label>
+                  <p className='text-tertiary font-bold'>Ensure to upload the right proof to avoid your account being banned</p>
                       <div className='w-full h-fit flex flex-wrap items-center justify-center gap-2 p-5'>
                       {selectedImages?.map((item, index) => (   
                         <div key={index} className='relative w-[200px] h-[200px]'>

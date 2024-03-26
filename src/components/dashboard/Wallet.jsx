@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectUser } from '../../redux/slices/authSlice'
+import { SET_USER, selectUser } from '../../redux/slices/authSlice'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { getUserWallet, selectIsError, selectIsLoading, selectUserWallet } from '../../redux/slices/walletSlice'
@@ -10,6 +10,8 @@ import FundWallet from '../FundWallet'
 import FundingForm from '../../components/forms/FundingForm'
 import WithdrawalForm from '../forms/WithdrawalForm'
 import {HiOutlineArrowLeft, HiOutlineArrowRight} from 'react-icons/hi'
+import { handleRefPtsConv } from '../../services/refService'
+import { getUser } from '../../services/authServices'
 
 
 const Wallet = ({handleEarn, handleAdvertise}) => {
@@ -22,7 +24,6 @@ const Wallet = ({handleEarn, handleAdvertise}) => {
   const isLoading = useSelector(selectIsLoading)
   const isError = useSelector(selectIsError)
 
-  
   // Toggle modal to fund account
   const toggleFundingSelect = (e) => {
     e.preventDefault()
@@ -45,6 +46,25 @@ setTogleWithdrawBtn(!togleWithdrawBtn)
     getWallet()
 }, [dispatch])
 
+const convertPts = async(e) => {
+  e.preventDefault()
+  // console.log(user)
+  // return
+  const userId = user.id
+
+  try {
+    toast.success("Converting in progress...")
+    await handleRefPtsConv(userId)
+    await dispatch(getUserWallet(user?.token))
+    const data = await getUser()
+    await dispatch(SET_USER(data))
+      toast.success("Conversion completed")
+  } catch (error) {
+    toast.error(`Conversion Failed, ${error}`)
+  }
+ 
+}
+
   
 
   return (
@@ -54,7 +74,15 @@ setTogleWithdrawBtn(!togleWithdrawBtn)
        {isError && <p className='text-red-400'>Failed to fund account</p>}
       <h3 className='pt-4 font-bold text-gray-600'>My Balance</h3>
       <div className='mt-[1.5rem]'>
-        <h1 className='text-3xl text-gray-800 font-extrabold'>{isLoading ? (<LoaderIcon />) : (<span>₦{wallet?.value}</span>)}</h1>
+        <h1 className='text-3xl text-gray-800 font-extrabold text-center'>{isLoading ? (<LoaderIcon />) : (<span>₦{wallet?.value}</span>)}</h1>
+
+        {!wallet?.refBonWallet ? "" :
+        (<div className='w-full flex items-center gap-2 text-sm text-gray-400 font-extrabold text-center'>
+          {isLoading ? (<LoaderIcon />) : 
+            (<p className='flex gap-2 items-center text-[13px] text-gray-600 text-center'>Referral Pts:<span className='font-light'>{user?.referralBonusPts}Pts</span></p>)
+          }
+          {user?.referralBonusPts >= 50 ? (<button onClick={convertPts} className='bg-secondary text-primary text-[8px] px-1 rounded-2xl'>Convert</button>) : ""}
+        </div>)}
       </div>
 
       {/* Withdraw and fund button */}
