@@ -24,54 +24,52 @@ const RefChallengeAdmin = () => {
       getChallenges();
     }, []);
 
-      console.log(challenge)
 
-
-      const columns = [
-        {
-          name: 'ID',
-          selector: row => row._id,
-          sortable: true
-        },
-        {
-          name: 'Start Date',
-          selector: row => row.createdAt,
-          sortable: true
-        },
-        // {
-        //     name: 'No. of Contestants',
-        //     selector: row => row.referralChallengeContestants.length,
-        //     sortable: true
-        //   },
-          {
-            name: 'No. of Ref Users',
-            selector: row => row.totalRefUsers,
-            sortable: true
-          },
-        {
-          name: 'Status',
-          sortable: true,
-          cell: (row) => (
-            <p className={`px-6 py-1 rounded-[5px] 
-                ${row.status === "Ongoing" && 'pending'}
-                ${row.status === "Completed" && 'completed'}
-                `}
-             >
-                {row.status}
-            </p>
-          )
-        },
-        {
-          name: 'Actions',
-          button: true,
-          cell: (row) => (
-            <button className={'px-6 py-2 bg-gray-800 text-primary rounded-[5px]'}
-              onClick={(e) => handleButtonClick(e, row._id)}>
-                View
-            </button>
-          )
-        },
-      ];
+      // const columns = [
+      //   {
+      //     name: 'ID',
+      //     selector: row => row._id,
+      //     sortable: true
+      //   },
+      //   {
+      //     name: 'Start Date',
+      //     selector: row => row.createdAt,
+      //     sortable: true
+      //   },
+      //   // {
+      //   //     name: 'No. of Contestants',
+      //   //     selector: row => row.referralChallengeContestants.length,
+      //   //     sortable: true
+      //   //   },
+      //     {
+      //       name: 'No. of Ref Users',
+      //       selector: row => row.totalRefUsers,
+      //       sortable: true
+      //     },
+      //   {
+      //     name: 'Status',
+      //     sortable: true,
+      //     cell: (row) => (
+      //       <p className={`px-6 py-1 rounded-[5px] 
+      //           ${row.status === "Ongoing" && 'pending'}
+      //           ${row.status === "Completed" && 'completed'}
+      //           `}
+      //        >
+      //           {row.status}
+      //       </p>
+      //     )
+      //   },
+      //   {
+      //     name: 'Actions',
+      //     button: true,
+      //     cell: (row) => (
+      //       <button className={'px-6 py-2 bg-gray-800 text-primary rounded-[5px]'}
+      //         onClick={(e) => handleButtonClick(e, row._id)}>
+      //           View
+      //       </button>
+      //     )
+      //   },
+      // ];
 
       // const customStyles = {
       //   headCells: {
@@ -97,7 +95,11 @@ const RefChallengeAdmin = () => {
                     <p className='font-semibold text-xl text-gray-700'>Referral Challenges</p>
                 </div>
           </div>
-      <DataTable 
+
+          <h3 className='text-center text-3xl font-extrabold'>
+            Coming Soon
+          </h3>
+      {/* <DataTable 
       columns={columns} 
       data={challenge}
       progressPending="Loading..."
@@ -107,7 +109,7 @@ const RefChallengeAdmin = () => {
       //customStyles={customStyles}
       sortIcon={sortIcon}
       //handleButtonClick={handleButtonClick}
-      />
+      /> */}
     </div>
   )
 }
