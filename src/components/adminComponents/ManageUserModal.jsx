@@ -74,7 +74,7 @@ const ManageUserModal = ({manageUser, user}) => {
                 <form onSubmit={confirm} className='flex flex-col items-center gap-2'>
                     <select name="status" id="" className='py-3 px-6 mb-3 border border-gray-500' onChange={handleInputChange}>
                       <option value="null" className='bg-gray-900 text-primary'>Manage User</option>
-                      <option value="Active" className='bg-gray-900 text-primary'>Activate User</option>
+                      <option value="Active" className='bg-gray-900 text-primary'>Re-activate User</option>
                       <option value="Suspended" className='bg-gray-900 text-primary'>Suspend User</option>
                       <option value="Banned" className='bg-gray-900 text-primary'>Ban User</option>
                       <option value="Delete" className='bg-gray-900 text-primary'>Delete User</option>

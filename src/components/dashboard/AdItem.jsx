@@ -144,7 +144,7 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
                             <small>{adTaskPerformers.find(u => u._id === tp)?.username}</small>
                                 <h3 className='font-bold text-gray-600'>{adTaskPerformers.find(u => u._id === tp)?.fullname}</h3>
                                 <span className='text-gray-400 font-semibold text-[9px]'>
-                                    {formatDate(adTaskPerformerTasks?.find(un => un.advertId === item._id)?.createdAt)}
+                                    {/* {formatDate(adTaskPerformerTasks?.find(un => un.advertId === item._id)?.createdAt)} */}
                                 </span>
                             </div>
                             

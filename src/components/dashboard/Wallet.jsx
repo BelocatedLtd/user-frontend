@@ -40,6 +40,7 @@ setTogleWithdrawBtn(!togleWithdrawBtn)
 }
 
   useEffect(() => {
+    console.log(user)
     async function getWallet() {
       await dispatch(getUserWallet(user?.token))
       if (isError) {
@@ -65,6 +66,7 @@ const convertPts = async(e) => {
   } catch (error) {
     toast.error(`Conversion Failed, ${error}`)
   }
+  
  
 }
 
@@ -104,11 +106,13 @@ const handleRefChallenge = () => {
       </div>
 
       {/* Earn and advertise button */}
-      <div className='flex items-center justify-center gap-[2rem] mt-3 md:hidden'>
+      {user.accountStatus === "Suspended" || user.accountStatus === "Banned" && ("")}
+      
+      {user.accountStatus === "Active" || (<div className='flex items-center justify-center gap-[2rem] mt-3 md:hidden'>
             <button onClick={handleEarn} className='flex-1 bg-secondary text-[12px] text-gray-100  px-7 py-2 md:py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border md:px-10'>Earn</button>
 
             <button onClick={handleAdvertise} className='flex-1 bg-transparent border border-gray-500 text-[12px] text-gray-600 px-4 py-2 md:py-3 rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>Advertise</button>
-      </div>
+      </div>)}
 
       {/* Fund and withdraw mobile */}
       <div className='md:hidden flex gap-2 mt-[1.5rem]'>
