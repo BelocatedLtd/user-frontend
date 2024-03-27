@@ -68,6 +68,7 @@ import Maintainance from "./pages/mainlayout/Maintainance";
 import RefChallenge from "./pages/dashboardlayout/userPages/RefChallenge";
 import RefChaRegister from "./pages/authLayout/RefChaRegister";
 import RefChallengeAdmin from "./pages/dashboardlayout/adminPages/RefChallengeAdmin";
+import RefBonus from "./pages/dashboardlayout/userPages/RefBonus";
 
 
 
@@ -350,6 +351,19 @@ const handleCloseMenu = () => {
           <SidebarLeft>
             <DashLayout>
               <RefChallenge />
+              <SidebarRight />
+            </DashLayout>
+          </SidebarLeft>
+        }
+        />
+
+        {/* Ref Bonus */}
+        <Route 
+        path="/dashboard/ref-bonus/:username" 
+        element={
+          <SidebarLeft>
+            <DashLayout>
+              <RefBonus />
               <SidebarRight />
             </DashLayout>
           </SidebarLeft>

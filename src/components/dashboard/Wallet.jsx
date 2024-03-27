@@ -12,6 +12,9 @@ import WithdrawalForm from '../forms/WithdrawalForm'
 import {HiOutlineArrowLeft, HiOutlineArrowRight} from 'react-icons/hi'
 import { handleRefPtsConv } from '../../services/refService'
 import { getUser } from '../../services/authServices'
+//import bgRed from '../../assets/newIcons/Red.svg'
+import family from '../../assets/newIcons/Family.svg'
+import trophy from '../../assets/newIcons/Trophy.svg'
 
 
 const Wallet = ({handleEarn, handleAdvertise}) => {
@@ -65,6 +68,15 @@ const convertPts = async(e) => {
  
 }
 
+const handleRefBonus = () => {
+  navigate(`/dashboard/ref-bonus/${user.username}`, { state: { data: user } })
+}
+
+const handleRefChallenge = () => {
+  toast.error("This feature is coming soon")
+  return
+}
+
   
 
   return (
@@ -103,6 +115,14 @@ const convertPts = async(e) => {
         <button onClick={toggleFundingSelect} className='flex items-center gap-1 text-sm text-green-600 mr-[2rem]'><HiOutlineArrowLeft /> Fund</button>
         <button  onClick={handleWithdrawFunds} className='flex items-center gap-1 text-sm text-secondary'>Withdraw<HiOutlineArrowRight /></button>
       </div>
+
+      {/* Ref Bnus and Ref Challenge */}
+      <div className='w-[70%] flex flex-col items-center gap-2 mt-[2rem]'>
+        <button onClick={handleRefBonus} className='w-full flex items-center gap-1 justify-center bg-tertiary rounded-full text-primary py-2'>Referral Bonus</button>
+        <button onClick={handleRefChallenge} className='w-full bg-secondary rounded-full text-primary py-2'>Referral Challenge</button>
+      </div>
+
+
 
       <div className='flex px-6 items-center justify-center mt-[4rem] pb-4 gap-5 md:flex'>
         <div className='flex flex-col items-center justify-center mb-[1rem] md:mb-[0rem]'>

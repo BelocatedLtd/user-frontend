@@ -7,10 +7,14 @@ import { useEffect } from 'react'
 import { formatDate } from '../../../utils/formatDate'
 import { icons} from '../../components/data/socialIcon'
 import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md'
+import { Link } from 'react-router-dom'
+import { CheckmarkIcon } from 'react-hot-toast'
 
-const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, tasks, item, url, taskPerformers }) => {
+const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, tasks, item, url, taskPerformers, users, taskList }) => {
     const [payBtn, setPayBtn] = useState('Pay Now')
     const [toggleTaskPerformers, settoggleTaskPerformers] = useState(false)
+    const [adTaskPerformers, setAdTaskPerformers] = useState()
+    const [adTaskPerformerTasks, setAdTaskPerformerTasks] = useState()
 
     useEffect(() => {
         if(status == 'Pending') {
@@ -24,10 +28,26 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
             }
     }, [status, payBtn])
 
+    useEffect(() => {
+        const tps = users?.filter(user => taskPerformers.includes(user._id));
+        const tpsList = taskList?.filter(task => tps.some(user => user._id === task.taskPerformerId));
+        setAdTaskPerformers(tps);
+        setAdTaskPerformerTasks(tpsList)
+      }, [users, taskPerformers]);
+
     const handleToggleTaskPerformers = () => {
-        console.log(taskPerformers)
+        console.log(item)
+        //console.log(adTaskPerformerTasks)
         settoggleTaskPerformers(!toggleTaskPerformers)
     }
+
+
+    function openPopup(imageUrl) {
+        if (imageUrl) {
+            window.open(imageUrl, '_blank', 'width=800,height=600,toolbar=no,scrollbars=yes,resizable=yes');
+        }
+    }
+    
 
   return (
     <div className='relative shadow-lg flex md:w-[95%] h-fit mt-5 mb-[2rem] bg-[#fcfcfc] p-[1.5rem] rounded-2xl rounded-tr-none md:p-[3rem]'>
@@ -83,7 +103,7 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
             <div className='w-fit flex flex-col justify-start gap-2 text-[10px] py-2 mt-[1rem] md:text-[14px]'>
                 <div className=''>
                     <label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>Tasks Completed:</label>
-                    <p className='text-[12px]'>{tasks}</p>
+                    <p className='text-[12px]'>{taskPerformers?.length}</p>
                 </div>
                 <ul className='flex items-center gap-2'>
                     <li>
@@ -107,7 +127,7 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
                     </li>
                 </ul>
                 {/* Task Performer Button */}
-                <button onClick={handleToggleTaskPerformers} className='flex gap-1 items-center justify-center bg-secondary px-3 py-1 mt-1 text-primary rounded-2xl hover:bg-tertiary'>See Task Performers <span>{taskPerformers.length}</span></button>
+                <button onClick={handleToggleTaskPerformers} className='flex gap-1 items-center justify-center bg-secondary px-3 py-1 mt-1 text-primary rounded-2xl hover:bg-tertiary'>View and Monitor Results <span>{taskPerformers.length}</span></button>
             </div>
 
             </div>
@@ -117,7 +137,47 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
         {toggleTaskPerformers && (
             <div className='flex flex-col gap-3'>
                     {taskPerformers.map(tp => (
-                        <p key={tp}>{tp}</p>
+                        // <p key={tp}>{tp}</p>
+                        <div className='w-full border-b border-gray-200 py-[1rem]' key={tp}>
+                            
+                            <div className='task performer details mb-[1rem]'>
+                            <small>{adTaskPerformers.find(u => u._id === tp)?.username}</small>
+                                <h3 className='font-bold text-gray-600'>{adTaskPerformers.find(u => u._id === tp)?.fullname}</h3>
+                                <span className='text-gray-400 font-semibold text-[9px]'>
+                                    {formatDate(adTaskPerformerTasks?.find(un => un.advertId === item._id)?.createdAt)}
+                                </span>
+                            </div>
+                            
+
+                            <div className='flex flex-col gap-3 md:items-center justify-between mb-[1rem] md:flex-row'>
+                                <div className='first columns'>
+                                    <label className='font-bold'>Social media username</label>
+                                    <p>{adTaskPerformerTasks?.find(un => un.advertId === item._id)?.socialPageLink ? 
+                                    (adTaskPerformerTasks?.find(un => un.advertId === item._id)?.socialPageLink) : "N/A"}</p>
+                                </div>
+
+                                <div className='second columns flex flex-col'>
+                                    <label className='font-bold'>Screenshot / Proof of work</label>
+                                    {adTaskPerformerTasks?.find(un => un.advertId === item._id)?.proofOfWorkMediaURL?.[0]?.secure_url ? (
+  <a onClick={() => openPopup(adTaskPerformerTasks.find(un => un.advertId === item._id)?.proofOfWorkMediaURL[0].secure_url)} className='text-blue-600 hover:text-red-600'>
+  Click to view
+    </a>
+) : "N/A"}
+
+                                </div>
+
+                                <div className='third columns'>
+                                    <label className='font-bold'>Status</label>
+                                    <p className='flex items-center gap-1'><span><CheckmarkIcon /></span>{adTaskPerformerTasks?.find(un => un.advertId === item._id)?.status}</p>
+                                </div>
+                            </div>
+
+                            {/* <div className='task management button flex items-center gap-2'>
+                                <button className='bg-green-600 px-3 py-2 text-primary hover:bg-orange-400'>Approve</button>
+                                <button className='bg-red-600 px-3 py-2 text-primary hover:bg-black'>Reject</button>
+                            </div> */}
+
+                        </div>
                     ))}
             </div>
         )}

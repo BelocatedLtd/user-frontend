@@ -24,7 +24,7 @@ export const createNewTask = createAsyncThunk(
   }
 )
 
-// Get User Tasks 
+// Get User Tasks Get a specific user task
 export const handleGetUserTasks = createAsyncThunk(
   "get/handleGetUserTasks",
   async(__, thunkAPI) => {
@@ -38,7 +38,7 @@ export const handleGetUserTasks = createAsyncThunk(
       } 
   )
 
-// Get Tasks 
+// Get Tasks  Get all tasks from db
 export const handleGetTasks = createAsyncThunk(
   "get/handleGetTasks",
   async(__, thunkAPI) => {

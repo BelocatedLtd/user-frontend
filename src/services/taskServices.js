@@ -32,14 +32,14 @@ export const getTask = async(taskId) => {
    return response.data      
 }
 
-// Get User Tasks
+// Get User Tasks Gets a specific user tasks
 export const getUserTasks = async() => {
     const headers = getAuthHeaders();
     const response = await axios.get(`${BACKEND_URL}/api/tasks/task`, headers)
    return response.data      
 }
 
-// Get All Tasks
+// Get All Tasks Get all tasks from db
 export const getTasks = async() => {
     const headers = getAuthHeaders();
     const response = await axios.get(`${BACKEND_URL}/api/tasks`, headers)

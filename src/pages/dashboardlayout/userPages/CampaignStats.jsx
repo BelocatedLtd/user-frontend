@@ -13,10 +13,14 @@ import { LoaderIcon, toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../../../components/loader/Loader'
 import { selectUser } from '../../../redux/slices/authSlice'
+import { handleGetAllUser, selectUsers } from '../../../redux/slices/userSlice'
+import { handleGetTasks, selectTasks } from '../../../redux/slices/taskSlice'
 
 const CampaignStats = () => {
   const user = useSelector(selectUser)
   const adverts = useSelector(selectAdverts)
+  const users = useSelector(selectUsers)
+  const tasksList = useSelector(selectTasks)
   const isLoading = useSelector(selectIsLoading)
   const isError = useSelector(selectIsError)
   const dispatch = useDispatch()
@@ -25,11 +29,14 @@ const CampaignStats = () => {
 
   const getAdverts = async() => {
     await dispatch(handleGetUserAdverts(user?.token)) 
+    await dispatch(handleGetAllUser()) 
+    await dispatch(handleGetTasks())
   }
 
-  useEffect(() => {
-    
+  useEffect(() => {   
     getAdverts()
+
+    //console.log(tasksList)
 
     if (isError) {
       toast.error("Failed to retrieve adverts, please reload page")
@@ -72,6 +79,8 @@ const CampaignStats = () => {
             item={item}
             url={item.socialPageLink}
             taskPerformers={item.taskPerformers}
+            users={users}
+            taskList={tasksList}
           />
         ))}
       </div>
