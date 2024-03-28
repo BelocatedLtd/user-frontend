@@ -61,6 +61,11 @@ const Dashboard = () => {
 
   const handleEarn = (e) => {
     e.preventDefault()
+    if (user?.accountStatus === "Suspended") {
+      toast.error("Account has being suspended, send an email to appeal@belocated.ng to appeal")
+      return
+    }
+
     if (!user?.location || !user?.community || !user?.gender) {
       toast.error("Please, complete your profile before you can perform tasks")
       navigate(`/dashboard/account-settings/${user?.username}`)
