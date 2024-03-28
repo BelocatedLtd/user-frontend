@@ -167,25 +167,27 @@ const SidebarLeft = ({children}) => {
 
 {/* Mobile footer menu */}
       <div className='flex sticky bottom-0 w-full md:hidden bg-white p-3 h-fit shrink-0 border border-top border-gray-200 overflow-auto justify-center mt-[1rem]'>
-        <div className='flex gap-1'>
+        <div className='flex gap-3'>
         {user?.accountType === "User" && (
              <>
-              {menu.slice(0, -2).map((item, index) => { 
+              {menu.slice(0, -3).map((item, index) => { 
                   return <SidebarItems key={index} item={item} isOpen={isOpen} />
              })}
             </>
           )}
+          </div>
 
           {user?.accountType === "Admin" && (
+            <div className='flex gap-0'>
               <>
               {adminMenu.slice(0, -3).map((item, index) => { 
                   return <SidebarItems className='' key={index} item={item} isOpen={isOpen} />
              })}
              </>
+            </div>
           )}
         </div>
       </div>
-    </div>
   )
 }
 
