@@ -21,6 +21,7 @@ const Tasks = () => {
   const isError = useSelector(selectIsError)
   const sortIcon = <MdArrowDownward />;
   const [sortedTasks, setSortedTasks] = useState()
+  const [selectedStatus, setSelectedStatus] = useState('All');
 
   useEffect(() => {
     dispatch(handleGetTasks())
@@ -37,12 +38,14 @@ const Tasks = () => {
   }, [isError, dispatch])
 
   useEffect(() => {
+    console.log(selectedStatus)
+    //const filteredTasks = tasks?.filter(task => task?.status !== 'Awaiting Submission')
 
-    const filteredTasks = tasks?.filter(task => task?.status !== 'Awaiting Submission')
+    // Filter tasks based on selected status
+    const filteredTasks = selectedStatus === 'All' ? tasks : tasks.filter(task => task.status === selectedStatus);
+
     setSortedTasks(filteredTasks)
-
-  
-  }, [tasks])
+  }, [tasks, selectedStatus])
 
   
 
@@ -147,10 +150,20 @@ const Tasks = () => {
     <div className='w-full mx-auto mt-[2rem]'>
       <div className='flex items-center justify-between mb-[2rem] py-5'>
                 <div className='flex items-center'>
-                <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))} className='mr-1'/>
+                    <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))} className='mr-1'/>
                     <p className='font-semibold text-xl text-gray-700'>Tasks</p>
                 </div>
-          </div>
+
+                <div>
+                  <select name="" id="" value={selectedStatus} onChange={e => setSelectedStatus(e.target.value)} className='py-3 p-3 border border-gray-400 rounded-xl '>
+                    <option value="All">All</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Submitted">Submitted</option>
+                    <option value="Awaiting Submission">Awaiting Submission</option>
+                    <option value="Rejected">Rejected</option>
+                  </select>
+                </div>
+      </div>
       <DataTable 
       columns={columns} 
       data={sortedTasks}
