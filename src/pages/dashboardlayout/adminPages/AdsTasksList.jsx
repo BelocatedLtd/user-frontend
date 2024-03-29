@@ -3,7 +3,7 @@ import DataTable from 'react-data-table-component';
 import { useSelector, useDispatch } from 'react-redux';
 import { handleGetAllUser, selectUsers } from '../../../redux/slices/userSlice';
 import { useNavigate, useParams } from 'react-router-dom';
-import { MdArrowDownward } from 'react-icons/md';
+import { MdArrowDownward, MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { handleGetTasks, selectIsError, selectIsLoading, selectTasks } from '../../../redux/slices/taskSlice';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
@@ -19,13 +19,25 @@ const AdsTasksList = () => {
   const isError = useSelector(selectIsError)
   const sortIcon = <MdArrowDownward />;
   const [taskAdList,  seTaskAdList] = useState()
+  const [sortedTasks, setSortedTasks] = useState()
+  const [selectedStatus, setSelectedStatus] = useState('All');
 
   useEffect(() => {
     const adsTaskList = tasks?.filter(task => task.advertId === id)
     seTaskAdList(adsTaskList) 
   }, [tasks])
 
-  const columns = [
+  useEffect(() => {
+    console.log(selectedStatus)
+    //const filteredTasks = tasks?.filter(task => task?.status !== 'Awaiting Submission')
+
+    // Filter tasks based on selected status
+    const filteredTasks = selectedStatus === 'All' ? tasks : taskAdList.filter(task => task.status === selectedStatus);
+
+    setSortedTasks(filteredTasks)
+  }, [tasks, selectedStatus])
+
+  const columns = [ 
     {
       name: 'Title',
       selector: row => row.title,
@@ -122,9 +134,27 @@ const AdsTasksList = () => {
   
   return (
     <div className='w-full mx-auto mt-[2rem]'>
+      <div className='flex items-center justify-between mb-[2rem] py-5'>
+                <div className='flex items-center'>
+                    <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))} className='mr-1'/>
+                    <p className='font-semibold text-xl text-gray-700'>User Tasks</p>
+                </div>
+
+                <div>
+                  <select name="" id="" value={selectedStatus} onChange={e => setSelectedStatus(e.target.value)} className='py-3 p-3 border border-gray-400 rounded-xl '>
+                    <option value="All">All</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Submitted">Submitted</option>
+                    <option value="Awaiting Submission">Awaiting Submission</option>
+                    <option value="Rejected">Rejected</option>
+                  </select>
+                </div>
+      </div>
+
+
       <DataTable 
       columns={columns} 
-      data={taskAdList}
+      data={sortedTasks}
       progressPending={isLoading}
       pagination
       selectableRows

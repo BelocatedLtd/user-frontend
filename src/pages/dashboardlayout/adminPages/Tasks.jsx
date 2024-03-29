@@ -30,17 +30,12 @@ const Tasks = () => {
     if (isError) {
       toast.error("failed to fetch tasks")
     }
-
-    const filteredTasks = tasks?.filter(task => task?.status !== 'Awaiting Submission')
-    setSortedTasks(filteredTasks)
-
   
   }, [isError, dispatch])
 
   useEffect(() => {
     console.log(selectedStatus)
-    //const filteredTasks = tasks?.filter(task => task?.status !== 'Awaiting Submission')
-
+    
     // Filter tasks based on selected status
     const filteredTasks = selectedStatus === 'All' ? tasks : tasks.filter(task => task.status === selectedStatus);
 
