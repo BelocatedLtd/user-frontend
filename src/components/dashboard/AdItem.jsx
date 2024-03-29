@@ -29,7 +29,7 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
     }, [status, payBtn])
 
     useEffect(() => {
-        const tps = users?.filter(user => taskPerformers.includes(user._id));
+        const tps = users?.filter(user => taskPerformers?.includes(user._id));
         const tpsList = taskList?.filter(task => tps.some(user => user._id === task.taskPerformerId));
         setAdTaskPerformers(tps);
         setAdTaskPerformerTasks(tpsList)
@@ -127,7 +127,7 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
                     </li>
                 </ul>
                 {/* Task Performer Button */}
-                <button onClick={handleToggleTaskPerformers} className='flex gap-1 items-center justify-center bg-secondary px-3 py-1 mt-1 text-primary rounded-2xl hover:bg-tertiary'>View and Monitor Results <span>{taskPerformers.length}</span></button>
+                <button onClick={handleToggleTaskPerformers} className='flex gap-1 items-center justify-center bg-secondary px-3 py-1 mt-1 text-primary rounded-2xl hover:bg-tertiary'>View and Monitor Results <span>{taskPerformers?.length}</span></button>
             </div>
 
             </div>
@@ -136,7 +136,7 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
         
         {toggleTaskPerformers && (
             <div className='flex flex-col gap-3'>
-                    {taskPerformers.map(tp => (
+                    {taskPerformers?.map(tp => (
                         // <p key={tp}>{tp}</p>
                         <div className='w-full border-b border-gray-200 py-[1rem]' key={tp}>
                             
