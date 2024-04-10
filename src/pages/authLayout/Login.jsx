@@ -117,7 +117,7 @@ const Login = ({showRegModal, closeModal}) => {
         
             } 
             
-            if (response.accountType === "Admin") {
+            if (response.accountType === "Admin" || response.accountType === "Super Admin") {
               navigate(`/admin/dashboard/${username}`)
             }
       

@@ -151,7 +151,7 @@ const SidebarLeft = ({children}) => {
             </>
           )}
 
-          {user?.accountType === "Admin" && (
+          {user?.accountType === "Admin" || user?.accountType === "Super Admin" && (
               <>
               {adminMenu.map((item, index) => { 
                 return <SidebarItems key={index} item={item} isOpen={isOpen} />

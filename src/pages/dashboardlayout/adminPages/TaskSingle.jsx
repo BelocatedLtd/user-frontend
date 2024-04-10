@@ -16,6 +16,7 @@ import Carousel from '../../../components/Carousel';
 import ImageGallery from '../../../components/ImageGallery';
 import { selectAllAdverts } from '../../../redux/slices/advertSlice';
 import { toast } from 'react-hot-toast';
+import TaskProofModal from '../../../components/ui/TaskProofModal';
 
 const TaskSingle = () => {
     const {id} = useParams()
@@ -31,6 +32,8 @@ const TaskSingle = () => {
     const [delBtn, setDelBtn] = useState(false)
     const [slides, setSlides] = useState([])
     const [ad, setAd] = useState()
+    const [toggleTaskProofModal, setToggleTaskProofModal] = useState(false)
+    const [taskProof, setTaskProof] = useState()
 
     useEffect(() => {
       const taskDetails = tasks?.find(task => task?._id === id)
@@ -71,11 +74,26 @@ const TaskSingle = () => {
       setDelBtn(!delBtn)
     }
 
+    function openPopup(e, task) {
+      e.preventDefault()
+
+      setTaskProof(task)
+      // if (!task) {
+      //     toast.error("Sorry, proof of task not available")
+      //     return
+      // }
+
+          setToggleTaskProofModal(!toggleTaskProofModal)
+          //window.open(imageUrl, '_blank', 'width=800,height=600,toolbar=no,scrollbars=yes,resizable=yes');
+
+  }
+
   return (
     <div className = 'w-full h-fit'>
       {modalBtn && <TaskModal handleModal={handleModal} task={task} taskPerformer={taskPerformer} />}
 
       {delBtn && <DeleteTaskModal handleDelete={handleDelete} task={task}/>}
+      {toggleTaskProofModal && <TaskProofModal toggleTaskProof={openPopup} task={taskProof} />}
       {isLoading && <Loader />}
       <div className='flex items-center gap-3 border-b border-gray-200 pb-6'>
           <MdOutlineKeyboardArrowLeft size={30} onClick={() => (navigate(-1))}/>
@@ -201,19 +219,22 @@ const TaskSingle = () => {
             </div>
           )}
 
-          {task?.proofOfWorkMediaURL?.length === 1 && (
+          {task?.proofOfWorkMediaURL?.length >= 1 && (
             <div className='w-full h-[400px]'>
-                <img src={task?.proofOfWorkMediaURL[0]?.secure_url} className='w-full h-full object-cover'/>
+                {/* <img src={task?.proofOfWorkMediaURL[0]?.secure_url} className='w-full h-full object-cover'/> */}
+                <a onClick={(e) => openPopup(e, task)} className='text-blue-600 hover:text-red-600'>
+  Click to view
+    </a>
             </div>
           )}
 
-          {task?.proofOfWorkMediaURL?.length > 1 && (
+          {/* {task?.proofOfWorkMediaURL?.length > 1 && (
             <Carousel autoSlide={true} >
             {slides?.map((s, index) => (
                 <img key={index} src={s.secure_url} className='w-full h-full object-cover'/>
             ))}
             </Carousel>
-          )}
+          )} */}
           </div>
           </div>
         </div>

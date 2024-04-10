@@ -26,6 +26,8 @@ const AdBuy = () => {
     const location = useLocation();
     const { selectedPlatformObject, service, adTitle } = location.state || {};
     const [socialService, setSocialService] = useState(null)
+    const [comments, setComments] = useState("");
+    const [captionArray, setCaptionArray] = useState([])
     
 
     const {roi, gender, socialPageLink, adText } = advert
@@ -35,6 +37,15 @@ const AdBuy = () => {
         setAdvert({ ...advert, [name]: value })
       }
 
+      const handleCaptionChange = (e) => {
+        setComments(e.target.value);
+      };
+  
+      // Split comments by newline character and remove empty strings
+      useEffect(() => {
+        const commentsArray = comments.split('\n').filter(comment => comment.trim() !== '');
+        setCaptionArray(commentsArray);
+      }, [comments]);
 
 // Upload and preview multiple screenshots
 const handleImageChange = (e) => {
@@ -105,10 +116,13 @@ const handleImageRemove = (itemToRemove) => {
        fileArray={fileArray}
        handleInputChange={handleInputChange} 
        handleImageChange={handleImageChange} 
+       handleCaptionChange={handleCaptionChange}
        expBudget= {expBudget}
        costToPay= {costToPay}
        earnPerTask = {earnPerTask}
        socialService= {socialService}
+       comments={comments}
+       captionArray={captionArray}
        />
     </div>
   )

@@ -7,14 +7,29 @@ import { useEffect } from 'react'
 import { formatDate } from '../../../utils/formatDate'
 import { icons} from '../../components/data/socialIcon'
 import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md'
-import { Link } from 'react-router-dom'
-import { CheckmarkIcon } from 'react-hot-toast'
+import { Link, useNavigate } from 'react-router-dom'
+import toast, { CheckmarkIcon, LoaderIcon } from 'react-hot-toast'
+import { handleApproveTask, selectIsError, selectIsLoading, selectIsSuccess, selectTasks } from '../../redux/slices/taskSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import TaskProofModal from '../ui/TaskProofModal'
+//import Loader from '../../components/loader/Loader'
+import Loader from '../../components/loader/Loader'
 
-const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, tasks, item, url, taskPerformers, users, taskList }) => {
+const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, item, url, users, user }) => {
     const [payBtn, setPayBtn] = useState('Pay Now')
     const [toggleTaskPerformers, settoggleTaskPerformers] = useState(false)
     const [adTaskPerformers, setAdTaskPerformers] = useState()
     const [adTaskPerformerTasks, setAdTaskPerformerTasks] = useState()
+    const [taskSubmitters, setTaskSubmitters] = useState()
+    const [tasksUserAd, setTasksUserAd] = useState()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const tasks = useSelector(selectTasks)
+    const isError = useSelector(selectIsError)
+    const isSuccess = useSelector(selectIsSuccess)
+    const isLoading = useSelector(selectIsLoading)
+    const [toggleTaskProofModal, setToggleTaskProofModal] = useState(false)
+    const [taskProof, setTaskProof] = useState()
 
     useEffect(() => {
         if(status == 'Pending') {
@@ -28,29 +43,85 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
             }
     }, [status, payBtn])
 
-    useEffect(() => {
-        const tps = users?.filter(user => taskPerformers?.includes(user._id));
-        const tpsList = taskList?.filter(task => tps.some(user => user._id === task.taskPerformerId));
-        setAdTaskPerformers(tps);
-        setAdTaskPerformerTasks(tpsList)
-      }, [users, taskPerformers]);
 
-    const handleToggleTaskPerformers = () => {
-        console.log(item)
-        //console.log(adTaskPerformerTasks)
+    useEffect(() => {
+        // Filter the task list and bring out all the tasks with their advertiserId as the user and task advertId is the same with the advertId being rendered.
+        const taskListUserAd = tasks?.filter(t => 
+            t.advertiserId === user.id && 
+            t.advertId === item._id &&
+            (t.status === 'Approved' || t.status === 'Submitted' || t.status === 'Pending Approval')
+        );
+        setTasksUserAd(taskListUserAd)
+      }, []);
+
+      //console.log(tasksUserAd) 
+
+    const handleToggleTaskPerformers = (e) => {
+        e.preventDefault()
+
+        if (taskSubmitters > 1) {
+            toast.error("No Task Submitted")
+            return
+        }
+
+        //console.log(item)
         settoggleTaskPerformers(!toggleTaskPerformers)
     }
 
 
-    function openPopup(imageUrl) {
-        if (imageUrl) {
-            window.open(imageUrl, '_blank', 'width=800,height=600,toolbar=no,scrollbars=yes,resizable=yes');
-        }
+    function openPopup(e, tp) {
+        e.preventDefault()
+
+        setTaskProof(tp)
+        // if (!tp) {
+        //     toast.error("Sorry, proof of task not available")
+        //     return
+        // }
+
+        setToggleTaskProofModal(!toggleTaskProofModal)
     }
+
+
+// Handle task for me.
+    const handleTaskApproval = async(e, clickedTask) => {
+        e.preventDefault()
+
+        console.log(clickedTask)
+
+        if (clickedTask.status === "Approved") {
+        toast.success("Task has already being approved")
+        return
+        }
+
+        const approveTaskData = {
+        taskId: clickedTask?._id, 
+        status: "Approved",
+        message: "The advertiser approved this task",
+    }
+ 
+        //If Advertiser Approves
+            if (!clickedTask?._id) {
+                toast.error('Task information missing')
+                return
+            }
+        
+            await dispatch(handleApproveTask(approveTaskData))
+            
+            if (isError) {
+                toast.error("Error Approving Task")
+            }
+    
+            if (isSuccess) {
+                toast.success("Task Approved")
+            }
+        }
+    
     
 
   return (
     <div className='relative shadow-lg flex md:w-[95%] h-fit mt-5 mb-[2rem] bg-[#fcfcfc] p-[1.5rem] rounded-2xl rounded-tr-none md:p-[3rem]'>
+        {isLoading && <Loader />}
+        {toggleTaskProofModal && <TaskProofModal toggleTaskProof={openPopup} task={taskProof} />}
         {/* Close icon to delete ad campaign */}
         {status == 'pending' && 
         <img src={close}  alt="close" size={20} className='absolute top-[-0.4rem] right-[-0.4rem] text-tertiary w-[28px] h-[28px]' />}
@@ -73,7 +144,7 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
         <div className='flex flex-col md:flex-row gap-2 justify-between'>
             <div className='flex flex-col'>
             <div className='flex flex-col'>
-                <label className='font-extrabold text-[12px] text-gray-700 md:text-[14px] md:font-bold'>Ad Unit:</label>
+                <label className='font-extrabold text-[12px] text-gray-700 md:text-[14px] md:font-bold'>Ad Unit Remaining:</label>
                 <small className='text-gray-500 font-bold'>{roi}</small> 
             </div>
 
@@ -84,7 +155,7 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
             
             <div className='flex flex-col mt-[1rem]'>
             <label className='font-extrabold text-[12px] text-gray-700 md:text-[14px] md:font-bold'>Link</label>
-            {url ? ( <small className='text-gray-500 font-bold'><a href={url} className='text-blue-600'>{url}</a></small>) : ("N/A")}
+            {url ? ( <small className='text-gray-500 font-bold'><a href={url} className='text-blue-600'>{url.slice(0, 20)}...</a></small>) : ("N/A")}
             </div>
             </div>
 
@@ -103,7 +174,7 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
             <div className='w-fit flex flex-col justify-start gap-2 text-[10px] py-2 mt-[1rem] md:text-[14px]'>
                 <div className=''>
                     <label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>Tasks Completed:</label>
-                    <p className='text-[12px]'>{taskPerformers?.length}</p>
+                    <p className='text-[12px]'>{tasksUserAd?.filter(t => t.status === "Approved").length}</p>
                 </div>
                 <ul className='flex items-center gap-2'>
                     <li>
@@ -127,7 +198,7 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
                     </li>
                 </ul>
                 {/* Task Performer Button */}
-                <button onClick={handleToggleTaskPerformers} className='flex gap-1 items-center justify-center bg-secondary px-3 py-1 mt-1 text-primary rounded-2xl hover:bg-tertiary'>View and Monitor Results <span>{taskPerformers?.length}</span></button>
+                <button onClick={handleToggleTaskPerformers} className='flex gap-1 items-center justify-center bg-secondary px-3 py-1 mt-1 text-primary rounded-2xl hover:bg-tertiary'>View and Monitor Results <span>{tasksUserAd?.length}</span></button>
             </div>
 
             </div>
@@ -136,30 +207,29 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
         
         {toggleTaskPerformers && (
             <div className='flex flex-col gap-3'>
-                    {taskPerformers?.map(tp => (
-                        // <p key={tp}>{tp}</p>
-                        <div className='w-full border-b border-gray-200 py-[1rem]' key={tp}>
-                            
-                            <div className='task performer details mb-[1rem]'>
-                            <small>{adTaskPerformers.find(u => u._id === tp)?.username}</small>
-                                <h3 className='font-bold text-gray-600'>{adTaskPerformers.find(u => u._id === tp)?.fullname}</h3>
+                    {tasksUserAd?.map(tp => (
+                        <div className='w-full border-b border-gray-200 py-[1rem]' key={tp._id}>  
+                            <div className='task performer details mb-[1rem] flex flex-col gap-1'>
+                                <small className='text-gray-400 font-semibold'>@{users?.find(u => u._id === tp?.taskPerformerId)?.username}</small>
+                                <h3 className='font-bold text-gray-600'>{users?.find(u => u._id === tp?.taskPerformerId)?.fullname}</h3>
                                 <span className='text-gray-400 font-semibold text-[9px]'>
-                                    {/* {formatDate(adTaskPerformerTasks?.find(un => un.advertId === item._id)?.createdAt)} */}
+                                    {formatDate(tp?.createdAt)}
                                 </span>
                             </div>
                             
 
                             <div className='flex flex-col gap-3 md:items-center justify-between mb-[1rem] md:flex-row'>
-                                <div className='first columns'>
-                                    <label className='font-bold'>Social media username</label>
-                                    <p>{adTaskPerformerTasks?.find(un => un.advertId === item._id)?.socialPageLink ? 
-                                    (adTaskPerformerTasks?.find(un => un.advertId === item._id)?.socialPageLink) : "N/A"}</p>
+                                <div className='first columns flex flex-col'>
+                                    <label className='font-bold'>Social Media</label>
+                                    <a href={tp?.socialPageLink} className='text-blue-600 hover:text-red-600 cursor-pointer'>
+  {tp.socialPageLink.slice(0, 20)}...
+    </a>
                                 </div>
 
                                 <div className='second columns flex flex-col'>
-                                    <label className='font-bold'>Screenshot / Proof of work</label>
-                                    {adTaskPerformerTasks?.find(un => un.advertId === item._id)?.proofOfWorkMediaURL?.[0]?.secure_url ? (
-  <a onClick={() => openPopup(adTaskPerformerTasks.find(un => un.advertId === item._id)?.proofOfWorkMediaURL[0].secure_url)} className='text-blue-600 hover:text-red-600'>
+                                    <label className='font-bold'>Proof</label>
+                                    {tp?.proofOfWorkMediaURL?.[0]?.secure_url ? (
+  <a onClick={(e) => openPopup(e, tp)} className='text-blue-600 hover:text-red-600 cursor-pointer'>
   Click to view
     </a>
 ) : "N/A"}
@@ -168,14 +238,18 @@ const AdItem = ({date, title, adperPostAmt, roi, adBudget, adService, status, ta
 
                                 <div className='third columns'>
                                     <label className='font-bold'>Status</label>
-                                    <p className='flex items-center gap-1'><span><CheckmarkIcon /></span>{adTaskPerformerTasks?.find(un => un.advertId === item._id)?.status}</p>
+                                    <p className='flex items-center gap-1'><span><CheckmarkIcon /></span>{tp?.status}</p>
                                 </div>
                             </div>
 
-                            {/* <div className='task management button flex items-center gap-2'>
-                                <button className='bg-green-600 px-3 py-2 text-primary hover:bg-orange-400'>Approve</button>
-                                <button className='bg-red-600 px-3 py-2 text-primary hover:bg-black'>Reject</button>
-                            </div> */}
+                            <div className='flex items-center gap-2'>
+                                <button onClick={(e) => handleTaskApproval(e, tp)} className={`
+                                ${tp?.status === "Approved" ? ("bg-green-600") : ("bg-yellow-600")} 
+                                flex items-center gap-2 rounded-2xl px-3 py-2 text-primary hover:bg-orange-400`} >
+                                    {tp?.status === "Approved" ? ("Approved") : ("Approve")}
+                                    <span>{isLoading && <LoaderIcon />}</span>
+                                </button>
+                            </div>
 
                         </div>
                     ))}

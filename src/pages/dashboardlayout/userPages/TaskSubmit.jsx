@@ -144,7 +144,7 @@ const TaskSubmit = () => {
       if (!response) {
         setIsLoading(false)
         setTaskSubmitted(false)
-        toast.error('Error submitting task')
+        toast.error('Error submitting task') 
         return
       }
 

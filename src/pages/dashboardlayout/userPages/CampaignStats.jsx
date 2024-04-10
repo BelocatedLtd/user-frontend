@@ -20,7 +20,6 @@ const CampaignStats = () => {
   const user = useSelector(selectUser)
   const adverts = useSelector(selectAdverts)
   const users = useSelector(selectUsers)
-  const tasksList = useSelector(selectTasks)
   const isLoading = useSelector(selectIsLoading)
   const isError = useSelector(selectIsError)
   const dispatch = useDispatch()
@@ -78,9 +77,10 @@ const CampaignStats = () => {
             religion={item.religion}
             item={item}
             url={item.socialPageLink}
-            taskPerformers={item.taskPerformers}
+            //taskPerformers={item.taskPerformers}
             users={users}
-            taskList={tasksList}
+            user={user}
+            //taskList={tasksList}
           />
         ))}
       </div>

@@ -12,7 +12,8 @@ import { selectUser } from '../../redux/slices/authSlice'
 import { GiCancel } from 'react-icons/gi'
 
 
-const AdBuyForm = ({advert, service, adTitle, platform, selectedFiles, fileArray, socialService, handleImageRemove, expBudget, costToPay, earnPerTask, handleInputChange, handleImageChange }) => {
+const AdBuyForm = ({advert, service, adTitle, platform, selectedFiles, fileArray, socialService, handleImageRemove, expBudget, costToPay, earnPerTask, handleInputChange, handleImageChange, comments, handleCaptionChange, captionArray }) => {
+    const user = useSelector(selectUser)
     const [mediaTypeImage, setMediaTypeImage] = useState('image')
     const [selectPaymentBtn, setSelectPaymentBtn] = useState(false)
     const [hideCommentInputFields, setHideCommentInputFields] = useState(false)
@@ -21,7 +22,6 @@ const AdBuyForm = ({advert, service, adTitle, platform, selectedFiles, fileArray
     const [selectedState, setSelectedState] = useState("")
     const [selectedStateCommunities, setSelectedStateCommunities] = useState([])
     const [selectedCommunity, setSelectedCommunity] = useState("")
-    const user = useSelector(selectUser)
 
 
     useEffect(() => {
@@ -77,9 +77,6 @@ const AdBuyForm = ({advert, service, adTitle, platform, selectedFiles, fileArray
         setHideLinkInputFields(true) 
       }
     }, [platform, service])
-    
-
-    
 
 
     const handleStateChange = (event) => {
@@ -110,7 +107,7 @@ const AdBuyForm = ({advert, service, adTitle, platform, selectedFiles, fileArray
       state: selectedState,
       imageArray: fileArray,
       lga: selectedCommunity,
-      caption: advert.adText,
+      //caption: comments,
       socialPageLink: advert.socialPageLink,
       costPerTask: costToPay,
       expBudget,
@@ -158,7 +155,7 @@ const AdBuyForm = ({advert, service, adTitle, platform, selectedFiles, fileArray
 
   return (
     <div className='w-full h-fit '>
-      {selectPaymentBtn && <PaymentMethod togglePaymentSelect={togglePaymentSelect} formData={formData} />}
+      {selectPaymentBtn && <PaymentMethod togglePaymentSelect={togglePaymentSelect} formData={formData} captionArray={captionArray} />}
        <form onSubmit={togglePaymentSelect} enctype="multipart/form-data" className='w-fit md:w-full p-5 md:p-6 m-1 md:m-0 md:mr-6 border border-semi_tertiary rounded-2xl flex flex-col text-center gap-6'>
                 <div className='form__container flex flex-col w-full md:flex-row'>
                   <div className='left flex-1 md:border-r md:border-gray-100 md:pr-5'>
@@ -260,11 +257,11 @@ const AdBuyForm = ({advert, service, adTitle, platform, selectedFiles, fileArray
                               cols="60" 
                               rows="10" 
                               name='adText' 
-                              placeholder =
-                              {service === "Comment" || service === "Share With Comment" ? "Give as many examples as possible, write a comment example per line and seperated by fullstop" : "Ad description"
-                              }
-                              value={advert.adText} 
-                              onChange={handleInputChange} 
+                              placeholder = "Enter your advert captions (separated by a newline)"
+                              // {service === "Comment" || service === "Share With Comment" ? "Give as many examples as possible, write a comment example per line and seperated by fullstop" : "Ad description"
+                              // }
+                              value={comments} 
+                              onChange={handleCaptionChange} 
                               className='shadow-inner bg-transparent border border-gray-200 rounded-xl p-3 mb-1 w-[250px] md:w-[100%] box-border'/>
                               </div>
                           </div>
