@@ -8,34 +8,51 @@ import { ShowOnLogin, ShowOnLogout } from './protect/hiddenLinks'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../redux/slices/authSlice'
 import { useNavigate } from 'react-router-dom'
+import Button from './Button'
 
-const CallToAction = ({handleRegister, regBtn}) => {
-  const user = useSelector(selectUser)
-  const navigate = useNavigate()
-  
-  return (
-    <div className='w-full h-fit'>
-      {regBtn && <Register handleRegister={handleRegister} regBtn={regBtn} />}
-        <div className='container flex items-center mx-auto px-[2rem] leading-[1.2] mb-[3rem] mt-[4rem]'>
-            <div className='hidden flex-1 md:flex'>
-                <img src={callToAction} alt="call to action" />
-            </div>
-            <div className='flex-1 w-full pr-5'>
-                <h1 className='text-[18px] md:text-[40px] text-red-400 font-extrabold leading-[1.4]'>Sounds too good to be true?</h1>
-                <ShowOnLogin>
-                  <p className='text-gray-700 font-light text-[20px] md:text-[40px] leading-[1.4]'>Head to your dashboard let us prove you wrong</p>
-                  <button onClick={() => navigate(`/dashboard/${user?.username}`)} className='mt-[2rem]  md:w-[200px] bg-transparent border border-gray-600 px-[1rem] py-3 flex items-center justify-center gap-1 font-light rounded-2xl'>Go to Dashboard <span><MdArrowRightAlt size={20} className='text-gray-600' /></span></button>
-                </ShowOnLogin>
+const CallToAction = ({ handleRegister, regBtn }) => {
+	const user = useSelector(selectUser)
+	const navigate = useNavigate()
 
-                <ShowOnLogout>
-                  <p className='text-gray-700 font-light text-[20px] md:text-[40px] leading-[1.4]'>Sign up an let us prove you wrong</p>
-                  <button onClick={handleRegister} className='mt-[2rem]  md:w-[200px] bg-transparent border border-gray-600 px-[1rem] py-3 flex items-center justify-center gap-1 font-light rounded-2xl'>Sign Up <span><MdArrowRightAlt size={20} className='text-gray-600' /></span></button>
-                </ShowOnLogout>
-            </div> 
-        </div>
+	return (
+		<div className='w-full h-[70%] flex items-center justify-center '>
+			<div className=''>
+				{regBtn && <Register handleRegister={handleRegister} regBtn={regBtn} />}
 
-    </div>
-  )
+				<div className='flex items-center justify-center '>
+					<h3 className='text-center  font-extrabold border-l-4 px-4 border-red-400 '>
+						Get Onboard
+					</h3>
+				</div>
+
+				<div className='container flex text-center justify-center mx-auto px-[2rem]  leading-[1.2] mb-[3rem] mt-[1rem]'>
+					<div className='flex-1 w-full pr-5'>
+						<h1 className='text-[18px] md:text-[40px]  font-black leading-[1.4]'>
+							Earners and advertisers,
+							<br /> BeLocated offers rewards and <br /> affordable advertising
+							with guaranteed ROI
+						</h1>
+
+						<ShowOnLogout>
+							<Button
+								size={'sm'}
+								onClick={() => null}
+								className='w-40 flex items-center mx-auto justify-center mt-[2rem]'
+								variant='outline'>
+								Join us Now!
+								<span>
+									<MdArrowRightAlt
+										size={20}
+										className='text-secondary ml-2 mt-1'
+									/>
+								</span>
+							</Button>
+						</ShowOnLogout>
+					</div>
+				</div>
+			</div>
+		</div>
+	)
 }
 
 export default CallToAction
