@@ -8,6 +8,7 @@ import { ShowOnLogin, ShowOnLogout } from './protect/hiddenLinks'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../redux/slices/authSlice'
 import { useNavigate } from 'react-router-dom'
+import sectionBg from '../assets/section-bg.png'
 import Button from './Button'
 
 const CallToAction = ({ handleRegister, regBtn }) => {
@@ -15,7 +16,15 @@ const CallToAction = ({ handleRegister, regBtn }) => {
 	const navigate = useNavigate()
 
 	return (
-		<div className='w-full h-[70%] flex items-center justify-center '>
+		<div
+			className='w-full h-[70%] bg-cover bg-center flex items-center justify-center '
+			style={{
+				// backgroundImage: `url(${sectionBg})}`,
+				backgroundImage: 'url(' + sectionBg + ')',
+				backgroundPosition: 'center',
+				backgroundSize: 'cover',
+				backgroundRepeat: 'no-repeat',
+			}}>
 			<div className=''>
 				{regBtn && <Register handleRegister={handleRegister} regBtn={regBtn} />}
 
