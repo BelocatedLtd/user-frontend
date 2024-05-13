@@ -14,8 +14,8 @@ const MembersTab = ({ handleRegister, regBtn }) => {
 		<section className='w-full h-full mt-20 '>
 			{regBtn && <Register handleRegister={handleRegister} regBtn={regBtn} />}
 			<div className='flex flex-col items-center justify-center'>
-				<div className='flex items-center justify-center mx-[1.5rem] w-[90%] bg-red-3 h-[600px]'>
-					<div className='w-1/2'>
+				<div className='flex flex-col md:flex-row md:items-center justify-center mx-[1.5rem] my-10 md:w-[90%] bg-red-3 md:h-[600px]'>
+					<div className='md:w-1/2'>
 						<h1 className='text-4xl text-gray-600 font-black'>Earners</h1>
 						<div className='mt-3'>
 							<p className='w-full text-gray-600'>
@@ -46,7 +46,7 @@ const MembersTab = ({ handleRegister, regBtn }) => {
 					<img
 						src={earners}
 						alt='earners'
-						className='w-full h-full object-contain'
+						className='w-full h-full object-contain mt-10'
 					/>
 					{/* <ShowOnLogout>
 							<button
@@ -63,13 +63,13 @@ const MembersTab = ({ handleRegister, regBtn }) => {
 							</button>
 						</ShowOnLogin> */}
 				</div>
-				<div className='flex  items-center text-right justify-center  mx-[1.5rem] w-[90%] bg-red-3 h-[600px]'>
+				<div className='flex flex-col-reverse md:flex-row md:items-center md:text-right justify-center  mx-[1.5rem] w-[90%] bg-red-3 md:h-[600px]'>
 					<img
 						src={advertisers}
 						alt='Advertisers'
-						className='w-full h-full object-contain'
+						className='w-full h-full object-contain mt-10 md:mt-0'
 					/>
-					<div className='w-1/2 mt-6'>
+					<div className='md:w-1/2 mt-6'>
 						<h1 className='text-4xl text-gray-600 font-black'>Advertisers </h1>
 						<p className='w-full text-gray-600 mt-3'>
 							Enjoy fast and affordable media services across all media

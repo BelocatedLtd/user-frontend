@@ -19,7 +19,7 @@ const Services = () => {
 					<br /> Our users come first, ensuring everyone gets more than
 					expected.
 				</p>
-				<hr className='my-36' />
+				<hr className='my-36 opacity-30' />
 
 				<div className='flex flex-col items-center justify-between gap-2 md:flex-row'>
 					<div className=' h-[400px] px-[2rem] flex flex-col gap-2 text-primary rounded-2xl '>

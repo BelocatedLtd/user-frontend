@@ -1,107 +1,130 @@
 import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { resendOTPVerificationEmail, verifyOldUserPassword } from '../../../../services/authServices'
+import {
+	resendOTPVerificationEmail,
+	verifyOldUserPassword,
+} from '../../../../services/authServices'
 import { toast } from 'react-hot-toast'
 import Loader from '../../../../components/loader/Loader'
 import PasswordVerify from './PasswordVerify'
+import Button from '../../../../components/Button'
 
 const initialState = {
-    password: ""
-  } 
-
-
-const PasswordChange = ({user}) => {
-    const [passwordChange, setPasswordChange] = useState(initialState)
-    const [isLoading, setIsLoading] = useState()
-    const [toggleOTPVerify, setToggleOTPVerify] = useState(false)
-
-//Password InPut Change
-const handlePasswordInputChange = (e) => {
-  e.preventDefault()
-  const {name, value } = e.target;
-  setPasswordChange({ ...passwordChange, [name]: value })
+	password: '',
 }
 
-const {password} = passwordChange
+const PasswordChange = ({ user }) => {
+	const [passwordChange, setPasswordChange] = useState(initialState)
+	const [isLoading, setIsLoading] = useState()
+	const [toggleOTPVerify, setToggleOTPVerify] = useState(false)
 
-const accountDetailsData = {
-  userId: user?.id,
-  email: user?.email,
-  oldPassword: password
-}
+	//Password InPut Change
+	const handlePasswordInputChange = (e) => {
+		e.preventDefault()
+		const { name, value } = e.target
+		setPasswordChange({ ...passwordChange, [name]: value })
+	}
 
-const handleSubmit = async(e) => {
-    e.preventDefault()
+	const { password } = passwordChange
 
-    //Verifications
-    if (!password) {
-        toast.error("Input your old password")
-        return
-      }
+	const accountDetailsData = {
+		userId: user?.id,
+		email: user?.email,
+		oldPassword: password,
+	}
 
-    if (password.length < 6) {
-        toast.error("Incorrect Password")
-        return
-    }
+	const handleSubmit = async (e) => {
+		e.preventDefault()
 
-        setIsLoading(true)
-        const oldPasswordOk = await verifyOldUserPassword(accountDetailsData)
+		//Verifications
+		if (!password) {
+			toast.error('Input your old password')
+			return
+		}
 
-        setIsLoading(false)
-        if(!oldPasswordOk) {
-          setIsLoading(false)
-          toast.error('Error, check the password and try again')
-          return
-        }
-     
-     if (oldPasswordOk === "Password is Correct") {
-      setIsLoading(true)
+		if (password.length < 6) {
+			toast.error('Incorrect Password')
+			return
+		}
 
-      //Sending Email Verification OTP
-      const OTPSent = await resendOTPVerificationEmail(user.email)
-      
-      setIsLoading(false)
+		setIsLoading(true)
+		const oldPasswordOk = await verifyOldUserPassword(accountDetailsData)
 
-      if (!OTPSent) {
-        setIsLoading(false)
-        toast.error('Error Sending Verification Email')
-        return
-      }
+		setIsLoading(false)
+		if (!oldPasswordOk) {
+			setIsLoading(false)
+			toast.error('Error, check the password and try again')
+			return
+		}
 
-      if (OTPSent && OTPSent.message === "Verification OTP Sent") {
-        setIsLoading(true)
+		if (oldPasswordOk === 'Password is Correct') {
+			setIsLoading(true)
 
-        setToggleOTPVerify(true)
-        setIsLoading(false)
-        toast.success('Please, verify your account')
-        return
-      }
-      setIsLoading(false)
-     }
-}
+			//Sending Email Verification OTP
+			const OTPSent = await resendOTPVerificationEmail(user.email)
 
+			setIsLoading(false)
 
-const handleModal = () => {
-  setToggleOTPVerify(!toggleOTPVerify)
-}
+			if (!OTPSent) {
+				setIsLoading(false)
+				toast.error('Error Sending Verification Email')
+				return
+			}
 
-  return (
-    <div className='box p-6 shadow-lg'>
-      {toggleOTPVerify && <PasswordVerify accountDetailsData={accountDetailsData} handleModal={handleModal} email={user.email}/>}
-      <form onSubmit={handleSubmit}>
-        {isLoading && <Loader />}
-          <label htmlFor="accountDetails reset" className='font-bold'>Change Password</label>
-              <div className='flex flex-col mt-3 mb-3'>
-                  <label htmlFor="Password Change" className='text-left'>Old Password</label>
-                  <input type='password' name="password" placeholder={"******"} onChange={handlePasswordInputChange} className='w-full shadow-inner p-3 border border-gray-200 rounded-xl text-gray-400' />
+			if (OTPSent && OTPSent.message === 'Verification OTP Sent') {
+				setIsLoading(true)
 
-                  <button className='w-full bg-tertiary text-gray-100 p-2 rounded-2xl mt-6'>Change Password</button>
-              </div>
-      </form>
-    </div>
-    
-  )
+				setToggleOTPVerify(true)
+				setIsLoading(false)
+				toast.success('Please, verify your account')
+				return
+			}
+			setIsLoading(false)
+		}
+	}
+
+	const handleModal = () => {
+		setToggleOTPVerify(!toggleOTPVerify)
+	}
+
+	return (
+		<div className='box p-6 shadow-lg'>
+			{toggleOTPVerify && (
+				<PasswordVerify
+					accountDetailsData={accountDetailsData}
+					handleModal={handleModal}
+					email={user.email}
+				/>
+			)}
+			<form onSubmit={handleSubmit}>
+				{isLoading && <Loader />}
+				<label htmlFor='accountDetails reset' className='font-bold'>
+					Change Password
+				</label>
+				<div className='flex flex-col mt-3 mb-3'>
+					<label htmlFor='Password Change' className='text-left'>
+						Old Password
+					</label>
+					<input
+						type='password'
+						name='password'
+						placeholder={'******'}
+						onChange={handlePasswordInputChange}
+						className='w-full shadow-inner p-3 border border-gray-200 rounded-xl text-gray-400'
+					/>
+
+					<Button
+						size={'sm'}
+						type='submit'
+						className='mt-10 bg-tertiary rounded-xl'
+						variant='danger'>
+						Change Password
+					</Button>
+				</div>
+			</form>
+		</div>
+	)
 }
 
 export default PasswordChange

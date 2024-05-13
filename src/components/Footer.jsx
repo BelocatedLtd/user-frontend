@@ -7,7 +7,7 @@ const Footer = () => {
 	return (
 		<section className=' w-full    bg-gray-800  md:flex'>
 			<footer className=' w-full flex-col justify-center container text-center items-center mx-auto text-gray-200 py-6 '>
-				<hr className='border-primary-border' />
+				<hr className='border-primary-border opacity-20' />
 
 				<div className='w-full py-10  '>
 					<div>

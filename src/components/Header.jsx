@@ -41,7 +41,7 @@ export const Header = () => {
 			return (
 				<button
 					onClick={() => navigate(`/admin/dashboard/${user?.username}`)}
-					className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>
+					className='bg-transparent text- px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>
 					Dashboard
 				</button>
 			)
@@ -51,7 +51,7 @@ export const Header = () => {
 			return (
 				<button
 					onClick={() => navigate(`/dashboard/${user?.username}`)}
-					className='bg-transparent text-tertiary px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>
+					className='bg-transparent text- px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>
 					Dashboard
 				</button>
 			)

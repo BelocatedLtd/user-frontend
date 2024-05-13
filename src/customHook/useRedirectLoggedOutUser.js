@@ -7,34 +7,32 @@ import { toast } from 'react-hot-toast'
 import { getToken } from '../../utils/tokenHandler'
 import { getLoginStatus } from '../services/authServices'
 
-
-
 const useRedirectLoggedOutUser = (path) => {
-  const dispatch = useDispatch()
-  //const user = useSelector(selectUser)
-    const navigate = useNavigate()
+	const dispatch = useDispatch()
+	//const user = useSelector(selectUser)
+	const navigate = useNavigate()
 
-  useEffect(() => {
-    const redirectLoggedOutUser = async () => {
-      const isLoggedIn = await getLoginStatus()
-      const tokenAvailable = await getToken()
+	useEffect(() => {
+		const redirectLoggedOutUser = async () => {
+			const isLoggedIn = await getLoginStatus()
+			const tokenAvailable = await getToken()
 
-        if(!isLoggedIn || !tokenAvailable) {
-          await dispatch(SET_LOGOUT())
-            toast.error('Session Expired, Please login to continue')
-            navigate(path)
-            return 
-        }
+			if (!isLoggedIn || !tokenAvailable) {
+				dispatch(SET_LOGOUT())
+				// toast.error('Session Expired, Please login to continue')
+				navigate(path)
+				return
+			}
 
-        if(tokenAvailable === undefined) {
-          await dispatch(SET_LOGOUT())
-            toast.error('Session Expired, Please login to continue')
-            navigate(path)
-            return 
-        }
-    }
-    redirectLoggedOutUser()
-  }, [navigate, dispatch])
+			if (tokenAvailable === undefined) {
+				await dispatch(SET_LOGOUT())
+				toast.error('Session Expired, Please login to continue')
+				navigate(path)
+				return
+			}
+		}
+		redirectLoggedOutUser()
+	}, [navigate, dispatch])
 }
 
 export default useRedirectLoggedOutUser

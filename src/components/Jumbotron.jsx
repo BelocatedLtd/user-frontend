@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../redux/slices/authSlice'
 import logo from '../assets/bg.png'
+import Marqueez from '../pages/mainlayout/Marquee'
 
 const Jumbotron = ({}) => {
 	const navigate = useNavigate()
@@ -46,7 +47,7 @@ const Jumbotron = ({}) => {
 				/>
 			)}
 
-			<div className='container flex flex-col items-center'>
+			<div className='container flex mt-20 flex-col items-center'>
 				<h1 className='w-[90%] text-center text-[28px] text-gray-800 font-extrabold md:text-[3rem]'>
 					Earn Daily: Complete Lucrative <br /> Social Media Tasks Easily
 				</h1>
@@ -85,7 +86,12 @@ const Jumbotron = ({}) => {
 					<span className='text-secondary cursor-pointer'>Logout</span>
 				</small>
 			</ShowOnLogin>
-			<img src={logo} alt='logo' className='w-full h-full  object-cover' />
+			<img
+				src={logo}
+				alt='logo'
+				className='w-full h-[39%] mt-8  object-cover'
+			/>
+			<Marqueez />
 		</section>
 	)
 }

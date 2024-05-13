@@ -24,7 +24,6 @@ export const Home = ({
 				loginBtn={loginBtn}
 				regBtn={regBtn}
 			/>
-			<Marqueez />
 			<MembersTab handleRegister={handleRegister} regBtn={regBtn} />
 			<Services />
 			{/* <About /> */}

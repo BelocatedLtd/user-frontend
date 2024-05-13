@@ -46,13 +46,13 @@ const CallToAction = ({ handleRegister, regBtn }) => {
 							<Button
 								size={'sm'}
 								onClick={() => null}
-								className='w-40 flex items-center mx-auto justify-center mt-[2rem]'
+								className='w-40 flex items-center mx-auto justify-center mt-[2rem] hover:text-primary'
 								variant='outline'>
-								Join us Now!
+								Join us Now
 								<span>
 									<MdArrowRightAlt
 										size={20}
-										className='text-secondary ml-2 mt-1'
+										className='text-secondary ml-2 mt-1 '
 									/>
 								</span>
 							</Button>

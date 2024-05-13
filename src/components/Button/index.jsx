@@ -1,7 +1,7 @@
 import React from 'react'
 import { cn } from '../../../helpers'
 
-const Button = ({ onClick, variant, size, children, className }) => {
+const Button = ({ onClick, variant, size, children, className, rounded }) => {
 	let buttonClasses =
 		'font-bold rounded-full transition duration-300 ease-in-out'
 
@@ -19,13 +19,15 @@ const Button = ({ onClick, variant, size, children, className }) => {
 
 	// Apply variant classes based on the variant prop
 	if (variant === 'solid') {
-		buttonClasses +=
-			' bg-secondary text-primary hover:bg-transparent hover:text-secondary hover:border-secondary hover:border'
+		buttonClasses += `bg-secondary text-primary hover:bg-transparent hover:text-secondary hover:border-secondary hover:border rounded-${rounded}`
 	} else if (variant === 'outline') {
 		buttonClasses +=
 			' border border-secondary text-secondary hover:bg-secondary hover:text-primary'
 	} else if (variant === 'text') {
 		buttonClasses += ' text-secondary hover:text-primary'
+	} else if (variant === 'danger') {
+		buttonClasses +=
+			' border border-tertiary text-white hover:bg-white hover:text-tertiary'
 	}
 
 	return (
