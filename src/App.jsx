@@ -157,7 +157,7 @@ const handleCloseMenu = () => {
           <SidebarLeft>
             <DashLayout>
               <Dashboard/>
-              <SidebarRight />
+              {/* <SidebarRight /> */}
             </DashLayout>
           </SidebarLeft>
         }

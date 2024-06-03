@@ -56,7 +56,7 @@ const ActivityFeed = () => {
 	}, [dispatch])
 
 	return (
-		<div className='right-0 w-[400px] h-[71vh]  md:flex md:flex-col'>
+		<div className='right-0 w-[400px] md:flex md:flex-col'>
 			<div className='w-full border-b border-gray-200 px-5 pb-3 my-3'>
 				<h1 className='text-xl font-semibold text-gray-600 px-4 border-red-400'>
 					Recent Activities
@@ -66,20 +66,20 @@ const ActivityFeed = () => {
 				</p>
 			</div>
 
-			<div className='flex flex-col w-full border-b border-gray-200 px-5 pb-3 gap-3 py-5'>
-				<div className='flex flex-col gap-[0.8rem] text-gray-600 text-[14px]'>
+			<div className='flex flex-col w-full px-5 pb-3 gap-3 py-5'>
+				<div className='flex flex-col gap-[0.8rem] divide-y text-gray-600 text-[14px]'>
 					{getCurrentPageData().map((item, index) => (
 						<div
 							key={index}
-							className='flex items-center gap-2 border-b border-gray-100 py-5'>
+							className='grid grid-cols-6   p-4 border-gray-100 '>
 							<div className=''>
 								<img
 									src={speaker}
 									alt='announcement'
-									className='bg-secondary rounded-full p-[1px]'
+									className='bg-secondary rounded-full w-10 h-10'
 								/>
 							</div>
-							<div className='flex flex-col'>
+							<div className='flex ml-3 col-span-5  flex-col'>
 								<small>{formatDistanceToNow(new Date(item?.createdAt))}</small>
 								<p className='text-gray-600 text-[14px]'>{item.action}</p>
 							</div>
