@@ -1,21 +1,14 @@
+'use client'
+
 import React from 'react'
-import toast from 'react-hot-toast'
-import { IoIosSend, IoMdArrowDropdown } from 'react-icons/io'
-import copy from '../../../assets/copy.png'
+import { IoIosSend } from 'react-icons/io'
 import { useState } from 'react'
 import { useRef } from 'react'
 import { useEffect } from 'react'
-import { getUser } from '../../../services/authServices'
-import {
-	SET_LOGOUT,
-	SET_USER,
-	selectUser,
-} from '../../../redux/slices/authSlice'
+import { getUser } from '@/services/authServices'
+import { SET_LOGOUT, SET_USER, selectUser } from '@/redux/slices/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import CountDown from '../../../components/ui/CountDown'
-import { getOngoingRefChallenge } from '../../../services/refService'
-import { selectUsers } from '../../../redux/slices/userSlice'
+import { getOngoingRefChallenge } from '@/services/refService'
 import { MdMessage } from 'react-icons/md'
 import { FaCheckCircle, FaUserPlus } from 'react-icons/fa'
 import Table from '@mui/material/Table'
@@ -25,11 +18,12 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
+import { useRouter } from 'next/navigation'
 
 const Referral = () => {
 	const dispatch = useDispatch()
-	const navigate = useNavigate()
 	const user = useSelector(selectUser)
+	const router = useRouter()
 	const inputRef = useRef(null)
 	const [challenge, setChallenge] = useState()
 	const [contestant, setContestant] = useState()
@@ -44,8 +38,8 @@ const Referral = () => {
 
 			if (!data || data === undefined) {
 				// toast.error('Unable to retrieve user data, session will be terminated')
-				await dispatch(SET_LOGOUT())
-				navigate('/')
+				dispatch(SET_LOGOUT())
+				router.push('/')
 				return
 			}
 
