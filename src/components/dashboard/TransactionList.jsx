@@ -10,6 +10,7 @@ import { selectIsError } from '../../redux/slices/transactionSlice';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { selectUser } from '../../redux/slices/authSlice';
+import { useRouter } from 'next/navigation';
 
 const TransactionList = () => {
     const dispatch = useDispatch()
@@ -19,7 +20,7 @@ const TransactionList = () => {
     const isLoading = useSelector(selectIsLoading)
     const isError = useSelector(selectIsError)
     const [perPage, setPerPage] = useState(10)
-    const navigate = useNavigate()
+    const router = useRouter()
 
     const columns = [
         {
@@ -59,7 +60,7 @@ const TransactionList = () => {
     
     //   const handleButtonClick = (e, artisanId) => {
     //     e.preventDefault();
-    //     navigate(`/dashboard/artisan/${artisanId}`)
+    //     router.push(`/dashboard/artisan/${artisanId}`)
     //   }
     
        useEffect(() => {
