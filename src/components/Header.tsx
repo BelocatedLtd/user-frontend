@@ -46,7 +46,7 @@ export const Header = () => {
 		if (user?.accountType === 'Admin') {
 			return (
 				<button
-					onClick={() => router.push(`/admin/dashboard/${user?.username}`)}
+					onClick={() => router.push(`/admin/dashboard`)}
 					className='bg-transparent text- px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>
 					Dashboard
 				</button>
@@ -56,7 +56,7 @@ export const Header = () => {
 		if (user?.accountType === 'User') {
 			return (
 				<button
-					onClick={() => router.push(`/dashboard/${user?.username}`)}
+					onClick={() => router.push(`/dashboard`)}
 					className='bg-transparent text- px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>
 					Dashboard
 				</button>

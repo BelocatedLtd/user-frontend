@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import Header from './Header'
+import Header from '../../components/dashboard/Header'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/slices/authSlice'

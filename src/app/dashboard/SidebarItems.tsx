@@ -21,7 +21,7 @@ const SidebarItems = ({ item, isOpen }: TSidebarItems) => {
 	return (
 		<Link href={item.path}>
 			<div className={cn(isActive && 'active')}>
-				<div className='sidebar-item s-parent'>
+				<div className='sidebar-item'>
 					<div className='sidebar-title'>
 						<span>
 							{item.icon && <div className='icon'>{item.icon}</div>}

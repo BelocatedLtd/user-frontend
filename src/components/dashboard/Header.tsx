@@ -1,10 +1,9 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
 import { MdMenu, MdOutlineCancel } from 'react-icons/md'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/slices/authSlice'
-import { ShowOnLogin } from '../../components/protect/hiddenLinks'
+import { ShowOnLogin } from '../protect/hiddenLinks'
 import { useEffect } from 'react'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
@@ -13,6 +12,7 @@ import { FaAngleDown, FaUserCircle } from 'react-icons/fa'
 import logo from '@/assets/belocated-logo.png'
 import Logout from '@/components/auth/Logout'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Header = () => {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -131,14 +131,18 @@ const Header = () => {
 								<div
 									onClick={() => handleCloseMenu()}
 									className='flex flex-col h-[200px] justify-center items-center gap-[1rem] font-extrabold text-gray-700'>
-									<Link to='/'>Home</Link>
-									{suspendAccount ? '' : <Link to='/dashboard/earn'>Earn</Link>}
-									<Link to='/dashboard/advertise'>Advertise</Link>
-									<Link to='/terms'>Terms</Link>
+									<Link href='/'>Home</Link>
+									{suspendAccount ? (
+										''
+									) : (
+										<Link href='/dashboard/earn'>Earn</Link>
+									)}
+									<Link href='/dashboard/advertise'>Advertise</Link>
+									<Link href='/terms'>Terms</Link>
 									<ShowOnLogin>
-										<Link to={'/dashboard/update-profile'}>Settings</Link>
+										<Link href={'/dashboard/update-profile'}>Settings</Link>
 										<Link
-											to={`/dashboard/${user?.username}`}
+											href={`/dashboard/${user?.username}`}
 											className='text-gray-800 cursor-pointer'>
 											Dashboard
 										</Link>
@@ -156,20 +160,21 @@ const Header = () => {
 								<div
 									onClick={() => handleCloseMenu()}
 									className='flex flex-col h-[200px] justify-center items-center gap-[1rem] font-extrabold text-gray-700'>
-									<Link to='/'>Home</Link>
-									<Link to='/terms'>Terms</Link>
+									<Link href='/'>Home</Link>
+									<Link href='/terms'>Terms</Link>
 									<ShowOnLogin>
 										<Link
-											to={`/admin/dashboard/transactions/${user?.username}`}>
+											href={`/admin/dashboard/transactions/${user?.username}`}>
 											Transactions
 										</Link>
-										<Link to={`/admin/dashboard/withdrawals/${user?.username}`}>
+										<Link
+											href={`/admin/dashboard/withdrawals/${user?.username}`}>
 											Withdrawals
 										</Link>
-										<Link to={'/dashboard/update-profile'}>Settings</Link>
-										<Link to={`/dashboard/referral`}>Refferal Challenge</Link>
+										<Link href={'/dashboard/update-profile'}>Settings</Link>
+										<Link href={`/dashboard/referral`}>Refferal Challenge</Link>
 										<Link
-											to={`/dashboard/${user?.username}`}
+											href={`/dashboard/${user?.username}`}
 											className='text-gray-800 cursor-pointer'>
 											User Dashboard
 										</Link>

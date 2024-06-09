@@ -2,10 +2,7 @@
 import React from 'react'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
-import close from '../../../assets/close.svg'
-import facebook from '../../../assets/social icons/facebook.svg'
 import AdItem from '../../../components/dashboard/AdItem'
-import adCampaigns from '../../../components/data/adData'
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -15,15 +12,16 @@ import {
 	selectIsLoading,
 } from '../../../redux/slices/advertSlice'
 import { useEffect } from 'react'
-import { LoaderIcon, toast } from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 import Loader from '../../../components/loader/Loader'
 import { selectUser } from '../../../redux/slices/authSlice'
 import { handleGetAllUser, selectUsers } from '../../../redux/slices/userSlice'
-import { handleGetTasks, selectTasks } from '../../../redux/slices/taskSlice'
+import { handleGetTasks } from '../../../redux/slices/taskSlice'
 import { useRouter } from 'next/navigation'
 
 const CampaignStats = () => {
 	const user = useSelector(selectUser)
+	console.log('🚀 ~ CampaignStats ~ user:', user)
 	const adverts = useSelector(selectAdverts)
 	const users = useSelector(selectUsers)
 	const isLoading = useSelector(selectIsLoading)
@@ -33,7 +31,7 @@ const CampaignStats = () => {
 	useRedirectLoggedOutUser('/login')
 
 	const getAdverts = async () => {
-		dispatch(handleGetUserAdverts(user?.token) as any)
+		dispatch(handleGetUserAdverts() as any)
 		dispatch(handleGetAllUser())
 		dispatch(handleGetTasks())
 	}

@@ -76,7 +76,7 @@ const Jumbotron = ({}: any) => {
 
 			<ShowOnLogin>
 				<button
-					onClick={() => router.push(`/dashboard/${user?.username}`)}
+					onClick={() => router.push(`/dashboard`)}
 					className='bg-tertiary text-primary font-bold px-10 py-3 mt-[5rem] rounded-full hover:bg-transparent hover:text-tertiary hover:border-tertiary hover:border'>
 					Go to Dashboard
 				</button>

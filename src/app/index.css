@@ -149,10 +149,6 @@ button {
 	transition: background-color 0.15s;
 }
 
-.s-parent {
-	border-bottom: 2px solid #ccc;
-}
-
 /* .sidebar-item:hover {
 	background-color: #eee;
 } */

@@ -1,6 +1,5 @@
 'use client'
 import React from 'react'
-import useRedirectLoggedOutUser from '@/customHook/useRedirectLoggedOutUser'
 import contactus from '@/assets/contactus.png'
 import { FaLinkedin, FaTelegram, FaTwitter, FaWhatsapp } from 'react-icons/fa'
 import { BsFacebook } from 'react-icons/bs'
