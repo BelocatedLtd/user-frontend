@@ -1,25 +1,23 @@
-import React from 'react'
-import Footer from '../../components/home/Footer'
-import { Link, Outlet } from 'react-router-dom'
-import { useEffect } from 'react'
-import { getUser } from '../../services/authServices'
-import { useDispatch } from 'react-redux'
-import { SET_LOGOUT, SET_USER } from '../../redux/slices/authSlice'
-import { getUserWallet } from '../../services/walletServices'
-import { Header } from '../../components/Header'
-import logo from '../../assets/belocated-logo.png'
+'use client'
 
-import Box from '@mui/material/Box'
+import React from 'react'
+import logo from '@/assets/belocated-logo.png'
+
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
 import StepButton from '@mui/material/StepButton'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
+import Link from 'next/link'
+import Image from 'next/image'
+import Whatsapp from '@/components/kyc/whatsapp'
+import CheckIcon from '@mui/icons-material/Check'
+import CompleteProfile from '@/components/kyc/completeProfile'
+import AddBank from '@/components/kyc/AddBank'
+import Completed from '@/components/kyc/completed'
 
-const steps = ['Whatsapp', 'Complete profile', 'Add Bank', '']
+const steps = ['Community', 'Complete profile', 'Add Bank']
 //import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser'
 
-const KycLayout = ({ children }) => {
+const Kyc = () => {
 	//useRedirectLoggedOutUser('/')
 
 	const [activeStep, setActiveStep] = React.useState(0)
@@ -42,11 +40,15 @@ const KycLayout = ({ children }) => {
 	}
 
 	const handleNext = () => {
+		const newCompleted = { ...completed }
+		newCompleted[activeStep] = true
+		setCompleted(newCompleted)
+
 		const newActiveStep =
 			isLastStep() && !allStepsCompleted()
 				? // It's the last step, but not all steps have been completed,
 				  // find the first step that has been completed
-				  steps.findIndex((step, i) => !(i in completed))
+				  steps.findIndex((step, i) => !(i in newCompleted))
 				: activeStep + 1
 		setActiveStep(newActiveStep)
 	}
@@ -59,13 +61,6 @@ const KycLayout = ({ children }) => {
 		setActiveStep(step)
 	}
 
-	const handleComplete = () => {
-		const newCompleted = completed
-		newCompleted[activeStep] = true
-		setCompleted(newCompleted)
-		handleNext()
-	}
-
 	const handleReset = () => {
 		setActiveStep(0)
 		setCompleted({})
@@ -76,9 +71,13 @@ const KycLayout = ({ children }) => {
 			{/* <Header /> */}
 			<div className=' text-center mt-40'>
 				<Link
-					to='/'
+					href='/'
 					className='logo cursor-pointer mx-auto text-4xl font-extrabold  w-[150px] md:w-[170px]'>
-					<img src={logo} alt='logo' className='w-30 h-10 mx-auto' />
+					<Image
+						src={logo}
+						alt='logo'
+						className='w-36 h-10 mx-auto object-contain'
+					/>
 				</Link>
 				<strong>Walcom Dayo,</strong>
 				<p>Just a few quick steps to get started with our platform!</p>
@@ -88,13 +87,27 @@ const KycLayout = ({ children }) => {
 					<Stepper nonLinear className='' activeStep={activeStep}>
 						{steps.map((label, index) => (
 							<Step key={label} completed={completed[index]}>
-								<StepButton color='inherit' onClick={handleStep(index)}>
+								<StepButton
+									color='inherit'
+									onClick={handleStep(index)}
+									icon={completed[index] ? <CheckIcon /> : null}>
 									{label}
 								</StepButton>
 							</Step>
 						))}
 					</Stepper>
-					{children}
+					{/* {children} */}
+				</div>
+				<div className='pt-4 p-3'>
+					{activeStep === 0 ? (
+						<Whatsapp next={handleNext} />
+					) : activeStep === 1 ? (
+						<CompleteProfile next={handleNext} />
+					) : activeStep === 2 ? (
+						<AddBank next={handleNext} />
+					) : (
+						completed && <Completed />
+					)}
 				</div>
 			</div>
 
@@ -103,4 +116,4 @@ const KycLayout = ({ children }) => {
 	)
 }
 
-export default KycLayout
+export default Kyc

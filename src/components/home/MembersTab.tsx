@@ -36,6 +36,7 @@ const MembersTab = () => {
 								size={'sm'}
 								onClick={() => null}
 								className='mt-4'
+								color='secondary'
 								variant='solid'>
 								Start Earning!
 							</Button>
@@ -83,6 +84,7 @@ const MembersTab = () => {
 							size={'sm'}
 							onClick={() => null}
 							className='mt-4'
+							color='secondary'
 							variant='solid'>
 							Start Advertising!
 						</Button>

@@ -1,23 +1,28 @@
-import React, { MouseEventHandler, ReactNode } from 'react'
+import React, { HTMLAttributes, MouseEventHandler, ReactNode } from 'react'
 import { cn } from '../../../helpers'
 
-interface ButtonProps {
-	onClick: MouseEventHandler<HTMLButtonElement>
+export interface IButtonProps extends HTMLAttributes<HTMLButtonElement> {
+	onClick?: MouseEventHandler<HTMLButtonElement>
 	variant?: 'solid' | 'outline' | 'text'
+	color?: 'primary' | 'secondary' | 'danger' | 'gray'
 	size?: 'sm' | 'lg' | 'xl'
 	children: ReactNode
-	className?: string
 	rounded?: boolean
+	disabled?: boolean
+	type?: 'button' | 'submit' | 'reset'
 }
 
 const Button = ({
 	onClick,
 	variant,
+	color,
 	size,
 	children,
 	className,
 	rounded,
-}: ButtonProps) => {
+	disabled = false,
+	...props
+}: IButtonProps) => {
 	let buttonClasses =
 		'font-bold rounded-full transition duration-300 ease-in-out'
 
@@ -35,19 +40,50 @@ const Button = ({
 
 	// Apply variant classes based on the variant prop
 	if (variant === 'solid') {
-		buttonClasses += `bg-secondary text-primary hover:bg-transparent hover:text-secondary hover:border-secondary hover:border rounded-${rounded}`
+		if (color === 'primary') {
+			buttonClasses += ' bg-primary text-white hover:bg-primary-dark'
+		} else if (color === 'secondary') {
+			buttonClasses += ' bg-secondary text-primary hover:bg-secondary-dark'
+		} else if (color === 'danger') {
+			buttonClasses += ' bg-tertiary text-white hover:bg-tertiary-dark'
+		} else if (color === 'gray') {
+			// Handle 'gray' color option
+			buttonClasses += ' bg-gray-500 text-white hover:bg-gray-700'
+		}
 	} else if (variant === 'outline') {
-		buttonClasses +=
-			' border border-secondary text-secondary hover:bg-secondary hover:text-primary'
+		if (color === 'primary') {
+			buttonClasses +=
+				' border border-primary text-primary hover:bg-primary hover:text-white'
+		} else if (color === 'secondary') {
+			buttonClasses +=
+				' border border-secondary text-secondary hover:bg-secondary hover:text-white'
+		} else if (color === 'danger') {
+			buttonClasses +=
+				' border border-tertiary text-tertiary hover:bg-tertiary hover:text-white'
+		}
 	} else if (variant === 'text') {
-		buttonClasses += ' text-secondary hover:text-primary'
-	} else if (variant === 'danger') {
-		buttonClasses +=
-			' border border-tertiary text-white hover:bg-white hover:text-tertiary'
+		if (color === 'primary') {
+			buttonClasses += ' text-primary hover:bg-primary-light'
+		} else if (color === 'secondary') {
+			buttonClasses += ' text-secondary hover:bg-secondary-light'
+		} else if (color === 'danger') {
+			buttonClasses += ' text-tertiary hover:bg-tertiary-light'
+		}
 	}
 
+	// Add disabled class if button is disabled
+	if (disabled) {
+		buttonClasses += ' opacity-50 cursor-not-allowed'
+	}
+
+	console.log('🚀 ~ buttonClasses:', buttonClasses)
+
 	return (
-		<button onClick={onClick} className={cn(buttonClasses, className)}>
+		<button
+			onClick={onClick}
+			className={cn(buttonClasses, className)}
+			disabled={disabled}
+			{...props}>
 			{children}
 		</button>
 	)

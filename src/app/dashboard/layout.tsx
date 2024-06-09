@@ -14,21 +14,21 @@ const DashLayout = ({ children }: { children: React.ReactNode }) => {
 	const router = useRouter()
 	const user = useSelector(selectUser)
 
-	// useEffect(() => {
-	// 	if (
-	// 		!user?.fullname ||
-	// 		!user?.phone ||
-	// 		!user?.location ||
-	// 		!user?.gender ||
-	// 		!user?.community ||
-	// 		!user?.religion
-	// 	) {
-	// 		router.push(`/kyc`)
-	// 		// setProfileComplete(true)
-	// 	} else {
-	// 		// setProfileComplete(false)
-	// 	}
-	// }, [user])
+	useEffect(() => {
+		if (
+			!user?.fullname ||
+			!user?.phone ||
+			!user?.location ||
+			!user?.gender ||
+			!user?.community ||
+			!user?.religion
+		) {
+			router.push(`/kyc`)
+			// setProfileComplete(true)
+		} else {
+			// setProfileComplete(false)
+		}
+	}, [user])
 
 	return (
 		<div className='w-full'>

@@ -35,8 +35,9 @@ const Logout = () => {
 			<Button
 				size={'sm'}
 				onClick={handleLogout}
-				className=' bg-tertiary '
-				variant='danger'>
+				className='  '
+				variant='solid'
+				color='danger'>
 				Logout
 			</Button>
 		</div>

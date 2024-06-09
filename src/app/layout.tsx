@@ -1,4 +1,5 @@
 'use client'
+
 import './index.css'
 import { Header } from '@/components/Header'
 import SubFooter from '@/components/home/SubFooter'
@@ -9,10 +10,16 @@ import { AppProgressBar as ProgressBar } from 'next-nprogress-bar'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import ReduxProvider from '@/redux/provider'
+import { Toaster } from 'react-hot-toast'
 
-const shouldRenderComponents = (pathname: string): boolean => {
-	return !pathname.startsWith('/dashboard')
+const shouldRenderComponents = (
+	pathname: string,
+	exclusions: string[],
+): boolean => {
+	return !exclusions.some((exclusion) => pathname.startsWith(exclusion))
 }
+
+const exclusions = ['/dashboard', '/kyc']
 
 export default function RootLayout({
 	children,
@@ -20,18 +27,18 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	const pathname = usePathname()
-	const isDashboardPage = shouldRenderComponents(pathname)
+	const shouldRender = shouldRenderComponents(pathname, exclusions)
 
 	return (
 		<html lang='en' className={`font-sans`}>
 			<head>{/* Add your head content here */}</head>
 			<body>
 				<ReduxProvider>
-					{isDashboardPage && <Header />}
+					{shouldRender && <Header />}
 					{children}
-					{isDashboardPage && <CallToAction />}
-					{isDashboardPage && <SubFooter />}
-					{isDashboardPage && <Footer />}
+					{shouldRender && <CallToAction />}
+					{shouldRender && <SubFooter />}
+					{shouldRender && <Footer />}
 				</ReduxProvider>
 				<ProgressBar
 					height='4px'
@@ -41,6 +48,7 @@ export default function RootLayout({
 				/>
 				<Analytics />
 				<SpeedInsights />
+				<Toaster />
 			</body>
 		</html>
 	)

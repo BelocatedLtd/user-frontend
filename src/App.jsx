@@ -76,7 +76,7 @@ import RefChaRegister from '../../(auth)/RefChaRegister'
 import RefChallengeAdmin from './app/dashboard/adminPages/RefChallengeAdmin'
 import RefBonus from './app/dashboard/userPages/RefBonus'
 import Referral from './app/dashboard/referral/page'
-import KycLayout from './app/kyc'
+import KycLayout from './app/kyc/page'
 
 axios.defaults.withCredentials = true
 
@@ -113,8 +113,6 @@ function App() {
 
 	return (
 		<BrowserRouter>
-			<Toaster />
-
 			<Routes>
 				<Route
 					path='/success'
