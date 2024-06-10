@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { ShowOnLogin, ShowOnLogout } from './protect/hiddenLinks'
 // import Logout from '../../../(auth)/Logout'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectUser } from '../redux/slices/authSlice'
+import { fetchUserDetails, selectUser } from '../redux/slices/authSlice'
 import { MdOutlineCancel } from 'react-icons/md'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import { useEffect } from 'react'
@@ -43,6 +43,9 @@ export const Header = () => {
 	}
 
 	const userDashboard = () => {
+		// if (!user?.isKycDone) {
+		// 	router.push(`/kyc`)
+		// } else
 		if (user?.accountType === 'Admin') {
 			return (
 				<button
@@ -67,6 +70,10 @@ export const Header = () => {
 	useEffect(() => {
 		userDashboard()
 	}, [user])
+
+	useEffect(() => {
+		dispatch(fetchUserDetails() as any)
+	}, [])
 
 	const handleCloseMenu = () => {
 		setMobileMenuOpen(!mobileMenuOpen)

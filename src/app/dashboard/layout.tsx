@@ -13,16 +13,10 @@ const DashLayout = ({ children }: { children: React.ReactNode }) => {
 	//useRedirectLoggedOutUser('/')
 	const router = useRouter()
 	const user = useSelector(selectUser)
+	console.log('🚀 ~ DashLayout ~ user:', user)
 
 	useEffect(() => {
-		if (
-			!user?.fullname ||
-			!user?.phone ||
-			!user?.location ||
-			!user?.gender ||
-			!user?.community ||
-			!user?.religion
-		) {
+		if (!user?.isKycDone) {
 			router.push(`/kyc`)
 			// setProfileComplete(true)
 		} else {

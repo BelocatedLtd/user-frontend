@@ -19,6 +19,7 @@ interface FormValues {
 
 export default function AddBank({ next }: { next: () => void }) {
 	const user = useSelector(selectUser)
+	console.log('🚀 ~ AddBank ~ user:', user)
 
 	const router = useRouter()
 
@@ -41,7 +42,7 @@ export default function AddBank({ next }: { next: () => void }) {
 
 		const updatedUserDetails = await updateUserBankAccountDetails({
 			...values,
-			userId: user?.id,
+			userId: user?._id,
 		})
 
 		if (!updatedUserDetails) {

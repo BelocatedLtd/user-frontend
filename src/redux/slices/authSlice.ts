@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { updateUser } from '../../services/authServices'
+import { getUser, updateUser } from '../../services/authServices'
 import { toast } from 'react-hot-toast'
 
 // Utility function to check if we're running on the client side
@@ -12,7 +12,7 @@ const initialState = {
 	isLoading: false,
 	isSuccess: false,
 	isError: false,
-	referralPoints:0,
+	referralPoints: 0,
 	message: '',
 }
 
@@ -30,6 +30,23 @@ export const handleUpdateUser = createAsyncThunk(
 				error.message ||
 				error.toString()
 			console.log(message)
+			return thunkAPI.rejectWithValue(message)
+		}
+	},
+)
+
+export const fetchUserDetails = createAsyncThunk(
+	'auth/fetchUserDetails',
+	async (_, thunkAPI) => {
+		try {
+			return await getUser()
+		} catch (error: any) {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString()
 			return thunkAPI.rejectWithValue(message)
 		}
 	},
@@ -93,6 +110,22 @@ const authSlice = createSlice({
 				state.isError = true
 				state.message = action.payload as string
 				toast.error('Failed to Update User details')
+			})
+			.addCase(fetchUserDetails.pending, (state) => {
+				state.isLoading = true
+			})
+			.addCase(fetchUserDetails.fulfilled, (state, action) => {
+				state.isLoading = false
+				state.isSuccess = true
+				state.isError = false
+				state.user = action.payload
+				toast.success('User Details Fetched!')
+			})
+			.addCase(fetchUserDetails.rejected, (state, action) => {
+				state.isLoading = false
+				state.isError = true
+				state.message = action.payload as string
+				toast.error('Failed to Fetch User Details')
 			})
 	},
 })
