@@ -11,16 +11,21 @@ import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import { useEffect } from 'react'
 import logo from '../assets/belocated-logo.png'
 import Button from './Button'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import Logout from './auth/Logout'
 import Link from 'next/link'
 import Register from './auth/register'
 import Login from './auth/login'
 import Image from 'next/image'
 import { cn } from '../../helpers'
+import { Modal } from '@mui/material'
 
 export const Header = () => {
 	const router = useRouter()
+
+	const searchParam = useSearchParams()
+	const referralToken = searchParam.get('referralToken')
+
 	const dispatch = useDispatch()
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 	const user = useSelector(selectUser)
@@ -68,11 +73,12 @@ export const Header = () => {
 	}
 
 	useEffect(() => {
+		if (referralToken) showRegModal()
 		userDashboard()
 	}, [user])
 
 	useEffect(() => {
-		dispatch(fetchUserDetails() as any)
+		if (user?.token) dispatch(fetchUserDetails() as any)
 	}, [])
 
 	const handleCloseMenu = () => {
@@ -81,21 +87,6 @@ export const Header = () => {
 
 	return (
 		<header className='w-full absolute'>
-			{isReg && (
-				<Register
-					showRegModal={showRegModal}
-					showLoginModal={showLoginModal}
-					closeModal={closeModal}
-				/>
-			)}
-			{isLogin && (
-				<Login
-					showLoginModal={showLoginModal}
-					showRegModal={showRegModal}
-					closeModal={closeModal}
-				/>
-			)}
-
 			<div className='relative container px-6 py-6 flex justify-between items-center mx-auto md:px-0'>
 				<Link
 					href='/'
@@ -188,6 +179,35 @@ export const Header = () => {
 					</div>
 				)}
 			</div>
+
+			<Modal
+				open={isReg}
+				onClose={setIsReg}
+				aria-labelledby='modal-modal-title'
+				aria-describedby='modal-modal-description'>
+				<div className='flex items-center justify-center h-full'>
+					<Register
+						referralToken={referralToken}
+						showRegModal={showRegModal}
+						showLoginModal={showLoginModal}
+						closeModal={closeModal}
+					/>
+				</div>
+			</Modal>
+
+			<Modal
+				open={isLogin}
+				onClose={setIsLogIn}
+				aria-labelledby='modal-modal-title'
+				aria-describedby='modal-modal-description'>
+				<div className='flex items-center justify-center h-full'>
+					<Login
+						showLoginModal={showLoginModal}
+						showRegModal={showRegModal}
+						closeModal={closeModal}
+					/>
+				</div>
+			</Modal>
 		</header>
 	)
 }

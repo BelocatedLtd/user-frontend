@@ -42,7 +42,7 @@ export default function AddBank({ next }: { next: () => void }) {
 
 		const updatedUserDetails = await updateUserBankAccountDetails({
 			...values,
-			userId: user?._id,
+			userId: user?.id || user?._id,
 		})
 
 		if (!updatedUserDetails) {

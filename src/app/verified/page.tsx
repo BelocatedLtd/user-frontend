@@ -1,14 +1,18 @@
+'use client'
 import React from 'react'
 import Loader from '../../components/loader/Loader'
-import { useParams, useSearchParams } from 'react-router-dom'
 import { CheckmarkIcon, toast } from 'react-hot-toast'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { emailVerified } from '../../services/authServices'
-import Login from './login'
+import Login from '../../components/auth/login'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Modal } from '@mui/material'
 
 const EmailVerified = () => {
-	const [searchParams, setSearchParams] = useSearchParams()
+	const router = useRouter()
+
+	const searchParams = useSearchParams()
 	const token = searchParams.get('token')
 	//const {verificationToken} = useParams()
 	const [isLoading, setIsLoading] = useState(false)
@@ -24,8 +28,8 @@ const EmailVerified = () => {
 
 		if (response.isEmailVerified === false) {
 			setFormData(response)
-			toast.error('Invalid or Expired Verification Link')
-			navigate('/verify-email', { state: { formData } })
+			toast.error('Invalid or Expired Verification Link. please login')
+			router.push('/')
 		}
 
 		if (response.isEmailVerified === true) {
@@ -37,7 +41,7 @@ const EmailVerified = () => {
 		handleVerifyEmail()
 	}, [])
 
-	const handleLogin = (e) => {
+	const handleLogin = (e: any) => {
 		e.preventDefault()
 		setLoginBtn(!loginBtn)
 	}
@@ -45,14 +49,7 @@ const EmailVerified = () => {
 	return (
 		<div className='w-full h-[88vh] flex items-center'>
 			{isLoading && <Loader />}
-			{loginBtn && (
-				<Login
-					handleLogin={handleLogin}
-					setLoginBtn={setLoginBtn}
-					loginBtn={loginBtn}
-					formData={formData}
-				/>
-			)}
+
 			<div className='w-[600px] h-fit bg-primary mx-auto mt-[3rem] py-[3rem]'>
 				<div className='w-full h-full flex flex-col justify-center items-center'>
 					<h3 className='flex gap-1 text-xl text-gray-800 font-bold px-6 mt-2 items-center'>
@@ -70,6 +67,21 @@ const EmailVerified = () => {
 					</button>
 				</div>
 			</div>
+
+			<Modal
+				open={loginBtn}
+				onClose={setLoginBtn}
+				aria-labelledby='modal-modal-title'
+				aria-describedby='modal-modal-description'>
+				<div className='flex items-center justify-center h-full'>
+					<Login
+						handleLogin={handleLogin}
+						setLoginBtn={setLoginBtn}
+						loginBtn={loginBtn}
+						formData={formData}
+					/>
+				</div>
+			</Modal>
 		</div>
 	)
 }

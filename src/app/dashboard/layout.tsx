@@ -16,13 +16,14 @@ const DashLayout = ({ children }: { children: React.ReactNode }) => {
 	console.log('🚀 ~ DashLayout ~ user:', user)
 
 	useEffect(() => {
-		if (!user?.isKycDone) {
-			router.push(`/kyc`)
-			// setProfileComplete(true)
-		} else {
-			// setProfileComplete(false)
-		}
-	}, [user])
+		if (user.token)
+			if (!user?.isKycDone) {
+				router.push(`/kyc`)
+				// setProfileComplete(true)
+			} else {
+				// setProfileComplete(false)
+			}
+	}, [])
 
 	return (
 		<div className='w-full'>

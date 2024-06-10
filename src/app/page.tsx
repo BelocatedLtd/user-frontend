@@ -12,11 +12,12 @@ export default function Home() {
 	const user = useSelector(selectUser)
 
 	useEffect(() => {
-		if (!user?.isKycDone) {
-			router.push(`/kyc`)
-		} else {
-		}
-	}, [user])
+		if (user?.token)
+			if (!user?.isKycDone) {
+				router.push(`/kyc`)
+			} else {
+			}
+	}, [])
 
 	return (
 		<div>

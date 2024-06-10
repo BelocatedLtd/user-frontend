@@ -62,7 +62,7 @@ const Login = ({ showRegModal, closeModal }: any) => {
 						toast.error('Failed to send verification email')
 					})
 					.then(() => {
-						router.push('/verify-email', { state: { formData } })
+						router.push(`/verify-email/${email}`)
 						setIsLoading(false)
 					})
 
@@ -197,9 +197,9 @@ const Login = ({ showRegModal, closeModal }: any) => {
 
 	return (
 		<>
-			<div className='wrapper'>
+			<div className=''>
 				{isLoading && <Loader />}
-				<div className='relative modal w-[350px] h-[550px] bg-primary md:w-[400px]'>
+				<div className='relative w-[350px] flex flex-col items-center h-[550px] bg-primary md:w-[400px]'>
 					<Image
 						src={close}
 						alt='close'

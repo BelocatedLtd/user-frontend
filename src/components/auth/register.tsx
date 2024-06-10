@@ -17,7 +17,7 @@ import RetrievePassword from './RetrievePassword'
 import VerifyEmail from './VerifyEmail'
 import { BACKEND_URL } from '../../utils/globalConfig'
 import Login from './login'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { io } from 'socket.io-client'
 import Image from 'next/image'
 
@@ -30,8 +30,10 @@ const initialState = {
 	password2: '',
 }
 
-const Register = ({ showLoginModal, closeModal }: any) => {
-	const refusername = useParams()
+const Register = ({ showLoginModal, closeModal, referralToken }: any) => {
+	const searchParam = useSearchParams()
+	const referralUsername = searchParam.get('ref')
+
 	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
 	const [isError, setIsError] = useState(false)
@@ -65,7 +67,8 @@ const Register = ({ showLoginModal, closeModal }: any) => {
 			username: username?.toLowerCase(),
 			email: email?.toLowerCase(),
 			password,
-			refusername: refusername ? refusername : '',
+			referralToken,
+			referralUsername,
 		}
 
 		setIsLoading(true)
@@ -125,9 +128,9 @@ const Register = ({ showLoginModal, closeModal }: any) => {
 
 	return (
 		<>
-			<div className='wrapper'>
+			<div className=''>
 				{isLoading && <Loader />}
-				<div className='relative modal w-[350px] h-[600px] bg-primary md:w-[400px]'>
+				<div className='relative w-[350px] items-center flex flex-col  h-[600px] bg-primary md:w-[400px]'>
 					<Image
 						src={close}
 						alt='close'
