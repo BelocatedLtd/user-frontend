@@ -14,10 +14,8 @@ import Link from 'next/link'
 import { resendVerificationEmail } from '@/services/authServices'
 import Loader from '@/components/loader/Loader'
 
-const VerifyEmail = () => {
-	const searchParams = useSearchParams()
-
-	const formData = searchParams.get('formData') || {}
+const VerifyEmail = ({ params }: { params: { email: string } }) => {
+	const email = decodeURIComponent(params.email)
 
 	const [isLoading, setIsLoading] = useState(false)
 	const [timer, setTimer] = useState(10)
@@ -38,8 +36,6 @@ const VerifyEmail = () => {
 
 		return () => clearInterval(interval)
 	}, [timer])
-
-	const { email } = formData || {}
 
 	const handleResendEmail = async (e) => {
 		e.preventDefault()
@@ -72,7 +68,7 @@ const VerifyEmail = () => {
 					</h3>
 					<p className='w-fit my-[1rem] text-center px-6'>
 						Please check the email address{' '}
-						<span className='text-secondary font-bold'>{email}</span> for
+						<span className='text-secondary font-bold'>{email!}</span> for
 						instructions href verify your belocated account
 					</p>
 					<small className='text-tertiary text-[12px] w-[300px] text-center mb-[1rem]'>

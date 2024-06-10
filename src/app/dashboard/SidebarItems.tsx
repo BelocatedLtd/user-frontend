@@ -16,7 +16,6 @@ const SidebarItems = ({ item, isOpen }: TSidebarItems) => {
 
 	const pathname = usePathname()
 	const isActive = pathname === item.path
-	console.log('🚀 ~ SidebarItems ~ isActive:', isActive)
 
 	return (
 		<Link href={item.path}>

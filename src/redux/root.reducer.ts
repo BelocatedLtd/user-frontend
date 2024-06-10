@@ -7,6 +7,7 @@ import taskReducer from './slices/taskSlice'
 import transactionReducer from './slices/transactionSlice'
 import feedReducer from './slices/feedSlice'
 import refChallengeReducer from './slices/refChallSlice'
+import referralsReducer from './slices/referrals'
 
 const rootReducer = combineReducers({
 	auth: authReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
 	transaction: transactionReducer,
 	feed: feedReducer,
 	refChallenge: refChallengeReducer,
+	referral: referralsReducer,
 })
 
 export default rootReducer

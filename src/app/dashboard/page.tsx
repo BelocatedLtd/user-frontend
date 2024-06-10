@@ -21,6 +21,7 @@ import Paper from '@mui/material/Paper'
 import { FaCopy } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import { toNaira } from '@/utils/payment'
 
 const Dashboard = () => {
 	const inputRef = useRef(null)
@@ -28,6 +29,7 @@ const Dashboard = () => {
 	const dispatch = useDispatch()
 	const [profile, setProfile] = useState(null)
 	const wallet = useSelector(selectUserWallet)
+	console.log('🚀 ~ Dashboard ~ wallet:', wallet)
 	const user = useSelector(selectUser)
 	const [profileComplete, setProfileComplete] = useState(false)
 	const [refLink, setRefLink] = useState('')
@@ -44,8 +46,8 @@ const Dashboard = () => {
 			// 	return
 			// }
 
-			await dispatch(SET_USER(data))
-			await dispatch(getUserWallet())
+			dispatch(SET_USER(data))
+			dispatch(getUserWallet())
 		}
 		getUserData()
 
@@ -140,14 +142,16 @@ const Dashboard = () => {
 					<div className='border w-full flex-col text-center items-center justify-center py-8 space-y-4 rounded-lg border-gray-200'>
 						<p>Total Earnings</p>
 						<div>
-							<strong className='text-3xl'>$45,678.90</strong>
+							<strong className='text-3xl'>
+								{toNaira(wallet.totalEarning)}
+							</strong>
 						</div>
 						<p className='text-xs text-gray-400'>+20% month over month</p>
 					</div>
 					<div className='border w-full flex-col text-center items-center justify-center py-8 space-y-4 rounded-lg border-gray-200'>
 						<p>My Balance</p>
 						<div>
-							<strong className='text-3xl'>$15,678.90</strong>
+							<strong className='text-3xl'>{toNaira(wallet.value)}</strong>
 						</div>
 						<p className='text-xs text-gray-400'>+20% month over month</p>
 					</div>

@@ -110,7 +110,7 @@ const Register = ({ showLoginModal, closeModal }: any) => {
 					setIsLoading(false)
 				})
 				.then((res) => {
-					router.push('/verify-email', { state: { formData } })
+					router.push(`/verify-email/${formData.email}`)
 					setIsLoading(false)
 				})
 

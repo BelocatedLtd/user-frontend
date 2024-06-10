@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
 import { socialMenu } from '../../../components/data/SocialData'
@@ -9,6 +11,7 @@ import { useEffect } from 'react'
 import socialPlatforms from '../../../components/data/assets'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 const Advertise = () => {
 	const router = useRouter()
@@ -17,14 +20,14 @@ const Advertise = () => {
 	const [platformName, setPlatformName] = useState('')
 	const [toggleServices, setToggleServices] = useState(false)
 	const [selectedPlatformObject, setSelectedPlatformObject] = useState()
-	useRedirectLoggedOutUser('/login')
+	// useRedirectLoggedOutUser('/login')
 
-	useEffect(() => {
-		if (!user?.location || !user?.community || !user?.gender) {
-			toast.error('Please, complete your profile before you can perform tasks')
-			router.push('/dashboard/update-profile')
-		}
-	}, [])
+	// useEffect(() => {
+	// 	if (!user?.location || !user?.community || !user?.gender) {
+	// 		toast.error('Please, complete your profile before you can perform tasks')
+	// 		router.push('/dashboard/update-profile')
+	// 	}
+	// }, [])
 
 	const handleSelect = (e, platform) => {
 		e.preventDefault(e)
@@ -43,11 +46,15 @@ const Advertise = () => {
 	}
 
 	const handleSelectService = (e, service, adTitle) => {
+		console.log('🚀 ~ handleSelectService ~ service:', service)
 		e.preventDefault(e)
 
-		router.push(`/dashboard/adbuy/${platformName}`, {
-			state: { selectedPlatformObject, service, adTitle },
-		})
+		router.push(
+			`/dashboard/ad-buy/${platformName}?service=${service}&adTitle=${adTitle}`,
+			// {
+			// state: { selectedPlatformObject, service, adTitle },
+			// }
+		)
 	}
 
 	return (
@@ -74,13 +81,13 @@ const Advertise = () => {
 					</p>
 				</div>
 
-				<div className='flex flex-col gap-[3rem] items-center justify-center mt-[1rem] px-3 py-5'>
+				<div className='grid grid-cols-3 gap-[3rem] items-center justify-center mt-[1rem] px-3 py-5'>
 					{socialMenu.map((menu, index) => (
-						<div key={index} className='w-fit md:w-full shadow-lg p-5'>
+						<div key={index} className='w-fit md:w-full shadow p-5'>
 							<div className='flex flex-col md:flex-row items-center gap-5'>
 								<div className='flex flex-col'>
 									<div className='hidden md:flex items-center justify-center w-[100px] h-[100px] bg-gray-50 rounded-t-xl rounded-b-2xl'>
-										<img
+										<Image
 											src={menu.icon}
 											alt=''
 											className='object-cover rounded-full p-2'
@@ -88,7 +95,7 @@ const Advertise = () => {
 									</div>
 									<button
 										onClick={(e) => handleSelect(e, menu.value)}
-										className='hidden md:flex px-5 py-3 border border-gray-200 mt-5'>
+										className='text-xs py-2 border border-gray-200 mt-5'>
 										Select
 									</button>
 								</div>
@@ -99,9 +106,8 @@ const Advertise = () => {
 											<h3 className='font-bold text-[20px] text'>
 												{menu.title}
 											</h3>
-											<p className='border-b border-gray-100 pb-3 text-[14px] text-gray-500 font-semibold'>
-												<span className='font-extrabold'>Pricing:</span> Starts
-												at ₦{menu.price}/Task Performed
+											<p className='border-b border-gray-100 pb-3 text-[14px] text-gray-500 font-medium'>
+												Starts at ₦{menu.price}/Task Performed
 											</p>
 										</div>
 									</div>
@@ -118,7 +124,7 @@ const Advertise = () => {
 										</button>
 
 										<div className='flex md:hidden items-center justify-end w-[50px] h-[50px] rounded-t-xl rounded-b-2xl'>
-											<img
+											<Image
 												src={menu?.icon}
 												alt=''
 												className='object-cover rounded-full mt-5'
@@ -130,24 +136,20 @@ const Advertise = () => {
 
 							{selectedPlatformObject?.assetplatform === menu.value &&
 							toggleServices ? (
-								<div className='w-full h-fit'>
+								<ul className=' mt-2 absolute bg-white border max-h-72 overflow-scroll rounded-sm space-y-4'>
 									{selectedPlatformObject?.assets?.map((service, index) => (
-										<ul key={index} className='flex items-center gap-3'>
-											<li className='flex items-center gap-3 border-b border-gray-50 py-3 '>
-												<div
-													onClick={(e) =>
-														handleSelectService(e, service?.asset, service.SC)
-													}
-													className='flex items-center gap-3 cursor-pointer'>
-													<p>{service.SC}</p>
-													<span className='bg-gray-50 rounded-full p-3'>
-														₦{service.CostToOrder}
-													</span>
-												</div>
-											</li>
-										</ul>
+										<li
+											onClick={(e) =>
+												handleSelectService(e, service?.asset, service.SC)
+											}
+											className='flex hover:bg-slate-200  cursor-pointer px-2 items-center text-sm gap-3 border-b border-gray-50 py-2 '>
+											<p>{service.SC}</p>
+											<span className='bg-gray-50 rounded-full p-3'>
+												₦{service.CostToOrder}
+											</span>
+										</li>
 									))}
-								</div>
+								</ul>
 							) : (
 								''
 							)}

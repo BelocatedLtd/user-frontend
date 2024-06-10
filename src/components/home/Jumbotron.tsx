@@ -32,7 +32,15 @@ const Jumbotron = ({}: any) => {
 	}
 
 	return (
-		<section className='w-full h-[85vh] flex flex-col items-center mt-[8rem]'>
+		<section
+			style={{
+				backgroundImage: 'url(/bg.png)',
+				// backgroundImage: 'url(' + sectionBg + ')',
+				backgroundPosition: 'center',
+				backgroundSize: 'cover',
+				backgroundRepeat: 'no-repeat',
+			}}
+			className='w-full h-screen  flex flex-col items-center pt-[10rem]'>
 			{/* {isReg && (
 				<Register
 					showRegModal={showRegModal}
@@ -87,12 +95,14 @@ const Jumbotron = ({}: any) => {
 					<span className='text-secondary cursor-pointer'>Logout</span>
 				</small>
 			</ShowOnLogin>
-			<Image
+			{/* <Image
 				src={logo}
 				alt='logo'
 				className='w-full h-[39%] mt-8  object-cover'
-			/>
-			<Marqueez />
+			/> */}
+			<div className='absolute bottom-0'>
+				<Marqueez />
+			</div>
 		</section>
 	)
 }

@@ -73,7 +73,7 @@ export const Header = () => {
 	}
 
 	return (
-		<header className='w-full'>
+		<header className='w-full absolute'>
 			{isReg && (
 				<Register
 					showRegModal={showRegModal}
@@ -111,7 +111,11 @@ export const Header = () => {
 							className='bg-transparent  px-6 py-3 rounded-full hover:bg-transparent hover:text-secondary'>
 							Login
 						</button>
-						<Button size={'sm'} onClick={showRegModal} variant='outline'>
+						<Button
+							size={'sm'}
+							onClick={showRegModal}
+							variant='outline'
+							color='secondary'>
 							Create Account
 						</Button>
 					</div>

@@ -255,6 +255,26 @@ export const resendVerificationEmail = async (email) => {
 	}
 }
 
+export const sendInviteEmail = async (email) => {
+	try {
+		const headers = getAuthHeaders()
+		console.log('🚀 ~ sendInviteEmail ~ headers:', headers)
+
+		const response = await axios.post(
+			`${BACKEND_URL}/api/user/send-referral-email`,
+			{ email },
+			headers,
+		)
+		return response.data
+	} catch (error) {
+		const message =
+			(error.response && error.response.data && error.response.data.message) ||
+			error.message ||
+			error.toString()
+		toast.error(message)
+	}
+}
+
 export const resendOTPVerificationEmail = async (email) => {
 	try {
 		const response = await axios.post(

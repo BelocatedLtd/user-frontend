@@ -18,21 +18,22 @@ import { selectUser } from '../../../redux/slices/authSlice'
 import { handleGetAllUser, selectUsers } from '../../../redux/slices/userSlice'
 import { handleGetTasks } from '../../../redux/slices/taskSlice'
 import { useRouter } from 'next/navigation'
+import Button from '@/components/Button'
 
 const CampaignStats = () => {
 	const user = useSelector(selectUser)
-	console.log('🚀 ~ CampaignStats ~ user:', user)
 	const adverts = useSelector(selectAdverts)
+	console.log('🚀 ~ CampaignStats ~ adverts:', adverts)
 	const users = useSelector(selectUsers)
 	const isLoading = useSelector(selectIsLoading)
 	const isError = useSelector(selectIsError)
 	const dispatch = useDispatch()
 	const router = useRouter()
-	useRedirectLoggedOutUser('/login')
+	// useRedirectLoggedOutUser('/login')
 
 	const getAdverts = async () => {
 		dispatch(handleGetUserAdverts() as any)
-		dispatch(handleGetAllUser())
+		dispatch(handleGetAllUser() as any)
 		dispatch(handleGetTasks())
 	}
 
@@ -70,12 +71,14 @@ const CampaignStats = () => {
 				<small className='hidden md:flex bg-secondary rounded-full p-4 text-primary'>
 					{adverts.length}
 				</small>
-				<button
+				<Button
+					variant='solid'
+					color='danger'
 					onClick={() => router.push('/dashboard/advertise')}
 					className='flex items-center gap-1 bg-secondary text-primary rounded-full px-5 py-2 mr-5 text-[12px] md:text-[15px] hover:bg-tertiary'>
 					<BsFillPlusCircleFill />
 					Campaign
-				</button>
+				</Button>
 			</div>
 
 			<div className='w-full'>

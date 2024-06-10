@@ -1,8 +1,7 @@
+'use client'
 import React from 'react'
 import close from '../assets/close.svg'
-import ReactDOM from 'react-dom'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
@@ -13,29 +12,26 @@ import {
 	selectUserWallet,
 } from '../redux/slices/walletSlice'
 import { useEffect } from 'react'
-import {
-	createNewAdvert,
-	selectIsLoading,
-	selectIsSuccess,
-	selectIsError,
-} from '../redux/slices/advertSlice'
-import io from 'socket.io-client'
+
 import { BACKEND_URL } from '../utils/globalConfig'
 import { createAdvert } from '../services/advertService'
 import { toast } from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
+import { io } from 'socket.io-client'
+import Image from 'next/image'
 
-const socket = io.connect(`${BACKEND_URL}`)
+const socket = io(`${BACKEND_URL}`)
 
 const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 	const dispatch = useDispatch()
 	const [canPay, setCanPay] = useState(false)
-	const navigate = useNavigate()
+	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
 	const user = useSelector(selectUser)
 	const wallet = useSelector(selectUserWallet)
 
 	const getWallet = async () => {
-		await dispatch(getUserWallet())
+		dispatch(getUserWallet() as any)
 	}
 
 	useEffect(() => {
@@ -80,18 +76,18 @@ const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 	paymentFormData.append('gender', gender)
 	paymentFormData.append('state', state)
 	paymentFormData.append('lga', lga)
-	paymentFormData.append('userId', user.id)
+	paymentFormData.append('userId', user?.id)
 	paymentFormData.append('costPerTask', costPerTask)
 	paymentFormData.append('earnPerTask', earnPerTask)
 	paymentFormData.append('socialPageLink', socialPageLink)
 	// Loop through captionArray and append each caption
-	captionArray.forEach((caption, index) => {
+	captionArray.forEach((caption: any, index: string) => {
 		paymentFormData.append(`caption[${index}]`, caption)
 	})
 	paymentFormData.append('adAmount', expBudget)
 
 	//make payment from available wallet fund
-	const handlePayment = async (e) => {
+	const handlePayment = async (e: any) => {
 		e.preventDefault()
 
 		// for (var pair of paymentFormData.entries()) {
@@ -117,11 +113,11 @@ const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 				//Emit Socket event to update activity feed
 				socket.emit('sendActivity', emitData)
 
-				navigate('/dashboard/campaign-stats')
+				router.push('/dashboard/campaign-stats')
 			}
 			if (!response) {
 				toast.error('Error creating advert, failed to make payment')
-				navigate('/dashboard/campaign-stats')
+				router.push('/dashboard/campaign-stats')
 				togglePaymentSelect()
 			}
 		} else {
@@ -131,8 +127,8 @@ const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 
 	// Fund wallet using flutterwave
 	const config = {
-		public_key: import.meta.env.NEXT_PUBLIC_FLUTTER_PUBLIC_KEY,
-		tx_ref: Date.now(),
+		public_key: process.env.NEXT_PUBLIC_FLUTTER_PUBLIC_KEY!,
+		tx_ref: Date.now().toString(),
 		amount: expBudget,
 		currency: 'NGN',
 		payment_options: 'card,mobilemoney,ussd',
@@ -144,6 +140,7 @@ const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 		customizations: {
 			title: title,
 			description: 'Advert creation',
+			logo: 'Belocated',
 		},
 	}
 
@@ -154,7 +151,7 @@ const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 	const fwConfig = {
 		...config,
 		text: 'Fund Wallet',
-		callback: async (response) => {
+		callback: async (response: any) => {
 			const trxData = {
 				userId: user.id,
 				email: response?.customer?.email,
@@ -165,24 +162,24 @@ const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 				status: response.charge_response_message,
 			}
 
-			await dispatch(fundUserWallet(trxData))
+			dispatch(fundUserWallet(trxData) as any)
 
 			closePaymentModal()
 		},
 		onClose: () => {
-			navigate(-1)
+			router.back()
 		},
 	}
 
-	return ReactDOM.createPortal(
-		<div className='wrapper'>
-			<div className='relative modal w-[85%] h-fit md:w-[600px] md:h-[550px] bg-primary'>
-				<img
+	return (
+		<div className=''>
+			<div className='relative  w-[85%] h-fit md:w-[600px] md:h-[550px] bg-primary'>
+				<Image
 					src={close}
 					alt='close'
 					onClick={togglePaymentSelect}
-					size={40}
-					className='absolute top-[-1rem] right-[-1rem] text-tertiary'
+					// size={40}
+					className='absolute h-10 w-10 top-[-1rem] right-[-1rem] text-tertiary'
 				/>
 				<div className='w-full px-[2rem] py-[1.5rem] md:px-[3rem] md:py-[4rem]'>
 					<h1 className='font-bold mb-3 text-xl'>Hello Payment Method</h1>
@@ -236,8 +233,7 @@ const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 					</div>
 				</div>
 			</div>
-		</div>,
-		document.getElementById('backdrop'),
+		</div>
 	)
 }
 
