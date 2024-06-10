@@ -19,6 +19,7 @@ import { toast } from 'react-hot-toast'
 import { selectUser } from '@/redux/slices/authSlice'
 import moment from 'moment'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 const TaskList = () => {
 	const router = useRouter()
@@ -30,11 +31,12 @@ const TaskList = () => {
 	const [icon, setIcon] = useState('')
 	const [platform, setPlatform] = useState('')
 	const tasks = useSelector(selectTasks)
+	console.log('🚀 ~ TaskList ~ tasks:', tasks)
 	const [sortedTasks, setSortedTasks] = useState()
 	// const itemsPerPage = 5;
 
 	const getUserTasks = async () => {
-		await dispatch(handleGetUserTasks())
+		dispatch(handleGetUserTasks() as any)
 	}
 
 	useEffect(() => {
@@ -47,14 +49,14 @@ const TaskList = () => {
 			(a, b) => new Date(b.createdAt) - new Date(a.createdAt),
 		)
 		setSortedTasks(sortedTaskList)
-	}, [dispatch])
+	}, [tasks])
 
 	const handleSelect = async (e) => {
 		e.preventDefault()
 		toast.success('Task has been completed, approved and cleared')
 	}
 
-	const checkTaskStatus = (task_Id, taskStatus) => {
+	const checkTaskStatus = (task_Id: string, taskStatus: any) => {
 		if (taskStatus === 'Awaiting Submission') {
 			return (
 				<button
@@ -125,13 +127,13 @@ const TaskList = () => {
 					</div>
 				</div>
 
-				<div className='md:px-8 mt-3 md:mt-8'>
+				<div className='md:px-8 mt-3 md:mt-8 grid grid-cols-3 gap-6'>
 					{sortedTasks?.map((task, index) => (
 						<div
 							key={index}
 							className='flex items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
 							<div className='flex gap-2 items-center'>
-								<img
+								<Image
 									src={
 										icons?.find((icon) => icon.platform === task.platform)?.icon
 									}

@@ -5,7 +5,7 @@ import { selectUser, SET_LOGOUT, SET_USER } from '@/redux/slices/authSlice'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import useRedirectLoggedOutUser from '@/customHook/useRedirectLoggedOutUser'
-import { getUser } from '@/services/authServices'
+import { getDashboardData, getUser } from '@/services/authServices'
 import { toast } from 'react-hot-toast'
 import copy from '@/assets/copy.png'
 import banner from '@/assets/banner.png'
@@ -22,6 +22,9 @@ import { FaCopy } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { toNaira } from '@/utils/payment'
+import ReferralsTable from '@/components/dashboard/referralTable'
+import { selectAdverts } from '@/redux/slices/advertSlice'
+import { handleGetAllReferrals } from '@/redux/slices/referrals'
 
 const Dashboard = () => {
 	const inputRef = useRef(null)
@@ -29,15 +32,36 @@ const Dashboard = () => {
 	const dispatch = useDispatch()
 	const [profile, setProfile] = useState(null)
 	const wallet = useSelector(selectUserWallet)
-	console.log('🚀 ~ Dashboard ~ wallet:', wallet)
+
+	const adverts = useSelector(selectAdverts)
+
 	const user = useSelector(selectUser)
 	const [profileComplete, setProfileComplete] = useState(false)
+	const [dashboardData, setDasboardData] = useState<{
+		totalEarnings: {
+			value: string
+		}
+		myBalance: {
+			value: string
+			// growth: growthRate,
+		}
+		advertsCreated: {
+			value: string
+			// growth: growthRate,
+		}
+		tasksCompleted: {
+			value: string
+			// growth: growthRate,
+		}
+	}>()
 	const [refLink, setRefLink] = useState('')
 	useRedirectLoggedOutUser('/')
 
 	useEffect(() => {
 		async function getUserData() {
 			const data = await getUser()
+			const dashboard = await getDashboardData()
+			setDasboardData(dashboard)
 
 			// if (!data || data === undefined) {
 			// 	// toast.error('Unable to retrieve user data, session will be terminated')
@@ -48,6 +72,8 @@ const Dashboard = () => {
 
 			dispatch(SET_USER(data))
 			dispatch(getUserWallet())
+
+			dispatch(handleGetAllReferrals() as any)
 		}
 		getUserData()
 
@@ -97,17 +123,6 @@ const Dashboard = () => {
 		toast.success('Referral link copied to clipboard')
 	}
 
-	function createData(name, calories, protein) {
-		return { name, calories, protein }
-	}
-
-	const rows = [
-		createData('Oladele dayo', 24, 4.0),
-		createData('Aisha Yusufu', 37, 4.3),
-		createData('Jgaban', 24, 6.0),
-		createData('Moses Jude', 67, 4.3),
-	]
-
 	return (
 		<div className='w-full h-fit'>
 			<div className='justify-between mx-auto md:mr-3'>
@@ -143,31 +158,37 @@ const Dashboard = () => {
 						<p>Total Earnings</p>
 						<div>
 							<strong className='text-3xl'>
-								{toNaira(wallet.totalEarning)}
+								{toNaira(dashboardData?.totalEarnings.value ?? 0)}
 							</strong>
 						</div>
-						<p className='text-xs text-gray-400'>+20% month over month</p>
+						{/* <p className='text-xs text-gray-400'>+20% month over month</p> */}
 					</div>
 					<div className='border w-full flex-col text-center items-center justify-center py-8 space-y-4 rounded-lg border-gray-200'>
 						<p>My Balance</p>
 						<div>
-							<strong className='text-3xl'>{toNaira(wallet.value)}</strong>
+							<strong className='text-3xl'>
+								{toNaira(dashboardData?.myBalance.value ?? 0)}
+							</strong>
 						</div>
-						<p className='text-xs text-gray-400'>+20% month over month</p>
+						{/* <p className='text-xs text-gray-400'>+20% month over month</p> */}
 					</div>
 					<div className='border w-full flex-col text-center items-center justify-center py-8 space-y-4 rounded-lg border-gray-200'>
 						<p>Adverts Created</p>
 						<div>
-							<strong className='text-3xl'>21,089</strong>
+							<strong className='text-3xl'>
+								{dashboardData?.advertsCreated.value ?? 0}
+							</strong>
 						</div>
-						<p className='text-xs text-gray-400'>+20% month over month</p>
+						{/* <p className='text-xs text-gray-400'>+20% month over month</p> */}
 					</div>
 					<div className='border w-full flex-col text-center items-center justify-center py-8 space-y-4 rounded-lg border-gray-200'>
 						<p>Tasks Completed</p>
 						<div>
-							<strong className='text-3xl'>10,000</strong>
+							<strong className='text-3xl'>
+								{dashboardData?.tasksCompleted.value ?? 0}
+							</strong>
 						</div>
-						<p className='text-xs text-gray-400'>+20% month over month</p>
+						{/* <p className='text-xs text-gray-400'>+20% month over month</p> */}
 					</div>
 					{/* <div className='hidden left w-full md:flex md:flex-1'>
 						<div className='w-full flex flex-col justify-center items-center'>
@@ -222,32 +243,7 @@ const Dashboard = () => {
 
 					<div className='border p-6 col-span-2 border-gray-200 rounded-lg '>
 						<h3 className='mb-6'>Referral</h3>
-						<TableContainer component={Paper}>
-							<Table sx={{ minWidth: 350 }} aria-label='simple table'>
-								<TableHead>
-									<TableRow>
-										<TableCell>Name</TableCell>
-										<TableCell align='right'>Date</TableCell>
-										<TableCell align='right'>Status</TableCell>
-									</TableRow>
-								</TableHead>
-								<TableBody>
-									{rows.map((row) => (
-										<TableRow
-											key={row.name}
-											sx={{
-												'&:last-child td, &:last-child th': { border: 0 },
-											}}>
-											<TableCell component='th' scope='row'>
-												{row.name}
-											</TableCell>
-											<TableCell align='right'>{row.calories}</TableCell>
-											<TableCell align='right'>{row.protein}</TableCell>
-										</TableRow>
-									))}
-								</TableBody>
-							</Table>
-						</TableContainer>
+						<ReferralsTable />
 					</div>
 					{/* <ProfileComplete className='flex  flex-col justify-center'> */}
 					<div className='rounded-lg p-6 border border-gray-300 flex flex-col gap-2   md:gap-0'>

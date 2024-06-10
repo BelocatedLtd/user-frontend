@@ -59,16 +59,16 @@ const makePayment = (
 
 export default makePayment
 
-export function toNaira(amount: number): string {
-	if (isNaN(amount)) {
-		throw new Error('Invalid amount. Please provide a valid numeric amount.')
-	}
+export function toNaira(amount: number | string): string {
+	// if (isNaN(amount)) {
+	// 	throw new Error('Invalid amount. Please provide a valid numeric amount.')
+	// }
 
 	try {
 		const formattedAmount = new Intl.NumberFormat('en-NG', {
 			style: 'currency',
 			currency: 'NGN',
-		}).format(amount)
+		}).format(+amount)
 		return formattedAmount
 	} catch (error) {
 		throw new Error('Error formatting amount to Naira.')

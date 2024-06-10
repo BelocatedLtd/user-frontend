@@ -120,6 +120,24 @@ export const getUser = async () => {
 	}
 }
 
+//Get dashboard data
+export const getDashboardData = async () => {
+	const headers = getAuthHeaders()
+	try {
+		const response = await axios.get(
+			`${BACKEND_URL}/api/user/dashboard`,
+			headers,
+		)
+		return response.data
+	} catch (error) {
+		const message =
+			(error.response && error.response.data && error.response.data.message) ||
+			error.message ||
+			error.toString()
+		toast.error(`${message}, Error retrieving user data`)
+	}
+}
+
 //Update user details
 export const updateUser = async (formData) => {
 	const headers = getAuthHeaders()

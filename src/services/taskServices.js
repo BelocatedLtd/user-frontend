@@ -41,6 +41,8 @@ export const getTask = async (taskId) => {
 export const getUserTasks = async () => {
 	const headers = getAuthHeaders()
 	const response = await axios.get(`${BACKEND_URL}/api/tasks/task`, headers)
+	console.log('🚀 ~ getUserTasks ~ response:', response)
+
 	return response.data
 }
 

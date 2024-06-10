@@ -18,6 +18,7 @@ import toast from 'react-hot-toast'
 import Loader from '@/components/loader/Loader'
 import {
 	handleGetAllReferrals,
+	selectAllReferrals,
 } from '@/redux/slices/referrals'
 import ReferralsTable from '@/components/dashboard/referralTable'
 
@@ -28,6 +29,8 @@ interface FormValues {
 const Referral = () => {
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
+
+	const referrals = useSelector(selectAllReferrals)
 
 	const router = useRouter()
 	const inputRef = useRef(null)
@@ -52,7 +55,7 @@ const Referral = () => {
 			setChallenge(Referral)
 			//  setContestants(challenge?.referralChallengeContestants)
 
-			await dispatch(SET_USER(data))
+			dispatch(SET_USER(data))
 		}
 		getUserData()
 
@@ -222,12 +225,16 @@ const Referral = () => {
 						<strong className='flex justify-self-end'>$45,678.90</strong>
 					</div>
 					<div className='border w-full flex-row justify-between px-8 py-4 space-y-4 rounded-lg border-gray-200'>
-						<p className='text-xs text-secondary'>Referred users</p>
-						<strong className='flex justify-self-end'>100</strong>
+						<p className='text-xs text-secondary'>Total points</p>
+						<strong className='flex justify-self-end'>
+							{user.referralPoints}
+						</strong>
 					</div>
 					<div className='border w-full flex-row justify-between px-8 py-4 space-y-4 rounded-lg border-gray-200'>
 						<p className='text-xs text-secondary'>Referred users</p>
-						<strong className='flex justify-self-end'>200</strong>
+						<strong className='flex justify-self-end'>
+							{referrals.length}
+						</strong>
 					</div>
 					<div className='border w-full flex-row justify-between px-8 py-4 space-y-4 rounded-lg border-gray-200'>
 						<p className='text-xs text-secondary'>Challenges won</p>
