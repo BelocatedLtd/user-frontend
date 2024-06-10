@@ -31,6 +31,13 @@ export const getAllReferrals = async () => {
 	return response.data
 }
 
+// Get Ref Dahsboard Data
+export const getRefDashboardData = async () => {
+	const headers = getAuthHeaders()
+	const response = await axios.get(`${BACKEND_URL}/api/ref/dashboard`, headers)
+	return response.data
+}
+
 // Ref Bonus
 
 // Convert Ref bonus pts to wallet funds

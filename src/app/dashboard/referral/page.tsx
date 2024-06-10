@@ -22,6 +22,8 @@ import {
 } from '@/redux/slices/referrals'
 import ReferralsTable from '@/components/dashboard/referralTable'
 import { handleRefLinkCopy } from '@/utils'
+import { getRefDashboardData } from '@/services/referrals'
+import { toNaira } from '@/utils/payment'
 
 interface FormValues {
 	email: string
@@ -41,10 +43,20 @@ const Referral = () => {
 	const [refLink, setRefLink] = useState('')
 	const [daysRemaining, setDaysRemaining] = useState()
 
+	const [dashboardData, setDasboardData] = useState<{
+		totalPoints: string
+		totalEarning: string
+		referredUsers: string
+		challengesWon: string
+	}>()
+
 	useEffect(() => {
 		async function getUserData() {
 			const data = await getUser()
 			const Referral = await getOngoingRefChallenge()
+
+			const dashData = await getRefDashboardData()
+			setDasboardData(dashData)
 
 			if (!data || data === undefined) {
 				// toast.error('Unable to retrieve user data, session will be terminated')
@@ -111,7 +123,7 @@ const Referral = () => {
 	}
 
 	const validationSchema = Yup.object().shape({
-		email: Yup.string().required('Email is required'),
+		email: Yup.string().email().required('Email is required'),
 	})
 
 	const [isLoading, setIsLoading] = useState(false)
@@ -183,23 +195,26 @@ const Referral = () => {
 									<Form>
 										<Field name='email'>
 											{({ field }: any) => (
-												<div className='border mt-10 h-14 rounded-full  pr-3 flex items-center'>
-													<input
-														{...field}
-														className=' w-full h-full rounded-l-full pl-6'
-														placeholder='Email Address'
-													/>
+												<>
+													<div className='border mt-10 h-14 rounded-full  pr-3 flex items-center'>
+														<input
+															{...field}
+															className=' w-full h-full rounded-l-full pl-6'
+															placeholder='Email Address'
+														/>
+
+														<button
+															type='submit'
+															className='bg-secondary cursor-pointer text-white text-xl rounded-full h-10 w-10 flex items-center justify-center ml-3'>
+															<IoIosSend className='' />
+														</button>
+													</div>
 													<ErrorMessage
 														name='email'
 														component='div'
 														className='text-red-500'
 													/>
-													<button
-														type='submit'
-														className='bg-secondary cursor-pointer text-white text-xl rounded-full h-10 w-10 flex items-center justify-center ml-3'>
-														<IoIosSend className='' />
-													</button>
-												</div>
+												</>
 											)}
 										</Field>
 									</Form>
@@ -233,23 +248,27 @@ const Referral = () => {
 				<div className=' grid grid-cols-4 gap-4'>
 					<div className='border w-full flex-row justify-between px-8 py-4 space-y-4 rounded-lg border-gray-200'>
 						<p className='text-xs text-secondary'>Total Earnings</p>
-						<strong className='flex justify-self-end'>$45,678.90</strong>
+						<strong className='flex justify-self-end'>
+							{toNaira(dashboardData?.totalEarning ?? 0)}
+						</strong>
 					</div>
 					<div className='border w-full flex-row justify-between px-8 py-4 space-y-4 rounded-lg border-gray-200'>
 						<p className='text-xs text-secondary'>Total points</p>
 						<strong className='flex justify-self-end'>
-							{user.referralPoints}
+							{dashboardData?.totalPoints ?? 0}
 						</strong>
 					</div>
 					<div className='border w-full flex-row justify-between px-8 py-4 space-y-4 rounded-lg border-gray-200'>
 						<p className='text-xs text-secondary'>Referred users</p>
 						<strong className='flex justify-self-end'>
-							{referrals.length}
+							{dashboardData?.referredUsers ?? 0}
 						</strong>
 					</div>
 					<div className='border w-full flex-row justify-between px-8 py-4 space-y-4 rounded-lg border-gray-200'>
 						<p className='text-xs text-secondary'>Challenges won</p>
-						<strong className='flex justify-self-end'>8</strong>
+						<strong className='flex justify-self-end'>
+							{dashboardData?.challengesWon ?? 0}
+						</strong>
 					</div>
 				</div>
 
