@@ -21,6 +21,7 @@ import {
 	selectAllReferrals,
 } from '@/redux/slices/referrals'
 import ReferralsTable from '@/components/dashboard/referralTable'
+import { handleRefLinkCopy } from '@/utils'
 
 interface FormValues {
 	email: string
@@ -131,6 +132,8 @@ const Referral = () => {
 		}
 	}
 
+	const frontEndUrl = window.location.hostname
+
 	return (
 		<div className='w-full h-screen lg:mr-5'>
 			{isLoading && <Loader />}
@@ -212,8 +215,16 @@ const Referral = () => {
 								</p>
 							</div>
 							<div className='rounded-full mt-6 bg-primary-light flex items-center justify-between px-8 py-4'>
-								<p>https://belocated.ng?ref={user.username}</p>
-								<p className='text-secondary'>copy link</p>
+								<p>{`https://${frontEndUrl}?ref=${user?.username}`}</p>
+								<button
+									onClick={() =>
+										handleRefLinkCopy(
+											`https://${frontEndUrl}?ref=${user?.username}`,
+										)
+									}
+									className='text-secondary'>
+									copy link
+								</button>
 							</div>
 						</div>
 					</div>

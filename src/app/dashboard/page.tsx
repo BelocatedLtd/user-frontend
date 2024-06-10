@@ -25,6 +25,7 @@ import { toNaira } from '@/utils/payment'
 import ReferralsTable from '@/components/dashboard/referralTable'
 import { selectAdverts } from '@/redux/slices/advertSlice'
 import { handleGetAllReferrals } from '@/redux/slices/referrals'
+import { handleRefLinkCopy } from '@/utils'
 
 const Dashboard = () => {
 	const inputRef = useRef(null)
@@ -78,7 +79,7 @@ const Dashboard = () => {
 		getUserData()
 
 		const frontEndUrl = window.location.hostname
-		setRefLink(`https://${frontEndUrl}/register/ref/${user?.username}`)
+		setRefLink(`https://${frontEndUrl}?ref=${user?.username}`)
 	}, [dispatch])
 
 	const handleEarn = (e) => {
@@ -115,12 +116,6 @@ const Dashboard = () => {
 		}
 		if (user.phone && user.location && user.community && user.gender)
 			router.push('/dashboard/advertise')
-	}
-
-	const handleRefLinkCopy = (e) => {
-		inputRef.current.select()
-		document.execCommand('copy')
-		toast.success('Referral link copied to clipboard')
 	}
 
 	return (
@@ -258,7 +253,9 @@ const Dashboard = () => {
 							/>
 							<FaCopy
 								className='cursor-pointer text-xl text-secondary'
-								onClick={handleRefLinkCopy}
+								onClick={() =>
+									handleRefLinkCopy(inputRef?.current?.value as string)
+								}
 							/>
 						</div>
 					</div>
