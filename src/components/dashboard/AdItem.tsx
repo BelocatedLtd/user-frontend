@@ -1,13 +1,9 @@
 import React from 'react'
-import close from '../../assets/close.svg'
-import facebook from '../../assets/social icons/facebook.svg'
-import tiktok from '../../assets/social icons/tiktok.svg'
+import close from '@/assets/close.svg'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { formatDate } from '../../utils/formatDate'
-import { icons } from '../../components/data/socialIcon'
-import { MdOutlineKeyboardDoubleArrowRight } from 'react-icons/md'
-import { Link, useNavigate } from 'react-router-dom'
+import { icons } from '../data/socialIcon'
 import toast, { CheckmarkIcon, LoaderIcon } from 'react-hot-toast'
 import {
 	handleApproveTask,
@@ -19,7 +15,23 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import TaskProofModal from '../ui/TaskProofModal'
 //import Loader from '../../components/loader/Loader'
-import Loader from '../../components/loader/Loader'
+import Loader from '../loader/Loader'
+import Image from 'next/image'
+import Button from '../Button'
+
+interface AdItemProps {
+	date: string
+	title: string
+	adperPostAmt: number
+	roi: number
+	adBudget: number
+	adService: string
+	status: string
+	item: any
+	url: string
+	users: any[]
+	user: any
+}
 
 const AdItem = ({
 	date,
@@ -33,15 +45,14 @@ const AdItem = ({
 	url,
 	users,
 	user,
-}) => {
+}: AdItemProps) => {
 	const [payBtn, setPayBtn] = useState('Pay Now')
 	const [toggleTaskPerformers, settoggleTaskPerformers] = useState(false)
 	const [adTaskPerformers, setAdTaskPerformers] = useState()
 	const [adTaskPerformerTasks, setAdTaskPerformerTasks] = useState()
 	const [taskSubmitters, setTaskSubmitters] = useState()
-	const [tasksUserAd, setTasksUserAd] = useState()
+	const [tasksUserAd, setTasksUserAd] = useState<any>()
 	const dispatch = useDispatch()
-	const navigate = useNavigate()
 	const tasks = useSelector(selectTasks)
 	const isError = useSelector(selectIsError)
 	const isSuccess = useSelector(selectIsSuccess)
@@ -79,7 +90,7 @@ const AdItem = ({
 	const handleToggleTaskPerformers = (e) => {
 		e.preventDefault()
 
-		if (taskSubmitters > 1) {
+		if (taskSubmitters && taskSubmitters > 1) {
 			toast.error('No Task Submitted')
 			return
 		}
@@ -101,7 +112,7 @@ const AdItem = ({
 	}
 
 	// Handle task for me.
-	const handleTaskApproval = async (e, clickedTask) => {
+	const handleTaskApproval = async (e: any, clickedTask: any) => {
 		e.preventDefault()
 
 		console.log(clickedTask)
@@ -123,7 +134,7 @@ const AdItem = ({
 			return
 		}
 
-		await dispatch(handleApproveTask(approveTaskData))
+		dispatch(handleApproveTask(approveTaskData) as any)
 
 		if (isError) {
 			toast.error('Error Approving Task')
@@ -135,43 +146,46 @@ const AdItem = ({
 	}
 
 	return (
-		<div className='relative shadow-lg flex md:w-[95%] h-fit mt-5 mb-[2rem] bg-[#fcfcfc] p-[1.5rem] rounded-2xl rounded-tr-none md:p-[3rem]'>
+		<div
+			onClick={handleToggleTaskPerformers}
+			className='relative shadow cursor-pointer hover:shadow-md flex w-full h-fit mt-5 mb-[2rem] p-[1.5rem] rounded-2xl rounded-tr-none '>
 			{isLoading && <Loader />}
 			{toggleTaskProofModal && (
 				<TaskProofModal toggleTaskProof={openPopup} task={taskProof} />
 			)}
 			{/* Close icon to delete ad campaign */}
 			{status == 'pending' && (
-				<img
+				<Image
 					src={close}
 					alt='close'
-					size={20}
-					className='absolute top-[-0.4rem] right-[-0.4rem] text-tertiary w-[28px] h-[28px]'
+					// size={20}
+					className=' text-tertiary w-[28px] h-[28px]'
 				/>
 			)}
 
-			{/* Social media icon  right */}
-			<div className='hidden w-[40px] h-[40px] md:flex md:mr-1'>
-				<img
-					src={icons?.find((icon) => icon.platform === item.platform)?.icon}
-					alt=''
-					className='w-full h-full object-cover'
-				/>
-			</div>
-
 			{/* ad details left */}
 			<div className='w-full md:w-[92%] flex flex-3 flex-col'>
-				{/* ad details first layer */}
-				<div className='flex flex-col mb-[1.5rem] border-b border-gray-100 pb-4'>
-					<small className='text-gray-400 font-semibold text-[9px]'>
-						{formatDate(date)}
-					</small>
-					<h1 className='font-bold text-sm md:text-lg text-gray-800'>
-						{title}
-					</h1>
-					<small className='text-[9px] text-gray-400 font-semibold'>
-						Pricing: ₦{adperPostAmt} per advert post
-					</small>
+				<div className='flex'>
+					{/* Social media icon  right */}
+					<div className='hidden w-[40px] h-[40px] md:flex md:mr-2'>
+						<Image
+							src={icons?.find((icon) => icon.platform === item.platform)?.icon}
+							alt=''
+							className='w-full h-full object-cover'
+						/>
+					</div>
+					{/* ad details first layer */}
+					<div className='flex flex-col mb-[1.5rem] border-b border-gray-100 pb-4'>
+						<small className='text-gray-400 font-semibold text-[9px]'>
+							{formatDate(date)}
+						</small>
+						<h1 className='font-bold text-sm md:text-lg text-gray-800'>
+							{title}
+						</h1>
+						<small className='text-[9px] text-gray-400 font-semibold'>
+							Pricing: ₦{adperPostAmt} per advert post
+						</small>
+					</div>
 				</div>
 
 				<div className='flex flex-col md:flex-row gap-2 justify-between'>
@@ -229,7 +243,10 @@ const AdItem = ({
 									Tasks Completed:
 								</label>
 								<p className='text-[12px]'>
-									{tasksUserAd?.filter((t) => t.status === 'Approved').length}
+									{
+										tasksUserAd?.filter((t: any) => t.status === 'Approved')
+											.length
+									}
 								</p>
 							</div>
 							<ul className='flex items-center gap-2'>
@@ -267,18 +284,21 @@ const AdItem = ({
 								</li>
 							</ul>
 							{/* Task Performer Button */}
-							<button
-								onClick={handleToggleTaskPerformers}
-								className='flex gap-1 items-center justify-center bg-secondary px-3 py-1 mt-1 text-primary rounded-2xl hover:bg-tertiary'>
-								View and Monitor Results <span>{tasksUserAd?.length}</span>
-							</button>
 						</div>
 					</div>
 				</div>
-
+				{/* <div className='w-full'>
+					<Button
+						onClick={handleToggleTaskPerformers}
+						variant='solid'
+						color='secondary'
+						className='flex gap-1 mt-2 items-center w-full justify-center px-3 py-1 '>
+						View and Monitor Results <span>{tasksUserAd?.length}</span>
+					</Button>
+				</div> */}
 				{toggleTaskPerformers && (
 					<div className='flex flex-col gap-3'>
-						{tasksUserAd?.map((tp) => (
+						{tasksUserAd?.map((tp: any) => (
 							<div
 								className='w-full border-b border-gray-200 py-[1rem]'
 								key={tp._id}>
@@ -286,13 +306,13 @@ const AdItem = ({
 									<small className='text-gray-400 font-semibold'>
 										@
 										{
-											users?.find((u) => u._id === tp?.taskPerformerId)
+											users?.find((u: any) => u._id === tp?.taskPerformerId)
 												?.username
 										}
 									</small>
 									<h3 className='font-bold text-gray-600'>
 										{
-											users?.find((u) => u._id === tp?.taskPerformerId)
+											users?.find((u: any) => u._id === tp?.taskPerformerId)
 												?.fullname
 										}
 									</h3>

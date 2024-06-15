@@ -120,6 +120,10 @@ const authSlice = createSlice({
 				state.isError = false
 				state.user = action.payload
 				toast.success('User Details Fetched!')
+				if (!action.payload?.isKycDone) {
+					router.push(`/kyc`)
+					// setProfileComplete(true)
+				}
 			})
 			.addCase(fetchUserDetails.rejected, (state, action) => {
 				state.isLoading = false

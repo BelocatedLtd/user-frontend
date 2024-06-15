@@ -79,6 +79,9 @@ const Login = ({ showRegModal, closeModal }: any) => {
 
 			// When user email is  verified
 			if (response.isEmailVerified === true) {
+				if (response.isKycDone === false) {
+					return router.push(`/kyc`)
+				}
 				const { token } = response
 
 				if (!token) {
@@ -90,6 +93,7 @@ const Login = ({ showRegModal, closeModal }: any) => {
 				setToken(token)
 				dispatch(SET_LOGIN())
 				dispatch(SET_USER(response))
+
 				const username = response.username
 
 				if (response.accountType === 'User') {
@@ -103,6 +107,7 @@ const Login = ({ showRegModal, closeModal }: any) => {
 					socket.emit('sendActivity', emitData)
 
 					router.push(`/dashboard`)
+					toast.success(`Welcome back @${username}!`)
 				}
 
 				if (

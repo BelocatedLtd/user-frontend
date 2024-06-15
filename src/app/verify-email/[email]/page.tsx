@@ -37,7 +37,7 @@ const VerifyEmail = ({ params }: { params: { email: string } }) => {
 		return () => clearInterval(interval)
 	}, [timer])
 
-	const handleResendEmail = async (e) => {
+	const handleResendEmail = async (e: any) => {
 		e.preventDefault()
 
 		try {

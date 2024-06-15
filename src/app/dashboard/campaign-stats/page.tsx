@@ -68,20 +68,20 @@ const CampaignStats = () => {
 						</small>
 					</div>
 				</div>
-				<small className='hidden md:flex bg-secondary rounded-full p-4 text-primary'>
+				<small className='hidden md:flex h-6 w-10 items-center justify-center bg-secondary rounded-full  text-primary'>
 					{adverts.length}
 				</small>
 				<Button
 					variant='solid'
 					color='danger'
 					onClick={() => router.push('/dashboard/advertise')}
-					className='flex items-center gap-1 bg-secondary text-primary rounded-full px-5 py-2 mr-5 text-[12px] md:text-[15px] hover:bg-tertiary'>
+					className='flex items-center  gap-1 bg-secondary text-primary rounded-full px-5 py-2 mr-5 text-[12px] md:text-[15px] hover:bg-tertiary'>
 					<BsFillPlusCircleFill />
 					Campaign
 				</Button>
 			</div>
 
-			<div className='w-full'>
+			<div className='w-full grid mt-4 grid-cols-3'>
 				{adverts.map((item) => (
 					<AdItem
 						key={item._id}
