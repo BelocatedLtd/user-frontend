@@ -127,9 +127,7 @@ const Earn = () => {
 			(advert) => advert?.service === asset,
 		)
 
-		router.push(`/dashboard/taskearn/${platformName}`, {
-			state: { filteredServiceAdvert, asset, taskTitle, taskVerification },
-		})
+		router.push(`/dashboard/taskearn/${platformName}`)
 	}
 
 	return (
@@ -139,7 +137,11 @@ const Earn = () => {
 
 			<div className='justify-between mx-auto md:mr-5'>
 				<div className='flex items-center gap-3 border-b border-gray-200 py-5'>
-					<MdOutlineKeyboardArrowLeft size={30} onClick={() => router.back()} />
+					<MdOutlineKeyboardArrowLeft
+						className='cursor-pointer'
+						size={30}
+						onClick={() => router.back()}
+					/>
 					<div className='flex flex-col'>
 						<p className='font-semibold text-xl text-gray-700'>
 							Perform Social Tasks and Earn
@@ -163,9 +165,12 @@ const Earn = () => {
                 {user?.freeTaskCount === 0 && (<p className='text-secondary font-normal px-6'>Free tasks completed for the week, you are eligible to earn from the tasks you perform</p>)} */}
 				</div>
 
-				<div className='grid grid-cols-3 gap-[3rem] items-center justify-center mt-[1rem] px-3 py-5'>
+				<div className='grid grid-cols-3 gap-8 items-center justify-center mt-[1rem] px-3 py-5'>
 					{theSortedSocials?.map((menu, index) => (
-						<div key={index} className='w-fit md:w-full shadow p-5'>
+						<div
+							key={index}
+							onClick={(e) => handleSelect(e, menu?.value)}
+							className='w-fit hover:shadow cursor-pointer md:w-full border rounded-lg p-5'>
 							<div className='flex flex-col md:flex-row items-center gap-5'>
 								<div className='flex flex-col'>
 									<div className='hidden md:flex items-center justify-center w-[100px] h-[100px] bg-gray-50 rounded-t-xl rounded-b-2xl'>
@@ -175,99 +180,103 @@ const Earn = () => {
 											className='object-cover rounded-full p-2'
 										/>
 									</div>
-									<button
+									{/* <button
 										onClick={(e) => handleSelect(e, menu?.value)}
 										className='hidden md:flex px-5 py-3 border border-gray-200 mt-5'>
 										Select
-									</button>
+									</button> */}
 								</div>
-
-								<div className='w-full'>
-									<div className='flex flex-col md:flex-row md:justify-between md:items-center md:border-b md:border-gray-100'>
-										<div className='flex flex-col w-full md:w-[70%]'>
-											<h3 className='font-bold text-[20px] text'>
-												{menu?.title}
-											</h3>
-											<p className='pb-3 text-[14px] text-gray-500 font-semibold'>
-												<span className='font-extrabold'>Earning: </span> Starts
-												from ₦{menu?.earn}/Task Completed & Approved
-											</p>
-										</div>
-										<div className='w-full md:text-right'>
-											<small
-												className={`py-2 px-5 ${
-													user?.freeTaskCount === 0
-														? 'bg-secondary'
-														: 'bg-tertiary'
-												} text-primary rounded-2xl`}>
-												<span className='mr-1'>
-													{
-														taskList?.filter(
-															(advert) => advert?.platform === menu?.value,
-														).length
-													}
-												</span>
-												Tasks Available
-											</small>
-										</div>
+								<div className='flex flex-col md:flex-ro md:justify-between md:items-center md:border-gray-100'>
+									<div className='flex flex-col w-full'>
+										<h3 className='font-bold text-[20px] text'>
+											{menu?.title}
+										</h3>
+										<p className='pb-3 text-[14px] text-gray-500 font-semibold'>
+											<span className='font-extrabold'>Earning: </span> Starts
+											from ₦{menu?.earn}/Task Completed & Approved
+										</p>
 									</div>
-									<p className='font-normal text-[14px] text-gray-700 mt-3'>
-										{menu?.desc}
-									</p>
-
-									{/* Select button and logo for mobile */}
-									<div className='w-full flex items-center gap-2'>
-										<button
-											onClick={(e) => handleSelect(e, menu?.value)}
-											className='flex md:hidden px-5 py-3 border border-gray-200 mt-5 hover:bg-gray-200'>
-											Select
-										</button>
-
-										<div className='flex md:hidden items-center justify-end w-[50px] h-[50px] rounded-t-xl rounded-b-2xl'>
-											<img
-												src={menu?.icon}
-												alt=''
-												className='object-cover rounded-full mt-5'
-											/>
-										</div>
+									<div className='w-full '>
+										<small
+											className={`py-2 px-5 ${
+												user?.freeTaskCount === 0
+													? 'bg-tertiary'
+													: 'bg-secondary'
+											} text-primary rounded-2xl`}>
+											<span className='mr-1'>
+												{
+													taskList?.filter(
+														(advert) => advert?.platform === menu?.value,
+													).length
+												}
+											</span>
+											Tasks Available
+										</small>
 									</div>
 								</div>
 							</div>
 
-							{selectedPlatformObject?.assetplatform === menu.value &&
-							toggleServices ? (
-								<div className='w-full h-fit'>
-									{selectedPlatformObject?.assets?.map((service, index) => (
-										<ul className='flex items-center gap-3'>
-											<li
-												key={index}
-												className='flex items-center gap-3 border-b border-gray-50 py-3'>
-												<div
-													onClick={(e) =>
-														handleSelectAsset(
-															e,
-															service?.asset,
-															service?.TD,
-															service?.verification,
-														)
-													}
-													className='flex items-center gap-3 cursor-pointer hover:bg-gray-300'>
-													{service.TD}
-													<button className='bg-gray-200 p-2 border border-gray-200 rounded-full'>
-														{
-															selectedPlatformAds?.filter(
-																(advert) => advert?.service === service?.asset,
-															).length
-														}
-													</button>
-												</div>
-											</li>
-										</ul>
-									))}
+							<div className='w-full mt-2'>
+								<p className='font-normal text-[14px] text-gray-700 mt-3'>
+									{menu?.desc}
+								</p>
+
+								{/* Select button and logo for mobile */}
+								<div className='w-full flex items-center gap-2'>
+									<button
+										onClick={(e) => handleSelect(e, menu?.value)}
+										className='flex md:hidden px-5 py-3 border border-gray-200 mt-5 hover:bg-gray-200'>
+										Select
+									</button>
+
+									<div className='flex md:hidden items-center justify-end w-[50px] h-[50px] rounded-t-xl rounded-b-2xl'>
+										<Image
+											src={menu?.icon}
+											alt=''
+											className='object-cover rounded-full mt-5'
+										/>
+									</div>
 								</div>
-							) : (
-								''
-							)}
+							</div>
+							{/* </div> */}
+
+							<div className='absolute bg-white space-y-4 border   max-h-72  overflow-scroll'>
+								{selectedPlatformObject?.assetplatform === menu.value &&
+								toggleServices ? (
+									<div className='w-full h-fit'>
+										{selectedPlatformObject?.assets?.map((service, index) => (
+											<ul className=' mt-2 overflow-scroll rounded-sm cursor-pointer hover:bg-gray-300 px-4'>
+												<li
+													key={index}
+													className='flex items-center gap-3 border-b border-gray-50 py-3'>
+													<div
+														onClick={(e) =>
+															handleSelectAsset(
+																e,
+																service?.asset,
+																service?.TD,
+																service?.verification,
+															)
+														}
+														className='flex items-center gap-3 '>
+														{service.TD}
+														<button className='bg-gray-200 p-2 border border-gray-200 rounded-full'>
+															{
+																selectedPlatformAds?.filter(
+																	(advert) =>
+																		advert?.service === service?.asset,
+																).length
+															}
+														</button>
+													</div>
+												</li>
+											</ul>
+										))}
+									</div>
+								) : (
+									''
+								)}
+							</div>
 						</div>
 					))}
 				</div>

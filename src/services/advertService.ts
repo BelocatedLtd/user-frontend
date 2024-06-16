@@ -17,15 +17,13 @@ const getAuthHeaders = () => {
 }
 
 // Create Advert
-export const createAdvert = async (adFormData) => {
+export const createAdvert = async (adFormData: FormData) => {
 	const headers = getAuthHeaders()
 	const response = await axios.post(
 		`${BACKEND_URL}/api/adverts/create`,
 		adFormData,
 		headers,
 	)
-	// console.log(response.data)
-	// return
 	return response.data
 }
 
@@ -43,18 +41,18 @@ export const getAllUserAdverts = async () => {
 }
 
 // Set Advert to be Free
-export const setAdvertFree = async (advertId) => {
+export const setAdvertFree = async (advertId: string) => {
 	const headers = getAuthHeaders()
 	const response = await axios.post(
 		`${BACKEND_URL}/api/adverts/setadfree/${advertId}`,
-		advertId,
+		{ advertId },
 		headers,
 	)
 	return response.data
 }
 
 // Delete Advert
-export const deleteAdvert = async (advertId) => {
+export const deleteAdvert = async (advertId: string) => {
 	const headers = getAuthHeaders()
 	try {
 		const response = await axios.delete(
@@ -62,7 +60,25 @@ export const deleteAdvert = async (advertId) => {
 			headers,
 		)
 		return response.data
-	} catch (error) {
+	} catch (error: any) {
+		const message =
+			(error.response && error.response.data && error.response.data.message) ||
+			error.message ||
+			error.toString()
+		toast.error(message)
+	}
+}
+
+// Get Qualified Adverts
+export const getQualifiedAdverts = async (platformName: string) => {
+	const headers = getAuthHeaders()
+	try {
+		const response = await axios.get(
+			`${BACKEND_URL}/api/adverts/qualified/${platformName}`,
+			headers,
+		)
+		return response.data
+	} catch (error: any) {
 		const message =
 			(error.response && error.response.data && error.response.data.message) ||
 			error.message ||

@@ -22,7 +22,7 @@ import Button from '../Button'
 interface AdItemProps {
 	date: string
 	title: string
-	adperPostAmt: number
+	adperPostAmt: string
 	roi: number
 	adBudget: number
 	adService: string
@@ -148,7 +148,7 @@ const AdItem = ({
 	return (
 		<div
 			onClick={handleToggleTaskPerformers}
-			className='relative shadow cursor-pointer hover:shadow-md flex w-full h-fit mt-5 mb-[2rem] p-[1.5rem] rounded-2xl rounded-tr-none '>
+			className='relative border cursor-pointer hover:shadow flex w-full h-fit mt-5 mb-[2rem] p-[1.5rem] rounded-2xl rounded-tr-none '>
 			{isLoading && <Loader />}
 			{toggleTaskProofModal && (
 				<TaskProofModal toggleTaskProof={openPopup} task={taskProof} />

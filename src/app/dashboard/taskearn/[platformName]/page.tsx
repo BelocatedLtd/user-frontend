@@ -1,27 +1,22 @@
+'use client'
+
 import React, { useEffect } from 'react'
-import whatsapp from '../../../assets/animated icons/whatsapp.gif'
-import facebook from '../../../assets/animated icons/facebook.gif'
-import tiktok from '../../../assets/animated icons/tiktok.gif'
-import instagram from '../../../assets/animated icons/instagram.gif'
-import twitter from '../../../assets/animated icons/twitter.gif'
-import youtube from '../../../assets/animated icons/youtube.svg'
-import linkedin from '../../../assets/animated icons/linkedin.gif'
-import appstore from '../../../assets/animated icons/appstore.svg'
-import playstore from '../../../assets/animated icons/playstore.svg'
-import audiomack from '../../../assets/animated icons/audiomack.svg'
-import boomplay from '../../../assets/animated icons/boomplay.svg'
-import spotify from '../../../assets/animated icons/spotify.svg'
-import {
-	useNavigate,
-	useLocation,
-	useParams,
-	useSearchParams,
-} from 'react-router-dom'
+import whatsapp from '@/assets/animated icons/whatsapp.gif'
+import facebook from '@/assets/animated icons/facebook.gif'
+import tiktok from '@/assets/animated icons/tiktok.gif'
+import instagram from '@/assets/animated icons/instagram.gif'
+import twitter from '@/assets/animated icons/twitter.gif'
+import youtube from '@/assets/animated icons/youtube.svg'
+import linkedin from '@/assets/animated icons/linkedin.gif'
+import appstore from '@/assets/animated icons/appstore.svg'
+import playstore from '@/assets/animated icons/playstore.svg'
+import audiomack from '@/assets/animated icons/audiomack.svg'
+import boomplay from '@/assets/animated icons/boomplay.svg'
+import spotify from '@/assets/animated icons/spotify.svg'
+
 import { useState } from 'react'
-import { LoaderIcon, toast } from 'react-hot-toast'
-import { selectUser, selectUsername } from '../../../redux/slices/authSlice'
-import socialPlatforms from '../../../components/data/assets'
-import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
+import { toast } from 'react-hot-toast'
+import { selectUser, selectUsername } from '@/redux/slices/authSlice'
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -31,96 +26,107 @@ import {
 	selectIsLoading,
 	selectIsSuccess,
 	selectTasks,
-} from '../../../redux/slices/taskSlice'
-import { formatDate } from '../../../utils/formatDate'
-import Loader from '../../../components/loader/Loader'
+} from '@/redux/slices/taskSlice'
+import { formatDate } from '@/utils/formatDate'
+import Loader from '@/components/loader/Loader'
+import { useRouter } from 'next/navigation'
+import Image, { StaticImageData } from 'next/image'
+import { getQualifiedAdverts } from '@/services/advertService'
+import { toIntlCurrency } from '@/utils'
 
-const TaskEarn = () => {
-	const navigate = useNavigate()
+const TaskEarn = ({ params }: { params: { platformName: string } }) => {
+	console.log('🚀 ~ TaskEarn ~ parama:', params)
+
+	const router = useRouter()
+
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
 	const username = useSelector(selectUsername)
 	const isError = useSelector(selectIsError)
 	const isSuccess = useSelector(selectIsSuccess)
 	const isLoading = useSelector(selectIsLoading)
-	const [icon, setIcon] = useState(null)
+	const [icon, setIcon] = useState<StaticImageData>()
 	const [newTask, setNewTask] = useState()
-	const [randomCaption, setRandomCaption] = useState()
 	const tasks = useSelector(selectTasks)
-	const { platformName } = useParams()
-	const location = useLocation()
-	const { filteredServiceAdvert, asset, taskTitle, taskVerification } =
-		location.state || {}
+	// const { filteredServiceAdvert, asset, taskTitle, taskVerification } =
+	// 	location.state || {}
 	const [finalFilteredTasks, setFinalFilteredTasks] = useState([])
 
 	const getAllTasks = async () => {
-		await dispatch(handleGetUserTasks())
+		dispatch(handleGetUserTasks() as any)
 	}
 
 	useEffect(() => {
-		if (user.email === '') {
-			navigate(`/dashboard/${username}`)
-		}
-
 		getAllTasks()
-	}, [dispatch, user?.email])
+	}, [dispatch])
 
 	useEffect(() => {
-		if (platformName === 'tiktok') {
+		if (params.platformName === 'tiktok') {
 			setIcon(tiktok)
 		}
-		if (platformName === 'facebook') {
+		if (params.platformName === 'facebook') {
 			setIcon(facebook)
 		}
-		if (platformName === 'twitter') {
+		if (params.platformName === 'twitter') {
 			setIcon(twitter)
 		}
-		if (platformName === 'instagram') {
+		if (params.platformName === 'instagram') {
 			setIcon(instagram)
 		}
-		if (platformName === 'linkedin') {
+		if (params.platformName === 'linkedin') {
 			setIcon(linkedin)
 		}
-		if (platformName === 'whatsapp') {
+		if (params.platformName === 'whatsapp') {
 			setIcon(whatsapp)
 		}
-		if (platformName === 'youtube') {
+		if (params.platformName === 'youtube') {
 			setIcon(youtube)
 		}
-		if (platformName === 'appstore') {
+		if (params.platformName === 'appstore') {
 			setIcon(appstore)
 		}
-		if (platformName === 'playstore') {
+		if (params.platformName === 'playstore') {
 			setIcon(playstore)
 		}
-		if (platformName === 'audiomack') {
+		if (params.platformName === 'audiomack') {
 			setIcon(audiomack)
 		}
-		if (platformName === 'spotify') {
+		if (params.platformName === 'spotify') {
 			setIcon(spotify)
 		}
-		if (platformName === 'boomplay') {
+		if (params.platformName === 'boomplay') {
 			setIcon(boomplay)
 		}
 
-		//Filter all ads to get the ones this user is qualified to perform
-		const filteredTasks = filteredServiceAdvert?.filter((advert) => {
-			const locationMatch =
-				advert.state === user.location || advert.state === 'All'
-			const communityMatch =
-				advert.lga === user.community || advert.lga === 'All'
-			const genderMatch =
-				advert.gender === user.gender || advert.gender === 'All'
+		const fetchQualifiedAdverts = async () => {
+			try {
+				const data = await getQualifiedAdverts(params.platformName)
+				setFinalFilteredTasks(data)
+			} catch (error) {
+				console.error('Failed to fetch qualified adverts:', error)
+			}
+		}
 
-			return locationMatch && communityMatch && genderMatch
-		})
+		fetchQualifiedAdverts()
+
+		//Filter all ads to get the ones this user is qualified to perform
+		// const filteredTasks = filteredServiceAdvert?.filter((advert: any) => {
+		// 	const locationMatch =
+		// 		advert.state === user.location || advert.state === 'All'
+		// 	const communityMatch =
+		// 		advert.lga === user.community || advert.lga === 'All'
+		// 	const genderMatch =
+		// 		advert.gender === user.gender || advert.gender === 'All'
+
+		// 	return locationMatch && communityMatch && genderMatch
+		// })
 
 		//Setting the filtered ads to a state called finalFilteredTasks
-		setFinalFilteredTasks(filteredTasks)
+		// setFinalFilteredTasks(filteredTasks)
 	}, [])
 
 	//Check if user has already opted in to perform a task, any task he/she is already performing will be marked submit task and new unperformed tasks marked perform task.
-	const checkTaskExistence = (advert_Id) => {
+	const checkTaskExistence = (advert_Id: string) => {
 		const existingTask = tasks?.find(
 			(task) => task.taskPerformerId === user.id && task.advertId === advert_Id,
 		)
@@ -143,15 +149,15 @@ const TaskEarn = () => {
 		}
 	}
 
-	const goToTaskPage = (existingTaskId) => {
-		navigate(`/dashboard/submittask/${existingTaskId}`)
+	const goToTaskPage = (existingTaskId: string) => {
+		router.push(`/dashboard/submittask/${existingTaskId}`)
 	}
 
 	//Handling click even on the button to perform task, this button should not create a new task if the user had already created a task for this ad
-	const handleSelect = async (advert_Id) => {
+	const handleSelect = async (advert_Id: string) => {
 		// Extracting the information for this Advert that will be converted to task for this user and also checking if Advert is still in existence amd paid for
-		const taskToPerform = finalFilteredTasks?.find(
-			(advert) => advert._id === advert_Id,
+		const taskToPerform: any = finalFilteredTasks?.find(
+			(advert: any) => advert._id === advert_Id,
 		)
 
 		const randomIndex = Math.floor(
@@ -167,7 +173,7 @@ const TaskEarn = () => {
 				advertId: taskToPerform._id,
 				advertiserId: taskToPerform.userId,
 				taskPerformerId: user?.id,
-				title: taskTitle,
+				// title: taskTitle,
 				platform: taskToPerform.platform,
 				service: taskToPerform.service,
 				desiredROI: taskToPerform.desiredROI,
@@ -176,14 +182,14 @@ const TaskEarn = () => {
 				state: taskToPerform.state,
 				lga: taskToPerform.lga,
 				caption: pickedCaption,
-				taskVerification,
+				// taskVerification,
 				socialPageLink: taskToPerform.socialPageLink,
 				adMedia: taskToPerform.mediaURL,
 			}
 
 			console.log(taskData)
 
-			const response = await dispatch(createNewTask(taskData))
+			const response = dispatch(createNewTask(taskData) as any)
 			setNewTask(response.payload)
 
 			if (isError) {
@@ -193,7 +199,7 @@ const TaskEarn = () => {
 
 			if (isSuccess) {
 				toast.success('Successfully created a Task from this advert')
-				navigate(`/dashboard/submittask/${response?.payload?._id}`)
+				router.push(`/dashboard/submittask/${response?.payload?._id}`)
 			}
 		}
 
@@ -209,15 +215,15 @@ const TaskEarn = () => {
 			{isLoading && <Loader />}
 			<div>
 				<div className='flex items-center gap-3 border-b border-gray-200 py-5'>
-					<MdOutlineKeyboardArrowLeft size={30} onClick={() => navigate(-1)} />
+					<MdOutlineKeyboardArrowLeft size={30} onClick={() => router.back()} />
 					<div className='flex flex-col'>
 						<p className='font-semibold text-xl text-gray-700'>
-							Perform Social Tasks on {platformName} and Earn Money
+							Perform Social Tasks on {params.platformName} and Earn Money
 						</p>
 						<small className='font-medium text-gray-500'>
 							Click{' '}
 							<span
-								onClick={() => navigate(`/dashboard/tasks/${user?.id}`)}
+								onClick={() => router.push(`/dashboard/tasks/${user?.id}`)}
 								className='text-secondary'>
 								here
 							</span>{' '}
@@ -227,45 +233,57 @@ const TaskEarn = () => {
 				</div>
 
 				<div className='flex items-center gap-3 border-b border-gray-200'>
-					<p className='font-normal text-[14px] text-gray-700 p-6'>
-						You can earn consistently by posting adverts of various businesses
-						and top brands on your social media accounts and performing simple
-						social media tasks. There are{' '}
+					<p className='font-normal text-[14px] text-gray-700 p-6 w-1/2'>
+						Earn by posting adverts and performing simple tasks on your social
+						media. You have{' '}
 						<span className='text-tertiary font-bold'>
-							({finalFilteredTasks.length})
+							({finalFilteredTasks?.length})
 						</span>{' '}
-						tasks you are qualified to perform on {platformName}. To get
-						started, simply click on any of the earning options shown below:
+						tasks available on WhatsApp. Click below to start.
 					</p>
 				</div>
 			</div>
 
-			<div className='md:px-8 mt-3 md:mt-8'>
-				{finalFilteredTasks?.map((task, index) => (
+			<div className='mt-3 md:mt-8 grid grid-cols-3 gap-8 '>
+				{finalFilteredTasks?.map((task: any, index) => (
 					<div
 						key={index}
-						className='w-full flex flex-col md:flex-row  md:items-center justify-between bg-gray-50 md:p-6 mb-[2rem] shadow-lg'>
-						<div className='w-full md:w-[70%] flex flex-col px-6 py-8 gap-2 md:items-center md:flex-row'>
-							<img src={icon} alt={platformName} className='hidden md:flex' />
-							<div className='w-full flex flex-col'>
+						className='w-full flex flex-col md:flex-row  md:items-center justify-between md:p-8 border rounded-lg'>
+						<div className='w-full fle flex-col  py-2 gap-2 md:items-center md:flex-row'>
+							<div className=' md:flex '>
+								{/* <Image
+									alt={params.platformName}
+									src={icon!}
+									className='hidden md:flex'
+								/> */}
+								<Image
+									src={icon!}
+									alt={params.platformName}
+									className='w-16 h-16'
+								/>
 								{/* Ad details to perform as Task */}
-								<div className='flex flex-col gap-[0.9rem]'>
+								<div className='flex flex-col gap-[0.9rem] ml-3'>
 									<small className='md:mb-[0.4rem] text-[9px] '>
 										{formatDate(task?.createdAt)}
 									</small>
-									<h4 className='text-gray-600 text-[15px] md:text-[18px] font-bold my-[-5px] p-0 border-b border-gray-200 pb-2'>
-										{taskTitle}
+
+									<h4 className='text-gray-600 flex text-[15px] md:text-[18px] font-bold my-[-5px] p-0 border-b border-gray-200 pb-2'>
+										<p className='w-1/8'>{task?.adTitle}</p>
+
+										<span>{toIntlCurrency(task?.earnPerTask)}</span>
 									</h4>
 									<small className='text-gray-600 text-[12px] mb-[1rem]'>
 										<span className='font-bold'>To Earn:</span> ₦
 										{task?.earnPerTask}
 									</small>
 								</div>
+							</div>
 
+							<div className='w-full flex flex-col'>
 								{/* Demographics and platform and create task button */}
 								<div className='flex flex-col w-full gap-3 md:flex-row'>
 									<div className='flex w-full items-center gap-[2rem]'>
-										<ul className='flex flex-col md:flex-row gap-3 text-[12px] font-light'>
+										<ul className='grid  grid-cols-4 gap-3 text-[12px] font-light'>
 											<li>
 												<span className='font-bold'>State:</span> {task.state}
 											</li>
@@ -282,13 +300,17 @@ const TaskEarn = () => {
 													)?.status
 												}
 											</li>
-											{/* <li>Free:{task.isFree ? ("Free") : ("Paid")}</li> */}
+											<li>
+												{' '}
+												<span className='font-bold'>Fee:</span>{' '}
+												{task.isFree ? 'Free' : 'Paid'}
+											</li>
 											{task.socialPageLink ? (
-												<li>
+												<li className='flex col-span-4  w-full'>
 													<span className='font-bold'>Link:</span>{' '}
 													<a
 														href={task.socialPageLink}
-														className='text-blue-600'>
+														className='text-blue-600 ml-2'>
 														{task.socialPageLink}
 													</a>
 												</li>
@@ -299,9 +321,9 @@ const TaskEarn = () => {
 									</div>
 
 									<div className='md:hidden w-fit flex gap-3 items-center md:mt-0 md:w-full md:justify-end'>
-										<img
-											src={icon}
-											alt={platformName}
+										<Image
+											src={icon!}
+											alt={params.platformName}
 											className='flex w-[20px] h-[20px] md:hidden'
 										/>
 										{checkTaskExistence(task._id)}
@@ -311,9 +333,9 @@ const TaskEarn = () => {
 						</div>
 
 						{/* Button */}
-						<div className='hidden w-[30%] md:flex md:justify-end'>
+						{/* <div className='hidden w-[30%] md:flex md:justify-end'>
 							{checkTaskExistence(task._id)}
-						</div>
+						</div> */}
 					</div>
 				))}
 			</div>

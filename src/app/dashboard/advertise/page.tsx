@@ -61,7 +61,12 @@ const Advertise = () => {
 		<div className='w-full h-fit'>
 			<div className='justify-between mx-auto md:mr-5'>
 				<div className='flex items-center gap-3 border-b border-gray-200 py-5'>
-					<MdOutlineKeyboardArrowLeft size={30} onClick={() => router.back()} />
+					<MdOutlineKeyboardArrowLeft
+						className='cursor-pointer'
+						size={30}
+						onClick={() => router.back()}
+					/>
+
 					<div className='flex flex-col'>
 						<p className='font-semibold text-xl text-gray-700'>
 							Create a Task Campaign to Advertise
@@ -133,26 +138,27 @@ const Advertise = () => {
 									</div>
 								</div>
 							</div>
-
-							{selectedPlatformObject?.assetplatform === menu.value &&
-							toggleServices ? (
-								<ul className=' mt-2 absolute bg-white border max-h-72 overflow-scroll rounded-sm space-y-4'>
-									{selectedPlatformObject?.assets?.map((service, index) => (
-										<li
-											onClick={(e) =>
-												handleSelectService(e, service?.asset, service.SC)
-											}
-											className='flex hover:bg-slate-200  cursor-pointer px-2 items-center text-sm gap-3 border-b border-gray-50 py-2 '>
-											<p>{service.SC}</p>
-											<span className='bg-gray-50 rounded-full p-3'>
-												₦{service.CostToOrder}
-											</span>
-										</li>
-									))}
-								</ul>
-							) : (
-								''
-							)}
+							<div className='absolute bg-white space-y-4 border   max-h-72  overflow-scroll'>
+								{selectedPlatformObject?.assetplatform === menu.value &&
+								toggleServices ? (
+									<ul className=' mt-2 overflow-scroll rounded-sm '>
+										{selectedPlatformObject?.assets?.map((service, index) => (
+											<li
+												onClick={(e) =>
+													handleSelectService(e, service?.asset, service.SC)
+												}
+												className='flex cursor-pointer hover:bg-gray-300 px-4 items-center text-sm gap-3 border-b border-gray-50 py-2 '>
+												<p>{service.SC}</p>
+												<span className='bg-gray-50 rounded-full p-3'>
+													₦{service.CostToOrder}
+												</span>
+											</li>
+										))}
+									</ul>
+								) : (
+									''
+								)}
+							</div>
 						</div>
 					))}
 				</div>
