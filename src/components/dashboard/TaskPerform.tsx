@@ -1,37 +1,36 @@
-import React from 'react'
-import whatsapp from '../../../assets/animated icons/whatsapp.gif'
-import facebook from '../../../assets/animated icons/facebook.gif'
-import tiktok from '../../../assets/animated icons/tiktok.gif'
-import instagram from '../../../assets/animated icons/instagram.gif'
-import twitter from '../../../assets/animated icons/twitter.gif'
-import youtube from '../../../assets/animated icons/youtube.svg'
-import linkedin from '../../../assets/animated icons/linkedin.gif'
-import appstore from '../../../assets/animated icons/appstore.svg'
-import playstore from '../../../assets/animated icons/playstore.svg'
-import audiomack from '../../../assets/animated icons/audiomack.svg'
-import boomplay from '../../../assets/animated icons/boomplay.svg'
-import spotify from '../../../assets/animated icons/spotify.svg'
+import React, { ChangeEvent, FormEvent } from 'react'
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
-import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { selectUser, selectUserId } from '../../../redux/slices/authSlice'
-import { CheckmarkIcon, LoaderIcon, toast } from 'react-hot-toast'
-import { formatDate } from '../../../utils/formatDate'
+import { selectUser, selectUserId } from '../../redux/slices/authSlice'
+import { CheckmarkIcon, toast } from 'react-hot-toast'
 import { useRef } from 'react'
-import copy from '../../../assets/copy.png'
+import copy from '@/assets/copy.png'
 import { GiCancel } from 'react-icons/gi'
-import {
-	handleGetUserTasks,
-	selectTasks,
-} from '../../../redux/slices/taskSlice'
-import ImageGallery from '../../../components/ImageGallery'
-import Loader from '../../../components/loader/Loader'
-import axios from 'axios'
+import { handleGetUserTasks, selectTasks } from '../../redux/slices/taskSlice'
 import { saveAs } from 'file-saver'
-import { BsGlobe } from 'react-icons/bs'
 import { BiArrowToLeft } from 'react-icons/bi'
+import { useRouter } from 'next/navigation'
+import Image from 'next/image'
+import Link from 'next/link'
+
+interface TaskPerformProps {
+	taskId: string
+	ad: {
+		tasks: number
+		desiredROI: number
+	}
+	userSocialName: string
+	selectedImages: string[]
+	taskSubmitted: boolean
+	handleOnSubmit: (e: FormEvent) => void
+	handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void
+	handleImageChange: (e: ChangeEvent<HTMLInputElement>) => void
+	handleImageRemove: (item: string) => void
+	isLoading: boolean
+	icons: any[]
+}
 
 const TaskPerform = ({
 	taskId,
@@ -45,26 +44,24 @@ const TaskPerform = ({
 	handleImageRemove,
 	isLoading,
 	icons,
-}) => {
-	const linkRef = useRef(null)
-	const adCaptionRef = useRef(null)
+}: TaskPerformProps) => {
+	const linkRef = useRef<HTMLInputElement>(null)
+	const adCaptionRef = useRef<HTMLTextAreaElement>(null)
 	const user = useSelector(selectUser)
 	const dispatch = useDispatch()
 	const userId = useSelector(selectUserId)
-	//const [icon, setIcon] = useState('')
-	const [newTask, setNewTask] = useState()
 	const tasks = useSelector(selectTasks)
-	const navigate = useNavigate()
+	const router = useRouter()
+	const [newTask, setNewTask] = useState<any>()
 	const [hideUsernameDisplayField, setHideUsernameDisplayField] =
 		useState(false)
 	const [hideLinkInputFields, setHideLinkInputFields] = useState(false)
-	const [createdAtDate, setCreatedAtDate] = useState()
-	const [icon, setIcon] = useState()
-	const [adMedia, setAdMedia] = useState()
+	const [icon, setIcon] = useState<string | undefined>()
+	const [adMedia, setAdMedia] = useState<any[]>()
 	const [isDownloading, setIsDownloading] = useState(false)
 
 	const getTask = async () => {
-		await dispatch(handleGetUserTasks())
+		dispatch(handleGetUserTasks() as any)
 	}
 
 	useEffect(() => {
@@ -125,22 +122,22 @@ const TaskPerform = ({
 		}
 	}, [newTask?.platform, newTask?.service])
 
-	const handleAdCaptionCopy = (e) => {
-		adCaptionRef.current.select()
+	const handleAdCaptionCopy = () => {
+		adCaptionRef.current?.select()
 		document.execCommand('copy')
 		toast.success('Ad caption copied to clipboard')
 	}
 
-	const handleDownload = async (mediaUrl, mediaName) => {
+	const handleDownload = async (mediaUrl: string, mediaName: string) => {
 		try {
 			setIsDownloading(true)
 			toast.success('Downloading media file...')
 
 			const response = await fetch(mediaUrl)
 			const contentType = response.headers.get('content-type')
-			const fileExtension = contentType.includes('image')
+			const fileExtension = contentType?.includes('image')
 				? '.jpg'
-				: contentType.includes('video')
+				: contentType?.includes('video')
 				? '.mp4'
 				: ''
 
@@ -162,7 +159,7 @@ const TaskPerform = ({
 				<div className='flex items-center'>
 					<MdOutlineKeyboardArrowLeft
 						size={30}
-						onClick={() => navigate(-1)}
+						onClick={() => router.back()}
 						className='mr-1'
 					/>
 					<div className='flex flex-col'>
@@ -170,7 +167,7 @@ const TaskPerform = ({
 						<small className='font-medium text-gray-500'>
 							Click{' '}
 							<span
-								onClick={() => navigate(`/dashboard/tasks`)}
+								onClick={() => router.push(`/dashboard/tasks`)}
 								className='text-secondary'>
 								here
 							</span>{' '}
@@ -180,7 +177,7 @@ const TaskPerform = ({
 				</div>
 			</div>
 
-			<div className='w-full mt-5 md:px-8 md:mt-8'>
+			<div className=' mt-5 md:px-8 md:mt-8 mx-auto py-4 w-1/2 bg-gray-50 '>
 				<div className='flex items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
 					<div className='flex w-full md:w-[70%] gap-2 items-center'>
 						<img
@@ -306,7 +303,7 @@ const TaskPerform = ({
 									value={newTask?.caption}
 									readOnly
 									className='border border-gray-200 p-3 w-full md:w-[400px] h-fit'></textarea>
-								<img
+								<Image
 									src={copy}
 									alt='click to copy ref link'
 									className='w-[30px] h-[30px]'
@@ -320,7 +317,7 @@ const TaskPerform = ({
 				)}
 
 				{/* Ad Image */}
-				{adMedia?.length > 0 ? (
+				{adMedia && adMedia?.length > 0 ? (
 					<div className='w-fit flex flex-col text-center items-center mx-auto md-w-500px mb-[2rem]'>
 						<label className='text-gray-500 font-bold text-center mb-[1rem]'>
 							Download Media:
@@ -404,13 +401,13 @@ const TaskPerform = ({
 								className='w-full h-[20px] px-6 py-5 text-gray-800 bg-gray-200 rounded-r rounded-2xl'
 							/>
 
-							<Link
-								to={newTask?.socialPageLink}
+							{/* <Link
+								href={newTask?.socialPageLink}
 								target='_blank'
 								rel='noopener noreferrer'
 								className='w-[4rem] h-[20px] px-5 py-5 bg-secondary text-primary text-[9px]'>
 								Visit
-							</Link>
+							</Link> */}
 						</div>
 						<small className='w-full md:w-[500px] mx-auto text-gray-400 text-[12px] text-center'>
 							Remember, the task you were given is {newTask?.service} on{' '}
@@ -503,7 +500,7 @@ const TaskPerform = ({
 					</form>
 					{taskSubmitted ? (
 						<button
-							onClick={() => navigate(`/dashboard/tasks`)}
+							onClick={() => router.push(`/dashboard/tasks`)}
 							className='text-green-700 text-[14px] px-6 py-2 flex items-center gap-1'>
 							<span>
 								<BiArrowToLeft />

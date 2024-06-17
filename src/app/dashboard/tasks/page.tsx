@@ -17,9 +17,11 @@ import { useEffect } from 'react'
 import { formatDate } from '@/utils/formatDate'
 import { toast } from 'react-hot-toast'
 import { selectUser } from '@/redux/slices/authSlice'
-import moment from 'moment'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import TimeAgo from 'timeago-react'
+import { getStatusBgColor, toIntlCurrency } from '@/utils'
+import { cn } from '../../../../helpers'
 
 const TaskList = () => {
 	const router = useRouter()
@@ -32,7 +34,7 @@ const TaskList = () => {
 	const [platform, setPlatform] = useState('')
 	const tasks = useSelector(selectTasks)
 	console.log('🚀 ~ TaskList ~ tasks:', tasks)
-	const [sortedTasks, setSortedTasks] = useState()
+	const [sortedTasks, setSortedTasks] = useState<any>()
 	// const itemsPerPage = 5;
 
 	const getUserTasks = async () => {
@@ -46,65 +48,22 @@ const TaskList = () => {
 
 	useEffect(() => {
 		const sortedTaskList = [...tasks].sort(
-			(a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+			(a, b) =>
+				new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
 		)
 		setSortedTasks(sortedTaskList)
 	}, [tasks])
 
-	const handleSelect = async (e) => {
+	const handleSelect = async (e: any) => {
 		e.preventDefault()
 		toast.success('Task has been completed, approved and cleared')
 	}
 
-	const checkTaskStatus = (task_Id: string, taskStatus: any) => {
-		if (taskStatus === 'Awaiting Submission') {
-			return (
-				<button
-					onClick={() => router.push(`/dashboard/submittask/${task_Id}`)}
-					className='flex justify-center gap-1 text-primary text-[9px] md:text-[15px] py-2 px-5 rounded-2xl bg-secondary'>
-					Submit
-				</button>
-			)
-		}
-
-		if (taskStatus === 'Submitted') {
-			return (
-				<button
-					onClick={() => router.push(`/dashboard/submittask/${task_Id}`)}
-					className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-yellow-600 text-[9px] md:text-[15px]'>
-					Pending Approval
-				</button>
-			)
-		}
-
-		if (taskStatus === 'Rejected') {
-			return (
-				<button
-					onClick={() => router.push(`/dashboard/submittask/${task_Id}`)}
-					className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-tertiary text-[9px] md:text-[15px]'>
-					Rejected
-				</button>
-			)
-		}
-
+	const navigateToTaskDetail = (task_Id: string, taskStatus: string) => {
 		if (taskStatus === 'Approved') {
-			return (
-				<button
-					onClick={handleSelect}
-					className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-secondary text-[9px] md:text-[15px]'>
-					Approved
-				</button>
-			)
-		}
-
-		if (taskStatus === 'Partial Approval') {
-			return (
-				<button
-					onClick={() => router.push(`/dashboard/submittask/${task_Id}`)}
-					className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-secondary text-[9px] md:text-[15px]'>
-					Partial Approval
-				</button>
-			)
+			handleSelect(null)
+		} else {
+			router.push(`/dashboard/submittask/${task_Id}`)
 		}
 	}
 
@@ -113,10 +72,7 @@ const TaskList = () => {
 			{isLoading && <Loader />}
 			<div>
 				<div className='flex items-center gap-3 border-b border-gray-200 py-5'>
-					<MdOutlineKeyboardArrowLeft
-						size={30}
-						onClick={() => router.push(-1)}
-					/>
+					<MdOutlineKeyboardArrowLeft size={30} onClick={() => router.back()} />
 					<div className='flex flex-col'>
 						<p className='font-semibold text-xl text-gray-700'>
 							Your Ongoing Tasks
@@ -128,67 +84,78 @@ const TaskList = () => {
 				</div>
 
 				<div className='md:px-8 mt-3 md:mt-8 grid grid-cols-3 gap-6'>
-					{sortedTasks?.map((task, index) => (
+					{sortedTasks?.map((task: any, index: number) => (
 						<div
 							key={index}
-							className='flex items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
-							<div className='flex gap-2 items-center'>
-								<Image
-									src={
-										icons?.find((icon) => icon.platform === task.platform)?.icon
-									}
-									alt={task.platform}
-									className='hidden md:flex'
-								/>
-								<div className=''>
-									<small>{formatDate(task.createdAt)}</small>
-									<h1 className='text-[15px] md:text-[18px] font-bold md:my-[-5px] p-0'>
-										{task?.title}
-									</h1>
-									<small className='text-gray-400 text-[9px]'>
-										To Earn: ₦{task?.toEarn}/task
-									</small>
-
-									{/* <p className='text-gray-500 text-[15px]'>{task.caption}</p> */}
-
-									<div className='flex flex-col gap-2'>
-										<ul className='flex flex-col gap-3 text-[13px]'>
-											<li>State: {task.state}</li>
-											<li>LGA: {task.lga}</li>
-											{task.socialPageLink ? (
-												<li>
-													Link:{' '}
-													<a
-														href={task.socialPageLink}
-														className='text-blue-600'>
-														{task.socialPageLink}
-													</a>
-												</li>
-											) : (
-												''
-											)}
-										</ul>
-
-										<div className='flex gap-2 items-center'>
-											<img
-												src={
-													icons?.find((icon) => icon.platform === task.platform)
-														?.icon
-												}
-												alt={task?.platform}
-												className='flex md:hidden w-[20px] h-[20px]'
-											/>
-
-											<div className='flex md:hidden'>
-												{checkTaskStatus(task?._id, task.status)}
-											</div>
+							onClick={() => navigateToTaskDetail(task._id, task.status)}
+							className='flex items-center border justify-between  p-6 rounded-lg hover:shadow cursor-pointer'>
+							<div className='bg-blue-'>
+								<div className='flex items-center bg-red- w-full justify-between'>
+									<div className='flex gap-3 items-center'>
+										<Image
+											src={
+												icons?.find((icon) => icon.platform === task.platform)
+													?.icon
+											}
+											alt={task.platform}
+											className='hidden md:flex w-10 h-10 rounded-lg'
+										/>
+										<div>
+											<small>
+												<TimeAgo datetime={task.createdAt} />
+											</small>
+											<h1 className='text-[15px] md:text-[18px] font-bold md:my-[-5px] p-0'>
+												{task?.title}
+											</h1>
 										</div>
 									</div>
-								</div>
-							</div>
 
-							<div className='hidden md:flex'>
-								{checkTaskStatus(task?._id, task.status)}
+									<small className=' font-bold ml-10'>
+										{toIntlCurrency(task?.toEarn)}/task
+									</small>
+								</div>
+								{/* <p className='text-gray-500 text-[15px]'>{task.caption}</p> */}
+								<hr className='my-3' />
+								<div className='flex flex-col gap-2'>
+									<ul className='flex flex- gap-3 text-[13px]'>
+										<li>State: {task.state}</li>
+										<li>LGA: {task.lga}</li>
+										<li>
+											Status:{' '}
+											<span
+												className={cn(
+													'p-2 text-xs ml-2 text-white rounded-full',
+													getStatusBgColor(task.status),
+												)}>
+												{task.status}
+											</span>
+										</li>
+									</ul>
+									{task.socialPageLink ? (
+										<p className='mt-2 text-sm'>
+											Link:{' '}
+											<a href={task.socialPageLink} className='text-blue-600'>
+												{task.socialPageLink}
+											</a>
+										</p>
+									) : (
+										''
+									)}
+									{/* <div className='flex gap-2 items-center'>
+										<Image
+											src={
+												icons?.find((icon) => icon.platform === task.platform)
+													?.icon
+											}
+											alt={task?.platform}
+											className='flex md:hidden w-[20px] h-[20px]'
+										/>
+
+										<div className='flex'>
+											{checkTaskStatus(task?._id, task.status)}
+										</div>
+									</div> */}
+								</div>
 							</div>
 						</div>
 					))}

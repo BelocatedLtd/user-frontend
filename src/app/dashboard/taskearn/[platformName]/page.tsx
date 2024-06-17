@@ -32,10 +32,18 @@ import Loader from '@/components/loader/Loader'
 import { useRouter } from 'next/navigation'
 import Image, { StaticImageData } from 'next/image'
 import { getQualifiedAdverts } from '@/services/advertService'
-import { toIntlCurrency } from '@/utils'
+import {
+	getSocialPlatformAsset,
+	getStatusBgColor,
+	toIntlCurrency,
+} from '@/utils'
+import { cn } from '../../../../../helpers'
+import ConfirmationModal from '@/components/ConfirmationModal'
+import TimeAgo from 'timeago-react'
 
 const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 	console.log('🚀 ~ TaskEarn ~ parama:', params)
+	const [isModalOpen, setModalOpen] = useState(false)
 
 	const router = useRouter()
 
@@ -47,6 +55,9 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 	const isLoading = useSelector(selectIsLoading)
 	const [icon, setIcon] = useState<StaticImageData>()
 	const [newTask, setNewTask] = useState()
+
+	const [selectedAdvertId, setSelectedAdvertId] = useState<string | null>(null)
+
 	const tasks = useSelector(selectTasks)
 	// const { filteredServiceAdvert, asset, taskTitle, taskVerification } =
 	// 	location.state || {}
@@ -153,12 +164,22 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 		router.push(`/dashboard/submittask/${existingTaskId}`)
 	}
 
+	const handleSelect = (advert_Id: string) => {
+		setSelectedAdvertId(advert_Id)
+		console.log('🚀 ~ handleConfirm ~ selectedAdvertId:', selectedAdvertId)
+
+		setModalOpen(true)
+	}
+
 	//Handling click even on the button to perform task, this button should not create a new task if the user had already created a task for this ad
-	const handleSelect = async (advert_Id: string) => {
+	const handleConfirm = async () => {
+		console.log('🚀 ~ handleConfirm ~ selectedAdvertId:', selectedAdvertId)
+
 		// Extracting the information for this Advert that will be converted to task for this user and also checking if Advert is still in existence amd paid for
 		const taskToPerform: any = finalFilteredTasks?.find(
-			(advert: any) => advert._id === advert_Id,
+			(advert: any) => advert._id === selectedAdvertId,
 		)
+		console.log('🚀 ~ handleSelect ~ taskToPerform:', taskToPerform)
 
 		const randomIndex = Math.floor(
 			Math.random() * taskToPerform?.caption.length,
@@ -168,12 +189,17 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 
 		// Happens if advert meets all criteria to be performed as task
 		if (taskToPerform) {
+			const assetresult = getSocialPlatformAsset(
+				taskToPerform.platform,
+				taskToPerform.service,
+			)
+
 			// Creating task data
 			const taskData = {
 				advertId: taskToPerform._id,
 				advertiserId: taskToPerform.userId,
 				taskPerformerId: user?.id,
-				// title: taskTitle,
+				title: assetresult.SC,
 				platform: taskToPerform.platform,
 				service: taskToPerform.service,
 				desiredROI: taskToPerform.desiredROI,
@@ -182,15 +208,18 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 				state: taskToPerform.state,
 				lga: taskToPerform.lga,
 				caption: pickedCaption,
-				// taskVerification,
+				taskVerification: assetresult.verification,
 				socialPageLink: taskToPerform.socialPageLink,
 				adMedia: taskToPerform.mediaURL,
 			}
 
+			console.log('🚀 ~ handleSelect ~ result:', assetresult)
+
 			console.log(taskData)
 
-			const response = dispatch(createNewTask(taskData) as any)
-			setNewTask(response.payload)
+			const response = await dispatch(createNewTask(taskData) as any)
+			console.log('🚀 ~ handleSelect ~ response:', response)
+			// setNewTask(response.payload)
 
 			if (isError) {
 				toast.error('Error Creating a Task from this advert')
@@ -198,6 +227,7 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 			}
 
 			if (isSuccess) {
+				setModalOpen(false)
 				toast.success('Successfully created a Task from this advert')
 				router.push(`/dashboard/submittask/${response?.payload?._id}`)
 			}
@@ -209,6 +239,10 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 	}
 
 	//console.log(finalFilteredTasks)
+
+	const handleCloseModal = () => {
+		setModalOpen(false)
+	}
 
 	return (
 		<div className='w-full h-fit'>
@@ -245,100 +279,119 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 			</div>
 
 			<div className='mt-3 md:mt-8 grid grid-cols-3 gap-8 '>
-				{finalFilteredTasks?.map((task: any, index) => (
-					<div
-						key={index}
-						className='w-full flex flex-col md:flex-row  md:items-center justify-between md:p-8 border rounded-lg'>
-						<div className='w-full fle flex-col  py-2 gap-2 md:items-center md:flex-row'>
-							<div className=' md:flex '>
-								{/* <Image
+				{finalFilteredTasks?.map((task: any, index) => {
+					const status = tasks?.find(
+						(task) =>
+							task.taskPerformerId === user.id && task.advertId === task._id,
+					)?.status
+
+					return (
+						<div
+							key={index}
+							onClick={() => handleSelect(task._id)}
+							className='w-full cursor-pointer hover:shadow flex flex-col md:flex-row  md:items-center justify-between md:px-8 md:py-6 border rounded-lg'>
+							<div className='w-full fle flex-col  py-2 gap-2 md:items-center md:flex-row'>
+								<div className=' md:flex '>
+									{/* <Image
 									alt={params.platformName}
 									src={icon!}
 									className='hidden md:flex'
 								/> */}
-								<Image
-									src={icon!}
-									alt={params.platformName}
-									className='w-16 h-16'
-								/>
-								{/* Ad details to perform as Task */}
-								<div className='flex flex-col gap-[0.9rem] ml-3'>
-									<small className='md:mb-[0.4rem] text-[9px] '>
-										{formatDate(task?.createdAt)}
-									</small>
+									<Image
+										src={icon!}
+										alt={params.platformName}
+										className='w-16 h-16'
+									/>
+									{/* Ad details to perform as Task */}
+									<div className='flex flex-col gap-[0.3rem] ml-3'>
+										<small className=' text-[9px] '>
+											<TimeAgo datetime={task.createdAt} />
+										</small>
 
-									<h4 className='text-gray-600 flex text-[15px] md:text-[18px] font-bold my-[-5px] p-0 border-b border-gray-200 pb-2'>
-										<p className='w-1/8'>{task?.adTitle}</p>
+										<h4 className='text-gray-600 flex text-[15px] md:text-[18px] font-bold p-0  border-gray-200 pb-2'>
+											<p className='w-1/8'>{task?.adTitle}</p>
 
-										<span>{toIntlCurrency(task?.earnPerTask)}</span>
-									</h4>
-									<small className='text-gray-600 text-[12px] mb-[1rem]'>
+											<span>{toIntlCurrency(task?.earnPerTask)}</span>
+										</h4>
+										{/* <small className='text-gray-600 text-[12px] mb-[1rem]'>
 										<span className='font-bold'>To Earn:</span> ₦
 										{task?.earnPerTask}
-									</small>
-								</div>
-							</div>
-
-							<div className='w-full flex flex-col'>
-								{/* Demographics and platform and create task button */}
-								<div className='flex flex-col w-full gap-3 md:flex-row'>
-									<div className='flex w-full items-center gap-[2rem]'>
-										<ul className='grid  grid-cols-4 gap-3 text-[12px] font-light'>
-											<li>
-												<span className='font-bold'>State:</span> {task.state}
-											</li>
-											<li>
-												<span className='font-bold'>LGA:</span> {task.lga}
-											</li>
-											<li>
-												<span className='font-bold'>Status:</span>{' '}
-												{
-													tasks?.find(
-														(task) =>
-															task.taskPerformerId === user.id &&
-															task.advertId === task._id,
-													)?.status
-												}
-											</li>
-											<li>
-												{' '}
-												<span className='font-bold'>Fee:</span>{' '}
-												{task.isFree ? 'Free' : 'Paid'}
-											</li>
-											{task.socialPageLink ? (
-												<li className='flex col-span-4  w-full'>
-													<span className='font-bold'>Link:</span>{' '}
-													<a
-														href={task.socialPageLink}
-														className='text-blue-600 ml-2'>
-														{task.socialPageLink}
-													</a>
-												</li>
-											) : (
-												''
-											)}
-										</ul>
+									</small> */}
 									</div>
+								</div>
+								<hr />
 
-									<div className='md:hidden w-fit flex gap-3 items-center md:mt-0 md:w-full md:justify-end'>
-										<Image
-											src={icon!}
-											alt={params.platformName}
-											className='flex w-[20px] h-[20px] md:hidden'
-										/>
-										{checkTaskExistence(task._id)}
+								<div className='w-full flex flex-col mt-3'>
+									{/* Demographics and platform and create task button */}
+									<div className='flex flex-col w-full gap-3 md:flex-row'>
+										<div className='flex w-full justify-between items-center gap-[2rem]'>
+											<ul className='grid  grid-cols-4 gap-3 text-[12px] font-light'>
+												<li>
+													<span className='font-bold'>State:</span> {task.state}
+												</li>
+												<li>
+													<span className='font-bold'>LGA:</span> {task.lga}
+												</li>
+
+												{status && (
+													<li>
+														<span className='font-bold'>Status:</span>{' '}
+														<span
+															className={cn(
+																'p-2 text-xs ml-2 text-white rounded-full',
+																getStatusBgColor(status),
+															)}>
+															{status}
+														</span>
+													</li>
+												)}
+												<li>
+													{' '}
+													<span className='font-bold'>Fee:</span>{' '}
+													{task.isFree ? 'Free' : 'Paid'}
+												</li>
+												{task.socialPageLink ? (
+													<li className='flex col-span-4  w-full'>
+														<span className='font-bold'>Link:</span>{' '}
+														<a
+															href={task.socialPageLink}
+															className='text-blue-600 ml-2'>
+															{task.socialPageLink}
+														</a>
+													</li>
+												) : (
+													''
+												)}
+											</ul>
+
+											{/* Button */}
+											{/* <div className='hidden w-[30%] md:flex md:justify-end'>
+												{checkTaskExistence(task._id)}
+											</div> */}
+										</div>
+
+										{/* <div className='md:hidden w-fit flex gap-3 items-center md:mt-0 md:w-full md:justify-end'>
+											<Image
+												src={icon!}
+												alt={params.platformName}
+												className='flex w-[20px] h-[20px] md:hidden'
+											/>
+											{checkTaskExistence(task._id)}
+										</div> */}
 									</div>
 								</div>
 							</div>
 						</div>
-
-						{/* Button */}
-						{/* <div className='hidden w-[30%] md:flex md:justify-end'>
-							{checkTaskExistence(task._id)}
-						</div> */}
-					</div>
-				))}
+					)
+				})}
 			</div>
+			<ConfirmationModal
+				open={isModalOpen}
+				title='Perform task'
+				message='Are you sure you want to perform this task?'
+				onClose={handleCloseModal}
+				onConfirm={handleConfirm}
+			/>
 		</div>
 	)
 }

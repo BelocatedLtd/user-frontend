@@ -1,6 +1,20 @@
 //SC - how it will show to service buyer.
 //TD - how is shows to the person doing the task.
 
+export interface IPlatformData {
+	assetplatform: string
+	assets: IAssetData[]
+	assetsts: string
+}
+
+export interface IAssetData {
+	asset: string
+	SC: string
+	TD: string
+	verification: string
+	CostToOrder: number
+	amountForTask: number
+}
 
 const socialPlatforms = [
     {

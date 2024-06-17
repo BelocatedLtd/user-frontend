@@ -22,11 +22,12 @@ import socialPlatforms from '../../../components/data/assets'
 import { LoaderIcon, toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import { toIntlCurrency } from '@/utils'
 
 const Earn = () => {
 	const router = useRouter()
 	const adverts = useSelector(selectAllAdverts)
-	const dispatch = useDispatch(selectAdverts)
+	const dispatch = useDispatch()
 	const isLoading = useSelector(selectIsLoading)
 	const isError = useSelector(selectIsError)
 	const isSuccess = useSelector(selectIsSuccess)
@@ -38,11 +39,11 @@ const Earn = () => {
 	const [platformName, setPlatformName] = useState('')
 	useRedirectLoggedOutUser('/login')
 	const [taskList, setTaskList] = useState()
-	const [theSortedSocials, setTheSortedSocials] = useState()
+	const [theSortedSocials, setTheSortedSocials] = useState<any>()
 
 	useEffect(() => {
 		async function getAdverts() {
-			dispatch(handleGetALLUserAdverts())
+			dispatch(handleGetALLUserAdverts() as any)
 		}
 
 		getAdverts()
@@ -121,6 +122,10 @@ const Earn = () => {
 
 	// When user selects a service/asset inside a platform
 	const handleSelectAsset = (e, asset, taskTitle, taskVerification) => {
+		console.log('🚀 ~ handleSelectAsset ~ taskVerification:', {
+			taskVerification,
+			taskTitle,
+		})
 		e.preventDefault()
 
 		const filteredServiceAdvert = selectedPlatformAds?.filter(
@@ -166,10 +171,16 @@ const Earn = () => {
 				</div>
 
 				<div className='grid grid-cols-3 gap-8 items-center justify-center mt-[1rem] px-3 py-5'>
-					{theSortedSocials?.map((menu, index) => (
+					{theSortedSocials?.map((menu: any, index: number) => (
 						<div
 							key={index}
-							onClick={(e) => handleSelect(e, menu?.value)}
+							onClick={
+								(e) => {
+									e.preventDefault()
+									router.push(`/dashboard/taskearn/${menu.value}`)
+								}
+								// handleSelect(e, menu?.value)
+							}
 							className='w-fit hover:shadow cursor-pointer md:w-full border rounded-lg p-5'>
 							<div className='flex flex-col md:flex-row items-center gap-5'>
 								<div className='flex flex-col'>
@@ -193,7 +204,8 @@ const Earn = () => {
 										</h3>
 										<p className='pb-3 text-[14px] text-gray-500 font-semibold'>
 											<span className='font-extrabold'>Earning: </span> Starts
-											from ₦{menu?.earn}/Task Completed & Approved
+											from {toIntlCurrency(menu?.earn)}/Task <br /> Completed &
+											Approved
 										</p>
 									</div>
 									<div className='w-full '>

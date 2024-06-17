@@ -1,7 +1,7 @@
+'use client'
+
 import React from 'react'
 import { useState } from 'react'
-import TaskPerform from './TaskPerform'
-import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -12,44 +12,45 @@ import {
 	selectIsSuccess,
 	handleGetUserTasks,
 	handleGetTasks,
-} from '../../../redux/slices/taskSlice'
-import { selectUser, selectUserId } from '../../../redux/slices/authSlice'
+} from '@/redux/slices/taskSlice'
+import { selectUser, selectUserId } from '@/redux/slices/authSlice'
 import { useEffect } from 'react'
-import { icons } from '../../../components/data/socialIcon'
-import io from 'socket.io-client'
-import { BACKEND_URL } from '../../../utils/globalConfig'
-import Loader from '../../../components/loader/Loader'
-import { submitTask } from '../../../services/taskServices'
+import { icons } from '@/components/data/socialIcon'
+import { BACKEND_URL } from '@/utils/globalConfig'
+import Loader from '@/components/loader/Loader'
+import { submitTask } from '@/services/taskServices'
 import {
 	handleGetALLUserAdverts,
 	selectAllAdverts,
-} from '../../../redux/slices/advertSlice'
+} from '@/redux/slices/advertSlice'
+import TaskPerform from '@/components/dashboard/TaskPerform'
+import { io } from 'socket.io-client'
+import { useRouter } from 'next/navigation'
 
-const socket = io.connect(`${BACKEND_URL}`)
+const socket = io(`${BACKEND_URL}`)
 
-const TaskSubmit = () => {
+const TaskSubmit = ({ params }: { params: { taskId: string } }) => {
 	const dispatch = useDispatch()
+	const router = useRouter()
 	// const isLoading = useSelector(selectIsLoading)
 	// const isSuccess = useSelector(selectIsSuccess)
 	const isError = useSelector(selectIsError)
 	const [isLoading, setIsLoading] = useState(false)
-	const navigate = useNavigate
 	const user = useSelector(selectUser)
-	const { taskId } = useParams()
 	const tasks = useSelector(selectTasks)
-	const [task, setTask] = useState()
+	const [task, setTask] = useState<any>()
 	const adverts = useSelector(selectAllAdverts)
-	const [ad, setAd] = useState()
-	const [imageArray, setimageArray] = useState()
-	const [selectedImages, setSelectedImages] = useState([])
-	const [userSocialName, setUserSocialName] = useState('')
+	const [ad, setAd] = useState<any>()
+	const [imageArray, setimageArray] = useState<any>()
+	const [selectedImages, setSelectedImages] = useState<any>([])
+	const [userSocialName, setUserSocialName] = useState<any>()
 	const [taskSubmitted, setTaskSubmitted] = useState(false)
 
 	//const { userSocialName } = taskSubmitData
 
 	const getTask = async () => {
-		await dispatch(handleGetUserTasks())
-		await dispatch(handleGetALLUserAdverts())
+		await dispatch(handleGetUserTasks() as any)
+		await dispatch(handleGetALLUserAdverts() as any)
 	}
 
 	useEffect(() => {
@@ -57,25 +58,25 @@ const TaskSubmit = () => {
 	}, [dispatch])
 
 	useEffect(() => {
-		setTask(tasks?.find((obj) => obj._id === taskId))
+		setTask(tasks?.find((obj) => obj._id === params.taskId))
 	}, [])
 
 	useEffect(() => {
-		setAd(adverts?.find((obj) => obj._id === task?.advertId))
+		setAd(adverts?.find((obj: any) => obj._id === task?.advertId))
 	}, [task, adverts])
 
 	//Handle Input
-	const handleInputChange = (e) => {
+	const handleInputChange = (e: any) => {
 		setUserSocialName(e.target.value)
 	}
 
 	// Upload and preview multiple screenshots
-	const handleImageChange = (e) => {
+	const handleImageChange = (e: any) => {
 		const files = Array.from(e.target.files)
 		setimageArray(files)
 
 		//Create an array of files previews
-		const filePreviews = Array.from(files).map((file) =>
+		const filePreviews = Array.from(files).map((file: any) =>
 			URL.createObjectURL(file),
 		)
 
@@ -83,10 +84,10 @@ const TaskSubmit = () => {
 	}
 
 	//Remove uploaded images
-	const handleImageRemove = (imagePreview) => {
+	const handleImageRemove = (imagePreview: any) => {
 		//filter out the selected image and update the state
 		const updatedImages = selectedImages.filter(
-			(preview) => preview !== imagePreview,
+			(preview: any) => preview !== imagePreview,
 		)
 
 		setSelectedImages(updatedImages)
@@ -103,13 +104,13 @@ const TaskSubmit = () => {
 		formData?.append('images', imageArray[i])
 	}
 
-	formData.append('taskId', taskId)
+	formData.append('taskId', params.taskId)
 	formData.append('userSocialName', userSocialName)
 
-	const handleOnSubmit = async (e) => {
+	const handleOnSubmit = async (e: any) => {
 		e.preventDefault()
 
-		if (ad.desiredROI === 0 || ad.status === 'Completed') {
+		if (ad && (ad.desiredROI === 0 || ad.status === 'Completed')) {
 			toast.error(
 				'Unfortunately, you cannot submit this task again because the advert has already being completed',
 			)
@@ -142,7 +143,7 @@ const TaskSubmit = () => {
 			//Emit Socket event to update activity feed
 			socket.emit('sendActivity', emitData)
 
-			navigate('/dashboard/tasks')
+			router.push('/dashboard/tasks')
 			return
 		}
 
@@ -158,9 +159,9 @@ const TaskSubmit = () => {
 		<div className='w-full h-fit'>
 			{isLoading && <Loader />}
 			<TaskPerform
-				taskId={taskId}
+				taskId={params.taskId!}
 				// newTask= {task}
-				ad={ad}
+				ad={ad!}
 				isLoading={isLoading}
 				icons={icons}
 				taskSubmitted={taskSubmitted}

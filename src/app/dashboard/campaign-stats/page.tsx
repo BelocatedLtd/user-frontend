@@ -34,7 +34,7 @@ const CampaignStats = () => {
 	const getAdverts = async () => {
 		dispatch(handleGetUserAdverts() as any)
 		dispatch(handleGetAllUser() as any)
-		dispatch(handleGetTasks())
+		dispatch(handleGetTasks() as any)
 	}
 
 	useEffect(() => {
@@ -82,7 +82,7 @@ const CampaignStats = () => {
 			</div>
 
 			<div className='w-full grid mt-4 grid-cols-3'>
-				{adverts.map((item) => (
+				{adverts.map((item: any) => (
 					<AdItem
 						key={item._id}
 						socialIcon={item.platform}
@@ -101,7 +101,7 @@ const CampaignStats = () => {
 						item={item}
 						url={item.socialPageLink}
 						//taskPerformers={item.taskPerformers}
-						users={users}
+						users={users?.users}
 						user={user}
 						//taskList={tasksList}
 					/>
