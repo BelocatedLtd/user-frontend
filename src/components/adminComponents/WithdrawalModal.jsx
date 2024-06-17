@@ -97,7 +97,8 @@ const WithdrawalModal = () => {
 
 	return (
 		<div className='w-full h-fit'>
-			{isLoading && <Loader />}
+			<Loader open={isLoading} />
+
 			<div className='flex items-center gap-3 border-b border-gray-200 pb-6'>
 				<MdOutlineKeyboardArrowLeft size={30} onClick={() => navigate(-1)} />
 				<div className='flex flex-col'>

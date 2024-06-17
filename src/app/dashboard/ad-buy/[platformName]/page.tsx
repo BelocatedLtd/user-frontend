@@ -1,10 +1,9 @@
 'use client'
-import React, { useEffect } from 'react'
-import AdBuyForm from '@/components/forms/AdBuyForm'
-import { useState } from 'react'
-import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
-import { useSearchParams, useRouter } from 'next/navigation'
+import BackButton from '@/components/Button/BackButton'
 import socialPlatforms from '@/components/data/assets'
+import AdBuyForm from '@/components/forms/AdBuyForm'
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 const initialState = {
 	roi: '',
@@ -15,7 +14,6 @@ const initialState = {
 
 const AdBuy = ({ params }: { params: { platformName: string } }) => {
 	console.log('🚀 ~ AdBuy ~ params:', params)
-	const router = useRouter()
 	const searchParam = useSearchParams()
 
 	const service = searchParam.get('service')
@@ -115,7 +113,7 @@ const AdBuy = ({ params }: { params: { platformName: string } }) => {
 	return (
 		<div>
 			<div className='flex items-center gap-3 border-b border-gray-200 py-5 mb-3'>
-				<MdOutlineKeyboardArrowLeft size={30} onClick={() => router.back()} />
+				<BackButton />
 				<div className='flex flex-col'>
 					<p className='font-semibold text-xl text-gray-700'>
 						Create an Advertising Campaign

@@ -76,7 +76,8 @@ const RetrievePassword = () => {
 					userId={userId}
 				/>
 			)}
-			{isLoading && <Loader />}
+			<Loader open={isLoading} />
+
 			<div className='flex flex-col justify-center items-center gap-4 mx-auto w-full h-full px-[2rem] md:w-1/2'>
 				<div className='mb-5 flex justify-center text-center'>
 					<h3 className='w-[80%] text-xl text-gray-600 font-bold px-6 mt-2'>

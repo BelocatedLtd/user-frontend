@@ -148,8 +148,11 @@ const Referral = () => {
 
 	return (
 		<div className='w-full h-screen lg:mr-5'>
-			{isLoading && <Loader />}
-			<h2 className='mt-1 font-medium text-lg  mb-10'>Referrals</h2>
+			<Loader open={isLoading} />
+
+			<h2 className='mt-1 mb-10 font-semibold text-xl text-gray-700'>
+				Referrals
+			</h2>
 			<div className='grid grid-cols-2 gap-8'>
 				<div className='border w-full px-8 py-4 space-y-4 rounded-lg border-gray-200'>
 					<div>

@@ -11,6 +11,8 @@ import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import ReduxProvider from '@/redux/provider'
 import { Toaster } from 'react-hot-toast'
+import Script from 'next/script'
+import TawkMessengerReact from '@tawk.to/tawk-messenger-react'
 
 const shouldRenderComponents = (
 	pathname: string,
@@ -48,6 +50,21 @@ export default function RootLayout({
 				/>
 				<Analytics />
 				<SpeedInsights />
+				<Script
+					dangerouslySetInnerHTML={{
+						__html: `
+              var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+              (function(){
+              var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+              s1.async=true;
+              s1.src='https://embed.tawk.to/66706a619a809f19fb3eb4bb/1i0jhv3q8';
+              s1.charset='UTF-8';
+              s1.setAttribute('crossorigin','*');
+              s0.parentNode.insertBefore(s1,s0);
+              })();
+            `,
+					}}
+				/>
 				<Toaster />
 			</body>
 		</html>

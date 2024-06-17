@@ -19,6 +19,7 @@ import { handleGetAllUser, selectUsers } from '../../../redux/slices/userSlice'
 import { handleGetTasks } from '../../../redux/slices/taskSlice'
 import { useRouter } from 'next/navigation'
 import Button from '@/components/Button'
+import BackButton from '@/components/Button/BackButton'
 
 const CampaignStats = () => {
 	const user = useSelector(selectUser)
@@ -50,14 +51,10 @@ const CampaignStats = () => {
 
 	return (
 		<div className='w-fit md:w-full h-fit'>
-			{isLoading && <Loader />}
+			<Loader open={isLoading} />
+
 			<div className='flex items-center justify-between gap-3 border-b border-gray-200 py-5'>
 				<div className='flex items-center'>
-					<MdOutlineKeyboardArrowLeft
-						size={30}
-						onClick={() => router.back()}
-						className='mr-1'
-					/>
 					<div className='flex flex-col'>
 						<p className='font-semibold text-xl text-gray-700'>
 							My Ad Campaigns

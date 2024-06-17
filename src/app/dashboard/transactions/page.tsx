@@ -17,6 +17,7 @@ import { toast } from 'react-hot-toast'
 import TransactionList from '@/components/dashboard/TransactionList'
 import { selectUser } from '@/redux/slices/authSlice'
 import { useRouter } from 'next/navigation'
+import BackButton from '@/components/Button/BackButton'
 
 const TransHistory = () => {
 	const transactions = useSelector(selectTransactions)
@@ -29,7 +30,7 @@ const TransHistory = () => {
 
 	useEffect(() => {
 		const getTransactions = async () => {
-			await dispatch(handleGetUserTransactions(user?.token))
+			await dispatch(handleGetUserTransactions(user?.token) as any)
 		}
 		getTransactions()
 
@@ -41,14 +42,11 @@ const TransHistory = () => {
 
 	return (
 		<div className='w-full h-fit'>
-			{isLoading && <Loader />}
+			<Loader open={isLoading} />
+
 			<div className='flex items-center justify-between gap-3 border-b border-gray-200 py-5'>
 				<div className='flex items-center'>
-					<MdOutlineKeyboardArrowLeft
-						size={30}
-						onClick={() => router.back()}
-						className='mr-1'
-					/>
+					{/* <BackButton /> */}
 					<div className='flex flex-col'>
 						<p className='font-semibold text-xl text-gray-700'>
 							My Transactions
@@ -59,7 +57,8 @@ const TransHistory = () => {
 						</small>
 					</div>
 				</div>
-				<small className='bg-secondary rounded-full p-4 text-primary'>
+
+				<small className='hidden md:flex h-6 w-10 items-center justify-center bg-secondary rounded-full  text-primary'>
 					{transactions.length}
 				</small>
 				<button className='flex items-center gap-1 bg-secondary text-primary rounded-full px-5 py-2 mr-5 text-[12px] md:text-[15px]'>

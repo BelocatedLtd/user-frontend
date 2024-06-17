@@ -58,7 +58,8 @@ const VerifyEmail = () => {
 
 	return (
 		<div className='w-full h-[88vh] flex items-center justify-center'>
-			{isLoading && <Loader />}
+			<Loader open={isLoading} />
+
 			<div className='w-[350px] md:w-[600px] flex justify-center h-fit bg-primary mx-auto mt-[3rem] py-[3rem]'>
 				<div className='w-full h-full flex flex-col justify-center items-center'>
 					<h3 className='flex gap-1 text-xl text-gray-800 font-bold px-6 mt-2 items-center'>

@@ -14,6 +14,7 @@ import { BiArrowToLeft } from 'react-icons/bi'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
+import BackButton from '../Button/BackButton'
 
 interface TaskPerformProps {
 	taskId: string
@@ -157,11 +158,8 @@ const TaskPerform = ({
 			{/* {isDownloading && <Loader />} */}
 			<div className='flex items-center justify-between gap-3 border-b border-gray-200 py-5'>
 				<div className='flex items-center'>
-					<MdOutlineKeyboardArrowLeft
-						size={30}
-						onClick={() => router.back()}
-						className='mr-1'
-					/>
+					<BackButton />
+
 					<div className='flex flex-col'>
 						<p className='font-semibold text-xl text-gray-700'></p>
 						<small className='font-medium text-gray-500'>

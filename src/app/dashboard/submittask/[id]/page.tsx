@@ -157,7 +157,8 @@ const TaskSubmit = ({ params }: { params: { taskId: string } }) => {
 
 	return (
 		<div className='w-full h-fit'>
-			{isLoading && <Loader />}
+			<Loader open={isLoading} />
+
 			<TaskPerform
 				taskId={params.taskId!}
 				// newTask= {task}

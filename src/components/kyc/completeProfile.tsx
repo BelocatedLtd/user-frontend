@@ -1,12 +1,10 @@
-import React from 'react'
-import * as Yup from 'yup'
-import { Formik, Form, Field } from 'formik'
 import { handleUpdateUser, selectUser } from '@/redux/slices/authSlice'
-import { useSelector } from 'react-redux'
-import FormInput from '../FormInput'
-import Button from '../Button'
-import FormSubmitButton from '../FormSubmitButton'
 import { useAppDispatch } from '@/redux/store'
+import { Form, Formik } from 'formik'
+import { useSelector } from 'react-redux'
+import * as Yup from 'yup'
+import FormInput from '../FormInput'
+import FormSubmitButton from '../FormSubmitButton'
 
 interface FormValues {
 	fullname: string
@@ -44,8 +42,11 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 	const handleSubmit = async (values: FormValues) => {
 		console.log('🚀 ~ CompleteProfile ~ values:', values)
 		dispatch(handleUpdateUser(values) as any)
-			.then(() => {
-				next()
+			.then((res: any) => {
+				if (res?.meta?.requestStatus == 'fulfilled') {
+					next()
+				}
+				console.log('🚀 ~ .then ~ res:', res)
 			})
 			.catch((error: any) => {
 				console.error('Error occurred during dispatch:', error)

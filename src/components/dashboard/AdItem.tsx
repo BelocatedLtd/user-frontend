@@ -149,7 +149,8 @@ const AdItem = ({
 		<div
 			onClick={handleToggleTaskPerformers}
 			className='relative border cursor-pointer hover:shadow flex w-full h-fit mt-5 mb-[2rem] p-[1.5rem] rounded-2xl rounded-tr-none '>
-			{isLoading && <Loader />}
+			<Loader open={isLoading} />
+
 			{toggleTaskProofModal && (
 				<TaskProofModal toggleTaskProof={openPopup} task={taskProof} />
 			)}

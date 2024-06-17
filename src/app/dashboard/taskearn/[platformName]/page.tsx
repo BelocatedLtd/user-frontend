@@ -40,6 +40,7 @@ import {
 import { cn } from '../../../../../helpers'
 import ConfirmationModal from '@/components/ConfirmationModal'
 import TimeAgo from 'timeago-react'
+import BackButton from '@/components/Button/BackButton'
 
 const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 	console.log('🚀 ~ TaskEarn ~ parama:', params)
@@ -246,10 +247,10 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 
 	return (
 		<div className='w-full h-fit'>
-			{isLoading && <Loader />}
+			<Loader open={isLoading} />
 			<div>
 				<div className='flex items-center gap-3 border-b border-gray-200 py-5'>
-					<MdOutlineKeyboardArrowLeft size={30} onClick={() => router.back()} />
+					<BackButton />
 					<div className='flex flex-col'>
 						<p className='font-semibold text-xl text-gray-700'>
 							Perform Social Tasks on {params.platformName} and Earn Money
@@ -345,9 +346,9 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 														</span>
 													</li>
 												)}
-												<li>
+												<li className='font-bold'>
 													{' '}
-													<span className='font-bold'>Fee:</span>{' '}
+													{/* <span className='font-bold'>Fee:</span>{' '} */}
 													{task.isFree ? 'Free' : 'Paid'}
 												</li>
 												{task.socialPageLink ? (

@@ -129,7 +129,8 @@ const Register = ({ showLoginModal, closeModal, referralToken }: any) => {
 	return (
 		<>
 			<div className=''>
-				{isLoading && <Loader />}
+				<Loader open={isLoading} />
+
 				<div className='relative w-[350px] items-center flex flex-col  h-[600px] bg-primary md:w-[400px]'>
 					<Image
 						src={close}

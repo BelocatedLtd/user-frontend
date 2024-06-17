@@ -9,6 +9,7 @@ import { AiFillInstagram } from 'react-icons/ai'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
+import BackButton from '@/components/Button/BackButton'
 
 const ContactSupport = () => {
 	const router = useRouter()
@@ -17,7 +18,7 @@ const ContactSupport = () => {
 	return (
 		<div className='w-full h-fit'>
 			<div className='flex items-center gap-3 border-b border-gray-200 pb-6 mb-3'>
-				<MdOutlineKeyboardArrowLeft size={30} onClick={() => router.back()} />
+				<BackButton />
 				<div className='flex flex-col'>
 					<p className='font-semibold text-xl text-gray-700'>Go back</p>
 				</div>

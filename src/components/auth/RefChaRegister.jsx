@@ -127,7 +127,8 @@ const RefChaRegister = () => {
 
 	return (
 		<div className='w-full h-screen'>
-			{isLoading && <Loader />}
+			<Loader open={isLoading} />
+
 			<div className='container h-full flex items-center mx-auto justify-center'>
 				<div className='h-[600px] bg-primary w-fit md:w-[450px] border border-gray-200'>
 					<div className='modal__header__text flex flex-col items-center mt-[3rem] mb-[1.7rem]'>

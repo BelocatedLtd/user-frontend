@@ -48,7 +48,7 @@ const EmailVerified = () => {
 
 	return (
 		<div className='w-full h-[88vh] flex items-center'>
-			{isLoading && <Loader />}
+			<Loader open={isLoading} />
 
 			<div className='w-[600px] h-fit bg-primary mx-auto mt-[3rem] py-[3rem]'>
 				<div className='w-full h-full flex flex-col justify-center items-center'>

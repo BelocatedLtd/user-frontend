@@ -22,6 +22,7 @@ import Image from 'next/image'
 import TimeAgo from 'timeago-react'
 import { getStatusBgColor, toIntlCurrency } from '@/utils'
 import { cn } from '../../../../helpers'
+import BackButton from '@/components/Button/BackButton'
 
 const TaskList = () => {
 	const router = useRouter()
@@ -69,10 +70,11 @@ const TaskList = () => {
 
 	return (
 		<div className='w-full h-fit'>
-			{isLoading && <Loader />}
+			<Loader open={isLoading} />
+
 			<div>
 				<div className='flex items-center gap-3 border-b border-gray-200 py-5'>
-					<MdOutlineKeyboardArrowLeft size={30} onClick={() => router.back()} />
+					{/* <BackButton /> */}
 					<div className='flex flex-col'>
 						<p className='font-semibold text-xl text-gray-700'>
 							Your Ongoing Tasks

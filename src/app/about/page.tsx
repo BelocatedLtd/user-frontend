@@ -3,13 +3,12 @@
 import React from 'react'
 import refd from '../../assets/refd.svg'
 import adRoi from '../../assets/adRoi.svg'
-import { useNavigate } from 'react-router-dom'
 import { ShowOnLogin, ShowOnLogout } from '@/components/protect/hiddenLinks'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 // import Register from '../../../(auth)/Register'
 
-const About = ({ handleRegister, regBtn }: any) => {
+const About = ({ handleRegister }: any) => {
 	const router = useRouter()
 	return (
 		<div className='w-full h-fit'>

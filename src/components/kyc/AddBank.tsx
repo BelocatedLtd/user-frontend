@@ -1,15 +1,13 @@
-import React from 'react'
-import * as Yup from 'yup'
-import { Formik, Form, Field } from 'formik'
 import { SET_USER, selectUser } from '@/redux/slices/authSlice'
-import { useSelector } from 'react-redux'
-import FormInput from '../FormInput'
-import Button from '../Button'
-import FormSubmitButton from '../FormSubmitButton'
-import { updateUserBankAccountDetails } from '@/services/authServices'
-import toast from 'react-hot-toast'
 import { useAppDispatch } from '@/redux/store'
+import { updateUserBankAccountDetails } from '@/services/authServices'
+import { Form, Formik } from 'formik'
 import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+import * as Yup from 'yup'
+import FormInput from '../FormInput'
+import FormSubmitButton from '../FormSubmitButton'
 
 interface FormValues {
 	bankName: string
@@ -39,23 +37,24 @@ export default function AddBank({ next }: { next: () => void }) {
 
 	const handleSubmit = async (values: FormValues) => {
 		console.log('🚀 ~ handleSubmit ~ values:', values)
+		if (user?.id) {
+			const updatedUserDetails = await updateUserBankAccountDetails({
+				...values,
+				userId: user?.id,
+			})
 
-		const updatedUserDetails = await updateUserBankAccountDetails({
-			...values,
-			userId: user?.id || user?._id,
-		})
+			if (!updatedUserDetails) {
+				toast.error('Failed to update Bank Details')
+				return
+			}
 
-		if (!updatedUserDetails) {
-			toast.error('Failed to update Bank Details')
-			return
-		}
+			if (updatedUserDetails) {
+				dispatch(SET_USER(updatedUserDetails))
 
-		if (updatedUserDetails) {
-			dispatch(SET_USER(updatedUserDetails))
+				next()
 
-			next()
-
-			toast.success('User Account Details Updated!')
+				toast.success('User Account Details Updated!')
+			}
 		}
 	}
 

@@ -141,7 +141,8 @@ const TaskModal = ({ handleModal, task, taskPerformer }) => {
 
 	return ReactDOM.createPortal(
 		<div className='wrapper'>
-			{isLoading && <Loader />}
+			<Loader open={isLoading} />
+
 			<div className='relative modal w-[85%] h-[400px] bg-primary md:w-[400px]'>
 				<img
 					src={close}

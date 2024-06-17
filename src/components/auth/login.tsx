@@ -1,18 +1,17 @@
 'use client'
 
-import React from 'react'
 import close from '@/assets/close.svg'
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { toast } from 'react-hot-toast'
-import { loginUser, resendVerificationEmail } from '@/services/authServices'
 import Loader from '@/components/loader/Loader'
-import { io } from 'socket.io-client'
 import { SET_LOGIN, SET_USER } from '@/redux/slices/authSlice'
+import { loginUser, resendVerificationEmail } from '@/services/authServices'
 import { BACKEND_URL } from '@/utils/globalConfig'
 import { setToken } from '@/utils/tokenHandler'
-import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { io } from 'socket.io-client'
 
 const socket = io(`${BACKEND_URL}`)
 
@@ -50,6 +49,7 @@ const Login = ({ showRegModal, closeModal }: any) => {
 
 		try {
 			const response = await loginUser(formData)
+			console.log('🚀 ~ handleOnSubmit ~ response:', response)
 			setIsLoading(false)
 
 			// When user email is not verified
@@ -79,9 +79,6 @@ const Login = ({ showRegModal, closeModal }: any) => {
 
 			// When user email is  verified
 			if (response.isEmailVerified === true) {
-				if (response.isKycDone === false) {
-					return router.push(`/kyc`)
-				}
 				const { token } = response
 
 				if (!token) {
@@ -92,7 +89,11 @@ const Login = ({ showRegModal, closeModal }: any) => {
 
 				setToken(token)
 				dispatch(SET_LOGIN())
-				dispatch(SET_USER(response))
+				dispatch(SET_USER({ ...response, token }))
+
+				if (response.isKycDone === false) {
+					return router.push(`/kyc`)
+				}
 
 				const username = response.username
 
@@ -203,7 +204,8 @@ const Login = ({ showRegModal, closeModal }: any) => {
 	return (
 		<>
 			<div className=''>
-				{isLoading && <Loader />}
+				<Loader open={isLoading} />
+
 				<div className='relative w-[350px] flex flex-col items-center h-[550px] bg-primary md:w-[400px]'>
 					<Image
 						src={close}

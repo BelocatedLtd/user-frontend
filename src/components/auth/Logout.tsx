@@ -30,7 +30,7 @@ const Logout = () => {
 
 	return (
 		<div className=''>
-			{isLoading && <Loader />}
+			<Loader open={isLoading} />
 
 			<Button
 				size={'sm'}

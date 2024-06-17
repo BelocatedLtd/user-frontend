@@ -23,7 +23,7 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 	const router = useRouter()
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
-	const [isOpen, setIsOpen] = useState(false)
+	const [isOpen, setIsOpen] = useState(true)
 	const toggleSidebar = () => setIsOpen(!isOpen)
 
 	async function getUserData() {

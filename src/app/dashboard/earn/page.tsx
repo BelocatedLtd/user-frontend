@@ -137,7 +137,8 @@ const Earn = () => {
 
 	return (
 		<div className='w-full h-fit'>
-			{/* {isLoading && <Loader />} */}
+			{/* 			<Loader open={isLoading} />
+			 */}
 			{/* {adverts === [] && <Loader />} */}
 
 			<div className='justify-between mx-auto md:mr-5'>

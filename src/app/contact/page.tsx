@@ -2,14 +2,8 @@
 
 import React from 'react'
 import contactus from '@/assets/contactus.png'
-import {
-	FaFacebook,
-	FaLinkedin,
-	FaTelegram,
-	FaTwitter,
-	FaWhatsapp,
-} from 'react-icons/fa'
-import { BsFacebook, BsInstagram, BsTwitter, BsYoutube } from 'react-icons/bs'
+import { FaLinkedin, FaTelegram, FaTwitter, FaWhatsapp } from 'react-icons/fa'
+import { BsFacebook } from 'react-icons/bs'
 import { MdEmail } from 'react-icons/md'
 import { BiPhoneCall } from 'react-icons/bi'
 import { AiFillInstagram } from 'react-icons/ai'
