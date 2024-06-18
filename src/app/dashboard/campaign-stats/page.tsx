@@ -1,25 +1,21 @@
 'use client'
-import React from 'react'
+import Button from '@/components/Button'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { toast } from 'react-hot-toast'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
-import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
-import AdItem from '../../../components/dashboard/AdItem'
-import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
 import { useDispatch, useSelector } from 'react-redux'
+import AdItem from '../../../components/dashboard/AdItem'
+import Loader from '../../../components/loader/Loader'
 import {
 	handleGetUserAdverts,
 	selectAdverts,
 	selectIsError,
 	selectIsLoading,
 } from '../../../redux/slices/advertSlice'
-import { useEffect } from 'react'
-import { toast } from 'react-hot-toast'
-import Loader from '../../../components/loader/Loader'
 import { selectUser } from '../../../redux/slices/authSlice'
-import { handleGetAllUser, selectUsers } from '../../../redux/slices/userSlice'
 import { handleGetTasks } from '../../../redux/slices/taskSlice'
-import { useRouter } from 'next/navigation'
-import Button from '@/components/Button'
-import BackButton from '@/components/Button/BackButton'
+import { handleGetAllUser, selectUsers } from '../../../redux/slices/userSlice'
 
 const CampaignStats = () => {
 	const user = useSelector(selectUser)
@@ -78,7 +74,7 @@ const CampaignStats = () => {
 				</Button>
 			</div>
 
-			<div className='w-full grid mt-4 grid-cols-3'>
+			<div className='w-full grid mt-4 gap-6 grid-cols-3'>
 				{adverts.map((item: any) => (
 					<AdItem
 						key={item._id}

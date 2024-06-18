@@ -1,24 +1,23 @@
 'use client'
 
-import React, { useEffect } from 'react'
-import whatsapp from '@/assets/animated icons/whatsapp.gif'
-import facebook from '@/assets/animated icons/facebook.gif'
-import tiktok from '@/assets/animated icons/tiktok.gif'
-import instagram from '@/assets/animated icons/instagram.gif'
-import twitter from '@/assets/animated icons/twitter.gif'
-import youtube from '@/assets/animated icons/youtube.svg'
-import linkedin from '@/assets/animated icons/linkedin.gif'
 import appstore from '@/assets/animated icons/appstore.svg'
-import playstore from '@/assets/animated icons/playstore.svg'
 import audiomack from '@/assets/animated icons/audiomack.svg'
 import boomplay from '@/assets/animated icons/boomplay.svg'
+import facebook from '@/assets/animated icons/facebook.gif'
+import instagram from '@/assets/animated icons/instagram.gif'
+import linkedin from '@/assets/animated icons/linkedin.gif'
+import playstore from '@/assets/animated icons/playstore.svg'
 import spotify from '@/assets/animated icons/spotify.svg'
+import tiktok from '@/assets/animated icons/tiktok.gif'
+import twitter from '@/assets/animated icons/twitter.gif'
+import whatsapp from '@/assets/animated icons/whatsapp.gif'
+import youtube from '@/assets/animated icons/youtube.svg'
+import { useEffect } from 'react'
 
-import { useState } from 'react'
-import { toast } from 'react-hot-toast'
+import BackButton from '@/components/Button/BackButton'
+import ConfirmationModal from '@/components/ConfirmationModal'
+import Loader from '@/components/loader/Loader'
 import { selectUser, selectUsername } from '@/redux/slices/authSlice'
-import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
-import { useDispatch, useSelector } from 'react-redux'
 import {
 	createNewTask,
 	handleGetUserTasks,
@@ -27,20 +26,19 @@ import {
 	selectIsSuccess,
 	selectTasks,
 } from '@/redux/slices/taskSlice'
-import { formatDate } from '@/utils/formatDate'
-import Loader from '@/components/loader/Loader'
-import { useRouter } from 'next/navigation'
-import Image, { StaticImageData } from 'next/image'
 import { getQualifiedAdverts } from '@/services/advertService'
 import {
 	getSocialPlatformAsset,
 	getStatusBgColor,
 	toIntlCurrency,
 } from '@/utils'
-import { cn } from '../../../../../helpers'
-import ConfirmationModal from '@/components/ConfirmationModal'
+import Image, { StaticImageData } from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
 import TimeAgo from 'timeago-react'
-import BackButton from '@/components/Button/BackButton'
+import { cn } from '../../../../../helpers'
 
 const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 	console.log('🚀 ~ TaskEarn ~ parama:', params)
@@ -274,7 +272,7 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 						<span className='text-tertiary font-bold'>
 							({finalFilteredTasks?.length})
 						</span>{' '}
-						tasks available on WhatsApp. Click below to start.
+						tasks available on {params.platformName}. Click below to start.
 					</p>
 				</div>
 			</div>

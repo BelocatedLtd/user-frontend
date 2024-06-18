@@ -1,10 +1,7 @@
-import React from 'react'
 import close from '@/assets/close.svg'
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { formatDate } from '../../utils/formatDate'
-import { icons } from '../data/socialIcon'
+import { useEffect, useState } from 'react'
 import toast, { CheckmarkIcon, LoaderIcon } from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
 import {
 	handleApproveTask,
 	selectIsError,
@@ -12,12 +9,12 @@ import {
 	selectIsSuccess,
 	selectTasks,
 } from '../../redux/slices/taskSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { formatDate } from '../../utils/formatDate'
+import { icons } from '../data/socialIcon'
 import TaskProofModal from '../ui/TaskProofModal'
 //import Loader from '../../components/loader/Loader'
-import Loader from '../loader/Loader'
 import Image from 'next/image'
-import Button from '../Button'
+import Loader from '../loader/Loader'
 
 interface AdItemProps {
 	date: string
@@ -148,7 +145,7 @@ const AdItem = ({
 	return (
 		<div
 			onClick={handleToggleTaskPerformers}
-			className='relative border cursor-pointer hover:shadow flex w-full h-fit mt-5 mb-[2rem] p-[1.5rem] rounded-2xl rounded-tr-none '>
+			className='relative border cursor-pointer hover:shadow flex w-full h-fit mt-5 mb-[2rem] p-[1.5rem] rounded-2xl '>
 			<Loader open={isLoading} />
 
 			{toggleTaskProofModal && (
