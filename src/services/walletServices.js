@@ -1,6 +1,6 @@
+import axios from 'axios'
 import { toast } from 'react-hot-toast'
 import { BACKEND_URL } from '../utils/globalConfig'
-import axios from 'axios'
 import { getToken } from '../utils/tokenHandler'
 
 const getAuthHeaders = () => {
@@ -85,6 +85,26 @@ export const fundWallet = async (trxData) => {
 			error.message ||
 			error.toString()
 		toast.error(message)
+	}
+}
+
+// initialize user transaction
+export const initTransaction = async (trxData) => {
+	const headers = getAuthHeaders()
+	try {
+		const response = await axios.post(
+			`${BACKEND_URL}/api/transactions/initialize-transaction`,
+			trxData,
+			headers,
+		)
+		return response.data
+	} catch (error) {
+		const message =
+			(error.response && error.response.data && error.response.data.message) ||
+			error.message ||
+			error.toString()
+
+		throw new Error(message)
 	}
 }
 

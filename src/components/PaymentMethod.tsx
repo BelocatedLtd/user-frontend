@@ -1,30 +1,31 @@
 'use client'
-import React from 'react'
-import close from '../assets/close.svg'
-import { useState } from 'react'
 import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3'
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import close from '../assets/close.svg'
 import { selectUser } from '../redux/slices/authSlice'
 import {
 	fundUserWallet,
 	getUserWallet,
+	handleInitializeUserTransaction,
 	selectUserWallet,
 } from '../redux/slices/walletSlice'
-import { useEffect } from 'react'
 
-import { BACKEND_URL } from '../utils/globalConfig'
-import { createAdvert } from '../services/advertService'
-import { toast } from 'react-hot-toast'
-import { useRouter } from 'next/navigation'
-import { io } from 'socket.io-client'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { toast } from 'react-hot-toast'
+import { usePaystackPayment } from 'react-paystack'
+import { io } from 'socket.io-client'
+import { createAdvert, initializeAdvert } from '../services/advertService'
+import { BACKEND_URL } from '../utils/globalConfig'
+import Loader from './loader/Loader'
 
 const socket = io(`${BACKEND_URL}`)
 
 const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 	const dispatch = useDispatch()
 	const [canPay, setCanPay] = useState(false)
+	const [reference, setReference] = useState('')
 	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
 	const user = useSelector(selectUser)
@@ -59,6 +60,7 @@ const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 		} else if (wallet?.value < expBudget) {
 			setCanPay(false)
 		}
+		setReference(Date.now().toString())
 	}, [wallet, expBudget])
 
 	const title = `Buy ${desiredROI} ${platform} ${service}`
@@ -97,6 +99,7 @@ const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 
 		if (canPay) {
 			//const response = await dispatch(createNewAdvert(adFormData))
+			paymentFormData.append('paymentRef', reference)
 
 			setIsLoading(true)
 			const response = await createAdvert(paymentFormData)
@@ -128,7 +131,7 @@ const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 	// Fund wallet using flutterwave
 	const config = {
 		public_key: process.env.NEXT_PUBLIC_FLUTTER_PUBLIC_KEY!,
-		tx_ref: Date.now().toString(),
+		tx_ref: reference,
 		amount: expBudget,
 		currency: 'NGN',
 		payment_options: 'card,mobilemoney,ussd',
@@ -150,7 +153,7 @@ const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 
 	const fwConfig = {
 		...config,
-		text: 'Fund Wallet',
+		text: 'Pay with Flutterwave',
 		callback: async (response: any) => {
 			const trxData = {
 				userId: user.id,
@@ -171,9 +174,87 @@ const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 		},
 	}
 
+	const payStackConfig = {
+		text: 'Pay with Paystack',
+		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY!,
+		email: user?.email,
+		reference,
+		amount: expBudget * 100,
+		currency: 'NGN',
+		payment_options: 'card,mobilemoney,ussd',
+		customer: {
+			email: user.email,
+			phone_number: user.phone,
+			name: user.fullname,
+		},
+		customizations: {
+			title: title,
+			description: 'Advert creation',
+			logo: 'Belocated',
+		},
+	}
+
+	const onClose = () => {
+		router.push('/dashboard/campaign-stats')
+	}
+
+	const onSuccess = (response: any) => {
+		console.log('🚀 ~ onSuccess: ~ response:', response)
+		router.push('/dashboard/campaign-stats')
+	}
+
+	const paystackPayment = usePaystackPayment(payStackConfig)
+
+	const initializePayment = async (
+		paymentMethod: 'paystack' | 'flutterwave',
+	) => {
+		setIsLoading(true)
+		paymentFormData.append('paymentRef', reference)
+
+		const response = await initializeAdvert(paymentFormData)
+		console.log(response)
+		setIsLoading(false)
+
+		if (response) {
+			//Emit socket io event to the backend
+			// const emitData = {
+			// 	userId: user?.id,
+			// 	action: `@${user?.username} just created an Ad for ${platform}`,
+			// }
+
+			// //Emit Socket event to update activity feed
+			// socket.emit('sendActivity', emitData)
+
+			const body = {
+				userId: user.id,
+				email: user.email,
+				amount: expBudget,
+				paymentRef: reference,
+				date: Date.now().toString(),
+				paymentMethod,
+				advertId: response._id,
+			}
+
+			const res = await dispatch(handleInitializeUserTransaction(body) as any)
+			setIsLoading(false)
+			console.log('🚀 ~ initializePayment ~ res:', { res, body })
+
+			if (res.meta.requestStatus === 'fulfilled') {
+				paystackPayment({ onSuccess, onClose })
+			}
+		}
+		if (!response) {
+			toast.error('Error creating advert, failed to make payment')
+			// router.push('/dashboard/campaign-stats')
+			togglePaymentSelect()
+		}
+	}
+
 	return (
 		<div className=''>
-			<div className='relative  w-[85%] h-fit md:w-[600px] md:h-[550px] bg-primary'>
+			<Loader open={isLoading} />
+
+			<div className='relative  w-[85%] h-fit md:w-[600px] bg-primary'>
 				<Image
 					src={close}
 					alt='close'
@@ -204,16 +285,21 @@ const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 						</small>
 
 						{!canPay && (
-							<div className='flex flex-col justify-center'>
+							<div className='flex space-y-0 flex-col justify-center'>
 								<p className='bg-red-400 text-primary p-5 my-3'>
 									Your wallet is insufficient to perform this transaction. Click
 									the button below to fund your wallet now
 								</p>
 								<FlutterWaveButton
 									{...fwConfig}
-									className='px-6 py-2 bg-secondary text-primary'
+									className='px-6 py-2 bg-yellow-500 text-primary'
 								/>
-								{/* <button onClick={handleclick}>Pay</button> */}
+								.
+								<button
+									onClick={() => initializePayment('paystack')}
+									className='px-6 py-2 bg-[#16A4DA] text-primary'>
+									Pay with Paystack
+								</button>
 							</div>
 						)}
 						{canPay && (

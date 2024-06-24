@@ -1,6 +1,6 @@
+import axios from 'axios'
 import { toast } from 'react-hot-toast'
 import { BACKEND_URL } from '../utils/globalConfig'
-import axios from 'axios'
 import { getToken } from '../utils/tokenHandler'
 
 const getAuthHeaders = () => {
@@ -21,6 +21,16 @@ export const createAdvert = async (adFormData: FormData) => {
 	const headers = getAuthHeaders()
 	const response = await axios.post(
 		`${BACKEND_URL}/api/adverts/create`,
+		adFormData,
+		headers,
+	)
+	return response.data
+}
+
+export const initializeAdvert = async (adFormData: FormData) => {
+	const headers = getAuthHeaders()
+	const response = await axios.post(
+		`${BACKEND_URL}/api/adverts/initialize`,
 		adFormData,
 		headers,
 	)

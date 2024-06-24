@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { toast } from 'react-hot-toast'
 import {
+	confirmWithdrawal,
+	deleteWithdrawal,
 	fundWallet,
+	getUserWithdrawals,
 	getWallet,
 	getWithdrawals,
+	initTransaction,
 	withdrawWallet,
-	getUserWithdrawals,
-	deleteWithdrawal,
-	confirmWithdrawal,
 } from '../../services/walletServices'
 //import { getUserWallet } from '../../services/walletServices';
 
@@ -48,22 +49,40 @@ export const getUserWallet = createAsyncThunk(
 )
 
 // Fund User Wallet
-export const fundUserWallet = createAsyncThunk(
-	'wallet/handleFundUserWallet',
-	async (trxData, thunkAPI) => {
-		try {
-			return await fundWallet(trxData)
-		} catch (error: any) {
-			const message =
-				(error.response &&
-					error.response.data &&
-					error.response.data.message) ||
-				error.message ||
-				error.toString()
-			return thunkAPI.rejectWithValue(message)
-		}
-	},
-)
+export const fundUserWallet = createAsyncThunk<
+	ReturnType<typeof fundWallet>,
+	any,
+	{ rejectValue: string }
+>('wallet/handleFundUserWallet', async (trxData, thunkAPI) => {
+	try {
+		return await fundWallet(trxData)
+	} catch (error: any) {
+		const message =
+			(error.response && error.response.data && error.response.data.message) ||
+			error.message ||
+			error.toString()
+
+		return thunkAPI.rejectWithValue(message)
+	}
+})
+
+export const handleInitializeUserTransaction = createAsyncThunk<
+	ReturnType<typeof fundWallet>,
+	any,
+	{ rejectValue: string }
+>('wallet/handleInitializeUserTransaction', async (trxData, thunkAPI) => {
+	try {
+		return await initTransaction(trxData)
+	} catch (error: any) {
+		const message =
+			(error.response && error.response.data && error.response.data.message) ||
+			error.message ||
+			error.toString()
+		console.log('🚀 ~ > handleInitializeUserTransaction~ message:', message)
+
+		return thunkAPI.rejectWithValue(message)
+	}
+})
 
 // Withdraw User Wallet
 export const withdrawUserWallet = createAsyncThunk(
@@ -210,6 +229,23 @@ const walletSlice = createSlice({
 				toast.success('Withdrawal request sent successfully')
 			})
 			.addCase(withdrawUserWallet.rejected, (state, action) => {
+				state.isLoading = false
+				state.isError = true
+				state.message = action.payload
+				toast.error(action.payload)
+			})
+
+			// handleInitializeUserTransaction
+			.addCase(handleInitializeUserTransaction.pending, (state) => {
+				state.isLoading = true
+			})
+			.addCase(handleInitializeUserTransaction.fulfilled, (state, action) => {
+				state.isLoading = false
+				state.isSuccess = true
+				state.isError = false
+				state.data = action.payload
+			})
+			.addCase(handleInitializeUserTransaction.rejected, (state, action) => {
 				state.isLoading = false
 				state.isError = true
 				state.message = action.payload
