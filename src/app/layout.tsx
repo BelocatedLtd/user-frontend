@@ -1,18 +1,17 @@
 'use client'
 
-import './index.css'
 import { Header } from '@/components/Header'
-import SubFooter from '@/components/home/SubFooter'
-import Footer from '@/components/home/Footer'
 import CallToAction from '@/components/home/CallToAction'
-import { usePathname } from 'next/navigation'
-import { AppProgressBar as ProgressBar } from 'next-nprogress-bar'
+import Footer from '@/components/home/Footer'
+import SubFooter from '@/components/home/SubFooter'
+import ReduxProvider from '@/redux/provider'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import ReduxProvider from '@/redux/provider'
-import { Toaster } from 'react-hot-toast'
+import { AppProgressBar as ProgressBar } from 'next-nprogress-bar'
+import { usePathname } from 'next/navigation'
 import Script from 'next/script'
-import TawkMessengerReact from '@tawk.to/tawk-messenger-react'
+import { Toaster } from 'react-hot-toast'
+import './index.css'
 
 const shouldRenderComponents = (
 	pathname: string,
@@ -21,7 +20,7 @@ const shouldRenderComponents = (
 	return !exclusions.some((exclusion) => pathname.startsWith(exclusion))
 }
 
-const exclusions = ['/dashboard', '/kyc']
+const exclusions = ['/dashboard', '/kyc', '/admin']
 
 export default function RootLayout({
 	children,

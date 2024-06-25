@@ -57,7 +57,7 @@ const userSlice = createSlice({
 })
 
 export const selectUser = (state: { user: { user: any } }) => state.user
-export const selectUsers = (state: { users: { users: any[] } }) => state.users
+export const selectUsers = (state: { user: any }) => state.user.users 
 
 export const selectIsLoading = (state: { user: { isLoading: boolean } }) =>
 	state.user.isLoading

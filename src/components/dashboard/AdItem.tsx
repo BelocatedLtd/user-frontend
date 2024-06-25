@@ -14,6 +14,7 @@ import { icons } from '../data/socialIcon'
 import TaskProofModal from '../ui/TaskProofModal'
 //import Loader from '../../components/loader/Loader'
 import Image from 'next/image'
+import { cn } from '../../../helpers'
 import Loader from '../loader/Loader'
 
 interface AdItemProps {
@@ -142,6 +143,22 @@ const AdItem = ({
 		}
 	}
 
+	const getPaymentStatusBgColor = (status) => {
+		switch (status) {
+			case 'Pending':
+				return 'bg-yellow-500'
+			case 'Running':
+			case 'Allocating':
+				return 'bg-green-500'
+			case 'Rejected':
+				return 'bg-red-500'
+			case 'Completed':
+				return 'bg-blue-500'
+			default:
+				return 'bg-gray-500'
+		}
+	}
+
 	return (
 		<div
 			onClick={handleToggleTaskPerformers}
@@ -230,7 +247,11 @@ const AdItem = ({
 							<label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>
 								Status:
 							</label>
-							<small className='bg-yellow-600 text-primary px-3 py-1 rounded-full'>
+							<small
+								className={cn(
+									'bg-yellow-600 text-primary px-3 py-1 rounded-full',
+									getPaymentStatusBgColor(status),
+								)}>
 								{status}
 							</small>
 						</div>

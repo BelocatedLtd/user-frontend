@@ -1,23 +1,16 @@
-import React, { ReactNode } from 'react'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import SidebarItems from './SidebarItems'
-import { FaAdversal, FaHome, FaTasks, FaUsers, FaTrophy } from 'react-icons/fa'
+import { useRouter } from 'next/navigation'
+import { ReactNode, useEffect, useState } from 'react'
+import { BiMenuAltRight } from 'react-icons/bi'
+import { FaAdversal, FaHome, FaTasks, FaTrophy, FaUsers } from 'react-icons/fa'
 import { GrSettingsOption, GrTransaction } from 'react-icons/gr'
-import { RiHome5Fill, RiMoneyDollarBoxFill } from 'react-icons/ri'
-import { BiMenuAltRight, BiMessageRoundedDetail } from 'react-icons/bi'
-import { useDispatch, useSelector } from 'react-redux'
-import { SET_LOGIN, SET_USER, selectUser } from '../../redux/slices/authSlice'
-import { getUser } from '../../services/authServices'
-import { toast } from 'react-hot-toast'
-import { useEffect } from 'react'
-import { SiGoogleads, SiTodoist } from 'react-icons/si'
-import transactions from '../../assets/transactions.png'
-import userprofile from '../../assets/userprofile.png'
-import customersupport from '../../assets/customersupport.png'
 import { IoTrophyOutline } from 'react-icons/io5'
 import { MdOutlineSupportAgent } from 'react-icons/md'
-import { useRouter } from 'next/navigation'
+import { RiHome5Fill, RiMoneyDollarBoxFill } from 'react-icons/ri'
+import { SiGoogleads, SiTodoist } from 'react-icons/si'
+import { useDispatch, useSelector } from 'react-redux'
+import { SET_USER, selectUser } from '../../redux/slices/authSlice'
+import { getUser } from '../../services/authServices'
+import SidebarItems from './SidebarItems'
 
 const SidebarLeft = ({ children }: { children: ReactNode }) => {
 	const router = useRouter()
@@ -164,14 +157,14 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 					)}
 				</div>
 
-				{user?.accountType === 'Admin' ||
-					(user?.accountType === 'Super Admin' && (
-						<>
-							{adminMenu.map((item, index) => {
-								return <SidebarItems key={index} item={item} isOpen={isOpen} />
-							})}
-						</>
-					))}
+				{(user?.accountType === 'Admin' ||
+					user?.accountType === 'Super Admin') && (
+					<>
+						{adminMenu.map((item, index) => {
+							return <SidebarItems key={index} item={item} isOpen={isOpen} />
+						})}
+					</>
+				)}
 			</div>
 
 			<main
