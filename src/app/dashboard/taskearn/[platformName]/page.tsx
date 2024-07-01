@@ -170,11 +170,7 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 		setModalOpen(true)
 	}
 
-	//Handling click even on the button to perform task, this button should not create a new task if the user had already created a task for this ad
 	const handleConfirm = async () => {
-		console.log('🚀 ~ handleConfirm ~ selectedAdvertId:', selectedAdvertId)
-
-		// Extracting the information for this Advert that will be converted to task for this user and also checking if Advert is still in existence amd paid for
 		const taskToPerform: any = finalFilteredTasks?.find(
 			(advert: any) => advert._id === selectedAdvertId,
 		)
@@ -184,16 +180,13 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 			Math.random() * taskToPerform?.caption.length,
 		)
 		const pickedCaption = taskToPerform?.caption[randomIndex]
-		//setRandomCaption(pickedCaption)
 
-		// Happens if advert meets all criteria to be performed as task
 		if (taskToPerform) {
 			const assetresult = getSocialPlatformAsset(
 				taskToPerform.platform,
 				taskToPerform.service,
 			)
 
-			// Creating task data
 			const taskData = {
 				advertId: taskToPerform._id,
 				advertiserId: taskToPerform.userId,
@@ -268,11 +261,12 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 				<div className='flex items-center gap-3 border-b border-gray-200'>
 					<p className='font-normal text-[14px] text-gray-700 p-6 w-1/2'>
 						Earn by posting adverts and performing simple tasks on your social
-						media. You have{' '}
-						<span className='text-tertiary font-bold'>
+						media.
+						{/* You have{' '} */}
+						{/* <span className='text-tertiary font-bold'>
 							({finalFilteredTasks?.length})
 						</span>{' '}
-						tasks available on {params.platformName}. Click below to start.
+						tasks available on {params.platformName}. Click below to start. */}
 					</p>
 				</div>
 			</div>
@@ -361,6 +355,18 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 												) : (
 													''
 												)}
+												<li className='bg-red- text-sm col-span-4'>
+													<span
+														className={cn(
+															'font-bold',
+															task.availableTasks > 4
+																? 'text-green-600'
+																: 'text-red-600',
+														)}>
+														{task.availableTasks}{' '}
+													</span>
+													tasks left to perform
+												</li>
 											</ul>
 
 											{/* Button */}
