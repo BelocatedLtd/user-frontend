@@ -16,6 +16,7 @@ import { useEffect } from 'react'
 
 import BackButton from '@/components/Button/BackButton'
 import ConfirmationModal from '@/components/ConfirmationModal'
+import TaskSubmit from '@/components/dashboard/submitTask'
 import Loader from '@/components/loader/Loader'
 import { selectUser, selectUsername } from '@/redux/slices/authSlice'
 import {
@@ -32,6 +33,7 @@ import {
 	getStatusBgColor,
 	toIntlCurrency,
 } from '@/utils'
+import { Modal } from '@mui/material'
 import Image, { StaticImageData } from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -44,7 +46,11 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 	console.log('🚀 ~ TaskEarn ~ parama:', params)
 	const [isModalOpen, setModalOpen] = useState(false)
 
+	const [selectedTask, setSelectedTask] = useState<string>()
+
 	const router = useRouter()
+
+	const [isOpen, setIsOpen] = useState(false)
 
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
@@ -221,7 +227,8 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 			if (isSuccess) {
 				setModalOpen(false)
 				toast.success('Successfully created a Task from this advert')
-				router.push(`/dashboard/submittask/${response?.payload?._id}`)
+				setIsOpen(true)
+				// router.push(`/dashboard/submittask/${response?.payload?._id}`)
 			}
 		}
 
@@ -397,6 +404,17 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 				onClose={handleCloseModal}
 				onConfirm={handleConfirm}
 			/>
+
+			<Modal
+				open={isOpen}
+				onClose={() => setIsOpen(false)}
+				aria-labelledby='modal-modal-title'
+				aria-describedby='modal-modal-description'>
+				<TaskSubmit
+					onClose={() => setIsOpen(false)}
+					taskId={selectedAdvertId!}
+				/>
+			</Modal>
 		</div>
 	)
 }

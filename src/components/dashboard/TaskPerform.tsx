@@ -1,20 +1,19 @@
-import React, { ChangeEvent, FormEvent } from 'react'
-import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
-import { useDispatch, useSelector } from 'react-redux'
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { selectUser, selectUserId } from '../../redux/slices/authSlice'
-import { CheckmarkIcon, toast } from 'react-hot-toast'
-import { useRef } from 'react'
 import copy from '@/assets/copy.png'
-import { GiCancel } from 'react-icons/gi'
-import { handleGetUserTasks, selectTasks } from '../../redux/slices/taskSlice'
 import { saveAs } from 'file-saver'
-import { BiArrowToLeft } from 'react-icons/bi'
-import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import Link from 'next/link'
-import BackButton from '../Button/BackButton'
+import { useRouter } from 'next/navigation'
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
+import { useDropzone } from 'react-dropzone'
+import { CheckmarkIcon, toast } from 'react-hot-toast'
+import { BiArrowToLeft } from 'react-icons/bi'
+import { GiCancel } from 'react-icons/gi'
+import { IoClose, IoTimeOutline } from 'react-icons/io5'
+import { useDispatch, useSelector } from 'react-redux'
+import { cn } from '../../../helpers'
+import loaderImg from '../../assets/loader.gif'
+import { selectUser, selectUserId } from '../../redux/slices/authSlice'
+import { handleGetUserTasks, selectTasks } from '../../redux/slices/taskSlice'
+import Button from '../Button'
 
 interface TaskPerformProps {
 	taskId: string
@@ -27,10 +26,11 @@ interface TaskPerformProps {
 	taskSubmitted: boolean
 	handleOnSubmit: (e: FormEvent) => void
 	handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void
-	handleImageChange: (e: ChangeEvent<HTMLInputElement>) => void
+	handleImageChange: (e: any[]) => void
 	handleImageRemove: (item: string) => void
 	isLoading: boolean
 	icons: any[]
+	onClose: () => void
 }
 
 const TaskPerform = ({
@@ -45,6 +45,7 @@ const TaskPerform = ({
 	handleImageRemove,
 	isLoading,
 	icons,
+	onClose,
 }: TaskPerformProps) => {
 	const linkRef = useRef<HTMLInputElement>(null)
 	const adCaptionRef = useRef<HTMLTextAreaElement>(null)
@@ -71,6 +72,7 @@ const TaskPerform = ({
 
 	useEffect(() => {
 		const selecectTask = tasks?.find((obj) => obj._id === taskId)
+		console.log('🚀 ~ useEffect ~ selecectTask:', { selecectTask, ad })
 
 		setNewTask(selecectTask)
 
@@ -153,37 +155,41 @@ const TaskPerform = ({
 		}
 	}
 
-	return (
-		<div className='w-full h-fit'>
-			{/* {isDownloading && <Loader />} */}
-			<div className='flex items-center justify-between gap-3 border-b border-gray-200 py-5'>
-				<div className='flex items-center'>
-					<BackButton />
+	const { getRootProps, getInputProps, isDragActive } = useDropzone({
+		onDrop: handleImageChange,
+		// accept: 'image/*',
+		multiple: true,
+	})
 
-					<div className='flex flex-col'>
-						<p className='font-semibold text-xl text-gray-700'></p>
-						<small className='font-medium text-gray-500'>
-							Click{' '}
-							<span
-								onClick={() => router.push(`/dashboard/tasks`)}
-								className='text-secondary'>
-								here
-							</span>{' '}
-							to see all your Tasks
-						</small>
+	return (
+		<div className=' mt-5 relative md:px-8 md:mt-8 mx-auto overflow-scroll h-[90%] py-4 w-1/2 bg-gray-50 '>
+			<IoClose
+				className='absolute top-4 right-4 cursor-pointer'
+				onClick={onClose}
+			/>
+			<h1 className='text-gray-500  font-bold text-lg text-center mb-[1rem]'>
+				Verification Instructions
+			</h1>
+			<div className='grid gap-6 my-[2rem] grid-cols-2'>
+				{/* Verification Instructions */}
+				<div className=' '>
+					<p>
+						<span className='text-tertiary'>NOTE:</span> Immediately you perform
+						the task, take a screenshot of the task performed on{' '}
+						{newTask?.platform}
+					</p>
+					<div className='mt-2'>
+						<p>{newTask?.taskVerification}</p>
 					</div>
 				</div>
-			</div>
-
-			<div className=' mt-5 md:px-8 md:mt-8 mx-auto py-4 w-1/2 bg-gray-50 '>
-				<div className='flex items-center justify-between bg-gray-50 p-6 mb-[2rem] shadow-lg'>
-					<div className='flex w-full md:w-[70%] gap-2 items-center'>
-						<img
+				<div className=' bg-gray-50 p-6 mb-[2rem] border rounded '>
+					<div className='flex w-full gap-2 items-center'>
+						<Image
 							src={
 								icons?.find((icon) => icon.platform === newTask?.platform)?.icon
 							}
 							alt={newTask?.platform}
-							className='hidden md:flex'
+							className='hidden md:flex h-10 w-10'
 						/>
 						<div className='flex flex-col gap-3'>
 							{/* {setCreatedAtDate(formatDate(newTask?.createdAt))} */}
@@ -191,123 +197,132 @@ const TaskPerform = ({
 							<p className='text-gray-800 text-sm md:text-[15px]'>
 								{newTask?.title}
 							</p>
-							<div className='flex flex-col gap-2'>
-								<div className='flex flex-col items-center gap-2 md:flex-row'>
-									<div className='text-gray-600 text-[9px] flex gap-1 items-center mt-2'>
-										<label htmlFor='pricing' className='font-bold'>
-											To Earn:
-										</label>
-										<p>₦{newTask?.toEarn}/task</p>
-									</div>
-
-									<div className='text-gray-600 text-[9px] flex gap-1 items-center mt-2'>
-										<label htmlFor='pricing' className='font-bold'>
-											Tasks Submitted Already:
-										</label>
-										<p>{ad?.tasks}</p>
-									</div>
-
-									<div className='text-gray-600 text-[9px] flex gap-1 items-center mt-2'>
-										<label htmlFor='pricing' className='font-bold'>
-											Units Left:
-										</label>
-										<p
-											className={`${
-												ad?.desiredROI < 2
-													? 'text-red-800 font-bold'
-													: 'text-green-800'
-											}`}>
-											{ad?.desiredROI}
-										</p>
-									</div>
-									<img
-										src={
-											icons?.find((icon) => icon.platform === newTask?.platform)
-												?.icon
-										}
-										alt={newTask?.platform}
-										className='md:hidden w-[25px] h-[25px]'
-									/>
-								</div>
-
-								{/* Status badge */}
-								<div className='md:hidden md:flex-col md:w-[30%] gap-1 text-gray-100 py-2 rounded-2xl'>
-									<label
-										htmlFor='status'
-										className='font-bold text-[12px] text-gray-600'>
-										Status:
-									</label>
-									<p
-										className={`w-full text-[12px] flex  justify-center items-center py-2 px-3 gap-2 
-                            ${
-															newTask?.status === 'Approved'
-																? 'bg-secondary'
-																: 'bg-red-700'
-														} rounded-2xl`}>
-										{newTask?.status}
-										<span>
-											{newTask?.status === 'Approved' && <CheckmarkIcon />}
-										</span>
-									</p>
-								</div>
+						</div>
+					</div>
+					<div className='flex flex-col gap-2'>
+						<div className='flex flex-col items-center gap-2 md:flex-row'>
+							<div className='text-gray-600 text-[9px] flex gap-1 items-center mt-2'>
+								<label htmlFor='pricing' className='font-bold'>
+									To Earn:
+								</label>
+								<p>₦{newTask?.toEarn}/task</p>
 							</div>
+
+							<div className='text-gray-600 text-[9px] flex gap-1 items-center mt-2'>
+								<label htmlFor='pricing' className='font-bold'>
+									Tasks Submitted Already:
+								</label>
+								<p>{ad?.tasks}</p>
+							</div>
+
+							<div className='text-gray-600 text-[9px] flex gap-1 items-center mt-2'>
+								<label htmlFor='pricing' className='font-bold'>
+									Units Left:
+								</label>
+								<p
+									className={`${
+										ad?.desiredROI < 2
+											? 'text-red-800 font-bold'
+											: 'text-green-800'
+									}`}>
+									{ad?.desiredROI}
+								</p>
+							</div>
+							<Image
+								src={
+									icons?.find((icon) => icon.platform === newTask?.platform)
+										?.icon
+								}
+								alt={newTask?.platform}
+								className='md:hidden w-[25px] h-[25px]'
+							/>
 						</div>
 					</div>
 
 					{/* Status badge */}
-					<div className='hidden md:flex md:flex-col md:w-[30%] items-center gap-1 text-gray-100 py-2 px-4 rounded-2xl'>
+					<div className='flex gap-1 text-gray-100 py-2 items-center rounded-2xl'>
 						<label
 							htmlFor='status'
 							className='font-bold text-[12px] text-gray-600'>
 							Status:
 						</label>
 						<p
-							className={`w-full text-[12px] flex text-center justify-center items-center py-2 px-3 gap-2 ${
-								newTask?.status === 'Approved' ? 'bg-secondary' : 'bg-red-700'
-							} rounded-2xl`}>
+							className={cn(
+								' text-[12px] flex ml-2  justify-center items-center  gap-2',
+								newTask?.status === 'Approved'
+									? 'text-secondary'
+									: 'text-red-700',
+							)}>
 							{newTask?.status}
-							<span>{newTask?.status === 'Approved' && <CheckmarkIcon />}</span>
+							<span>
+								{newTask?.status === 'Approved' ? (
+									<CheckmarkIcon />
+								) : newTask?.status === 'Submitted' ? (
+									<IoTimeOutline />
+								) : (
+									<Image src={loaderImg} alt='loading...' className='h-4 w-4' />
+								)}
+							</span>
 						</p>
 					</div>
 				</div>
-
-				{/* Message from Admin */}
-				{newTask?.message ? (
-					<div className='w-full md:w-[500px] text-center mb-[2rem]'>
-						<label className='text-gray-500 font-bold text-center mb-[1rem]'>
-							Message from Admin:
-						</label>
-						<p className='text-gray-600 font-normal'>{newTask?.message}</p>
-					</div>
-				) : (
+				{/* Task link */}
+				{hideLinkInputFields ? (
 					''
-				)}
+				) : (
+					<div className='flex flex-col gap-2'>
+						<label
+							htmlFor='task link'
+							className='text-gray-500 font-bold text-center '>
+							Task Link
+						</label>
+						<div className='w-full  flex items-center justify-center mx-auto'>
+							<input
+								type='link'
+								value={newTask?.socialPageLink}
+								readOnly
+								ref={linkRef}
+								className='w-full h-[20px] px-6 py-5 text-gray-800 bg-gray-200 rounded-r rounded-2xl'
+							/>
 
+							{/* <Link
+								href={newTask?.socialPageLink}
+								target='_blank'
+								rel='noopener noreferrer'
+								className='w-[4rem] h-[20px] px-5 py-5 bg-secondary text-primary text-[9px]'>
+								Visit
+							</Link> */}
+						</div>
+						<small className='w-full mx-auto text-gray-400 text-[12px] text-center'>
+							Remember, the task you were given is {newTask?.service} on{' '}
+							{newTask?.platform}, use the link or username to perform this task
+						</small>
+					</div>
+				)}
 				{/* Ad Caption */}
 				{newTask?.caption ? (
-					<div className='w-fit flex flex-col md-w-500px text-center items-center mx-auto mb-[2rem]'>
-						<label className='text-gray-500 font-bold text-center mb-[1rem]'>
+					<div className='w-fit flex flex-col md-w-500px gap-2 text-center items-center mx-auto '>
+						<label className='text-gray-500 font-bold text-center '>
 							Message from Advertiser:
 						</label>
-						<div className='flex flex-col items-center gap-1'>
-							<p>
-								<span className='text-tertiary'>NOTE:</span> Kindly include the
-								caption below in your post on your WhatsApp Status
-							</p>
-
-							<div className='flex gap-1 items-center justify-center w-full'>
+						<div className='flex flex-col items-center text-xs gap-1'>
+							<div className='flex gap-1 items- justify-center w-full'>
 								<textarea
 									ref={adCaptionRef}
 									value={newTask?.caption}
 									readOnly
-									className='border border-gray-200 p-3 w-full md:w-[400px] h-fit'></textarea>
+									className='border border-gray-200 p-3 w-full  h-fit'></textarea>
 								<Image
 									src={copy}
 									alt='click to copy ref link'
-									className='w-[30px] h-[30px]'
+									className='w-5 h-5 cursor-pointer'
 									onClick={handleAdCaptionCopy}
 								/>
 							</div>
+							<p>
+								<span className='text-tertiary'>NOTE:</span> Kindly include the
+								caption below in your post on your WhatsApp Status
+							</p>
 						</div>
 					</div>
 				) : (
@@ -357,159 +372,151 @@ const TaskPerform = ({
 									</button>
 								</div>
 							)
-							// Handle other file types as needed
-							return null
 						})}
 					</div>
 				) : (
 					''
 				)}
-
-				{/* Verification Instructions */}
-				<div className='w-full md-w-500px text-center mb-[2rem]'>
-					<h1 className='text-gray-500 font-bold text-center mb-[1rem]'>
-						Verification Instructions
-					</h1>
-					<p>
-						<span className='text-tertiary'>NOTE:</span> Immediately you perform
-						the task, take a screenshot of the task performed on{' '}
-						{newTask?.platform}
-					</p>
-					<div className='mt-2'>
-						<p>{newTask?.taskVerification}</p>
-					</div>
-				</div>
-
-				{/* Task link */}
-				{hideLinkInputFields ? (
-					''
-				) : (
-					<div className='flex flex-col gap-2'>
-						<label
-							htmlFor='task link'
-							className='text-gray-500 font-bold text-center '>
-							Task Link
-						</label>
-						<div className='w-full md:w-[500px] flex items-center justify-center mx-auto'>
-							<input
-								type='link'
-								value={newTask?.socialPageLink}
-								readOnly
-								ref={linkRef}
-								className='w-full h-[20px] px-6 py-5 text-gray-800 bg-gray-200 rounded-r rounded-2xl'
-							/>
-
-							{/* <Link
-								href={newTask?.socialPageLink}
-								target='_blank'
-								rel='noopener noreferrer'
-								className='w-[4rem] h-[20px] px-5 py-5 bg-secondary text-primary text-[9px]'>
-								Visit
-							</Link> */}
-						</div>
-						<small className='w-full md:w-[500px] mx-auto text-gray-400 text-[12px] text-center'>
-							Remember, the task you were given is {newTask?.service} on{' '}
-							{newTask?.platform}, use the link or username to perform this task
-						</small>
-					</div>
-				)}
-
-				<div className='flex flex-col items-center gap-3 mt-[4rem]'>
-					{/* Submition Form */}
-					<form onSubmit={handleOnSubmit} className='flex flex-col'>
-						{/* Upload ScreenSHot */}
-
-						{newTask?.status === 'Approved' ||
-						newTask?.status === 'Submitted' ? (
-							''
-						) : (
-							<div className='w-full h-full flex flex-col pt-[1rem] items-center border-gray-200'>
-								<label
-									htmlFor='upload proof of work'
-									className='text-gray-500 font-bold text-center mb-[1rem]'>
-									Upload Proof of work
-								</label>
-								<p className='text-tertiary font-bold'>
-									Ensure to upload the right proof to avoid your account being
-									banned
-								</p>
-								<div className='w-full h-fit flex flex-wrap items-center justify-center gap-2 p-5'>
-									{selectedImages?.map((item, index) => (
-										<div key={index} className='relative w-[200px] h-[200px]'>
-											<img
-												src={item}
-												alt='preview'
-												className='w-full h-full object-cover'
-											/>
-											<GiCancel
-												size={20}
-												className='absolute text-tertiary top-0 right-0 pr-1 pt-1'
-												onClick={(e) => handleImageRemove(item)}
-											/>
-										</div>
-									))}
-								</div>
-
-								{/* File Upload Input Tag  */}
-								<input
-									type='file'
-									name='images'
-									placeholder='Upload Screenshots'
-									multiple
-									onChange={handleImageChange}
-									className='w-full p-3 shadow-inner rounded-2xl bg-gray-50 md:w-[300px]'
-								/>
-							</div>
-						)}
-
-						{/* Social Account Link */}
-						{hideUsernameDisplayField ? (
-							''
-						) : (
-							<div className='w-full md:w-[500px] flex flex-col items-center mt-[2rem] mx-auto'>
-								<label
-									htmlFor='social media username'
-									className='text-gray-500 font-bold text-center mb-[1rem]'>
-									Fill in your {newTask?.platform} Username
-								</label>
-								<input
-									type='text'
-									name='userSocialName'
-									value={userSocialName}
-									placeholder='Enter your social media username'
-									onChange={handleInputChange}
-									className='py-2 px-6 text-gray-800 bg-gray-200 rounded-2xl'
-								/>
-							</div>
-						)}
-
-						{newTask?.status === 'Approved' ||
-						newTask?.status === 'Submitted' ||
-						taskSubmitted ? (
-							''
-						) : (
-							<button
-								type='submit'
-								className='flex items-center justify-center gap-2 w-full md:w-[300px] bg-secondary text-gray-100 py-3 px-6 mt-5 rounded-full mx-auto hover:bg-tertiary'>
-								{!isLoading && 'Submit'}
-								{isLoading && 'Submitting...'}
-							</button>
-						)}
-					</form>
-					{taskSubmitted ? (
-						<button
-							onClick={() => router.push(`/dashboard/tasks`)}
-							className='text-green-700 text-[14px] px-6 py-2 flex items-center gap-1'>
-							<span>
-								<BiArrowToLeft />
-							</span>
-							Go to your task list page
-						</button>
-					) : (
-						''
-					)}
-				</div>
 			</div>
+
+			<div className='flex flex-col w-full items-center gap-3 '>
+				{/* Submition Form */}
+				<form onSubmit={handleOnSubmit} className='flex w-full flex-col'>
+					{/* Upload ScreenSHot */}
+
+					{newTask?.status === 'Approved' || newTask?.status === 'Submitted' ? (
+						''
+					) : (
+						<div className='w-full h-full flex  flex-col pt-[1rem] items-center border-gray-200'>
+							<label
+								htmlFor='upload proof of work'
+								className='text-gray-500 font-bold text-center'>
+								Upload Proof of work
+							</label>
+							<p className='text-tertiary font-bold'>
+								Ensure to upload the right proof to avoid your account being
+								banned
+							</p>
+							<div className='w-full h-fit flex flex-wrap items-center justify-center gap-2 p-5'>
+								{selectedImages?.map((item, index) => (
+									<div key={index} className='relative w-[200px] h-[200px]'>
+										<Image
+											src={item}
+											alt='preview'
+											className='w-full h-full object-cover'
+											width={200}
+											height={200}
+										/>
+										<GiCancel
+											size={20}
+											className='absolute text-tertiary top-0 right-0 cursor-pointer pr-1 pt-1'
+											onClick={() => handleImageRemove(item)}
+										/>
+									</div>
+								))}
+							</div>
+
+							{/* File Upload Input Tag  */}
+							{/* <input
+								type='file'
+								name='images'
+								placeholder='Upload Screenshots'
+								multiple
+								onChange={handleImageChange}
+								className='w-full p-3 shadow-inner rounded-2xl bg-gray-50 md:w-[300px]'
+							/> */}
+
+							{/* <input
+								type='file'
+								name='images'
+								placeholder='Upload Screenshots'
+								multiple
+								onChange={handleImageChange}
+								className='w-full p-3 shadow-inner rounded-2xl bg-gray-50 md:w-[300px]'
+							/> */}
+
+							<div
+								{...getRootProps()}
+								className={`w-full p-6 border-2 border-dashed rounded-2xl h-22 ${
+									isDragActive
+										? 'border-blue-500 bg-blue-50'
+										: 'border-gray-300 bg-gray-50'
+								}`}>
+								<input {...getInputProps()} />
+								{isDragActive ? (
+									<p className='text-center text-blue-500'>
+										Drop the files here...
+									</p>
+								) : (
+									<p className='text-center text-gray-500'>
+										Drag & drop some files here, or click to select files
+									</p>
+								)}
+							</div>
+						</div>
+					)}
+
+					{/* Social Account Link */}
+					{hideUsernameDisplayField ? (
+						''
+					) : (
+						<div className='w-full md:w-[500px] flex flex-col items-center mt-[2rem] mx-auto'>
+							<label
+								htmlFor='social media username'
+								className='text-gray-500 font-bold text-center mb-[1rem]'>
+								Fill in your {newTask?.platform} Username
+							</label>
+							<input
+								type='text'
+								name='userSocialName'
+								value={userSocialName}
+								placeholder='Enter your social media username'
+								onChange={handleInputChange}
+								className='py-2 px-6 text-gray-800 bg-gray-200 rounded-2xl'
+							/>
+						</div>
+					)}
+
+					{newTask?.status === 'Approved' ||
+					newTask?.status === 'Submitted' ||
+					taskSubmitted ? (
+						''
+					) : (
+						<Button
+							className='mt-4 w-1/2 mx-auto'
+							variant='solid'
+							color='secondary'
+							type='submit'>
+							{!isLoading && 'Submit'}
+							{isLoading && 'Submitting...'}
+						</Button>
+					)}
+				</form>
+				{taskSubmitted ? (
+					<button
+						onClick={() => router.push(`/dashboard/tasks`)}
+						className='text-green-700 text-[14px] px-6 py-2 flex items-center gap-1'>
+						<span>
+							<BiArrowToLeft />
+						</span>
+						Go to your task list page
+					</button>
+				) : (
+					''
+				)}
+			</div>
+
+			{/* Message from Admin */}
+			{newTask?.message ? (
+				<div className='w-full md:w-[500px] text-center mb-[2rem]'>
+					<label className='text-gray-500 font-bold text-center mb-[1rem]'>
+						Message from Admin:
+					</label>
+					<p className='text-gray-600 font-normal'>{newTask?.message}</p>
+				</div>
+			) : (
+				''
+			)}
 		</div>
 	)
 }

@@ -47,11 +47,11 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 			path: `/dashboard/tasks`,
 		},
 		{
-			title: 'Transactions',
+			title: 'Wallet',
 			icon: (
 				<RiMoneyDollarBoxFill className='text-[15px] md:text-[28px] md:mr-2 ' />
 			),
-			path: '/dashboard/transactions',
+			path: '/dashboard/wallet',
 		},
 
 		{

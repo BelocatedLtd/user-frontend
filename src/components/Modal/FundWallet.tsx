@@ -1,46 +1,36 @@
-import React from 'react'
-import { useState } from 'react'
-import close from '../assets/close.svg'
-import ReactDOM from 'react-dom'
-import { useNavigate } from 'react-router-dom'
+import close from '@/assets/close.svg'
+import { toIntlCurrency } from '@/utils'
 import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectUser } from '../redux/slices/authSlice'
-import { fundUserWallet, selectUserWallet } from '../redux/slices/walletSlice'
-import { BsFillArrowRightCircleFill } from 'react-icons/bs'
-import { fundWallet } from '../services/walletServices'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { LoaderIcon } from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectUser } from '../../redux/slices/authSlice'
+import {
+	fundUserWallet,
+	selectUserWallet,
+} from '../../redux/slices/walletSlice'
 
-const FundWallet = ({ toggleFLWFunding, fundingAmount }) => {
+const FundWallet = ({
+	toggleFLWFunding,
+	fundingAmount,
+}: {
+	toggleFLWFunding: () => void
+	fundingAmount: number
+}) => {
 	const dispatch = useDispatch()
-	const navigate = useNavigate()
+	const router = useRouter()
 	const user = useSelector(selectUser)
 	const wallet = useSelector(selectUserWallet)
+	console.log('🚀 ~ wallet:', wallet)
 	const [isLoading, setisLoading] = useState(false)
-
-	// const handlePayment = async (e) => {
-	//     e.preventDefault()
-	//     const trxData = {
-	//         userId: user.id,
-	//         email: user.email,
-	//         date: Date.now(),
-	//         chargedAmount: fundingAmount.fundingAmount,
-	//         trxId: Date.now(),
-	//         paymentRef: Date.now(),
-	//         status: "Approved Successfully"
-	//     }
-
-	//     //console.log(trxData)
-
-	//     await dispatch(fundUserWallet(trxData))
-	//     //const response = await fundWallet(trxData)
-	// }
 
 	// Fund wallet using flutterwave
 	const config = {
-		public_key: import.meta.env.NEXT_PUBLIC_FLUTTER_PUBLIC_KEY,
+		public_key: process.env.NEXT_PUBLIC_FLUTTER_PUBLIC_KEY,
 		tx_ref: Date.now(),
-		amount: fundingAmount.fundingAmount,
+		amount: fundingAmount,
 		currency: 'NGN',
 		payment_options: 'card,mobilemoney,ussd',
 		customer: {
@@ -57,7 +47,7 @@ const FundWallet = ({ toggleFLWFunding, fundingAmount }) => {
 	const fwConfig = {
 		...config,
 		text: 'Fund Wallet',
-		callback: async (response) => {
+		callback: async (response: any) => {
 			setisLoading(true)
 			//if (response.status === 'completed'  && response.charge_response_message === 'Approved Successful') {
 			const trxData = {
@@ -69,26 +59,27 @@ const FundWallet = ({ toggleFLWFunding, fundingAmount }) => {
 				paymentRef: response.flw_ref,
 				status: response.charge_response_message,
 			}
-			await dispatch(fundUserWallet(trxData))
+			dispatch(fundUserWallet(trxData) as any)
 
 			setisLoading(false)
 
 			closePaymentModal()
 		},
 		onClose: () => {
-			navigate(`/dashboard/${user.username}`)
+			toggleFLWFunding()
 		},
 	}
 
-	return ReactDOM.createPortal(
-		<div className='wrapper'>
-			<div className='relative modal w-[85%] md:w-[600px] h-fit bg-primary'>
-				<img
+	return (
+		<div className='flex flex-col h-full justify-center items-center'>
+			<div className='relative w-[85%] md:w-[600px] h-fit bg-primary'>
+				<Image
 					src={close}
 					alt='close'
 					onClick={toggleFLWFunding}
-					size={40}
-					className='absolute top-[-1rem] right-[-1rem] text-tertiary'
+					height={40}
+					width={40}
+					className='absolute cursor-pointer top-[-1rem] right-[-1rem] text-tertiary'
 				/>
 				<div className='w-full px-[2rem] py-[2rem] md:px-[3rem] md:py-[4rem]'>
 					<h1 className='font-bold mb-3 text-xl'>Hello Payment Method</h1>
@@ -106,15 +97,17 @@ const FundWallet = ({ toggleFLWFunding, fundingAmount }) => {
 
 					<div className=' flex flex-col'>
 						<h3 className='font-bold text-lg text-gray-700'>
-							Fund Your Wallet{' '}
+							Fund Your Wallet
 						</h3>
 						<small className='mt-2'>
 							<span className='font-bold text-gray-900'>
-								Current Wallet Balance:
-							</span>{' '}
-							₦{wallet.value} |{' '}
-							<span className='font-bold text-gray-900'>Funding Amount:</span> ₦
-							{fundingAmount.fundingAmount}
+								Current Wallet Balance:{' '}
+							</span>
+							{toIntlCurrency(wallet.value || '0')}
+							<span className='font-bold ml-3 text-gray-900'>
+								Funding Amount:{' '}
+							</span>
+							{toIntlCurrency(fundingAmount.toString())}
 						</small>
 
 						<div className='flex flex-col justify-center'>
@@ -131,8 +124,7 @@ const FundWallet = ({ toggleFLWFunding, fundingAmount }) => {
 					</div>
 				</div>
 			</div>
-		</div>,
-		document.getElementById('backdrop'),
+		</div>
 	)
 }
 

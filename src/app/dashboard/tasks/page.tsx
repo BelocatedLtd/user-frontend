@@ -1,9 +1,9 @@
 'use client'
 
-import React from 'react'
+import TaskSubmit from '@/components/dashboard/submitTask'
 import { icons } from '@/components/data/socialIcon'
-import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
 import Loader from '@/components/loader/Loader'
+import { selectUser } from '@/redux/slices/authSlice'
 import {
 	handleGetUserTasks,
 	selectIsError,
@@ -11,18 +11,15 @@ import {
 	selectIsSuccess,
 	selectTasks,
 } from '@/redux/slices/taskSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { formatDate } from '@/utils/formatDate'
-import { toast } from 'react-hot-toast'
-import { selectUser } from '@/redux/slices/authSlice'
-import { useRouter } from 'next/navigation'
-import Image from 'next/image'
-import TimeAgo from 'timeago-react'
 import { getStatusBgColor, toIntlCurrency } from '@/utils'
+import { Modal } from '@mui/material'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
+import TimeAgo from 'timeago-react'
 import { cn } from '../../../../helpers'
-import BackButton from '@/components/Button/BackButton'
 
 const TaskList = () => {
 	const router = useRouter()
@@ -37,6 +34,9 @@ const TaskList = () => {
 	console.log('🚀 ~ TaskList ~ tasks:', tasks)
 	const [sortedTasks, setSortedTasks] = useState<any>()
 	// const itemsPerPage = 5;
+
+	const [isOpen, setIsOpen] = useState(false)
+	const [selectedTask, setSelectedTask] = useState<string>()
 
 	const getUserTasks = async () => {
 		dispatch(handleGetUserTasks() as any)
@@ -89,7 +89,13 @@ const TaskList = () => {
 					{sortedTasks?.map((task: any, index: number) => (
 						<div
 							key={index}
-							onClick={() => navigateToTaskDetail(task._id, task.status)}
+							onClick={
+								() => {
+									setIsOpen(true)
+									setSelectedTask(task._id)
+								}
+								// navigateToTaskDetail(task._id, task.status)
+							}
 							className='flex items-center border justify-between  p-6 rounded-lg hover:shadow cursor-pointer'>
 							<div className='bg-blue-'>
 								<div className='flex items-center bg-red- w-full justify-between'>
@@ -117,8 +123,8 @@ const TaskList = () => {
 									</small>
 								</div>
 								{/* <p className='text-gray-500 text-[15px]'>{task.caption}</p> */}
-								<hr className='my-3' />
-								<div className='flex flex-col gap-2'>
+								{/* <hr className='my-3' /> */}
+								<div className='flex flex-col gap-2 mt-4'>
 									<ul className='flex flex- gap-3 text-[13px]'>
 										<li>State: {task.state}</li>
 										<li>LGA: {task.lga}</li>
@@ -126,7 +132,7 @@ const TaskList = () => {
 											Status:{' '}
 											<span
 												className={cn(
-													'p-2 text-xs ml-2 text-white rounded-full',
+													' text-xs ml-1 text-white rounded-full',
 													getStatusBgColor(task.status),
 												)}>
 												{task.status}
@@ -143,7 +149,7 @@ const TaskList = () => {
 									) : (
 										''
 									)}
-									{/* <div className='flex gap-2 items-center'>
+									<div className='flex gap-2 items-center'>
 										<Image
 											src={
 												icons?.find((icon) => icon.platform === task.platform)
@@ -153,16 +159,24 @@ const TaskList = () => {
 											className='flex md:hidden w-[20px] h-[20px]'
 										/>
 
-										<div className='flex'>
+										{/* <div className='flex'>
 											{checkTaskStatus(task?._id, task.status)}
-										</div>
-									</div> */}
+										</div> */}
+									</div>
 								</div>
 							</div>
 						</div>
 					))}
 				</div>
 			</div>
+
+			<Modal
+				open={isOpen}
+				onClose={() => setIsOpen(false)}
+				aria-labelledby='modal-modal-title'
+				aria-describedby='modal-modal-description'>
+				<TaskSubmit onClose={() => setIsOpen(false)} taskId={selectedTask!} />
+			</Modal>
 		</div>
 	)
 }

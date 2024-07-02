@@ -59,16 +59,16 @@ export function getSocialPlatformAsset(
 export const getStatusBgColor = (taskStatus: string) => {
 	switch (taskStatus) {
 		case 'Awaiting Submission':
-			return 'bg-secondary'
+			return 'text-secondary'
 		case 'Submitted':
-			return 'bg-yellow-600'
+			return 'text-yellow-600'
 		case 'Rejected':
-			return 'bg-tertiary'
+			return 'text-tertiary'
 		case 'Approved':
-			return 'bg-secondary'
+			return 'text-secondary'
 		case 'Partial Approval':
-			return 'bg-secondary'
+			return 'text-secondary'
 		default:
-			return 'bg-gray-200'
+			return 'text-gray-200'
 	}
 }
