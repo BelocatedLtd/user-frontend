@@ -39,14 +39,18 @@ const Header = () => {
 
 	return (
 		<header className='w-full border-b border-gray-200'>
-			<div className='ml-5 py-6 px-2 flex justify-between items-center mx-auto md:px-2'>
+			<div className='md:ml-5 py-6  flex justify-between items-center mx-auto md:px-2'>
 				<div className='cursor-pointer text-secondary'>
-					<Image src={logo} alt='logo' className='w-40 object-contain' />
+					<Image
+						src={logo}
+						alt='logo'
+						className='md:w-40 w-24 object-contain'
+					/>
 					{/* <span className='text-tertiary'>Be</span>located */}
 					<div className='flex flex-col justify-start md:hidden'>
 						<div className='flex items-center gap-1'>
-							<h1 className='text-lg text-gray-600 font-bold'>Welcome, </h1>
-							<h4 className='text-lg text-gray-600 font-medium'>
+							<h1 className='md:text-lg text-gray-600 font-bold'>Welcome, </h1>
+							<h4 className='md:text-lg text-sm text-gray-600 font-medium'>
 								{user?.fullname ? user?.fullname : user?.username}
 							</h4>
 						</div>
@@ -73,7 +77,7 @@ const Header = () => {
 						onClick={handleClick}>
 						<div className='flex items-center gap-2'>
 							<FaUserCircle />
-							<span>{user?.username}</span>
+							<span className=''>{user?.username}</span>
 						</div>
 
 						<FaAngleDown />

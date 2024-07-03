@@ -1,11 +1,11 @@
 'use client'
 
-import React from 'react'
-import Header from '../../components/dashboard/Header'
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { selectUser } from '../../redux/slices/authSlice'
+import { getUserWallet } from '@/redux/slices/walletSlice'
 import { useRouter } from 'next/navigation'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import Header from '../../components/dashboard/Header'
+import { selectUser } from '../../redux/slices/authSlice'
 import SidebarLeft from './SidebarLeft'
 //import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser'
 
@@ -13,6 +13,7 @@ const DashLayout = ({ children }: { children: React.ReactNode }) => {
 	//useRedirectLoggedOutUser('/')
 	const router = useRouter()
 	const user = useSelector(selectUser)
+	const dispatch = useDispatch()
 	console.log('🚀 ~ DashLayout ~ user:', user)
 
 	useEffect(() => {
@@ -21,6 +22,8 @@ const DashLayout = ({ children }: { children: React.ReactNode }) => {
 				router.push(`/kyc`)
 				// setProfileComplete(true)
 			} else {
+				dispatch(getUserWallet() as any)
+
 				// setProfileComplete(false)
 			}
 	}, [])

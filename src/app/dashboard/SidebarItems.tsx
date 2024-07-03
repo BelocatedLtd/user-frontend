@@ -9,9 +9,10 @@ type TSidebarItems = {
 		icon?: React.ReactNode
 	}
 	isOpen: boolean
+	isMobile?: boolean
 }
 
-const SidebarItems = ({ item, isOpen }: TSidebarItems) => {
+const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 	const router = useRouter()
 
 	const pathname = usePathname()
@@ -24,7 +25,7 @@ const SidebarItems = ({ item, isOpen }: TSidebarItems) => {
 					<div className='sidebar-title'>
 						<span>
 							{item.icon && <div className='icon'>{item.icon}</div>}
-							{isOpen && <div className=''>{item.title}</div>}
+							{!isMobile && isOpen && <div className=''>{item.title}</div>}
 						</span>
 					</div>
 				</div>

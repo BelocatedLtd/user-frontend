@@ -1,16 +1,11 @@
 import close from '@/assets/close.svg'
 import { Modal } from '@mui/material'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import FundWallet from '../Modal/FundWallet'
 
 const FundingForm = ({ onClose }: { onClose: () => void }) => {
-	const dispatch = useDispatch()
-	const router = useRouter()
 	const [fundingAmount, setFundingAmount] = useState(0)
-	console.log('🚀 ~ FundingForm ~ fundingAmount:', fundingAmount)
 	const [fLWFundingModal, setFLWFundingModal] = useState(false)
 
 	const handleInputChange = (e: any) => {
@@ -18,8 +13,9 @@ const FundingForm = ({ onClose }: { onClose: () => void }) => {
 		setFundingAmount(value)
 	}
 
-	const toggleFLWFunding = (e: any) => {
+	const toggleFLWFunding = async (e: any) => {
 		e.preventDefault()
+
 		setFLWFundingModal(!fLWFundingModal)
 	}
 
@@ -58,7 +54,10 @@ const FundingForm = ({ onClose }: { onClose: () => void }) => {
 				aria-labelledby='modal-modal-title'
 				aria-describedby='modal-modal-description'>
 				<FundWallet
-					toggleFLWFunding={() => setFLWFundingModal(false)}
+					toggleFLWFunding={() => {
+						setFLWFundingModal(false)
+						onClose()
+					}}
 					fundingAmount={fundingAmount}
 				/>
 			</Modal>

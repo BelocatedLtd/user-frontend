@@ -162,7 +162,7 @@ const AdItem = ({
 	return (
 		<div
 			onClick={handleToggleTaskPerformers}
-			className='relative border cursor-pointer hover:shadow flex w-full h-fit mt-5 mb-[2rem] p-[1.5rem] rounded-2xl '>
+			className='relative border cursor-pointer hover:shadow flex w-full h-fit p-[1.5rem] rounded-2xl '>
 			<Loader open={isLoading} />
 
 			{toggleTaskProofModal && (
@@ -203,7 +203,7 @@ const AdItem = ({
 					</div>
 				</div>
 
-				<div className='flex flex-col md:flex-row gap-2 justify-between'>
+				<div className='flex flex-row gap-2 justify-between'>
 					<div className='flex flex-col'>
 						<div className='flex flex-col'>
 							<label className='font-extrabold text-[12px] text-gray-700 md:text-[14px] md:font-bold'>
@@ -291,7 +291,7 @@ const AdItem = ({
 								<li>
 									{/* Social media icon  right */}
 									<div className='flex md:hidden w-[25px] h-[25px]'>
-										<img
+										<Image
 											src={
 												icons?.find((icon) => icon.platform === item.platform)
 													?.icon

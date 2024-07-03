@@ -1,14 +1,13 @@
 import close from '@/assets/close.svg'
 import { toIntlCurrency } from '@/utils'
-import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3'
+import { closePaymentModal, useFlutterwave } from 'flutterwave-react-v3'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { LoaderIcon } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectUser } from '../../redux/slices/authSlice'
 import {
-	fundUserWallet,
+	handleInitializeUserTransaction,
 	selectUserWallet,
 } from '../../redux/slices/walletSlice'
 
@@ -20,16 +19,20 @@ const FundWallet = ({
 	fundingAmount: number
 }) => {
 	const dispatch = useDispatch()
-	const router = useRouter()
 	const user = useSelector(selectUser)
 	const wallet = useSelector(selectUserWallet)
-	console.log('🚀 ~ wallet:', wallet)
+	const [reference, setReference] = useState('')
+
 	const [isLoading, setisLoading] = useState(false)
+
+	useEffect(() => {
+		setReference(Date.now().toString())
+	}, [fundingAmount])
 
 	// Fund wallet using flutterwave
 	const config = {
 		public_key: process.env.NEXT_PUBLIC_FLUTTER_PUBLIC_KEY,
-		tx_ref: Date.now(),
+		tx_ref: reference,
 		amount: fundingAmount,
 		currency: 'NGN',
 		payment_options: 'card,mobilemoney,ussd',
@@ -48,18 +51,7 @@ const FundWallet = ({
 		...config,
 		text: 'Fund Wallet',
 		callback: async (response: any) => {
-			setisLoading(true)
-			//if (response.status === 'completed'  && response.charge_response_message === 'Approved Successful') {
-			const trxData = {
-				userId: user.id,
-				email: response?.customer?.email,
-				date: response.created_at,
-				chargedAmount: response.charged_amount,
-				trxId: response.transaction_id,
-				paymentRef: response.flw_ref,
-				status: response.charge_response_message,
-			}
-			dispatch(fundUserWallet(trxData) as any)
+			toggleFLWFunding()
 
 			setisLoading(false)
 
@@ -69,6 +61,18 @@ const FundWallet = ({
 			toggleFLWFunding()
 		},
 	}
+
+	const body = {
+		userId: user.id,
+		email: user.email,
+		amount: fundingAmount,
+		paymentRef: reference,
+		date: Date.now().toString(),
+		paymentMethod: 'flutterwave',
+		paymentType: 'wallet funding',
+	}
+
+	const handleFlutterPayment = useFlutterwave(fwConfig as any)
 
 	return (
 		<div className='flex flex-col h-full justify-center items-center'>
@@ -116,8 +120,25 @@ const FundWallet = ({
 								fund gets added to your wallet immediately
 							</p>
 
-							<button className='px-6 py-2 bg-secondary text-primary hover:bg-gray-800'>
-								<FlutterWaveButton {...fwConfig} />
+							<button
+								onClick={async () => {
+									const res = await dispatch(
+										handleInitializeUserTransaction(body) as any,
+									)
+									if (res)
+										handleFlutterPayment({
+											callback: (response) => {
+												console.log(response)
+												closePaymentModal()
+												toggleFLWFunding()
+											},
+											onClose: () => {
+												toggleFLWFunding()
+											},
+										})
+								}}
+								className='px-6 py-2 bg-secondary text-primary hover:bg-gray-800'>
+								Fund Wallet
 								{isLoading && <LoaderIcon />}
 							</button>
 						</div>

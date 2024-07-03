@@ -1,29 +1,26 @@
 'use client'
 
-import React from 'react'
-import { IoIosSend } from 'react-icons/io'
-import { useState } from 'react'
-import { useRef } from 'react'
-import { useEffect } from 'react'
-import { getUser, sendInviteEmail } from '@/services/authServices'
-import { SET_LOGOUT, SET_USER, selectUser } from '@/redux/slices/authSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { getOngoingRefChallenge } from '@/services/refService'
-import { MdMessage } from 'react-icons/md'
-import { FaCheckCircle, FaUserPlus } from 'react-icons/fa'
-import { useRouter } from 'next/navigation'
-import { ErrorMessage, Field, Form, Formik } from 'formik'
-import * as Yup from 'yup'
-import toast from 'react-hot-toast'
+import ReferralsTable from '@/components/dashboard/referralTable'
 import Loader from '@/components/loader/Loader'
+import { SET_LOGOUT, SET_USER, selectUser } from '@/redux/slices/authSlice'
 import {
 	handleGetAllReferrals,
 	selectAllReferrals,
 } from '@/redux/slices/referrals'
-import ReferralsTable from '@/components/dashboard/referralTable'
-import { handleRefLinkCopy } from '@/utils'
+import { getUser, sendInviteEmail } from '@/services/authServices'
+import { getOngoingRefChallenge } from '@/services/refService'
 import { getRefDashboardData } from '@/services/referrals'
+import { handleRefLinkCopy } from '@/utils'
 import { toNaira } from '@/utils/payment'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
+import { FaCheckCircle, FaUserPlus } from 'react-icons/fa'
+import { IoIosSend } from 'react-icons/io'
+import { MdMessage } from 'react-icons/md'
+import { useDispatch, useSelector } from 'react-redux'
+import * as Yup from 'yup'
 
 interface FormValues {
 	email: string
@@ -147,14 +144,14 @@ const Referral = () => {
 	const frontEndUrl = window.location.hostname
 
 	return (
-		<div className='w-full h-screen lg:mr-5'>
+		<div className='w-full lg:mr-5'>
 			<Loader open={isLoading} />
 
 			<h2 className='mt-1 mb-10 font-semibold text-xl text-gray-700'>
 				Referrals
 			</h2>
-			<div className='grid grid-cols-2 gap-8'>
-				<div className='border w-full px-8 py-4 space-y-4 rounded-lg border-gray-200'>
+			<div className='md:grid md:grid-cols-2 gap-8'>
+				<div className='border w-full px-4 md:px-8 py-4 space-y-4 rounded-lg border-gray-200'>
 					<div>
 						<p>Earn with Belocated</p>
 						<p className='text-xs mt-1 text-gray-400'>
@@ -162,7 +159,7 @@ const Referral = () => {
 						</p>
 					</div>
 
-					<div className='flex items-center space-x-4'>
+					<div className='flex items-center justify-evenly'>
 						<div className='flex items-center'>
 							<MdMessage className='text-secondary' />
 							<span className='ml-3'>Send Invitation</span>
@@ -248,7 +245,7 @@ const Referral = () => {
 					</div>
 				</div>
 
-				<div className=' grid grid-cols-4 gap-4'>
+				<div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
 					<div className='border w-full flex-row justify-between px-8 py-4 space-y-4 rounded-lg border-gray-200'>
 						<p className='text-xs text-secondary'>Total Earnings</p>
 						<strong className='flex justify-self-end'>
@@ -280,8 +277,11 @@ const Referral = () => {
 					<ReferralsTable />
 				</div>
 
-				<div className='border p-6 border-gray-200 rounded-lg flex'>
+				<div className='border p-6 border-gray-200 rounded-lg '>
 					<p>Referral Challenge</p>
+					<div className='flex text-tertiary items-center justify-center h-full w-full'>
+						<p>Coming Soon!</p>
+					</div>
 				</div>
 			</div>
 		</div>

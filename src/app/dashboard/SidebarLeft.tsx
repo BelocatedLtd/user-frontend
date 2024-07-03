@@ -37,7 +37,7 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 			path: `/dashboard`,
 		},
 		{
-			title: 'My Campaigns',
+			title: 'My Campaignsssx',
 			icon: <SiGoogleads className='md:mr-2 text-[15px] md:text-[24px]' />,
 			path: '/dashboard/campaign-stats',
 		},
@@ -175,12 +175,19 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 			</main>
 
 			{/* Mobile footer menu */}
-			<div className='flex sticky bottom-0 w-full md:hidden bg-white p-3 h-fit shrink-0 border border-top border-gray-200 overflow-auto justify-center mt-[1rem]'>
-				<div className='flex gap-3'>
+			<div className='flex sticky bottom-0 w-full md:hidden bg-white p-3 h-fit shrink-0 border border-top border-gray-200 overflow-scroll justify-center mt-[1rem]'>
+				<div className='flex'>
 					{user?.accountType === 'User' && (
 						<>
-							{menu.slice(0, -3).map((item, index) => {
-								return <SidebarItems key={index} item={item} isOpen={isOpen} />
+							{menu.map((item, index) => {
+								return (
+									<SidebarItems
+										isMobile
+										key={index}
+										item={item}
+										isOpen={isOpen}
+									/>
+								)
 							})}
 						</>
 					)}

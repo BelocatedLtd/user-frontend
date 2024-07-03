@@ -233,6 +233,7 @@ const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 				date: Date.now().toString(),
 				paymentMethod,
 				advertId: response._id,
+				paymentType: 'deposit',
 			}
 
 			const res = await dispatch(handleInitializeUserTransaction(body) as any)

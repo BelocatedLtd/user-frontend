@@ -85,7 +85,7 @@ const TaskList = () => {
 					</div>
 				</div>
 
-				<div className='md:px-8 mt-3 md:mt-8 grid grid-cols-3 gap-6'>
+				<div className='md:px-8 mt-3 md:mt-8 grid md:grid-cols-3 gap-6'>
 					{sortedTasks?.map((task: any, index: number) => (
 						<div
 							key={index}
@@ -96,7 +96,7 @@ const TaskList = () => {
 								}
 								// navigateToTaskDetail(task._id, task.status)
 							}
-							className='flex items-center border justify-between  p-6 rounded-lg hover:shadow cursor-pointer'>
+							className='flex items-center border justify-between p-6 rounded-lg hover:shadow cursor-pointer'>
 							<div className='bg-blue-'>
 								<div className='flex items-center bg-red- w-full justify-between'>
 									<div className='flex gap-3 items-center'>

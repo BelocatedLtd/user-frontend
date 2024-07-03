@@ -4,21 +4,21 @@ import { useState } from 'react'
 // import Login from '../../../(auth)/login'
 import { ShowOnLogin, ShowOnLogout } from './protect/hiddenLinks'
 // import Logout from '../../../(auth)/Logout'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchUserDetails, selectUser } from '../redux/slices/authSlice'
-import { MdOutlineCancel } from 'react-icons/md'
-import { HiOutlineMenuAlt3 } from 'react-icons/hi'
-import { useEffect } from 'react'
-import logo from '../assets/belocated-logo.png'
-import Button from './Button'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import Logout from './auth/Logout'
-import Link from 'next/link'
-import Register from './auth/register'
-import Login from './auth/login'
-import Image from 'next/image'
-import { cn } from '../../helpers'
 import { Modal } from '@mui/material'
+import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
+import { HiOutlineMenuAlt3 } from 'react-icons/hi'
+import { MdOutlineCancel } from 'react-icons/md'
+import { useDispatch, useSelector } from 'react-redux'
+import { cn } from '../../helpers'
+import logo from '../assets/belocated-logo.png'
+import { fetchUserDetails, selectUser } from '../redux/slices/authSlice'
+import Button from './Button'
+import Logout from './auth/Logout'
+import Login from './auth/login'
+import Register from './auth/register'
 
 export const Header = () => {
 	const router = useRouter()
@@ -90,7 +90,7 @@ export const Header = () => {
 			<div className='relative container px-6 py-6 flex justify-between items-center mx-auto md:px-0'>
 				<Link
 					href='/'
-					className='logo cursor-pointer text-4xl font-extrabold  w-[150px] md:w-[170px]'>
+					className='logo cursor-pointer text-4xl font-extrabold  w-2 md:w-[170px]'>
 					<Image src={logo} alt='logo' className='' />
 				</Link>
 
