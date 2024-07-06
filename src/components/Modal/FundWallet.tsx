@@ -107,7 +107,7 @@ const FundWallet = ({
 							<span className='font-bold text-gray-900'>
 								Current Wallet Balance:{' '}
 							</span>
-							{toIntlCurrency(wallet.value || '0')}
+							{toIntlCurrency(wallet.value?.toString() || '0')}
 							<span className='font-bold ml-3 text-gray-900'>
 								Funding Amount:{' '}
 							</span>

@@ -1,17 +1,14 @@
-import React from 'react'
-import { useState } from 'react'
-import image from '../../assets/animated icons/image.gif'
-import video from '../../assets/animated icons/video.gif'
+import React, { useState } from 'react'
 import nigerianStates from '../data/States'
 // import socialPlatforms from '../data/assets'
+import { Modal } from '@mui/material'
 import { useEffect } from 'react'
-import PaymentMethod from '../PaymentMethod'
 import { toast } from 'react-hot-toast'
+import { GiCancel } from 'react-icons/gi'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/slices/authSlice'
-import { GiCancel } from 'react-icons/gi'
 import Button from '../Button'
-import { Modal } from '@mui/material'
+import PaymentMethod from '../PaymentMethod'
 
 interface AdBuyFormProps {
 	advert: any
@@ -25,7 +22,9 @@ interface AdBuyFormProps {
 	expBudget: number
 	costToPay: number
 	earnPerTask: number
-	handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+	handleInputChange: (
+		e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>,
+	) => void
 	handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 	comments: string
 	handleCaptionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
@@ -57,7 +56,9 @@ const AdBuyForm = ({
 	const [hideImageInputFields, setHideImageInputFields] = useState(false)
 	const [hideLinkInputFields, setHideLinkInputFields] = useState(false)
 	const [selectedState, setSelectedState] = useState('')
-	const [selectedStateCommunities, setSelectedStateCommunities] = useState([])
+	const [selectedStateCommunities, setSelectedStateCommunities] = useState<
+		any[]
+	>([])
 	const [selectedCommunity, setSelectedCommunity] = useState('')
 
 	useEffect(() => {
@@ -115,7 +116,7 @@ const AdBuyForm = ({
 		}
 	}, [platform, service])
 
-	const handleStateChange = (event) => {
+	const handleStateChange = (event: any) => {
 		const index = event.target.value
 		setSelectedState(index)
 		setSelectedCommunity('')
@@ -127,10 +128,10 @@ const AdBuyForm = ({
 		const selectedStateObject = nigerianStates?.find(
 			(item) => item.state === selectedState,
 		)
-		setSelectedStateCommunities(selectedStateObject?.community)
+		setSelectedStateCommunities(selectedStateObject?.community!)
 	}
 
-	const handleCommunityChange = (event) => {
+	const handleCommunityChange = (event: any) => {
 		const city = event.target.value
 		setSelectedCommunity(city)
 	}
@@ -152,7 +153,7 @@ const AdBuyForm = ({
 	}
 	console.log('🚀 ~ formData:', formData)
 
-	const togglePaymentSelect = (e) => {
+	const togglePaymentSelect = (e: any) => {
 		e.preventDefault()
 
 		if (expBudget < 1000) {
@@ -209,7 +210,7 @@ const AdBuyForm = ({
 		<div className='w-full h-fit '>
 			<form
 				onSubmit={togglePaymentSelect}
-				enctype='multipart/form-data'
+				encType='multipart/form-data'
 				className='w-fit md:w-full p-5 md:p-6 m-1 md:m-0 md:mr-6 border border-semi_tertiary rounded-2xl  text-center gap-6'>
 				<div className='form__container flex flex-col w-full '>
 					<div className='left flex-1 md:border-r md:border-gray-100 md:pr-5'>

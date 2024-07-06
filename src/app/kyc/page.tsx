@@ -1,18 +1,18 @@
 'use client'
 
-import React from 'react'
 import logo from '@/assets/belocated-logo.png'
+import React from 'react'
 
-import Stepper from '@mui/material/Stepper'
-import Step from '@mui/material/Step'
-import StepButton from '@mui/material/StepButton'
-import Link from 'next/link'
-import Image from 'next/image'
+import AddBank from '@/components/kyc/AddBank'
+import CompleteProfile from '@/components/kyc/completeProfile'
+import Completed from '@/components/kyc/completed'
 import Whatsapp from '@/components/kyc/whatsapp'
 import CheckIcon from '@mui/icons-material/Check'
-import CompleteProfile from '@/components/kyc/completeProfile'
-import AddBank from '@/components/kyc/AddBank'
-import Completed from '@/components/kyc/completed'
+import Step from '@mui/material/Step'
+import StepButton from '@mui/material/StepButton'
+import Stepper from '@mui/material/Stepper'
+import Image from 'next/image'
+import Link from 'next/link'
 
 const steps = ['Community', 'Complete profile', 'Add Bank']
 //import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser'
@@ -21,7 +21,9 @@ const Kyc = () => {
 	//useRedirectLoggedOutUser('/')
 
 	const [activeStep, setActiveStep] = React.useState(0)
-	const [completed, setCompleted] = React.useState({})
+	const [completed, setCompleted] = React.useState<{ [key: number]: boolean }>(
+		{},
+	)
 
 	const totalSteps = () => {
 		return steps.length
@@ -40,15 +42,13 @@ const Kyc = () => {
 	}
 
 	const handleNext = () => {
-		const newCompleted = { ...completed }
+		const newCompleted: { [key: number]: boolean } = { ...completed }
 		newCompleted[activeStep] = true
 		setCompleted(newCompleted)
 
 		const newActiveStep =
 			isLastStep() && !allStepsCompleted()
-				? // It's the last step, but not all steps have been completed,
-				  // find the first step that has been completed
-				  steps.findIndex((step, i) => !(i in newCompleted))
+				? steps.findIndex((step, i) => !(i in newCompleted))
 				: activeStep + 1
 		setActiveStep(newActiveStep)
 	}
@@ -57,7 +57,7 @@ const Kyc = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1)
 	}
 
-	const handleStep = (step) => () => {
+	const handleStep = (step: number) => () => {
 		setActiveStep(step)
 	}
 

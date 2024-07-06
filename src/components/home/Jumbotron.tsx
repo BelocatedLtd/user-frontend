@@ -1,19 +1,16 @@
-import React from 'react'
 import { useState } from 'react'
 // import Register from '../../../(auth)/Register'
 // import Login from '../../../(auth)/login'
-import { ShowOnLogin, ShowOnLogout } from '../protect/hiddenLinks'
-import { useSelector } from 'react-redux'
-import { SET_LOGOUT, selectUser } from '../../redux/slices/authSlice'
-import logo from '@/assets/bg.png'
-import Marqueez from './Marquee'
-import { useRouter, useSearchParams } from 'next/navigation'
-import Image from 'next/image'
-import Register from '../auth/register'
-import Login from '../auth/login'
-import toast from 'react-hot-toast'
 import { useAppDispatch } from '@/redux/store'
 import { Modal } from '@mui/material'
+import { useRouter, useSearchParams } from 'next/navigation'
+import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+import { SET_LOGOUT, selectUser } from '../../redux/slices/authSlice'
+import Login from '../auth/login'
+import Register from '../auth/register'
+import { ShowOnLogin, ShowOnLogout } from '../protect/hiddenLinks'
+import Marqueez from './Marquee'
 
 const Jumbotron = ({}: any) => {
 	const router = useRouter()
@@ -60,7 +57,7 @@ const Jumbotron = ({}: any) => {
 				backgroundSize: 'cover',
 				backgroundRepeat: 'no-repeat',
 			}}
-			className='w-full h-screen  flex flex-col items-center pt-[10rem]'>
+			className='w-full h-screen  flex flex-col items-center pt-[5rem] md:pt-[10rem]'>
 			<div className='container flex mt-20 flex-col items-center'>
 				<h1 className='w-[90%] text-center text-[28px] text-gray-800 font-extrabold md:text-[3rem]'>
 					Earn Daily: Complete Lucrative <br /> Social Media Tasks Easily

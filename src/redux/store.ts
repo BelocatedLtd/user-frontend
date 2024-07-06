@@ -1,7 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux'
-import { persistReducer } from 'redux-persist'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { configureStore } from '@reduxjs/toolkit'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { persistReducer } from 'redux-persist'
 
 import logger from 'redux-logger'
 import rootReducer from './root.reducer'

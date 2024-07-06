@@ -85,7 +85,7 @@ const AdItem = ({
 
 	//console.log(tasksUserAd)
 
-	const handleToggleTaskPerformers = (e) => {
+	const handleToggleTaskPerformers = (e: any) => {
 		e.preventDefault()
 
 		if (taskSubmitters && taskSubmitters > 1) {
@@ -97,7 +97,7 @@ const AdItem = ({
 		settoggleTaskPerformers(!toggleTaskPerformers)
 	}
 
-	function openPopup(e, tp) {
+	function openPopup(e: any, tp: any) {
 		e.preventDefault()
 
 		setTaskProof(tp)
@@ -143,7 +143,7 @@ const AdItem = ({
 		}
 	}
 
-	const getPaymentStatusBgColor = (status) => {
+	const getPaymentStatusBgColor = (status: any) => {
 		switch (status) {
 			case 'Pending':
 				return 'bg-yellow-500'

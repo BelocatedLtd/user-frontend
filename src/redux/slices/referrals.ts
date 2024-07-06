@@ -1,7 +1,7 @@
+import { getAllReferrals } from '@/services/referrals'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { toast } from 'react-hot-toast'
 import { RootState } from '../store'
-import { getAllReferrals } from '@/services/referrals'
 
 // Define the shape of the referral state
 interface ReferralState {
@@ -62,7 +62,7 @@ const referralSlice = createSlice({
 			)
 			.addCase(
 				handleGetAllReferrals.rejected,
-				(state, action: PayloadAction<string>) => {
+				(state, action: PayloadAction<any>) => {
 					state.isLoading = false
 					state.isError = true
 					state.message = action.payload

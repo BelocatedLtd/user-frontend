@@ -10,9 +10,29 @@ import {
 	initTransaction,
 	withdrawWallet,
 } from '../../services/walletServices'
-//import { getUserWallet } from '../../services/walletServices';
 
-const initialState = {
+// Define the shape of the wallet state
+interface WalletState {
+	walletValue: {
+		userId: string
+		value: null | number
+		totalEarning: null | number
+		pendingBalance: null | number
+		amountSpent: null | number
+	}
+	wallets: never[]
+	transaction: null
+	transactions: never[]
+	withdraw: null
+	withdrawals: any[]
+	isError: boolean
+	isSuccess: boolean
+	isLoading: boolean
+	message: string // Add message property
+}
+
+// Initial state
+const initialState: WalletState = {
 	walletValue: {
 		userId: '',
 		value: null,
@@ -28,12 +48,13 @@ const initialState = {
 	isError: false,
 	isSuccess: false,
 	isLoading: false,
+	message: '', // Initialize message property
 }
 
 // Get User Wallet
 export const getUserWallet = createAsyncThunk(
 	'wallet/handleGetUserWallet',
-	async (__, thunkAPI) => {
+	async (_, thunkAPI) => {
 		try {
 			return await getWallet()
 		} catch (error: any) {
@@ -66,8 +87,9 @@ export const fundUserWallet = createAsyncThunk<
 	}
 })
 
+// Initialize User Transaction
 export const handleInitializeUserTransaction = createAsyncThunk<
-	ReturnType<typeof fundWallet>,
+	ReturnType<typeof initTransaction>,
 	any,
 	{ rejectValue: string }
 >('wallet/handleInitializeUserTransaction', async (trxData, thunkAPI) => {
@@ -86,10 +108,11 @@ export const handleInitializeUserTransaction = createAsyncThunk<
 
 // Withdraw User Wallet
 export const withdrawUserWallet = createAsyncThunk(
-	'wallet/handleWithdrawUserWallet',
-	async (trxData, thunkAPI) => {
+	'wallet/withdrawUserWallet',
+	async (confirmedWithdrawalDetails: any, thunkAPI) => {
 		try {
-			return await withdrawWallet(trxData)
+			const response = await withdrawWallet(confirmedWithdrawalDetails)
+			return response.data
 		} catch (error: any) {
 			const message =
 				(error.response &&
@@ -105,7 +128,7 @@ export const withdrawUserWallet = createAsyncThunk(
 // Get All Users Withdrawals
 export const handleGetWithdrawals = createAsyncThunk(
 	'wallet/handleAllUserWithdrawals',
-	async (__, thunkAPI) => {
+	async (_, thunkAPI) => {
 		try {
 			return await getWithdrawals()
 		} catch (error: any) {
@@ -123,7 +146,7 @@ export const handleGetWithdrawals = createAsyncThunk(
 // Get User Withdrawals
 export const handleGetUserWithdrawals = createAsyncThunk(
 	'wallet/handlegetUserWithdrawals',
-	async (userId, thunkAPI) => {
+	async (userId: string, thunkAPI) => {
 		try {
 			return await getUserWithdrawals(userId)
 		} catch (error: any) {
@@ -141,7 +164,7 @@ export const handleGetUserWithdrawals = createAsyncThunk(
 // Confirm Withdraw User Wallet
 export const handleConfirmUserWithdrawal = createAsyncThunk(
 	'wallet/handleConfirmUserWithdrawal',
-	async (withdrawalRequestId, thunkAPI) => {
+	async (withdrawalRequestId: string, thunkAPI) => {
 		try {
 			return await confirmWithdrawal(withdrawalRequestId)
 		} catch (error: any) {
@@ -156,10 +179,10 @@ export const handleConfirmUserWithdrawal = createAsyncThunk(
 	},
 )
 
-// Confirm Withdraw User Wallet
+// Delete Withdrawal
 export const handleDeleteWithdrawal = createAsyncThunk(
 	'wallet/handleDeleteWithdrawal',
-	async (withdrawalRequestId, thunkAPI) => {
+	async (withdrawalRequestId: string, thunkAPI) => {
 		try {
 			return await deleteWithdrawal(withdrawalRequestId)
 		} catch (error: any) {
@@ -180,7 +203,6 @@ const walletSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
-
 			// Get User Wallet
 			.addCase(getUserWallet.pending, (state) => {
 				state.isLoading = true
@@ -194,9 +216,8 @@ const walletSlice = createSlice({
 			.addCase(getUserWallet.rejected, (state, action) => {
 				state.isLoading = false
 				state.isError = true
-				console.log(action.payload)
-				state.message = action.payload
-				toast.error(action.payload)
+				state.message = action.payload as string
+				toast.error(action.payload as string)
 			})
 
 			// Fund User Wallet
@@ -207,14 +228,30 @@ const walletSlice = createSlice({
 				state.isLoading = false
 				state.isSuccess = true
 				state.isError = false
-				console.log(action.payload)
-				state.walletValue = action.payload
+				state.walletValue = action.payload as any
 			})
 			.addCase(fundUserWallet.rejected, (state, action) => {
 				state.isLoading = false
 				state.isError = true
-				state.message = action.payload
-				toast.error(action.payload)
+				state.message = action.payload as string
+				toast.error(action.payload as string)
+			})
+
+			// Initialize User Transaction
+			.addCase(handleInitializeUserTransaction.pending, (state) => {
+				state.isLoading = true
+			})
+			.addCase(handleInitializeUserTransaction.fulfilled, (state, action) => {
+				state.isLoading = false
+				state.isSuccess = true
+				state.isError = false
+				state.transaction = action.payload as any
+			})
+			.addCase(handleInitializeUserTransaction.rejected, (state, action) => {
+				state.isLoading = false
+				state.isError = true
+				state.message = action.payload as string
+				toast.error(action.payload as string)
 			})
 
 			// Withdraw User Wallet
@@ -231,28 +268,11 @@ const walletSlice = createSlice({
 			.addCase(withdrawUserWallet.rejected, (state, action) => {
 				state.isLoading = false
 				state.isError = true
-				state.message = action.payload
-				toast.error(action.payload)
+				state.message = action.payload as string
+				toast.error(action.payload as string)
 			})
 
-			// handleInitializeUserTransaction
-			.addCase(handleInitializeUserTransaction.pending, (state) => {
-				state.isLoading = true
-			})
-			.addCase(handleInitializeUserTransaction.fulfilled, (state, action) => {
-				state.isLoading = false
-				state.isSuccess = true
-				state.isError = false
-				state.data = action.payload
-			})
-			.addCase(handleInitializeUserTransaction.rejected, (state, action) => {
-				state.isLoading = false
-				state.isError = true
-				state.message = action.payload
-				toast.error(action.payload)
-			})
-
-			// Withdraws  all
+			// Get All Users Withdrawals
 			.addCase(handleGetWithdrawals.pending, (state) => {
 				state.isLoading = true
 			})
@@ -265,11 +285,11 @@ const walletSlice = createSlice({
 			.addCase(handleGetWithdrawals.rejected, (state, action) => {
 				state.isLoading = false
 				state.isError = true
-				state.message = action.payload
-				toast.error(action.payload)
+				state.message = action.payload as string
+				toast.error(action.payload as string)
 			})
 
-			// Withdraws for User
+			// Get User Withdrawals
 			.addCase(handleGetUserWithdrawals.pending, (state) => {
 				state.isLoading = true
 			})
@@ -282,11 +302,11 @@ const walletSlice = createSlice({
 			.addCase(handleGetUserWithdrawals.rejected, (state, action) => {
 				state.isLoading = false
 				state.isError = true
-				state.message = action.payload
-				toast.error(action.payload)
+				state.message = action.payload as string
+				toast.error(action.payload as string)
 			})
 
-			// Withdraws for User
+			// Confirm Withdraw User Wallet
 			.addCase(handleConfirmUserWithdrawal.pending, (state) => {
 				state.isLoading = true
 			})
@@ -294,7 +314,6 @@ const walletSlice = createSlice({
 				state.isLoading = false
 				state.isSuccess = true
 				state.isError = false
-				state.advert = action.payload
 				state.withdraw = action.payload
 				state.withdrawals.push(action.payload)
 				toast.success('Withdrawal Approved Successfully')
@@ -302,11 +321,11 @@ const walletSlice = createSlice({
 			.addCase(handleConfirmUserWithdrawal.rejected, (state, action) => {
 				state.isLoading = false
 				state.isError = true
-				state.message = action.payload
-				toast.error(action.payload)
+				state.message = action.payload as string
+				toast.error(action.payload as string)
 			})
 
-			// Withdraws for User
+			// Delete Withdrawal
 			.addCase(handleDeleteWithdrawal.pending, (state) => {
 				state.isLoading = true
 			})
@@ -319,17 +338,27 @@ const walletSlice = createSlice({
 			.addCase(handleDeleteWithdrawal.rejected, (state, action) => {
 				state.isLoading = false
 				state.isError = true
-				state.message = action.payload
-				toast.error(action.payload)
+				state.message = action.payload as string
+				toast.error(action.payload as string)
 			})
 	},
 })
 
 export const {} = walletSlice.actions
-export const selectUserWallet = (state) => state.wallet.walletValue
-export const selectWithdrawals = (state) => state.wallet.withdrawals
-export const selectIsLoading = (state) => state.wallet.isLoading
-export const selectIsError = (state) => state.wallet.isError
-export const selectIsSuccess = (state) => state.wallet.isSuccess
+
+export const selectUserWallet = (state: { wallet: WalletState }) =>
+	state.wallet.walletValue
+
+export const selectWithdrawals = (state: { wallet: WalletState }) =>
+	state.wallet.withdrawals
+
+export const selectIsLoading = (state: { wallet: WalletState }) =>
+	state.wallet.isLoading
+
+export const selectIsError = (state: { wallet: WalletState }) =>
+	state.wallet.isError
+
+export const selectIsSuccess = (state: { wallet: WalletState }) =>
+	state.wallet.isSuccess
 
 export default walletSlice.reducer

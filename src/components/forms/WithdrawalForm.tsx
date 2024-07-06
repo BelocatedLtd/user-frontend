@@ -40,7 +40,7 @@ const WithdrawalForm = ({
 	const [canWithdraw, setCanWithdraw] = useState(false)
 	const [error, setError] = useState('')
 
-	const handleWithdrawalMethodChange = (event) => {
+	const handleWithdrawalMethodChange = (event: any) => {
 		setWithdrawMethod(event.target.value)
 	}
 
@@ -63,7 +63,7 @@ const WithdrawalForm = ({
 		}
 	}, [withdrawMethod])
 
-	const handleWithdrawalAmount = (event) => {
+	const handleWithdrawalAmount = (event: any) => {
 		const withdrawAmount = event.target.value
 		setAmount(event.target.value)
 		setwalletBalance(walletBalance - withdrawAmount)
@@ -140,7 +140,7 @@ const WithdrawalForm = ({
 					return
 				}
 
-				await dispatch(withdrawUserWallet(confirmedWithdrawalDetails))
+				dispatch(withdrawUserWallet(confirmedWithdrawalDetails) as any)
 
 				if (isError) {
 					toast.error('Error sending withdrawal request')

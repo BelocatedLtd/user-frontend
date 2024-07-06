@@ -90,7 +90,7 @@ export const Header = () => {
 			<div className='relative container px-6 py-6 flex justify-between items-center mx-auto md:px-0'>
 				<Link
 					href='/'
-					className='logo cursor-pointer text-4xl font-extrabold  w-2 md:w-[170px]'>
+					className='logo cursor-pointer text-4xl font-extrabold  w-20 md:w-[170px]'>
 					<Image src={logo} alt='logo' className='' />
 				</Link>
 

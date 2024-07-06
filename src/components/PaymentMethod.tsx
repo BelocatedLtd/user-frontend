@@ -22,7 +22,11 @@ import Loader from './loader/Loader'
 
 const socket = io(`${BACKEND_URL}`)
 
-const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
+const PaymentMethod = ({
+	togglePaymentSelect,
+	formData,
+	captionArray,
+}: any) => {
 	const dispatch = useDispatch()
 	const [canPay, setCanPay] = useState(false)
 	const [reference, setReference] = useState('')
@@ -55,9 +59,9 @@ const PaymentMethod = ({ togglePaymentSelect, formData, captionArray }) => {
 	} = formData
 
 	useEffect(() => {
-		if (wallet?.value >= expBudget) {
+		if (wallet?.value !== null && wallet.value >= expBudget) {
 			setCanPay(true)
-		} else if (wallet?.value < expBudget) {
+		} else if (wallet?.value !== null && wallet.value < expBudget) {
 			setCanPay(false)
 		}
 		setReference(Date.now().toString())

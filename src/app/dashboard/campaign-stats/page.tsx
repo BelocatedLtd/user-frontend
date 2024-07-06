@@ -78,19 +78,19 @@ const CampaignStats = () => {
 				{adverts.map((item: any) => (
 					<AdItem
 						key={item._id}
-						socialIcon={item.platform}
+						// socialIcon={item.platform as any}
 						date={item.createdAt}
 						title={`${item.service} on ${item?.platform?.toUpperCase()} `}
 						adperPostAmt={`${item.costPerTask} Per Ad`}
 						roi={item.desiredROI}
 						adBudget={item.adAmount}
-						tasks={item.tasks}
+						// tasks={item.tasks}
 						adService={item.service}
 						status={item.status}
-						adDesc={item.caption}
-						state={item.state}
-						lga={item.lga}
-						religion={item.religion}
+						// adDesc={item.caption}
+						// state={item.state}
+						// lga={item.lga}
+						// religion={item.religion}
 						item={item}
 						url={item.socialPageLink}
 						//taskPerformers={item.taskPerformers}

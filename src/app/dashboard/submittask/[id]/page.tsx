@@ -1,31 +1,25 @@
 'use client'
 
-import React from 'react'
-import { useState } from 'react'
-import { toast } from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import {
-	handleSubmitTask,
-	selectTasks,
-	selectIsLoading,
-	selectIsError,
-	selectIsSuccess,
-	handleGetUserTasks,
-	handleGetTasks,
-} from '@/redux/slices/taskSlice'
-import { selectUser, selectUserId } from '@/redux/slices/authSlice'
-import { useEffect } from 'react'
+import TaskPerform from '@/components/dashboard/TaskPerform'
 import { icons } from '@/components/data/socialIcon'
-import { BACKEND_URL } from '@/utils/globalConfig'
 import Loader from '@/components/loader/Loader'
-import { submitTask } from '@/services/taskServices'
 import {
 	handleGetALLUserAdverts,
 	selectAllAdverts,
 } from '@/redux/slices/advertSlice'
-import TaskPerform from '@/components/dashboard/TaskPerform'
-import { io } from 'socket.io-client'
+import { selectUser } from '@/redux/slices/authSlice'
+import {
+	handleGetUserTasks,
+	selectIsError,
+	selectTasks,
+} from '@/redux/slices/taskSlice'
+import { submitTask } from '@/services/taskServices'
+import { BACKEND_URL } from '@/utils/globalConfig'
 import { useRouter } from 'next/navigation'
+import { Suspense, useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
+import { io } from 'socket.io-client'
 
 const socket = io(`${BACKEND_URL}`)
 
@@ -156,24 +150,27 @@ const TaskSubmit = ({ params }: { params: { taskId: string } }) => {
 	}
 
 	return (
-		<div className='w-full h-fit'>
-			<Loader open={isLoading} />
+		<Suspense>
+			<div className='w-full h-fit'>
+				<Loader open={isLoading} />
 
-			<TaskPerform
-				taskId={params.taskId!}
-				// newTask= {task}
-				ad={ad!}
-				isLoading={isLoading}
-				icons={icons}
-				taskSubmitted={taskSubmitted}
-				userSocialName={userSocialName}
-				selectedImages={selectedImages}
-				handleOnSubmit={handleOnSubmit}
-				handleInputChange={handleInputChange}
-				handleImageChange={handleImageChange}
-				handleImageRemove={handleImageRemove}
-			/>
-		</div>
+				<TaskPerform
+					taskId={params.taskId!}
+					onClose={() => null}
+					// newTask= {task}
+					ad={ad!}
+					isLoading={isLoading}
+					icons={icons}
+					taskSubmitted={taskSubmitted}
+					userSocialName={userSocialName}
+					selectedImages={selectedImages}
+					handleOnSubmit={handleOnSubmit}
+					handleInputChange={handleInputChange}
+					handleImageChange={handleImageChange}
+					handleImageRemove={handleImageRemove}
+				/>
+			</div>
+		</Suspense>
 	)
 }
 

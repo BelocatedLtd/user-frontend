@@ -37,7 +37,7 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 			path: `/dashboard`,
 		},
 		{
-			title: 'My Campaignsssx',
+			title: 'My Campaigns',
 			icon: <SiGoogleads className='md:mr-2 text-[15px] md:text-[24px]' />,
 			path: '/dashboard/campaign-stats',
 		},

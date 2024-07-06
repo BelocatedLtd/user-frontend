@@ -38,14 +38,35 @@ const Header = () => {
 	}
 
 	return (
-		<header className='w-full border-b border-gray-200'>
-			<div className='md:ml-5 py-6  flex justify-between items-center mx-auto md:px-2'>
-				<div className='cursor-pointer text-secondary'>
-					<Image
-						src={logo}
-						alt='logo'
-						className='md:w-40 w-24 object-contain'
-					/>
+		<header className='container w-full px-3 border-b border-gray-200'>
+			<div className='md:ml-5 py-6 w-full flex justify-between items-center mx-auto md:px-2'>
+				<div className='cursor-pointer w-full text-secondary'>
+					<div className='flex  w-full justify-between items-center'>
+						<Image
+							src={logo}
+							alt='logo'
+							className='md:w-40 -ml-2 w-24 object-contain'
+						/>
+						<div className='relative md:hidden'>
+							<div>
+								{mobileMenuOpen && (
+									<MdOutlineCancel
+										onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+										size={30}
+										className='text-gray-600'
+									/>
+								)}
+								{!mobileMenuOpen && (
+									<MdMenu
+										onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+										size={30}
+										className='text-gray-600'
+									/>
+								)}
+							</div>
+						</div>
+					</div>
+
 					{/* <span className='text-tertiary'>Be</span>located */}
 					<div className='flex flex-col justify-start md:hidden'>
 						<div className='flex items-center gap-1'>
@@ -105,27 +126,8 @@ const Header = () => {
 					<Logout /> */}
 				</div>
 
-				<div className='relative md:hidden'>
-					<div>
-						{mobileMenuOpen && (
-							<MdOutlineCancel
-								onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-								size={30}
-								className='text-gray-600'
-							/>
-						)}
-						{!mobileMenuOpen && (
-							<MdMenu
-								onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-								size={30}
-								className='text-gray-600'
-							/>
-						)}
-					</div>
-				</div>
-
 				{mobileMenuOpen && (
-					<div className='absolute z-10 w-full right-0 left-0 shadow-xl top-[6rem] py-[5rem] p-[1.5rem] bg-primary rounded-sm'>
+					<div className='absolute z-10 w-full right-0 left-0 shadow-xl top-[4rem] py-[5rem] p-[1.5rem] bg-primary rounded-sm'>
 						{/* Mobile Dropdown Menu for ordinary Users */}
 						<>
 							{user?.accountType === 'User' && (
@@ -143,7 +145,7 @@ const Header = () => {
 									<ShowOnLogin>
 										<Link href={'/dashboard/update-profile'}>Settings</Link>
 										<Link
-											href={`/dashboard/${user?.username}`}
+											href={`/dashboard`}
 											className='text-gray-800 cursor-pointer'>
 											Dashboard
 										</Link>

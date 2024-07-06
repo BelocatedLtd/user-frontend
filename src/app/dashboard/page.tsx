@@ -18,7 +18,7 @@ import { FaCopy } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Dashboard = () => {
-	const inputRef = useRef(null)
+	const inputRef = useRef<HTMLInputElement>(null)
 	const router = useRouter()
 	const dispatch = useDispatch()
 	const [profile, setProfile] = useState(null)
@@ -71,7 +71,7 @@ const Dashboard = () => {
 		setRefLink(`https://${frontEndUrl}?ref=${user?.username}`)
 	}, [dispatch])
 
-	const handleEarn = (e) => {
+	const handleEarn = (e: any) => {
 		e.preventDefault()
 		if (user?.accountStatus === 'Suspended') {
 			toast.error(
@@ -92,7 +92,7 @@ const Dashboard = () => {
 			router.push('/dashboard/earn')
 	}
 
-	const handleAdvertise = (e) => {
+	const handleAdvertise = (e: any) => {
 		e.preventDefault()
 		if (!user.location || !user.community || !user.gender) {
 			toast.error('Please, complete your profile before you can create Adverts')
@@ -108,9 +108,9 @@ const Dashboard = () => {
 	}
 
 	return (
-		<div className='w-full h-fit'>
+		<div className='container w-full h-fit'>
 			<div className='justify-between mx-auto md:mr-3'>
-				<div className='md:flex mb-10 items-center justify-between'>
+				<div className='md:flex mb-10 px-3 items-center justify-between'>
 					<div>
 						<h2 className='mt-1 font-medium text-lg'>
 							Welcome, {user?.fullname ? user?.fullname : user?.username}

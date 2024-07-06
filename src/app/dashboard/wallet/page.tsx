@@ -16,7 +16,7 @@ import { getUserWallet, selectUserWallet } from '@/redux/slices/walletSlice'
 import { toNaira } from '@/utils/payment'
 import { Modal } from '@mui/material'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
 import { FaCircleMinus } from 'react-icons/fa6'
@@ -42,7 +42,7 @@ const TransHistory = () => {
 
 	useEffect(() => {
 		const getTransactions = async () => {
-			await dispatch(handleGetUserTransactions(user?.token) as any)
+			await dispatch(handleGetUserTransactions() as any)
 		}
 		getTransactions()
 		dispatch(getUserWallet() as any)
@@ -54,105 +54,107 @@ const TransHistory = () => {
 	}, [])
 
 	return (
-		<div className='w-full h-fit'>
-			<Loader open={isLoading} />
-			<div className='md:flex items-center justify-between gap-3  py-5'>
-				<div>
-					<h2 className='mt-1 font-semibold text-xl text-gray-700'>
-						My Wallet
-					</h2>
-				</div>
-				<div className='flex gap-3 mt-2 md:mt-0'>
-					<button
-						onClick={() => setIsOpen(true)}
-						className='flex items-center gap-2 bg-green-600 text-primary rounded-full px-5 py-2 text-[12px] md:text-[15px]'>
-						<BsFillPlusCircleFill />
-						Fund Wallet
-					</button>
-					<button
-						onClick={handleWithdrawFunds}
-						className='flex items-center gap-2 bg-tertiary text-primary rounded-full px-5 py-2 text-[12px] md:text-[15px]'>
-						<FaCircleMinus />
-						Withdraw
-					</button>
-				</div>
-			</div>
-
-			<div className='flex items-center justify-center gap-4 mt-2'>
-				<div className='border w-full flex-col text-center items-center justify-center py-8 space-y-2 rounded-lg border-gray-200'>
-					<p>Total Earnings</p>
+		<Suspense>
+			<div className='w-full h-fit'>
+				<Loader open={isLoading} />
+				<div className='md:flex items-center justify-between gap-3  py-5'>
 					<div>
-						<strong className='text-xl md:text-3xl'>
-							{toNaira(wallet.totalEarning)}
-						</strong>
+						<h2 className='mt-1 font-semibold text-xl text-gray-700'>
+							My Wallet
+						</h2>
 					</div>
-				</div>
-				<div className='border w-full flex-col text-center items-center justify-center py-8 space-y-2 rounded-lg border-gray-200'>
-					<p>Wallet Balance</p>
-					<div>
-						<strong className='text-xl md:text-3xl'>
-							{toNaira(wallet.value)}
-						</strong>
-					</div>
-				</div>
-			</div>
-
-			<hr className='mt-5' />
-
-			<div className='flex items-center justify-between gap-3 py-5'>
-				<div className='flex items-center'>
-					{/* <BackButton /> */}
-					<div className='flex flex-col'>
-						<p className='font-semibold text-xl text-gray-700'>
-							My Transactions
-						</p>
-						<small className='font-medium text-gray-500'>
-							Click <span className='text-secondary'>here</span> to see and
-							monitor your adverts
-						</small>
+					<div className='flex gap-3 mt-2 md:mt-0'>
+						<button
+							onClick={() => setIsOpen(true)}
+							className='flex items-center gap-2 bg-green-600 text-primary rounded-full px-5 py-2 text-[12px] md:text-[15px]'>
+							<BsFillPlusCircleFill />
+							Fund Wallet
+						</button>
+						<button
+							onClick={handleWithdrawFunds}
+							className='flex items-center gap-2 bg-tertiary text-primary rounded-full px-5 py-2 text-[12px] md:text-[15px]'>
+							<FaCircleMinus />
+							Withdraw
+						</button>
 					</div>
 				</div>
 
-				<small className='hidden md:flex h-6 w-10 items-center justify-center bg-secondary rounded-full  text-primary'>
-					{transactions.length}
-				</small>
-				{/* <button className='flex items-center gap-1 bg-secondary text-primary rounded-full px-5 py-2 mr-5 text-[12px] md:text-[15px]'>
+				<div className='flex items-center justify-center gap-4 mt-2'>
+					<div className='border w-full flex-col text-center items-center justify-center py-8 space-y-2 rounded-lg border-gray-200'>
+						<p>Total Earnings</p>
+						<div>
+							<strong className='text-xl md:text-3xl'>
+								{toNaira(wallet.totalEarning?.toString() || '0')}
+							</strong>
+						</div>
+					</div>
+					<div className='border w-full flex-col text-center items-center justify-center py-8 space-y-2 rounded-lg border-gray-200'>
+						<p>Wallet Balance</p>
+						<div>
+							<strong className='text-xl md:text-3xl'>
+								{toNaira(wallet.value?.toString() || '0')}
+							</strong>
+						</div>
+					</div>
+				</div>
+
+				<hr className='mt-5' />
+
+				<div className='flex items-center justify-between gap-3 py-5'>
+					<div className='flex items-center'>
+						{/* <BackButton /> */}
+						<div className='flex flex-col'>
+							<p className='font-semibold text-xl text-gray-700'>
+								My Transactions
+							</p>
+							<small className='font-medium text-gray-500'>
+								Click <span className='text-secondary'>here</span> to see and
+								monitor your adverts
+							</small>
+						</div>
+					</div>
+
+					<small className='hidden md:flex h-6 w-10 items-center justify-center bg-secondary rounded-full  text-primary'>
+						{transactions.length}
+					</small>
+					{/* <button className='flex items-center gap-1 bg-secondary text-primary rounded-full px-5 py-2 mr-5 text-[12px] md:text-[15px]'>
 					<BsFillPlusCircleFill />
 					Transactions
 				</button> */}
-			</div>
+				</div>
 
-			<div>
-				<TransactionList />
-			</div>
+				<div>
+					<TransactionList />
+				</div>
 
-			<Modal
-				open={isOpen}
-				onClose={() => setIsOpen(false)}
-				aria-labelledby='modal-modal-title'
-				aria-describedby='modal-modal-description'>
-				<FundingForm
+				<Modal
+					open={isOpen}
+					onClose={() => setIsOpen(false)}
+					aria-labelledby='modal-modal-title'
+					aria-describedby='modal-modal-description'>
+					<FundingForm
+						onClose={() => {
+							setIsOpen(false)
+							dispatch(getUserWallet() as any)
+							dispatch(handleGetUserTransactions() as any)
+						}}
+					/>
+				</Modal>
+				<Modal
+					open={openWithdraw}
 					onClose={() => {
-						setIsOpen(false)
-						dispatch(getUserWallet() as any)
-						dispatch(handleGetUserTransactions(user?.token) as any)
+						setOpenWithdraw(false)
 					}}
-				/>
-			</Modal>
-			<Modal
-				open={openWithdraw}
-				onClose={() => {
-					setOpenWithdraw(false)
-				}}
-				aria-labelledby='modal-modal-title'
-				aria-describedby='modal-modal-description'>
-				<WithdrawalForm
-					handleWithdrawFunds={handleWithdrawFunds}
-					wallet={wallet}
-					user={user}
-				/>
-			</Modal>
-		</div>
+					aria-labelledby='modal-modal-title'
+					aria-describedby='modal-modal-description'>
+					<WithdrawalForm
+						handleWithdrawFunds={handleWithdrawFunds}
+						wallet={wallet}
+						user={user}
+					/>
+				</Modal>
+			</div>
+		</Suspense>
 	)
 }
 

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { getUser, updateUser } from '../../services/authServices'
 import { toast } from 'react-hot-toast'
+import { getUser, updateUser } from '../../services/authServices'
 
 // Utility function to check if we're running on the client side
 const isBrowser = typeof window !== 'undefined'
@@ -120,10 +120,6 @@ const authSlice = createSlice({
 				state.isError = false
 				state.user = action.payload
 				toast.success('User Details Fetched!')
-				if (!action.payload?.isKycDone) {
-					router.push(`/kyc`)
-					// setProfileComplete(true)
-				}
 			})
 			.addCase(fetchUserDetails.rejected, (state, action) => {
 				state.isLoading = false

@@ -1,11 +1,11 @@
 'use client'
-import React, { useEffect } from 'react'
+import { selectUser } from '@/redux/slices/authSlice'
+import { useRouter } from 'next/navigation'
+import { Suspense, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import Jumbotron from '../components/home/Jumbotron'
 import MembersTab from '../components/home/MembersTab'
 import Services from '../components/home/Services'
-import { useRouter } from 'next/navigation'
-import { selectUser } from '@/redux/slices/authSlice'
-import { useSelector } from 'react-redux'
 
 export default function Home() {
 	const router = useRouter()
@@ -20,7 +20,7 @@ export default function Home() {
 	}, [])
 
 	return (
-		<div>
+		<Suspense>
 			<Jumbotron
 			// handleRegister={handleRegister}
 			// handleLogin={handleLogin}
@@ -32,6 +32,6 @@ export default function Home() {
 			/>
 			<Services />
 			{/* <About /> */}
-		</div>
+		</Suspense>
 	)
 }

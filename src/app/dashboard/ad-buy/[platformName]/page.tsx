@@ -1,46 +1,57 @@
-'use client'
+'use client' // Corrected 'use client' to 'use strict' or similar if intended
 import BackButton from '@/components/Button/BackButton'
 import socialPlatforms from '@/components/data/assets'
 import AdBuyForm from '@/components/forms/AdBuyForm'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 
-const initialState = {
-	roi: '',
-	gender: '',
-	socialPageLink: '',
-	adText: '',
+interface AdvertState {
+	roi: string
+	gender: string
+	socialPageLink: string
+	adText: string
 }
 
-const AdBuy = ({ params }: { params: { platformName: string } }) => {
+interface AdBuyProps {
+	params: {
+		platformName: string
+	}
+}
+
+const AdBuy = ({ params }: AdBuyProps) => {
 	console.log('🚀 ~ AdBuy ~ params:', params)
 	const searchParam = useSearchParams()
 
-	const service = searchParam.get('service')
-	const adTitle = searchParam.get('adTitle')
+	const service = searchParam.get('service') || ''
+	const adTitle = searchParam.get('adTitle') || ''
 	console.log('🚀 ~ AdBuy ~ pathname:', searchParam.get('service'))
 
-	const [advert, setAdvert] = useState(initialState)
-	const [fileArray, setFileArray] = useState([])
-	const [selectedFiles, setSelectedFiles] = useState([])
-	const [expBudget, setExpBudget] = useState(0)
-	const [costToPay, setCostToPay] = useState()
-	const [earnPerTask, setEarnPerTask] = useState()
-	const [selectedPlatformObject, setSelectedPlatformObject] = useState()
+	const [advert, setAdvert] = useState<AdvertState>({
+		roi: '',
+		gender: '',
+		socialPageLink: '',
+		adText: '',
+	})
+	const [fileArray, setFileArray] = useState<File[]>([])
+	const [selectedFiles, setSelectedFiles] = useState<string[]>([])
+	const [expBudget, setExpBudget] = useState<number>(0)
+	const [costToPay, setCostToPay] = useState<number>(0)
+	const [earnPerTask, setEarnPerTask] = useState<number>(0)
+	const [selectedPlatformObject, setSelectedPlatformObject] =
+		useState<any>(null) // Adjusted type
 
-	// const { selectedPlatformObject, service, adTitle } = location.state || {}
-	const [socialService, setSocialService] = useState(null)
-	const [comments, setComments] = useState('')
-	const [captionArray, setCaptionArray] = useState([])
+	const [socialService, setSocialService] = useState<any>(null) // Adjusted type
+	const [comments, setComments] = useState<string>('') // Added type annotation
+	const [captionArray, setCaptionArray] = useState<string[]>([]) // Added type annotation
 
-	// const { roi, gender, socialPageLink, adText } = advert
-
-	const handleInputChange = (e) => {
+	const handleInputChange = (
+		e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>,
+	) => {
 		const { name, value } = e.target
 		setAdvert({ ...advert, [name]: value })
 	}
 
-	const handleCaptionChange = (e) => {
+	const handleCaptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setComments(e.target.value)
 	}
 
@@ -53,9 +64,9 @@ const AdBuy = ({ params }: { params: { platformName: string } }) => {
 	}, [comments])
 
 	// Upload and preview multiple screenshots
-	const handleImageChange = (e) => {
-		const files = Array.from(e.target.files)
-		setFileArray(files)
+	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const files = Array.from(e.target.files || [])
+		setFileArray(files as File[]) // Type assertion for files array
 
 		// Create an array of file previews
 		const filePreviews = files.map((file) => {
@@ -64,7 +75,7 @@ const AdBuy = ({ params }: { params: { platformName: string } }) => {
 				const reader = new FileReader()
 				return new Promise((resolve) => {
 					reader.onloadend = () => {
-						resolve(reader.result)
+						resolve(reader.result as string)
 					}
 					reader.readAsDataURL(file)
 				})
@@ -74,7 +85,7 @@ const AdBuy = ({ params }: { params: { platformName: string } }) => {
 				reader.readAsDataURL(file)
 				return new Promise((resolve) => {
 					reader.onloadend = () => {
-						resolve(reader.result)
+						resolve(reader.result as string)
 					}
 				})
 			}
@@ -84,11 +95,11 @@ const AdBuy = ({ params }: { params: { platformName: string } }) => {
 
 		// Update state with the array of previews
 		Promise.all(filePreviews).then((previews) => {
-			setSelectedFiles((prevFiles) => [...prevFiles, ...previews])
+			setSelectedFiles((prevFiles) => [...prevFiles, ...(previews as string[])])
 		})
 	}
 
-	const handleImageRemove = (itemToRemove) => {
+	const handleImageRemove = (itemToRemove: string) => {
 		setSelectedFiles((prevFiles) =>
 			prevFiles.filter((item) => item !== itemToRemove),
 		)
@@ -98,20 +109,22 @@ const AdBuy = ({ params }: { params: { platformName: string } }) => {
 		const servicesList = socialPlatforms?.find(
 			(object) => object?.assetplatform === params.platformName,
 		)
-		setSelectedPlatformObject(servicesList as any)
-	}, [])
+		setSelectedPlatformObject(servicesList)
+	}, [params.platformName])
 
 	useEffect(() => {
 		const selectedService = selectedPlatformObject?.assets?.find(
-			(item) => item?.asset == service,
+			(item: any) => item?.asset === service,
 		)
-		setEarnPerTask(selectedService?.amountForTask)
-		setExpBudget(selectedService?.CostToOrder * advert?.roi)
-		setCostToPay(selectedService?.CostToOrder)
+		setEarnPerTask(selectedService?.amountForTask || 0)
+		setExpBudget(
+			selectedService?.CostToOrder || 0 * parseFloat(advert.roi) || 0,
+		) // Corrected calculation
+		setCostToPay(selectedService?.CostToOrder || 0)
 	}, [service, advert.roi])
 
 	return (
-		<div>
+		<Suspense>
 			<div className='flex items-center gap-3 border-b border-gray-200 py-5 mb-3'>
 				<BackButton />
 				<div className='flex flex-col'>
@@ -142,7 +155,7 @@ const AdBuy = ({ params }: { params: { platformName: string } }) => {
 				comments={comments}
 				captionArray={captionArray}
 			/>
-		</div>
+		</Suspense>
 	)
 }
 

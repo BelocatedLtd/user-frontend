@@ -12,7 +12,7 @@ import tiktok from '@/assets/animated icons/tiktok.gif'
 import twitter from '@/assets/animated icons/twitter.gif'
 import whatsapp from '@/assets/animated icons/whatsapp.gif'
 import youtube from '@/assets/animated icons/youtube.svg'
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 
 import BackButton from '@/components/Button/BackButton'
 import ConfirmationModal from '@/components/ConfirmationModal'
@@ -244,145 +244,147 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 	}
 
 	return (
-		<div className='w-full h-fit'>
-			<Loader open={isLoading} />
-			<div>
-				<div className='flex items-center gap-3 border-b border-gray-200 py-5'>
-					<BackButton />
-					<div className='flex flex-col'>
-						<p className='font-semibold text-xl text-gray-700'>
-							Perform Social Tasks on {params.platformName} and Earn Money
-						</p>
-						<small className='font-medium text-gray-500'>
-							Click{' '}
-							<span
-								onClick={() => router.push(`/dashboard/tasks/${user?.id}`)}
-								className='text-secondary'>
-								here
-							</span>{' '}
-							to see and monitor your Tasks
-						</small>
+		<Suspense>
+			<div className='w-full h-fit'>
+				<Loader open={isLoading} />
+				<div>
+					<div className='flex items-center gap-3 border-b border-gray-200 py-5'>
+						<BackButton />
+						<div className='flex flex-col'>
+							<p className='font-semibold text-xl text-gray-700'>
+								Perform Social Tasks on {params.platformName} and Earn Money
+							</p>
+							<small className='font-medium text-gray-500'>
+								Click{' '}
+								<span
+									onClick={() => router.push(`/dashboard/tasks/${user?.id}`)}
+									className='text-secondary'>
+									here
+								</span>{' '}
+								to see and monitor your Tasks
+							</small>
+						</div>
 					</div>
-				</div>
 
-				<div className='flex items-center gap-3 border-b border-gray-200'>
-					<p className='font-normal text-[14px] text-gray-700 p-6 w-1/2'>
-						Earn by posting adverts and performing simple tasks on your social
-						media.
-						{/* You have{' '} */}
-						{/* <span className='text-tertiary font-bold'>
+					<div className='flex items-center gap-3 border-b border-gray-200'>
+						<p className='font-normal text-[14px] text-gray-700 p-6 w-1/2'>
+							Earn by posting adverts and performing simple tasks on your social
+							media.
+							{/* You have{' '} */}
+							{/* <span className='text-tertiary font-bold'>
 							({finalFilteredTasks?.length})
 						</span>{' '}
 						tasks available on {params.platformName}. Click below to start. */}
-					</p>
+						</p>
+					</div>
 				</div>
-			</div>
 
-			<div className='mt-3 md:mt-8 grid grid-cols-3 gap-8 '>
-				{finalFilteredTasks?.map((task: any, index) => {
-					const status = tasks?.find(
-						(task) =>
-							task.taskPerformerId === user.id && task.advertId === task._id,
-					)?.status
+				<div className='mt-3 md:mt-8 grid grid-cols-3 gap-8 '>
+					{finalFilteredTasks?.map((task: any, index) => {
+						const status = tasks?.find(
+							(task) =>
+								task.taskPerformerId === user.id && task.advertId === task._id,
+						)?.status
 
-					return (
-						<div
-							key={index}
-							onClick={() => handleSelect(task._id)}
-							className='w-full cursor-pointer hover:shadow flex flex-col md:flex-row  md:items-center justify-between md:px-8 md:py-6 border rounded-lg'>
-							<div className='w-full fle flex-col  py-2 gap-2 md:items-center md:flex-row'>
-								<div className=' md:flex '>
-									{/* <Image
+						return (
+							<div
+								key={index}
+								onClick={() => handleSelect(task._id)}
+								className='w-full cursor-pointer hover:shadow flex flex-col md:flex-row  md:items-center justify-between md:px-8 md:py-6 border rounded-lg'>
+								<div className='w-full fle flex-col  py-2 gap-2 md:items-center md:flex-row'>
+									<div className=' md:flex '>
+										{/* <Image
 									alt={params.platformName}
 									src={icon!}
 									className='hidden md:flex'
 								/> */}
-									<Image
-										src={icon!}
-										alt={params.platformName}
-										className='w-16 h-16'
-									/>
-									{/* Ad details to perform as Task */}
-									<div className='flex flex-col gap-[0.3rem] ml-3'>
-										<small className=' text-[9px] '>
-											<TimeAgo datetime={task.createdAt} />
-										</small>
+										<Image
+											src={icon!}
+											alt={params.platformName}
+											className='w-16 h-16'
+										/>
+										{/* Ad details to perform as Task */}
+										<div className='flex flex-col gap-[0.3rem] ml-3'>
+											<small className=' text-[9px] '>
+												<TimeAgo datetime={task.createdAt} />
+											</small>
 
-										<h4 className='text-gray-600 flex text-[15px] md:text-[18px] font-bold p-0  border-gray-200 pb-2'>
-											<p className='w-1/8'>{task?.adTitle}</p>
+											<h4 className='text-gray-600 flex text-[15px] md:text-[18px] font-bold p-0  border-gray-200 pb-2'>
+												<p className='w-1/8'>{task?.adTitle}</p>
 
-											<span>{toIntlCurrency(task?.earnPerTask)}</span>
-										</h4>
-										{/* <small className='text-gray-600 text-[12px] mb-[1rem]'>
+												<span>{toIntlCurrency(task?.earnPerTask)}</span>
+											</h4>
+											{/* <small className='text-gray-600 text-[12px] mb-[1rem]'>
 										<span className='font-bold'>To Earn:</span> ₦
 										{task?.earnPerTask}
 									</small> */}
+										</div>
 									</div>
-								</div>
-								<hr />
+									<hr />
 
-								<div className='w-full flex flex-col mt-3'>
-									{/* Demographics and platform and create task button */}
-									<div className='flex flex-col w-full gap-3 md:flex-row'>
-										<div className='flex w-full justify-between items-center gap-[2rem]'>
-											<ul className='grid  grid-cols-4 gap-3 text-[12px] font-light'>
-												<li>
-													<span className='font-bold'>State:</span> {task.state}
-												</li>
-												<li>
-													<span className='font-bold'>LGA:</span> {task.lga}
-												</li>
-
-												{status && (
+									<div className='w-full flex flex-col mt-3'>
+										{/* Demographics and platform and create task button */}
+										<div className='flex flex-col w-full gap-3 md:flex-row'>
+											<div className='flex w-full justify-between items-center gap-[2rem]'>
+												<ul className='grid  grid-cols-4 gap-3 text-[12px] font-light'>
 													<li>
-														<span className='font-bold'>Status:</span>{' '}
+														<span className='font-bold'>State:</span>{' '}
+														{task.state}
+													</li>
+													<li>
+														<span className='font-bold'>LGA:</span> {task.lga}
+													</li>
+
+													{status && (
+														<li>
+															<span className='font-bold'>Status:</span>{' '}
+															<span
+																className={cn(
+																	'p-2 text-xs ml-2 text-white rounded-full',
+																	getStatusBgColor(status),
+																)}>
+																{status}
+															</span>
+														</li>
+													)}
+													<li className='font-bold'>
+														{' '}
+														{/* <span className='font-bold'>Fee:</span>{' '} */}
+														{task.isFree ? 'Free' : 'Paid'}
+													</li>
+													{task.socialPageLink ? (
+														<li className='flex col-span-4  w-full'>
+															<span className='font-bold'>Link:</span>{' '}
+															<a
+																href={task.socialPageLink}
+																className='text-blue-600 ml-2'>
+																{task.socialPageLink}
+															</a>
+														</li>
+													) : (
+														''
+													)}
+													<li className='bg-red- text-sm col-span-4'>
 														<span
 															className={cn(
-																'p-2 text-xs ml-2 text-white rounded-full',
-																getStatusBgColor(status),
+																'font-bold',
+																task.availableTasks > 4
+																	? 'text-green-600'
+																	: 'text-red-600',
 															)}>
-															{status}
+															{task.availableTasks}{' '}
 														</span>
+														tasks left to perform
 													</li>
-												)}
-												<li className='font-bold'>
-													{' '}
-													{/* <span className='font-bold'>Fee:</span>{' '} */}
-													{task.isFree ? 'Free' : 'Paid'}
-												</li>
-												{task.socialPageLink ? (
-													<li className='flex col-span-4  w-full'>
-														<span className='font-bold'>Link:</span>{' '}
-														<a
-															href={task.socialPageLink}
-															className='text-blue-600 ml-2'>
-															{task.socialPageLink}
-														</a>
-													</li>
-												) : (
-													''
-												)}
-												<li className='bg-red- text-sm col-span-4'>
-													<span
-														className={cn(
-															'font-bold',
-															task.availableTasks > 4
-																? 'text-green-600'
-																: 'text-red-600',
-														)}>
-														{task.availableTasks}{' '}
-													</span>
-													tasks left to perform
-												</li>
-											</ul>
+												</ul>
 
-											{/* Button */}
-											{/* <div className='hidden w-[30%] md:flex md:justify-end'>
+												{/* Button */}
+												{/* <div className='hidden w-[30%] md:flex md:justify-end'>
 												{checkTaskExistence(task._id)}
 											</div> */}
-										</div>
+											</div>
 
-										{/* <div className='md:hidden w-fit flex gap-3 items-center md:mt-0 md:w-full md:justify-end'>
+											{/* <div className='md:hidden w-fit flex gap-3 items-center md:mt-0 md:w-full md:justify-end'>
 											<Image
 												src={icon!}
 												alt={params.platformName}
@@ -390,32 +392,33 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 											/>
 											{checkTaskExistence(task._id)}
 										</div> */}
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					)
-				})}
-			</div>
-			<ConfirmationModal
-				open={isModalOpen}
-				title='Perform task'
-				message='Are you sure you want to perform this task?'
-				onClose={handleCloseModal}
-				onConfirm={handleConfirm}
-			/>
-
-			<Modal
-				open={isOpen}
-				onClose={() => setIsOpen(false)}
-				aria-labelledby='modal-modal-title'
-				aria-describedby='modal-modal-description'>
-				<TaskSubmit
-					onClose={() => setIsOpen(false)}
-					taskId={selectedAdvertId!}
+						)
+					})}
+				</div>
+				<ConfirmationModal
+					open={isModalOpen}
+					title='Perform task'
+					message='Are you sure you want to perform this task?'
+					onClose={handleCloseModal}
+					onConfirm={handleConfirm}
 				/>
-			</Modal>
-		</div>
+
+				<Modal
+					open={isOpen}
+					onClose={() => setIsOpen(false)}
+					aria-labelledby='modal-modal-title'
+					aria-describedby='modal-modal-description'>
+					<TaskSubmit
+						onClose={() => setIsOpen(false)}
+						taskId={selectedAdvertId!}
+					/>
+				</Modal>
+			</div>
+		</Suspense>
 	)
 }
 

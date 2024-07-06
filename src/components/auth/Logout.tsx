@@ -1,13 +1,11 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { SET_LOGOUT } from '../../redux/slices/authSlice'
-import { useNavigate } from 'react-router-dom'
-import Loader from '../loader/Loader'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
 import useRedirectLoggedOutUser from '../../customHook/useRedirectLoggedOutUser'
+import { SET_LOGOUT } from '../../redux/slices/authSlice'
 import Button from '../Button'
-import { useRouter } from 'next/navigation'
+import Loader from '../loader/Loader'
 
 const Logout = () => {
 	const dispatch = useDispatch()
@@ -22,7 +20,7 @@ const Logout = () => {
 			router.push('/')
 			toast.success('User successfully logged out')
 			setIsLoading(false)
-		} catch (error) {
+		} catch (error: any) {
 			setIsLoading(false)
 			toast.error(error)
 		}

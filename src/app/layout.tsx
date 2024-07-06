@@ -10,6 +10,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar'
 import { usePathname } from 'next/navigation'
 import Script from 'next/script'
+import { Suspense } from 'react'
 import { Toaster } from 'react-hot-toast'
 import './index.css'
 
@@ -31,27 +32,28 @@ export default function RootLayout({
 	const shouldRender = shouldRenderComponents(pathname, exclusions)
 
 	return (
-		<html lang='en' className={`font-sans`}>
-			<head>{/* Add your head content here */}</head>
-			<body>
-				<ReduxProvider>
-					{shouldRender && <Header />}
-					{children}
-					{shouldRender && <CallToAction />}
-					{shouldRender && <SubFooter />}
-					{shouldRender && <Footer />}
-				</ReduxProvider>
-				<ProgressBar
-					height='4px'
-					color='#1F9FDA'
-					options={{ showSpinner: true }}
-					shallowRouting
-				/>
-				<Analytics />
-				<SpeedInsights />
-				<Script
-					dangerouslySetInnerHTML={{
-						__html: `
+		<Suspense>
+			<html lang='en' className={`font-sans`}>
+				<head>{/* Add your head content here */}</head>
+				<body>
+					<ReduxProvider>
+						{shouldRender && <Header />}
+						{children}
+						{shouldRender && <CallToAction />}
+						{shouldRender && <SubFooter />}
+						{shouldRender && <Footer />}
+					</ReduxProvider>
+					<ProgressBar
+						height='4px'
+						color='#1F9FDA'
+						options={{ showSpinner: true }}
+						shallowRouting
+					/>
+					<Analytics />
+					<SpeedInsights />
+					<Script
+						dangerouslySetInnerHTML={{
+							__html: `
               var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
               (function(){
               var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
@@ -62,10 +64,11 @@ export default function RootLayout({
               s0.parentNode.insertBefore(s1,s0);
               })();
             `,
-					}}
-				/>
-				<Toaster />
-			</body>
-		</html>
+						}}
+					/>
+					<Toaster />
+				</body>
+			</html>
+		</Suspense>
 	)
 }

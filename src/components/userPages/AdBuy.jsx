@@ -33,7 +33,7 @@ const AdBuy = () => {
     const {roi, gender, socialPageLink, adText } = advert
 
     const handleInputChange = (e) => {
-        const {name, value } = e.target;∏
+        const {name, value } = e.target;
         setAdvert({ ...advert, [name]: value })
       }
 
