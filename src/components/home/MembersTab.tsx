@@ -1,18 +1,17 @@
-import React from 'react'
+import advertisers from '@/assets/advertisers.png'
+import earners from '@/assets/earners.png'
+import Image from 'next/image'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/slices/authSlice'
-import earners from '@/assets/earners.png'
-import advertisers from '@/assets/advertisers.png'
-import Image from 'next/image'
 import Button from '../Button'
 
 const MembersTab = () => {
 	const user = useSelector(selectUser)
 	return (
-		<section className='w-full h-full mt-20 '>
+		<section className='w-full h- md:mt-20 '>
 			{/* {regBtn && <Register handleRegister={handleRegister} regBtn={regBtn} />} */}
 			<div className='flex flex-col items-center justify-center'>
-				<div className='flex flex-col md:flex-row md:items-center justify-center mx-[1.5rem] my-10 md:w-[90%] bg-red-3 md:h-[600px]'>
+				<div className='flex flex-col-reverse md:flex-row md:items-center justify-center mx-[1.5rem]  md:w-[80%] bg-red-3 md:h-[600px]'>
 					<div className='md:w-1/2'>
 						<h1 className='text-4xl text-gray-600 font-black'>Earners</h1>
 						<div className='mt-3'>
@@ -62,12 +61,13 @@ const MembersTab = () => {
 							</button>
 						</ShowOnLogin> */}
 				</div>
-				<div className='flex flex-col-reverse md:flex-row md:items-center md:text-right justify-center  mx-[1.5rem] w-[90%] bg-red-3 md:h-[600px]'>
+				<div className='flex flex-col my-10 md:my-0 md:flex-row md:items-center md:text-right justify-center  mx-[1.5rem] w-[80%] bg-red-3 md:h-[600px]'>
 					<Image
 						src={advertisers}
 						alt='Advertisers'
-						className='w-full h-full object-contain mt-10 md:mt-0'
+						className='md:w-full -ml-10 h-full object-contain md:mt-0'
 					/>
+
 					<div className='md:w-1/2 mt-6'>
 						<h1 className='text-4xl text-gray-600 font-black'>Advertisers </h1>
 						<p className='w-full text-gray-600 mt-3'>
