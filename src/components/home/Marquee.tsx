@@ -1,17 +1,16 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import { formatDistanceToNow } from 'date-fns'
+import { useEffect, useState } from 'react'
 import Marquee from 'react-fast-marquee'
 import { useDispatch, useSelector } from 'react-redux'
+import { io } from 'socket.io-client'
 import {
 	NEW_ACTIVITY,
 	handleGetAllActivities,
 	selectActivities,
 } from '../../redux/slices/feedSlice'
 import { BACKEND_URL } from '../../utils/globalConfig'
-import { formatDistanceToNow } from 'date-fns'
-import speaker from '@/assets/animated icons/speaker.gif'
-import { io } from 'socket.io-client'
 
 const socket = io(`${BACKEND_URL}`)
 
@@ -44,7 +43,7 @@ export default function Marqueez() {
 	}, [dispatch])
 
 	return (
-		<div className=' bg-primary-light text-gray-500'>
+		<div className=' bg-primary-light w-full text-gray-500'>
 			<Marquee pauseOnHover gradient gradientColor='#EBF4FF'>
 				{getCurrentPageData().map((item: any, index: number) => (
 					<div
