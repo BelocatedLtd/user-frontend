@@ -24,6 +24,11 @@ const EmailVerified = () => {
 		try {
 			const response = await emailVerified(token)
 
+			if (!response) {
+				toast.error('Internal server error')
+				return
+			}
+
 			if (response.isEmailVerified === false) {
 				setFormData(response)
 				toast.error('Invalid or Expired Verification Link. Please login.')
@@ -35,7 +40,7 @@ const EmailVerified = () => {
 			}
 		} catch (error) {
 			console.error('Error verifying email:', error)
-			// toast.error('Error verifying email. Please try again.')
+			toast.error('Error verifying email. Please try again.')
 		} finally {
 			setIsLoading(false)
 		}
@@ -69,7 +74,7 @@ const EmailVerified = () => {
 							variant='solid'
 							color='secondary'
 							onClick={handleLogin}
-							className='md:w-[60%] mt-1 rounded-xl'>
+							className='md:w-[60%] mt-1 py-2 text-md rounded-xl  text-gray-100 mb-5 '>
 							Login to Account
 						</Button>
 					</div>

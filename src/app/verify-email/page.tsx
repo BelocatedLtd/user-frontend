@@ -11,16 +11,9 @@ import {
 	FaWhatsapp,
 } from 'react-icons/fa'
 
-interface VerifyEmailProps {
-	email: string
-}
+const VerifyEmail = ({ params }: { params: { email: string } }) => {
+	const email = decodeURIComponent(params.email)
 
-const VerifyEmail = ({ email }: VerifyEmailProps) => {
-	// const email = decodeURIComponent(params.email)
-	console.log(
-		'🚀 ~ constgetServerSideProps:GetServerSideProps= ~ email:',
-		email,
-	)
 	const [isLoading, setIsLoading] = useState(false)
 	const [timer, setTimer] = useState(10)
 	const [resendBtn, setResendBtn] = useState(false)
@@ -145,25 +138,4 @@ const VerifyEmail = ({ email }: VerifyEmailProps) => {
 	)
 }
 
-import { GetServerSideProps } from 'next'
-
-interface VerifyEmailPageProps {
-	email: string
-}
-
-const VerifyEmailPage = ({ email }: VerifyEmailPageProps) => {
-	return <VerifyEmail email={email} />
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-	// const { email } = context.params
-
-	return {
-		props: {
-			// email: decodeURIComponent(email as string),
-			email: 'dayoo@gmail.com',
-		},
-	}
-}
-
-export default VerifyEmailPage
+export default VerifyEmail
