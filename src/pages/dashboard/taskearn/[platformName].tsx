@@ -35,20 +35,20 @@ import {
 } from '@/utils'
 import { Modal } from '@mui/material'
 import Image, { StaticImageData } from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import TimeAgo from 'timeago-react'
-import { cn } from '../../../../../helpers'
+import { cn } from '../../../../helpers'
 
-const TaskEarn = ({ params }: { params: { platformName: string } }) => {
-	console.log('🚀 ~ TaskEarn ~ parama:', params)
+const TaskEarn = () => {
+	const router = useRouter()
+
+	const platformName = router.query.platformName as string
 	const [isModalOpen, setModalOpen] = useState(false)
 
 	const [selectedTask, setSelectedTask] = useState<string>()
-
-	const router = useRouter()
 
 	const [isOpen, setIsOpen] = useState(false)
 
@@ -77,46 +77,46 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 	}, [dispatch])
 
 	useEffect(() => {
-		if (params.platformName === 'tiktok') {
+		if (platformName === 'tiktok') {
 			setIcon(tiktok)
 		}
-		if (params.platformName === 'facebook') {
+		if (platformName === 'facebook') {
 			setIcon(facebook)
 		}
-		if (params.platformName === 'twitter') {
+		if (platformName === 'twitter') {
 			setIcon(twitter)
 		}
-		if (params.platformName === 'instagram') {
+		if (platformName === 'instagram') {
 			setIcon(instagram)
 		}
-		if (params.platformName === 'linkedin') {
+		if (platformName === 'linkedin') {
 			setIcon(linkedin)
 		}
-		if (params.platformName === 'whatsapp') {
+		if (platformName === 'whatsapp') {
 			setIcon(whatsapp)
 		}
-		if (params.platformName === 'youtube') {
+		if (platformName === 'youtube') {
 			setIcon(youtube)
 		}
-		if (params.platformName === 'appstore') {
+		if (platformName === 'appstore') {
 			setIcon(appstore)
 		}
-		if (params.platformName === 'playstore') {
+		if (platformName === 'playstore') {
 			setIcon(playstore)
 		}
-		if (params.platformName === 'audiomack') {
+		if (platformName === 'audiomack') {
 			setIcon(audiomack)
 		}
-		if (params.platformName === 'spotify') {
+		if (platformName === 'spotify') {
 			setIcon(spotify)
 		}
-		if (params.platformName === 'boomplay') {
+		if (platformName === 'boomplay') {
 			setIcon(boomplay)
 		}
 
 		const fetchQualifiedAdverts = async () => {
 			try {
-				const data = await getQualifiedAdverts(params.platformName)
+				const data = await getQualifiedAdverts(platformName)
 				setFinalFilteredTasks(data)
 			} catch (error) {
 				console.error('Failed to fetch qualified adverts:', error)
@@ -252,7 +252,7 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 						<BackButton />
 						<div className='flex flex-col'>
 							<p className='font-semibold text-xl text-gray-700'>
-								Perform Social Tasks on {params.platformName} and Earn Money
+								Perform Social Tasks on {platformName} and Earn Money
 							</p>
 							<small className='font-medium text-gray-500'>
 								Click{' '}
@@ -274,7 +274,7 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 							{/* <span className='text-tertiary font-bold'>
 							({finalFilteredTasks?.length})
 						</span>{' '}
-						tasks available on {params.platformName}. Click below to start. */}
+						tasks available on {platformName}. Click below to start. */}
 						</p>
 					</div>
 				</div>
@@ -294,13 +294,13 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 								<div className='w-full fle flex-col  py-2 gap-2 md:items-center md:flex-row'>
 									<div className=' md:flex '>
 										{/* <Image
-									alt={params.platformName}
+									alt={platformName}
 									src={icon!}
 									className='hidden md:flex'
 								/> */}
 										<Image
 											src={icon!}
-											alt={params.platformName}
+											alt={platformName}
 											className='w-16 h-16'
 										/>
 										{/* Ad details to perform as Task */}
@@ -387,7 +387,7 @@ const TaskEarn = ({ params }: { params: { platformName: string } }) => {
 											{/* <div className='md:hidden w-fit flex gap-3 items-center md:mt-0 md:w-full md:justify-end'>
 											<Image
 												src={icon!}
-												alt={params.platformName}
+												alt={platformName}
 												className='flex w-[20px] h-[20px] md:hidden'
 											/>
 											{checkTaskExistence(task._id)}

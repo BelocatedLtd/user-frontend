@@ -15,7 +15,7 @@ import {
 } from '@/redux/slices/taskSlice'
 import { submitTask } from '@/services/taskServices'
 import { BACKEND_URL } from '@/utils/globalConfig'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { Suspense, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
@@ -23,9 +23,11 @@ import { io } from 'socket.io-client'
 
 const socket = io(`${BACKEND_URL}`)
 
-const TaskSubmit = ({ params }: { params: { taskId: string } }) => {
+const TaskSubmit = () => {
 	const dispatch = useDispatch()
 	const router = useRouter()
+
+	const taskId = router.query.taskId as string
 	// const isLoading = useSelector(selectIsLoading)
 	// const isSuccess = useSelector(selectIsSuccess)
 	const isError = useSelector(selectIsError)
@@ -52,7 +54,7 @@ const TaskSubmit = ({ params }: { params: { taskId: string } }) => {
 	}, [dispatch])
 
 	useEffect(() => {
-		setTask(tasks?.find((obj) => obj._id === params.taskId))
+		setTask(tasks?.find((obj) => obj._id === taskId))
 	}, [])
 
 	useEffect(() => {
@@ -98,7 +100,7 @@ const TaskSubmit = ({ params }: { params: { taskId: string } }) => {
 		formData?.append('images', imageArray[i])
 	}
 
-	formData.append('taskId', params.taskId)
+	formData.append('taskId', taskId)
 	formData.append('userSocialName', userSocialName)
 
 	const handleOnSubmit = async (e: any) => {
@@ -155,7 +157,7 @@ const TaskSubmit = ({ params }: { params: { taskId: string } }) => {
 				<Loader open={isLoading} />
 
 				<TaskPerform
-					taskId={params.taskId!}
+					taskId={taskId!}
 					onClose={() => null}
 					// newTask= {task}
 					ad={ad!}
