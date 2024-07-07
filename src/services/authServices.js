@@ -320,6 +320,7 @@ export const emailVerified = async (emailToken) => {
 			(error.response && error.response.data && error.response.data.message) ||
 			error.message ||
 			error.toString()
+
 		toast.error(message)
 	}
 }
