@@ -21,7 +21,7 @@ const Jumbotron = ({}: any) => {
 	const dispatch = useAppDispatch()
 
 	const searchParam = useSearchParams()
-	const referralToken = searchParam.get('referralToken')
+	const referralToken = searchParam?.get('referralToken')
 
 	const showRegModal = () => {
 		setIsReg(true)

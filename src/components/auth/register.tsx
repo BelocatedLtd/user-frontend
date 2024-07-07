@@ -32,7 +32,7 @@ const initialState = {
 
 const Register = ({ showLoginModal, closeModal, referralToken }: any) => {
 	const searchParam = useSearchParams()
-	const referralUsername = searchParam.get('ref')
+	const referralUsername = searchParam?.get('ref')
 
 	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(false)

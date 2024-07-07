@@ -22,9 +22,9 @@ const AdBuy = ({ params }: AdBuyProps) => {
 	console.log('🚀 ~ AdBuy ~ params:', params)
 	const searchParam = useSearchParams()
 
-	const service = searchParam.get('service') || ''
-	const adTitle = searchParam.get('adTitle') || ''
-	console.log('🚀 ~ AdBuy ~ pathname:', searchParam.get('service'))
+	const service = searchParam?.get('service') || ''
+	const adTitle = searchParam?.get('adTitle') || ''
+	console.log('🚀 ~ AdBuy ~ pathname:', searchParam?.get('service'))
 
 	const [advert, setAdvert] = useState<AdvertState>({
 		roi: '',

@@ -24,7 +24,7 @@ export const Header = () => {
 	const router = useRouter()
 
 	const searchParam = useSearchParams()
-	const referralToken = searchParam.get('referralToken')
+	const referralToken = searchParam?.get('referralToken')
 
 	const dispatch = useDispatch()
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
