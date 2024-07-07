@@ -3,6 +3,7 @@ import BackButton from '@/components/Button/BackButton'
 import socialPlatforms from '@/components/data/assets'
 import AdBuyForm from '@/components/forms/AdBuyForm'
 import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { Suspense, useEffect, useState } from 'react'
 
 interface AdvertState {
@@ -12,14 +13,12 @@ interface AdvertState {
 	adText: string
 }
 
-interface AdBuyProps {
-	params: {
-		platformName: string
-	}
-}
 
-const AdBuy = ({ params }: AdBuyProps) => {
-	console.log('🚀 ~ AdBuy ~ params:', params)
+
+const AdBuy = () => {
+	const router = useRouter()
+
+	const platformName = router.query.platformName as string
 	const searchParam = useSearchParams()
 
 	const service = searchParam?.get('service') || ''
@@ -107,10 +106,10 @@ const AdBuy = ({ params }: AdBuyProps) => {
 
 	useEffect(() => {
 		const servicesList = socialPlatforms?.find(
-			(object) => object?.assetplatform === params.platformName,
+			(object) => object?.assetplatform === platformName,
 		)
 		setSelectedPlatformObject(servicesList)
-	}, [params.platformName])
+	}, [platformName])
 
 	useEffect(() => {
 		const selectedService = selectedPlatformObject?.assets?.find(
@@ -138,7 +137,7 @@ const AdBuy = ({ params }: AdBuyProps) => {
 				</div>
 			</div>
 			<AdBuyForm
-				platform={params.platformName}
+				platform={platformName!}
 				service={service}
 				adTitle={adTitle}
 				advert={advert}
