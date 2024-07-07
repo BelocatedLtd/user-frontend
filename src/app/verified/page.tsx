@@ -13,7 +13,7 @@ const EmailVerified = () => {
 
 	const searchParams = useSearchParams()
 
-	const token = searchParams.get('token')
+	const token = searchParams?.get('token')
 
 	const [isLoading, setIsLoading] = useState(false)
 	const [formData, setFormData] = useState<any>()
@@ -23,11 +23,6 @@ const EmailVerified = () => {
 		setIsLoading(true)
 		try {
 			const response = await emailVerified(token)
-
-			if (!response) {
-				toast.error('Internal server error')
-				return
-			}
 
 			if (response.isEmailVerified === false) {
 				setFormData(response)
@@ -40,7 +35,7 @@ const EmailVerified = () => {
 			}
 		} catch (error) {
 			console.error('Error verifying email:', error)
-			toast.error('Error verifying email. Please try again.')
+			// toast.error('Error verifying email. Please try again.')
 		} finally {
 			setIsLoading(false)
 		}
@@ -74,7 +69,7 @@ const EmailVerified = () => {
 							variant='solid'
 							color='secondary'
 							onClick={handleLogin}
-							className='md:w-[60%] mt-1 py-2 text-md rounded-xl  text-gray-100 mb-5 '>
+							className='md:w-[60%] mt-1 rounded-xl'>
 							Login to Account
 						</Button>
 					</div>

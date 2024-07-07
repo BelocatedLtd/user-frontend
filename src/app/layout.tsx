@@ -29,7 +29,7 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	const pathname = usePathname()
-	const shouldRender = shouldRenderComponents(pathname, exclusions)
+	const shouldRender = shouldRenderComponents(pathname!, exclusions)
 
 	return (
 		<html lang='en' className={`font-sans`}>
