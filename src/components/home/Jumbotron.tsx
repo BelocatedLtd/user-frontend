@@ -102,7 +102,7 @@ const Jumbotron = ({}: any) => {
 				alt='logo'
 				className='w-full h-[39%] mt-8  object-cover'
 			/> */}
-			<div className='absolut w-full bottom-0'>
+			<div className='absolute w-full bottom-0'>
 				<Marqueez />
 			</div>
 
