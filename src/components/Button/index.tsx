@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, MouseEventHandler, ReactNode } from 'react'
+import { HTMLAttributes, MouseEventHandler, ReactNode } from 'react'
 import { cn } from '../../../helpers'
 
 export interface IButtonProps extends HTMLAttributes<HTMLButtonElement> {
@@ -75,8 +75,6 @@ const Button = ({
 	if (disabled) {
 		buttonClasses += ' opacity-50 cursor-not-allowed'
 	}
-
-	console.log('🚀 ~ buttonClasses:', buttonClasses)
 
 	return (
 		<button

@@ -1,22 +1,26 @@
 'use client'
-import React from 'react'
+import Loader from '@/components/loader/Loader'
+import { resendVerificationEmail } from '@/services/authServices'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { CheckmarkIcon, toast } from 'react-hot-toast'
-import { useState } from 'react'
-import { useEffect } from 'react'
 import {
 	FaAngleDoubleRight,
 	FaEnvelope,
 	FaTelegram,
 	FaWhatsapp,
 } from 'react-icons/fa'
-import { useSearchParams } from 'next/navigation'
-import Link from 'next/link'
-import { resendVerificationEmail } from '@/services/authServices'
-import Loader from '@/components/loader/Loader'
 
-const VerifyEmail = ({ params }: { params: { email: string } }) => {
-	const email = decodeURIComponent(params.email)
+interface VerifyEmailProps {
+	email: string
+}
 
+const VerifyEmail = ({ email }: VerifyEmailProps) => {
+	// const email = decodeURIComponent(params.email)
+	console.log(
+		'🚀 ~ constgetServerSideProps:GetServerSideProps= ~ email:',
+		email,
+	)
 	const [isLoading, setIsLoading] = useState(false)
 	const [timer, setTimer] = useState(10)
 	const [resendBtn, setResendBtn] = useState(false)
@@ -141,4 +145,25 @@ const VerifyEmail = ({ params }: { params: { email: string } }) => {
 	)
 }
 
-export default VerifyEmail
+import { GetServerSideProps } from 'next'
+
+interface VerifyEmailPageProps {
+	email: string
+}
+
+const VerifyEmailPage = ({ email }: VerifyEmailPageProps) => {
+	return <VerifyEmail email={email} />
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	// const { email } = context.params
+
+	return {
+		props: {
+			// email: decodeURIComponent(email as string),
+			email: 'dayoo@gmail.com',
+		},
+	}
+}
+
+export default VerifyEmailPage
