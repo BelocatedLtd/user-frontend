@@ -17,7 +17,6 @@ interface FormValues {
 
 export default function AddBank({ next }: { next: () => void }) {
 	const user = useSelector(selectUser)
-	console.log('🚀 ~ AddBank ~ user:', user)
 
 	const router = useRouter()
 
@@ -36,7 +35,6 @@ export default function AddBank({ next }: { next: () => void }) {
 	}
 
 	const handleSubmit = async (values: FormValues) => {
-		console.log('🚀 ~ handleSubmit ~ values:', values)
 		if (user?.id) {
 			const updatedUserDetails = await updateUserBankAccountDetails({
 				...values,
@@ -63,7 +61,7 @@ export default function AddBank({ next }: { next: () => void }) {
 			<p className='text-lg text-left font-medium'>Add Bank Details</p>
 			<Formik
 				initialValues={initialValues}
-				// validationSchema={validationSchema}
+				validationSchema={validationSchema}
 				onSubmit={handleSubmit}>
 				{() => (
 					<Form className='mt-4'>
