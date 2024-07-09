@@ -48,12 +48,17 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 				if (res?.meta?.requestStatus === 'fulfilled') {
 					next()
 				}
-				console.log('🚀 ~ .then ~ res:', res)
 			})
 			.catch((error: any) => {
 				console.error('Error occurred during dispatch:', error)
 			})
 	}
+
+	const genderOptions = [
+		{ id: 'Male', value: 'Male' },
+		{ id: 'Female', value: 'Female' },
+		{ id: 'Other', value: 'Other' },
+	]
 
 	return (
 		<div className=''>
@@ -79,7 +84,12 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 								}
 							/>
 
-							<FormInput name='gender' label='Gender' />
+							<FormSelect
+								name='gender'
+								label='Gender'
+								options={genderOptions}
+							/>
+
 							<FormInput name='religion' label='Religion' />
 						</div>
 
