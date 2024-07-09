@@ -1,12 +1,23 @@
 import advertisers from '@/assets/advertisers.png'
 import earners from '@/assets/earners.png'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/slices/authSlice'
 import Button from '../Button'
 
 const MembersTab = () => {
 	const user = useSelector(selectUser)
+	const router = useRouter()
+
+	const handleAction = (action: 'earn' | 'advertise') => {
+		console.log('🚀 ~ handleAction ~ action:', action)
+		if (user?.token) {
+			if (action == 'earn') router.push('/dashboard/earn')
+			else if (action == 'advertise') router.push('/dashboard/advertise')
+		} else router.push(`/?action=login`)
+	}
+
 	return (
 		<section className='w-full h- md:mt-20 '>
 			{/* {regBtn && <Register handleRegister={handleRegister} regBtn={regBtn} />} */}
@@ -33,7 +44,7 @@ const MembersTab = () => {
 							</ol>
 							<Button
 								size={'sm'}
-								onClick={() => null}
+								onClick={() => handleAction('earn')}
 								className='mt-4'
 								color='secondary'
 								variant='solid'>
@@ -82,7 +93,7 @@ const MembersTab = () => {
 						</p>
 						<Button
 							size={'sm'}
-							onClick={() => null}
+							onClick={() => handleAction('advertise')}
 							className='mt-4'
 							color='secondary'
 							variant='solid'>

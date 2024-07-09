@@ -1,9 +1,7 @@
-import { useState } from 'react'
-// import Register from '../../../(auth)/Register'
-// import Login from '../../../(auth)/login'
 import { useAppDispatch } from '@/redux/store'
 import { Modal } from '@mui/material'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { SET_LOGOUT, selectUser } from '../../redux/slices/authSlice'
@@ -12,16 +10,15 @@ import Register from '../auth/register'
 import { ShowOnLogin, ShowOnLogout } from '../protect/hiddenLinks'
 import Marqueez from './Marquee'
 
-const Jumbotron = ({}: any) => {
+const Jumbotron = () => {
 	const router = useRouter()
 	const user = useSelector(selectUser)
 	const [isReg, setIsReg] = useState(false)
 	const [isLogin, setIsLogIn] = useState(false)
-
 	const dispatch = useAppDispatch()
-
 	const searchParam = useSearchParams()
 	const referralToken = searchParam?.get('referralToken')
+	const action = searchParam?.get('action')
 
 	const showRegModal = () => {
 		setIsReg(true)
@@ -34,8 +31,7 @@ const Jumbotron = ({}: any) => {
 	}
 
 	const closeModal = () => {
-		setIsLogIn(false)
-		setIsReg(false)
+		router.push(`/${referralToken ? `?referralToken=${referralToken}` : ''}`)
 	}
 
 	const handleLogout = () => {
@@ -48,21 +44,31 @@ const Jumbotron = ({}: any) => {
 		}
 	}
 
+	useEffect(() => {
+		if (action === 'register') {
+			showRegModal()
+		} else if (action === 'login') {
+			showLoginModal()
+		} else {
+			setIsReg(false)
+			setIsLogIn(false)
+		}
+	}, [action])
+
 	return (
 		<section
 			style={{
 				backgroundImage: 'url(/bg.png)',
-				// backgroundImage: 'url(' + sectionBg + ')',
 				backgroundPosition: 'center',
 				backgroundSize: 'cover',
 				backgroundRepeat: 'no-repeat',
 			}}
-			className='w-full h-screen  flex flex-col items-center pt-[5rem] md:pt-[10rem]'>
+			className='w-full h-screen flex flex-col items-center pt-[5rem] md:pt-[10rem]'>
 			<div className='container flex mt-20 flex-col items-center'>
 				<h1 className='w-[90%] text-center text-[28px] text-gray-800 font-extrabold md:text-[3rem]'>
 					Earn Daily: Complete Lucrative <br /> Social Media Tasks Easily
 				</h1>
-				<p className='w-[80%] text-[22px] font-light text-center text-gray-600  md:w-[60%] md:text-[1.5rem]'>
+				<p className='w-[80%] text-[22px] font-light text-center text-gray-600 md:w-[60%] md:text-[1.5rem]'>
 					Earn while you engage with media. Belocated pays for every task you
 					complete.
 				</p>
@@ -71,12 +77,12 @@ const Jumbotron = ({}: any) => {
 			<ShowOnLogout>
 				<div className='flex mt-6 items-center'>
 					<button
-						onClick={() => showRegModal()}
-						className='bg-secondary text-primary font-bold px-10 py-3  rounded-full hover:bg-transparent hover:text-secondary hover:border-secondary hover:border'>
+						onClick={() => router.push(`/?action=register`)}
+						className='bg-secondary text-primary font-bold px-10 py-3 rounded-full hover:bg-transparent hover:text-secondary hover:border-secondary hover:border'>
 						Get Started
 					</button>
 					<small
-						onClick={showLoginModal}
+						onClick={() => router.push(`/?action=login`)}
 						className='ml-3 font-medium text-gray-500'>
 						Already a Member?{' '}
 						<span className='text-secondary cursor-pointer'>Login</span>
@@ -91,24 +97,20 @@ const Jumbotron = ({}: any) => {
 					Go to Dashboard
 				</button>
 				<small
-					onClick={() => handleLogout()}
+					onClick={handleLogout}
 					className='mt-3 font-medium text-gray-500 mb-3'>
 					Welcome, @{user?.username}.{' '}
 					<span className='text-secondary cursor-pointer'>Logout</span>
 				</small>
 			</ShowOnLogin>
-			{/* <Image
-				src={logo}
-				alt='logo'
-				className='w-full h-[39%] mt-8  object-cover'
-			/> */}
+
 			<div className='absolute w-full bottom-0'>
 				<Marqueez />
 			</div>
 
 			<Modal
 				open={isReg}
-				onClose={setIsReg}
+				onClose={closeModal}
 				aria-labelledby='modal-modal-title'
 				aria-describedby='modal-modal-description'>
 				<div className='flex items-center justify-center h-full'>
@@ -123,7 +125,7 @@ const Jumbotron = ({}: any) => {
 
 			<Modal
 				open={isLogin}
-				onClose={setIsLogIn}
+				onClose={closeModal}
 				aria-labelledby='modal-modal-title'
 				aria-describedby='modal-modal-description'>
 				<div className='flex items-center justify-center h-full'>
