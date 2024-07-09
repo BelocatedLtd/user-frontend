@@ -62,6 +62,12 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 		{ id: 'Other', value: 'Other' },
 	]
 
+	const religionOption = [
+		{ id: 'Christianity', value: 'Christianity' },
+		{ id: 'Islam', value: 'Islam' },
+		{ id: 'Other', value: 'Other' },
+	]
+
 	return (
 		<div className=''>
 			<p className='text-lg text-left font-medium'>Complete Your Profile</p>
@@ -91,8 +97,11 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 								label='Gender'
 								options={genderOptions}
 							/>
-
-							<FormInput name='religion' label='Religion' />
+							<FormSelect
+								name='religion'
+								label='Religion'
+								options={religionOption}
+							/>
 						</div>
 
 						<FormSubmitButton
