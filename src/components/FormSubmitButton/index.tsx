@@ -1,5 +1,5 @@
-import React from 'react'
 import { useFormikContext } from 'formik'
+import React from 'react'
 import Button, { IButtonProps } from '../Button'
 
 interface FormSubmitButtonProps extends IButtonProps {
@@ -10,10 +10,13 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
 	children,
 	...props
 }) => {
-	const { isSubmitting, isValid } = useFormikContext()
+	const { isSubmitting, isValid, dirty } = useFormikContext()
 
 	return (
-		<Button type='submit' disabled={isSubmitting || !isValid} {...props}>
+		<Button
+			type='submit'
+			disabled={isSubmitting || !isValid || !dirty}
+			{...props}>
 			{children}
 		</Button>
 	)

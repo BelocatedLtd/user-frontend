@@ -53,17 +53,10 @@ const Kyc = () => {
 		setActiveStep(newActiveStep)
 	}
 
-	const handleBack = () => {
-		setActiveStep((prevActiveStep) => prevActiveStep - 1)
-	}
-
 	const handleStep = (step: number) => () => {
-		setActiveStep(step)
-	}
-
-	const handleReset = () => {
-		setActiveStep(0)
-		setCompleted({})
+		if (completed[step] || step === activeStep - 1) {
+			setActiveStep(step)
+		}
 	}
 
 	return (
@@ -79,7 +72,7 @@ const Kyc = () => {
 						className='w-36 h-10 mx-auto object-contain'
 					/>
 				</Link>
-				<strong>Walcom Dayo,</strong>
+				<strong>Welcome to Belocated!</strong>
 				<p>Just a few quick steps to get started with our platform!</p>
 				<div
 					// style={{ minHeight: '80vh' }}

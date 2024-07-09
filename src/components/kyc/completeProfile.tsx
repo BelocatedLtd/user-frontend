@@ -4,7 +4,9 @@ import { Form, Formik } from 'formik'
 import { useSelector } from 'react-redux'
 import * as Yup from 'yup'
 import FormInput from '../FormInput'
+import FormSelect from '../FormSelect'
 import FormSubmitButton from '../FormSubmitButton'
+import { fetchCitiesOtpionsByState, stateOptions } from '../data/NigeriaData'
 
 interface FormValues {
 	fullname: string
@@ -23,9 +25,9 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 
 	const validationSchema = Yup.object().shape({
 		fullname: Yup.string().required('Fullname is required'),
-		phone: Yup.string().required('phone is required'),
-		state: Yup.string().required('state is required'),
-		lga: Yup.string().required('lga is required'),
+		phone: Yup.string().required('Phone is required'),
+		state: Yup.string().required('State is required'),
+		lga: Yup.string().required('LGA is required'),
 		gender: Yup.string().required('Gender is required'),
 		religion: Yup.string().required('Religion is required'),
 	})
@@ -33,8 +35,8 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 	const initialValues: FormValues = {
 		fullname: user?.fullname || '',
 		phone: user?.phone || '',
-		lga: user?.location || '',
-		state: user?.community || '',
+		state: user?.state || '',
+		lga: user?.lga || '',
 		gender: user?.gender || '',
 		religion: user?.religion || '',
 	}
@@ -43,7 +45,7 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 		console.log('🚀 ~ CompleteProfile ~ values:', values)
 		dispatch(handleUpdateUser(values) as any)
 			.then((res: any) => {
-				if (res?.meta?.requestStatus == 'fulfilled') {
+				if (res?.meta?.requestStatus === 'fulfilled') {
 					next()
 				}
 				console.log('🚀 ~ .then ~ res:', res)
@@ -60,13 +62,23 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 				initialValues={initialValues}
 				validationSchema={validationSchema}
 				onSubmit={handleSubmit}>
-				{() => (
+				{({ values, setFieldValue }) => (
 					<Form className='mt-4'>
 						<div className='grid grid-cols-2 gap-4'>
 							<FormInput name='fullname' label='Fullname' />
 							<FormInput name='phone' label='Phone Number' />
-							<FormInput name='state' label='Residential State' />
-							<FormInput name='lga' label='Residential LGA' />
+
+							<FormSelect name='state' label='State' options={stateOptions} />
+							<FormSelect
+								name='lga'
+								label='Local Government Area'
+								options={
+									fetchCitiesOtpionsByState(values.state as any) || [
+										{ id: '', value: '' },
+									]
+								}
+							/>
+
 							<FormInput name='gender' label='Gender' />
 							<FormInput name='religion' label='Religion' />
 						</div>
