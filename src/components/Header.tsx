@@ -33,13 +33,11 @@ export const Header = () => {
 	const [isLogin, setIsLogIn] = useState(false)
 
 	const showRegModal = () => {
-		setIsReg(true)
-		setIsLogIn(false)
+		router.push(`/?action=register`)
 	}
 
 	const showLoginModal = () => {
-		setIsReg(false)
-		setIsLogIn(true)
+		router.push(`/?action=login`)
 	}
 
 	const closeModal = () => {
