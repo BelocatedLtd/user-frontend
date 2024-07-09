@@ -1,5 +1,5 @@
+import { ErrorMessage, Field, useFormikContext } from 'formik'
 import React from 'react'
-import { Field, ErrorMessage } from 'formik'
 
 interface FormInputProps {
 	name: string
@@ -14,15 +14,29 @@ const FormInput: React.FC<FormInputProps> = ({
 	type = 'text',
 	placeholder,
 }) => {
+	const formik = useFormikContext() // Access Formik context
+
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		let value = event.target.value
+
+		if (name === 'phone') {
+			value = value.replace(/\D/g, '')
+			value = value.slice(0, 11)
+		}
+
+		formik.setFieldValue(name, value) // Use setFieldValue from useFormikContext
+	}
+
 	return (
-		<div className=' text-left'>
+		<div className='text-left'>
 			<label htmlFor={name}>{label}</label>
-			<div className=''>
+			<div>
 				<Field
 					className='border w-full rounded-lg h-10 px-2'
 					type={type}
 					name={name}
 					placeholder={placeholder}
+					onChange={handleChange} // Pass handleChange directly to onChange
 				/>
 			</div>
 

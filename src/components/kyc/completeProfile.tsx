@@ -25,7 +25,9 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 
 	const validationSchema = Yup.object().shape({
 		fullname: Yup.string().required('Fullname is required'),
-		phone: Yup.string().required('Phone is required'),
+		phone: Yup.string()
+			.required('Phone is required')
+			.min(11, 'Phone must be 11 digits long'),
 		state: Yup.string().required('State is required'),
 		lga: Yup.string().required('LGA is required'),
 		gender: Yup.string().required('Gender is required'),
