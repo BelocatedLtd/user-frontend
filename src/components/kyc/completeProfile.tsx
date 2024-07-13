@@ -83,10 +83,15 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 							<FormInput name='fullname' label='Fullname' />
 							<FormInput name='phone' label='Phone Number' />
 
-							<FormSelect name='state' label='State' options={stateOptions} />
+							<FormSelect
+								name='state'
+								label='State of Residence
+							'
+								options={stateOptions}
+							/>
 							<FormSelect
 								name='lga'
-								label='Local Government Area'
+								label='LGA of Residence'
 								options={
 									fetchCitiesOtpionsByState(values.state as any) || [
 										{ id: '', value: '' },
