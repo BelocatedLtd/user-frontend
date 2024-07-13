@@ -96,6 +96,10 @@ const Login = ({ showRegModal, closeModal }: any) => {
 				}
 
 				const username = response.username
+				console.log(
+					'🚀 ~ handleOnSubmit ~ response.accountType:',
+					response.accountType,
+				)
 
 				if (response.accountType === 'User') {
 					//Emit socket io event to the backend
@@ -109,17 +113,19 @@ const Login = ({ showRegModal, closeModal }: any) => {
 
 					router.push(`/dashboard`)
 					toast.success(`Welcome back @${username}!`)
+
+					// closeModal()
+					// setIsLoading(false)
+				} else {
+					toast.success('Please login as user')
 				}
 
-				if (
-					response.accountType === 'Admin' ||
-					response.accountType === 'Super Admin'
-				) {
-					router.push(`/admin/dashboard/${username}`)
-				}
-
-				closeModal()
-				setIsLoading(false)
+				// if (
+				// 	response.accountType === 'Admin' ||
+				// 	response.accountType === 'Super Admin'
+				// ) {
+				// 	router.push(`/admin/dashboard/${username}`)
+				// }
 			}
 		} catch (error) {
 			setIsLoading(false)
