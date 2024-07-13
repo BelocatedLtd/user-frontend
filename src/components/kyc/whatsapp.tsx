@@ -24,9 +24,12 @@ export default function Whatsapp({ next }: { next: () => void }) {
 			<div
 				className='bg-primary-light rounded-lg text-center py-2 mt-3 cursor-pointer'
 				onClick={handleLinkClick}>
-				<span className='text-sm text-gray-500'>
-					https://whatsapp.com/invite?id=jefncenrfnerfbrefewuifnu
-				</span>
+				<a
+					href='https://whatsapp.com/channel/0029Va7JRtyEVccRNhgObL3E'
+					target='_blank'
+					className='text-sm text-gray-500'>
+					https://whatsapp.com/channel/0029Va7JRtyEVccRNhgObL3E
+				</a>
 			</div>
 
 			<Button
