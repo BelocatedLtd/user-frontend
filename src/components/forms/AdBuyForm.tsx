@@ -215,7 +215,7 @@ const AdBuyForm = ({
 					className='w-fit md:w-full p-5 md:p-6 m-1 md:m-0 md:mr-6 border border-semi_tertiary rounded-2xl  text-center gap-6'>
 					<div className='form__container flex flex-col w-full '>
 						<div className='left flex-1 md:border-r md:border-gray-100 md:pr-5'>
-							<div className='grid grid-cols-2 w-full md:flex-row md:gap-6'>
+							<div className='md:grid md:grid-cols-2 w-full md:flex-row md:gap-6'>
 								{/* Services */}
 								<div className=' md:gap-6 w-fit md:w-full text-left'>
 									{/* <div className='flex flex-col bg-blue-300 mt-3 mb-3'> */}
@@ -234,7 +234,7 @@ const AdBuyForm = ({
 								</div>
 
 								{/* Unit */}
-								<div className='flex flex-col w-fit md:w-full items-center md:gap-3 md:flex-row'>
+								<div className='flex flex-row w-full items-center md:gap-3 '>
 									<div className='flex flex-col mb-3'>
 										<label
 											htmlFor='Business Name'
@@ -282,7 +282,7 @@ const AdBuyForm = ({
 										State
 									</label>
 									<select
-										className='w-fit md:w-full mt-2 shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'
+										className='w-full mt-2 shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'
 										value={selectedState}
 										name={selectedState}
 										onChange={handleStateChange}>
@@ -303,7 +303,7 @@ const AdBuyForm = ({
 										LGAs from {selectedState}
 									</label>
 									<select
-										className='w-fit md:w-full  mt-2 shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'
+										className='w-full  mt-2 shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'
 										value={selectedCommunity}
 										name={selectedCommunity}
 										onChange={handleCommunityChange}>
@@ -331,7 +331,7 @@ const AdBuyForm = ({
 										id='gender'
 										value={advert.gender}
 										onChange={handleInputChange}
-										className='w-fit md:w-full mt-2 shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'>
+										className='w-full mt-2 shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'>
 										<option value=''>Select a Gender</option>
 										<option value='All'>All</option>
 										<option value='Male'>Male</option>
@@ -370,7 +370,7 @@ const AdBuyForm = ({
 							{hideCommentInputFields ? (
 								''
 							) : (
-								<div className='w-[200px] md:w-full flex flex-col mt-3 mb-1'>
+								<div className='w-full flex flex-col mt-3 mb-1'>
 									<label htmlFor='adText' className='text-left mt-4 mb-1 ml-1'>
 										{service == 'Comment' && 'Type of comments you want'}
 										{service === 'Quote Tweet' &&
@@ -387,7 +387,7 @@ const AdBuyForm = ({
 											'Kind of comments you want (Give as many example as possible)'}
 									</label>
 
-									<div className='w-fit md:w-full'>
+									<div className='w-full'>
 										<textarea
 											// type='textarea'
 											cols={60}
@@ -398,7 +398,7 @@ const AdBuyForm = ({
 											// }
 											value={comments}
 											onChange={handleCaptionChange}
-											className='shadow-inner bg-transparent border border-gray-200 rounded-xl p-3 mb-1 w-[250px] md:w-[100%] box-border'
+											className='shadow-inner bg-transparent border border-gray-200 rounded-xl p-3 mb-1 w-full box-border'
 										/>
 									</div>
 								</div>
