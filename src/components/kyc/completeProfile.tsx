@@ -27,7 +27,9 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 		fullname: Yup.string().required('Fullname is required'),
 		phone: Yup.string()
 			.required('Phone is required')
-			.min(11, 'Phone must be 11 digits long'),
+			.min(11, 'Phone must be 11 digits long')
+			.matches(/^(07|08|09)/, 'Must start with 07, 08, or 09'),
+
 		state: Yup.string().required('State is required'),
 		lga: Yup.string().required('LGA is required'),
 		gender: Yup.string().required('Gender is required'),

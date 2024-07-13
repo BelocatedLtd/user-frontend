@@ -40,7 +40,7 @@ const FormInput: React.FC<FormInputProps> = ({
 				/>
 			</div>
 
-			<div className='text-sm text-tertiary'>
+			<div className='text-sm text-tertiary '>
 				<ErrorMessage name={name} component='div' />
 			</div>
 		</div>
