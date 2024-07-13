@@ -7,13 +7,11 @@ import { useRouter } from 'next/router'
 import { Suspense, useEffect, useState } from 'react'
 
 interface AdvertState {
-	roi: string
+	desiredROI: string
 	gender: string
 	socialPageLink: string
 	adText: string
 }
-
-
 
 const AdBuy = () => {
 	const router = useRouter()
@@ -23,10 +21,9 @@ const AdBuy = () => {
 
 	const service = searchParam?.get('service') || ''
 	const adTitle = searchParam?.get('adTitle') || ''
-	console.log('🚀 ~ AdBuy ~ pathname:', searchParam?.get('service'))
 
 	const [advert, setAdvert] = useState<AdvertState>({
-		roi: '',
+		desiredROI: '',
 		gender: '',
 		socialPageLink: '',
 		adText: '',
@@ -115,45 +112,49 @@ const AdBuy = () => {
 		const selectedService = selectedPlatformObject?.assets?.find(
 			(item: any) => item?.asset === service,
 		)
+
 		setEarnPerTask(selectedService?.amountForTask || 0)
 		setExpBudget(
-			selectedService?.CostToOrder || 0 * parseFloat(advert.roi) || 0,
+			(selectedService?.CostToOrder || 0) *
+				(parseFloat(advert.desiredROI) || 0),
 		) // Corrected calculation
 		setCostToPay(selectedService?.CostToOrder || 0)
-	}, [service, advert.roi])
+	}, [service, advert.desiredROI])
 
 	return (
 		<Suspense>
-			<div className='flex items-center gap-3 border-b border-gray-200 py-5 mb-3'>
-				<BackButton />
-				<div className='flex flex-col'>
-					<p className='font-semibold text-xl text-gray-700'>
-						Create an Advertising Campaign
-					</p>
-					<small className='font-medium text-gray-500'>
-						Click <span className='text-secondary'>here</span> to see and
-						monitor your adverts
-					</small>
+			<div>
+				<div className='flex items-center gap-3 border-b border-gray-200 py-5 mb-3'>
+					<BackButton />
+					<div className='flex flex-col'>
+						<p className='font-semibold text-xl text-gray-700'>
+							Create an Advertising Campaign
+						</p>
+						<small className='font-medium text-gray-500'>
+							Click <span className='text-secondary'>here</span> to see and
+							monitor your adverts
+						</small>
+					</div>
 				</div>
+				<AdBuyForm
+					platform={platformName!}
+					service={service}
+					adTitle={adTitle}
+					advert={advert}
+					handleImageRemove={handleImageRemove}
+					selectedFiles={selectedFiles}
+					fileArray={fileArray}
+					handleInputChange={handleInputChange}
+					handleImageChange={handleImageChange}
+					handleCaptionChange={handleCaptionChange}
+					expBudget={expBudget}
+					costToPay={costToPay}
+					earnPerTask={earnPerTask}
+					socialService={socialService}
+					comments={comments}
+					captionArray={captionArray}
+				/>
 			</div>
-			<AdBuyForm
-				platform={platformName!}
-				service={service}
-				adTitle={adTitle}
-				advert={advert}
-				handleImageRemove={handleImageRemove}
-				selectedFiles={selectedFiles}
-				fileArray={fileArray}
-				handleInputChange={handleInputChange}
-				handleImageChange={handleImageChange}
-				handleCaptionChange={handleCaptionChange}
-				expBudget={expBudget}
-				costToPay={costToPay}
-				earnPerTask={earnPerTask}
-				socialService={socialService}
-				comments={comments}
-				captionArray={captionArray}
-			/>
 		</Suspense>
 	)
 }

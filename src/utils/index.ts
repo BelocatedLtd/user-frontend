@@ -1,7 +1,4 @@
-import socialPlatforms, {
-	IAssetData,
-	IPlatformData,
-} from '@/components/data/assets'
+import socialPlatforms, { IAssetData } from '@/components/data/assets'
 import toast from 'react-hot-toast'
 
 export const handleRefLinkCopy = async (text: string) => {
@@ -16,8 +13,8 @@ export const handleRefLinkCopy = async (text: string) => {
 	}
 }
 
-export function toIntlCurrency(amount: string): string {
-	const numericAmount = parseFloat(amount)
+export function toIntlCurrency(amount: string | number): string {
+	const numericAmount = parseFloat(amount.toString())
 	if (isNaN(numericAmount)) {
 		throw new Error('Invalid amount. Please provide a valid numeric amount.')
 	}
