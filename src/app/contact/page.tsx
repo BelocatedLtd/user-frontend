@@ -13,12 +13,12 @@ import { MdEmail } from 'react-icons/md'
 const Contact = () => {
 	return (
 		<Suspense>
-			<div className='w-full h-fit'>
-				<div className='container h-full flex flex-col items-center justify-center mx-auto mt-[5rem] md:mt-[3rem]   md:flex-row'>
-					<div className='left w-full h-full flex flex-col'>
-						<div className='w-[80%] h-fit mx-auto'>
+			<div className='w-full min:h-full md:h-[80%]'>
+				<div className='container  h-full flex flex-col items-center justify-center mx-auto md:flex-row'>
+					<div className='left w-full flex justify-center items-center h-full  '>
+						<div className='md:w-[80%] h-fit '>
 							{/* Phone and Email */}
-							<ul className='flex flex-wrap items-center gap-[2rem]'>
+							<ul className='grid grid-cols-2 items-center gap-[2rem]'>
 								<li className='flex items-center gap-2 bg-transparent hover:bg-gray-200 p-4'>
 									<BiPhoneCall className='text-blue-50 text-[40px] bg-blue-600 p-2 rounded-full' />
 									<div>
@@ -34,7 +34,7 @@ const Contact = () => {
 							</ul>
 
 							{/* Facebook and Instagram */}
-							<ul className='flex flex-wrap items-center gap-[2rem]'>
+							<ul className='grid grid-cols-2 items-center gap-[2rem]'>
 								<li className='bg-transparent hover:bg-gray-200 p-4'>
 									<Link
 										href={'https://www.facebook.com/belocatedng'}
@@ -62,7 +62,7 @@ const Contact = () => {
 							</ul>
 
 							{/* Twitter and LinkedIn */}
-							<ul className='flex flex-wrap items-center gap-[2rem]'>
+							<ul className='grid grid-cols-2 items-center gap-[2rem]'>
 								<li className='bg-transparent hover:bg-gray-200 p-4'>
 									<Link
 										href={'https://twitter.com/belocatedng'}
@@ -90,7 +90,7 @@ const Contact = () => {
 							</ul>
 
 							{/* WhatsApp and telegram */}
-							<ul className='flex flex-wrap items-center gap-[2rem]'>
+							<ul className='grid grid-cols-2 items-center gap-[2rem]'>
 								<li className='flex items-center gap-2 bg-transparent hover:bg-gray-200 p-4'>
 									<Link
 										href={'https://wa.me/2347031935276'}

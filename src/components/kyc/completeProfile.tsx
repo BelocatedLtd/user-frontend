@@ -28,7 +28,7 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 		phone: Yup.string()
 			.required('Phone is required')
 			.min(11, 'Phone must be 11 digits long')
-			.matches(/^(07|08|09)/, 'Must start with 07, 08, or 09'),
+			.matches(/^(07|08|09)/, 'Kindly input correct phone number.'),
 
 		state: Yup.string().required('State is required'),
 		lga: Yup.string().required('LGA is required'),
@@ -61,14 +61,13 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 	const genderOptions = [
 		{ id: 'Male', value: 'Male' },
 		{ id: 'Female', value: 'Female' },
-		{ id: 'Other', value: 'Other' },
 	]
 
-	const religionOption = [
-		{ id: 'Christianity', value: 'Christianity' },
-		{ id: 'Islam', value: 'Islam' },
-		{ id: 'Other', value: 'Other' },
-	]
+	// const religionOption = [
+	// 	{ id: 'Christianity', value: 'Christianity' },
+	// 	{ id: 'Islam', value: 'Islam' },
+	// 	{ id: 'Other', value: 'Other' },
+	// ]
 
 	return (
 		<div className=''>
@@ -101,14 +100,15 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 
 							<FormSelect
 								name='gender'
+								containerClassName='col-span-2'
 								label='Gender'
 								options={genderOptions}
 							/>
-							<FormSelect
+							{/* <FormSelect
 								name='religion'
 								label='Religion'
 								options={religionOption}
-							/>
+							/> */}
 						</div>
 
 						<FormSubmitButton

@@ -9,7 +9,7 @@ const FAQ = () => {
 
 	return (
 		<Suspense>
-			<div className='w-full h-fit'>
+			<div className='w-full bg-red-200 h-fit'>
 				<div className='container flex flex-col items-center mx-auto leading-[1.2]'>
 					<div className='w-full h-full py-[5rem] mt-[5rem] flex flex-col items-center justify-center mx-auto'>
 						<h3 className='text-[#0F1741] px-6 text-[30px] md:text-[38px] mb-[5px] font-bold text-center'>

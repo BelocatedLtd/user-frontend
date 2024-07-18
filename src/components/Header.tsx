@@ -84,7 +84,7 @@ export const Header = () => {
 	}
 
 	return (
-		<header className='w-full absolute'>
+		<header className='w-full'>
 			<div className='relative container px-6 py-6 flex justify-between items-center mx-auto md:px-0'>
 				<Link
 					href='/'
