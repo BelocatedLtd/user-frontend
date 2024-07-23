@@ -14,8 +14,6 @@ import {
 	handleGetALLUserAdverts,
 	selectAllAdverts,
 	selectIsError,
-	selectIsLoading,
-	selectIsSuccess,
 } from '../../../redux/slices/advertSlice'
 import { selectUser } from '../../../redux/slices/authSlice'
 
@@ -51,21 +49,19 @@ const Earn = () => {
 	const router = useRouter()
 	const adverts: Advert[] = useSelector(selectAllAdverts)
 	const dispatch = useDispatch()
-	const isLoading: boolean = useSelector(selectIsLoading)
 	const isError: boolean = useSelector(selectIsError)
-	const isSuccess: boolean = useSelector(selectIsSuccess)
 	const [toggleServices, setToggleServices] = useState(false)
 	const [selectedPlatformObject, setSelectedPlatformObject] = useState<
 		SocialPlatform | undefined
 	>()
 	const user = useSelector(selectUser)
-	const [finalFilteredTasks, setFinalFilteredTasks] = useState<Advert[]>([])
 	const [selectedPlatformAds, setSelectedPlatformAds] = useState<
 		Advert[] | undefined
 	>()
 	const [platformName, setPlatformName] = useState<string>('')
 	useRedirectLoggedOutUser('/login')
 	const [taskList, setTaskList] = useState<Advert[] | undefined>()
+	console.log('🚀 ~ Earn ~ taskList:', taskList)
 	const [theSortedSocials, setTheSortedSocials] = useState<any[] | undefined>()
 
 	useEffect(() => {
@@ -85,10 +81,11 @@ const Earn = () => {
 		// Get the list of only adverts that are still running
 		const runningAdsList = adverts?.filter(
 			(ad) =>
-				ad.status !== 'Completed' &&
-				ad.status !== 'Pending Payment' &&
-				ad.desiredROI === 0,
+				ad.status == 'Running' &&
+				// ad.status !== 'Pending Payment' &&
+				ad.desiredROI > 0,
 		)
+		console.log('🚀 ~ useEffect ~ runningAdsList:', runningAdsList)
 
 		// Check if task performer is still eligible for free tasks so he will see only the adverts that are marked as free. If not, he will see paid adverts
 		if (user?.freeTaskCount > 0) {
