@@ -1,5 +1,5 @@
 'use client'
-import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3'
+import { closePaymentModal, useFlutterwave } from 'flutterwave-react-v3'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import close from '../assets/close.svg'
@@ -34,6 +34,7 @@ const PaymentMethod = ({
 	const [isLoading, setIsLoading] = useState(false)
 	const user = useSelector(selectUser)
 	const wallet = useSelector(selectUserWallet)
+	console.log('🚀 ~ wallet:', wallet)
 
 	const getWallet = async () => {
 		dispatch(getUserWallet() as any)
@@ -59,7 +60,7 @@ const PaymentMethod = ({
 	} = formData
 
 	useEffect(() => {
-		if (wallet?.value !== null && wallet.value >= expBudget) {
+		if (wallet?.value !== null && wallet?.value >= expBudget) {
 			setCanPay(true)
 		} else if (wallet?.value !== null && wallet.value < expBudget) {
 			setCanPay(false)
@@ -215,11 +216,11 @@ const PaymentMethod = ({
 	}
 
 	const onSuccess = (response: any) => {
-		console.log('🚀 ~ onSuccess: ~ response:', response)
 		router.push('/dashboard/campaign-stats')
 	}
 
 	const paystackPayment = usePaystackPayment(payStackConfig)
+	const flutterwavePayment = useFlutterwave(config)
 
 	const initializePayment = async (
 		paymentMethod: 'paystack' | 'flutterwave',
@@ -249,18 +250,28 @@ const PaymentMethod = ({
 				date: Date.now().toString(),
 				paymentMethod,
 				advertId: response._id,
-				paymentType: 'deposit',
+				paymentType: 'Ad Paymen',
 			}
 
 			const res = await dispatch(handleInitializeUserTransaction(body) as any)
 			setIsLoading(false)
-			console.log('🚀 ~ initializePayment ~ res:', { res, body })
 
 			if (res.meta.requestStatus === 'fulfilled') {
-				paystackPayment({ onSuccess, onClose })
+				if (paymentMethod === 'paystack')
+					paystackPayment({ onSuccess, onClose })
+				else if (paymentMethod === 'flutterwave')
+					flutterwavePayment({
+						callback: (response) => {
+							console.log(response)
+							closePaymentModal()
+							onSuccess(response)
+						},
+						onClose: () => onClose(),
+					})
 			}
 		}
 		if (!response) {
+			setIsLoading(false)
 			toast.error('Error creating advert, failed to make payment')
 			// router.push('/dashboard/campaign-stats')
 			togglePaymentSelect()
@@ -307,10 +318,11 @@ const PaymentMethod = ({
 									Your wallet is insufficient to perform this transaction. Click
 									the button below to fund your wallet now
 								</p>
-								<FlutterWaveButton
-									{...fwConfig}
-									className='px-6 py-2 bg-yellow-500 text-primary'
-								/>
+								<button
+									onClick={() => initializePayment('flutterwave')}
+									className='px-6 py-2 bg-yellow-500 text-primary'>
+									Pay with Flutterwave
+								</button>
 								.
 								<button
 									onClick={() => initializePayment('paystack')}
