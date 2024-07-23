@@ -162,7 +162,7 @@ const TaskPerform = ({
 	})
 
 	return (
-		<div className=' mt-5 relative md:px-8 md:mt-8 mx-auto overflow-scroll h-[90%] py-4 w-1/2 bg-gray-50 '>
+		<div className=' mt-5 relative md:px-8 md:mt-8 mx-4 md:mx-auto overflow-scroll h-[90%] rounded-lg py-4 md:w-1/2 bg-gray-50 '>
 			<IoClose
 				className='absolute top-4 right-4 cursor-pointer'
 				onClick={onClose}
@@ -170,7 +170,7 @@ const TaskPerform = ({
 			<h1 className='text-gray-500  font-bold text-lg text-center mb-[1rem]'>
 				Verification Instructions
 			</h1>
-			<div className='grid gap-6 my-[2rem] grid-cols-2'>
+			<div className='grid gap-6 p-4 my-[2rem] md:grid-cols-2'>
 				{/* Verification Instructions */}
 				<div className=' '>
 					<p>
@@ -331,7 +331,7 @@ const TaskPerform = ({
 
 				{/* Ad Image */}
 				{adMedia && adMedia?.length > 0 ? (
-					<div className='w-fit flex flex-col text-center items-center mx-auto md-w-500px mb-[2rem]'>
+					<div className='w-fit flex flex-col text-center items-center mx-auto md:w-500px mb-[2rem]'>
 						<label className='text-gray-500 font-bold text-center mb-[1rem]'>
 							Download Media:
 						</label>
@@ -379,7 +379,7 @@ const TaskPerform = ({
 				)}
 			</div>
 
-			<div className='flex flex-col w-full items-center gap-3 '>
+			<div className='flex flex-col w-full items-center p-4 gap-3 '>
 				{/* Submition Form */}
 				<form onSubmit={handleOnSubmit} className='flex w-full flex-col'>
 					{/* Upload ScreenSHot */}

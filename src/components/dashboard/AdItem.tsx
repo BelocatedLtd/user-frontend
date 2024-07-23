@@ -162,7 +162,7 @@ const AdItem = ({
 	return (
 		<div
 			onClick={handleToggleTaskPerformers}
-			className='relative border cursor-pointer hover:shadow flex w-full h-fit p-[1.5rem] rounded-2xl '>
+			className='relative border cursorpointer hovershadow flex w-full h-fit p-[1.5rem] rounded-2xl '>
 			<Loader open={isLoading} />
 
 			{toggleTaskProofModal && (

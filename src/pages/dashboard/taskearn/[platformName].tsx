@@ -246,7 +246,7 @@ const TaskEarn = () => {
 
 	return (
 		<Suspense>
-			<div className='w-full h-fit'>
+			<div className='w-full '>
 				<Loader open={isLoading} />
 				<div>
 					<div className='flex items-center gap-3 border-b border-gray-200 py-5'>
@@ -280,7 +280,7 @@ const TaskEarn = () => {
 					</div>
 				</div>
 
-				<div className='mt-3 md:mt-8 grid grid-cols-3 gap-8 '>
+				<div className='mt-3 md:mt-8 grid md:grid-cols-3 gap-8 '>
 					{finalFilteredTasks?.map((task: any, index) => {
 						const status = tasks?.find(
 							(task) =>
@@ -291,9 +291,9 @@ const TaskEarn = () => {
 							<div
 								key={index}
 								onClick={() => handleSelect(task._id)}
-								className='w-full cursor-pointer hover:shadow flex flex-col md:flex-row  md:items-center justify-between md:px-8 md:py-6 border rounded-lg'>
+								className='w-full cursor-pointer hover:shadow flex flex-col md:flex-row  md:items-center px-4 py-3  justify-between md:px-8 md:py-6 border rounded-lg'>
 								<div className='w-full fle flex-col  py-2 gap-2 md:items-center md:flex-row'>
-									<div className=' md:flex '>
+									<div className=' flex '>
 										{/* <Image
 									alt={platformName}
 									src={icon!}
