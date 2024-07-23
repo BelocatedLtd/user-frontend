@@ -46,6 +46,7 @@ const TaskEarn = () => {
 	const router = useRouter()
 
 	const platformName = router.query.platformName as string
+	console.log('🚀 ~ TaskEarn ~ platformName:', platformName)
 	const [isModalOpen, setModalOpen] = useState(false)
 
 	const [selectedTask, setSelectedTask] = useState<string>()
@@ -139,7 +140,7 @@ const TaskEarn = () => {
 
 		//Setting the filtered ads to a state called finalFilteredTasks
 		// setFinalFilteredTasks(filteredTasks)
-	}, [])
+	}, [platformName])
 
 	//Check if user has already opted in to perform a task, any task he/she is already performing will be marked submit task and new unperformed tasks marked perform task.
 	const checkTaskExistence = (advert_Id: string) => {
@@ -257,7 +258,7 @@ const TaskEarn = () => {
 							<small className='font-medium text-gray-500'>
 								Click{' '}
 								<span
-									onClick={() => router.push(`/dashboard/tasks/${user?.id}`)}
+									onClick={() => router.push(`/dashboard/tasks`)}
 									className='text-secondary'>
 									here
 								</span>{' '}
