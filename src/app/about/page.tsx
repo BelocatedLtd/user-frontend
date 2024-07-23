@@ -43,7 +43,7 @@ const About = () => {
 					{/* Vision Mission */}
 					<div className='mt-[5rem]'>
 						<div className='flex flex-col items-center justify-center gap-[5rem] mt-[2rem] md:flex-row'>
-							<div className='bg-transparent w-fit md:w-[450px] h-[450px] flex flex-col gap-2 items-center justify-center text-center shadow-2xl'>
+							<div className='bg-transparent w-fit md:w-[450px] h-[450px] flex flex-col gap-2 items-center justify-center text-center '>
 								<h2 className='text-[20px] font-[700] leading-[1.4em]  border-b-4 border-red-400 '>
 									VISION
 								</h2>
@@ -55,7 +55,7 @@ const About = () => {
 								</p>
 							</div>
 
-							<div className='bg-transparent w-fit md:w-[450px] h-[450px] flex flex-col gap-2 items-center justify-center text-center shadow-2xl'>
+							<div className='bg-transparent w-fit md:w-[450px] h-[450px] flex flex-col gap-2 items-center justify-center text-center '>
 								<h2 className='text-[20px] font-[700] leading-[1.4em] border-b-4 border-red-400'>
 									MISSION
 								</h2>
@@ -78,61 +78,59 @@ const About = () => {
 							</h1>
 						</div>
 
-						<div className='flex flex-col md:flex-row'>
-							<div className='flex flex-col md:flex-row'>
-								<ul className='flex flex-col gap-[2rem]'>
-									<li className='w-full'>
-										<h3 className='text-gray-700 text-[18px] my-[0.8rem] font-bold'>
-											People First:
-										</h3>
-										<p className='w-fit md:w-[500px]'>
-											Every product and service offered is inspired by the
-											diverse needs of people. Having understood the struggles
-											of new and existing businesses or brands with getting the
-											needed publicity for their products, BeLocated is
-											committed to solving these problems at all cost
-										</p>
-									</li>
+						<div className='flex '>
+							<ul className='grid md:grid-cols-4 gap-[3rem]'>
+								<li className='w-full'>
+									<h3 className='text-gray-700 text-[18px] my-[0.8rem] font-bold'>
+										People First:
+									</h3>
+									<p className='w-fit '>
+										Every product and service offered is inspired by the diverse
+										needs of people. Having understood the struggles of new and
+										existing businesses or brands with getting the needed
+										publicity for their products, BeLocated is committed to
+										solving these problems at all cost
+									</p>
+								</li>
 
-									<li className='w-full'>
-										<h3 className='text-gray-700 text-[18px] my-[0.8rem] font-bold'>
-											Dependability:
-										</h3>
-										<p className='w-fit md:w-[500px]'>
-											We take pride in the process and structures we have put in
-											place to make us a highly dependable brand. Say no to
-											unpredictable ads and poor-quality jobs. With BeLocated,
-											quality is guaranteed.
-										</p>
-									</li>
+								<li className='w-full'>
+									<h3 className='text-gray-700 text-[18px] my-[0.8rem] font-bold'>
+										Dependability:
+									</h3>
+									<p className='w-fit'>
+										We take pride in the process and structures we have put in
+										place to make us a highly dependable brand. Say no to
+										unpredictable ads and poor-quality jobs. With BeLocated,
+										quality is guaranteed.
+									</p>
+								</li>
 
-									<li className='w-full'>
-										<h3 className='text-gray-700 text-[18px] my-[0.8rem] font-bold'>
-											Creativity:
-										</h3>
-										<p className='w-fit md:w-[500px]'>
-											We do not just ‘think outside the box’ we are a brand that
-											exist outside the ‘box’ because there is no limit to our
-											learning and birthing new ideas to serve you better.
-										</p>
-									</li>
+								<li className='w-full'>
+									<h3 className='text-gray-700 text-[18px] my-[0.8rem] font-bold'>
+										Creativity:
+									</h3>
+									<p className='w-fit'>
+										We do not just ‘think outside the box’ we are a brand that
+										exist outside the ‘box’ because there is no limit to our
+										learning and birthing new ideas to serve you better.
+									</p>
+								</li>
 
-									<li className='w-full'>
-										<h3 className='text-gray-700 text-[18px] my-[0.8rem] font-bold'>
-											Integrity:
-										</h3>
-										<p className='w-fit md:w-[500px]'>
-											We are guided by a strict standard of honesty and probity
-											which makes us a trusted organization.
-										</p>
-									</li>
-								</ul>
-							</div>
+								<li className='w-full'>
+									<h3 className='text-gray-700 text-[18px] my-[0.8rem] font-bold'>
+										Integrity:
+									</h3>
+									<p className='w-fit'>
+										We are guided by a strict standard of honesty and probity
+										which makes us a trusted organization.
+									</p>
+								</li>
+							</ul>
 						</div>
 					</div>
 
-					<div className='mt-[5rem]'>
-						<h2 className='text-gray-600 px-6 text-[23px] md:text-[38px] mb-[5px] font-bold text-center w-fit'>
+					<div className='my-[10rem]'>
+						<h2 className='text-gray-600 px-6 text-[23px] md:text-2xl mb-[5px] font-bold text-center w-fit'>
 							Across all media platforms, BeLocated drives the necessary{' '}
 							<span className='text-red-500'>
 								traffic, likes, followers, product review, comments and clicks
@@ -140,7 +138,7 @@ const About = () => {
 							you need to take your business, product or brand to the next
 							level.
 						</h2>
-						<h3 className='text-secondary text-[18px] mx-[1rem] w-fit md:text-[38px] mb-[1rem] text-center'>
+						<h3 className='text-secondary text-[18px] mx-[1rem] w-fit md:text-4xl mb-[1rem] text-center'>
 							We are a brand that does the unusual and so we stay outside the
 							box to give our clients the very best services.
 						</h3>
@@ -155,7 +153,7 @@ const About = () => {
 						</div>
 
 						<div className='flex flex-col w-full items-center gap-2 mt-[2rem] md:flex-row'>
-							<div className='bg-gray-100 w-fit md:w-[450px] h-[500px] mx-[1rem] flex flex-col gap-2 items-center justify-center text-center shadow-2xl rounded-2xl'>
+							<div className='bg-gray-100 w-fit md:w-[450px] h-[500px] mx-[1rem] flex flex-col gap-2 items-center justify-center text-center  rounded-2xl'>
 								<div className='w-[70px] h-fit bg-gray-300 p-2 rounded-full mb-4'>
 									<Image
 										src={adRoi}
@@ -182,7 +180,7 @@ const About = () => {
 								</button>
 							</div>
 
-							<div className='bg-gray-100 w-fit md:w-[450px] h-[500px] mx-[1rem] flex flex-col gap-2 items-center justify-center text-center shadow-2xl rounded-2xl'>
+							<div className='bg-gray-100 w-fit md:w-[450px] h-[500px] mx-[1rem] flex flex-col gap-2 items-center justify-center text-center rounded-2xl'>
 								<div className='w-[70px] h-fit bg-gray-300 p-2 rounded-full mb-4'>
 									<Image
 										src={adRoi}
@@ -209,7 +207,7 @@ const About = () => {
 								</button>
 							</div>
 
-							<div className='bg-gray-100 w-fit md:w-[450px] h-[500px] mx-[1rem] flex flex-col gap-2 items-center justify-center text-center shadow-2xl roundedP-2xl'>
+							<div className='bg-gray-100 w-fit md:w-[450px] h-[500px] mx-[1rem] flex flex-col gap-2 items-center justify-center text-center  roundedP-2xl'>
 								<div className='w-[70px] h-fit bg-gray-300 p-2 rounded-full mb-4'>
 									<Image
 										src={adRoi}

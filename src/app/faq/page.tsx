@@ -9,7 +9,7 @@ const FAQ = () => {
 
 	return (
 		<Suspense>
-			<div className='w-full bg-red-200 h-fit'>
+			<div className='w-full h-fit'>
 				<div className='container flex flex-col items-center mx-auto leading-[1.2]'>
 					<div className='w-full h-full py-[5rem] mt-[5rem] flex flex-col items-center justify-center mx-auto'>
 						<h3 className='text-[#0F1741] px-6 text-[30px] md:text-[38px] mb-[5px] font-bold text-center'>
@@ -22,8 +22,8 @@ const FAQ = () => {
 					</div>
 				</div>
 
-				<div className='w-full h-fit flex justify-center bg-blue-200 py-[5rem]'>
-					<div className='services-list flex flex-wrap w-fit md:w-1/2 h-fit px-[2rem] md:px-0'>
+				<div className='w-full h-fit flex justify-center py-[5rem] bg-blue-50 '>
+					<div className='services-list grid md:grid-cols-3 px-10 md:gap-10  w-fit h-fit '>
 						{faqData?.map((item, index) => (
 							<div key={index} className='w-fit md:w-full  py-6'>
 								<div className='flex items-center gap-2 mb-[1rem]'>

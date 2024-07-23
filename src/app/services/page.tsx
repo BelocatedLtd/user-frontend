@@ -1,10 +1,10 @@
 'use client'
 
-import React, { Suspense } from 'react'
 import { services } from '@/components/data/servicesList'
+import Image from 'next/image'
+import { Suspense } from 'react'
 import { CheckmarkIcon } from 'react-hot-toast'
 import { AiOutlineHolder } from 'react-icons/ai'
-import Image from 'next/image'
 
 const ServicesPage = () => {
 	return (
@@ -22,7 +22,7 @@ const ServicesPage = () => {
 						</p>
 					</div>
 
-					<div className='w-full h-fit flex justify-center bg-blue-200 py-[5rem]'>
+					<div className='w-full h-fit flex justify-center bg-blue-50 py-[5rem]'>
 						<div className='services-list flex flex-wrap w-fit md:w-[80%] h-fit px-[3rem] md:px-0'>
 							{services?.map((item, index) => (
 								<div
