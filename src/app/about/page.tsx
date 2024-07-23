@@ -165,12 +165,9 @@ const About = () => {
 									Locate Your Business
 								</h2>
 								<p className='px-6 text-center'>
-									In a global village such as the one we find ourselves today,
-									being located is as important as your identity. There are
-									uncountable opportunities out there for you but only if you
-									can be located. With BeLocated platform you can access
-									countless business and earning opportunities while listing
-									opportunities for many others.
+									In today's connected world, having a visible presence is
+									crucial for businesses. BeLocated helps you: Access countless
+									business and earning Opportunities.
 								</p>
 
 								<button
@@ -192,12 +189,9 @@ const About = () => {
 									Increase Your Business{' '}
 								</h2>
 								<p className='px-6 text-center'>
-									Increase your business visibility and create awareness for
-									your brand and services through our customized publicity plan.
-									With Belocated, there is a package for everyone no matter how
-									little or how much your budget is. We work with your business
-									goal and timeline to provide affordable publicity packages
-									that will get you, your brand or your business located
+									Boost your business visibility with Belocated’s tailored
+									publicity plans. We offer affordable packages for any budget,
+									ensuring your brand gets noticed.
 								</p>
 
 								<button
@@ -219,12 +213,9 @@ const About = () => {
 									Earn Steady Income
 								</h2>
 								<p className='px-6 text-center'>
-									Belocated is more than just a business but an organization
-									that rewards you for all transactions carried out on the
-									platform. As a client, you earn guaranteed return on your
-									business investments, visible results as well as on time and
-									quality service delivery. As a user you earn for every task
-									performed on the platform. Here, everyone is a WINNER!
+									Belocated rewards you for every transaction. Clients get
+									guaranteed returns, visible results, and quality service.
+									Users earn for every task. With Belocated, everyone wins!
 								</p>
 
 								<ShowOnLogout>
