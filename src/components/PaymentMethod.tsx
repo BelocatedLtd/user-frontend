@@ -323,12 +323,11 @@ const PaymentMethod = ({
 									className='px-6 py-2 bg-yellow-500 text-primary'>
 									Pay with Flutterwave
 								</button>
-								.
-								<button
+								{/* <button
 									onClick={() => initializePayment('paystack')}
 									className='px-6 py-2 bg-[#16A4DA] text-primary'>
 									Pay with Paystack
-								</button>
+								</button> */}
 							</div>
 						)}
 						{canPay && (
