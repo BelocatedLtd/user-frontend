@@ -147,7 +147,7 @@ const TaskSubmit = ({
 				//Emit Socket event to update activity feed
 				socket.emit('sendActivity', emitData)
 
-				router.push('/dashboard/tasks')
+				onClose()
 				return
 			}
 			setIsLoading(false)

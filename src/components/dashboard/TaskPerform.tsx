@@ -1,6 +1,7 @@
 import copy from '@/assets/copy.png'
 import { saveAs } from 'file-saver'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
@@ -276,22 +277,18 @@ const TaskPerform = ({
 							className='text-gray-500 font-bold text-center '>
 							Task Link
 						</label>
-						<div className='w-full  flex items-center justify-center mx-auto'>
-							<input
-								type='link'
-								value={newTask?.socialPageLink}
-								readOnly
-								ref={linkRef}
-								className='w-full h-[20px] px-6 py-5 text-gray-800 bg-gray-200 rounded-r rounded-2xl'
-							/>
+						<div className='w-full min-h-[20px] bg-gray-200 text-gray-800  rounded-r rounded-2xl flex items-center justify-center mx-auto'>
+							<p ref={linkRef} className='w-full px-6 py-3  text-sm truncate'>
+								{newTask?.socialPageLink}
+							</p>
 
-							{/* <Link
-								href={newTask?.socialPageLink}
+							<Link
+								href={newTask?.socialPageLink || ''}
 								target='_blank'
 								rel='noopener noreferrer'
-								className='w-[4rem] h-[20px] px-5 py-5 bg-secondary text-primary text-[9px]'>
+								className='w-[4rem] h-full flex justify-center items-center  bg-secondary text-primary text-base'>
 								Visit
-							</Link> */}
+							</Link>
 						</div>
 						<small className='w-full mx-auto text-gray-400 text-[12px] text-center'>
 							Remember, the task you were given is {newTask?.service} on{' '}
@@ -486,6 +483,7 @@ const TaskPerform = ({
 							className='mt-4 w-1/2 mx-auto'
 							variant='solid'
 							color='secondary'
+							disabled={!userSocialName || selectedImages.length < 2}
 							type='submit'>
 							{!isLoading && 'Submit'}
 							{isLoading && 'Submitting...'}
