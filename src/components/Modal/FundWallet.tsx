@@ -69,7 +69,7 @@ const FundWallet = ({
 		paymentRef: reference,
 		date: Date.now().toString(),
 		paymentMethod: 'flutterwave',
-		paymentType: 'wallet funding',
+		paymentType: 'wallet_funding',
 	}
 
 	const handleFlutterPayment = useFlutterwave(fwConfig as any)

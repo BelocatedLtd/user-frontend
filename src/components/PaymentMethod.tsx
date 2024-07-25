@@ -250,7 +250,7 @@ const PaymentMethod = ({
 				date: Date.now().toString(),
 				paymentMethod,
 				advertId: response._id,
-				paymentType: 'Ad Paymen',
+				paymentType: 'advert_payment',
 			}
 
 			const res = await dispatch(handleInitializeUserTransaction(body) as any)
