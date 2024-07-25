@@ -1,6 +1,5 @@
 import close from '@/assets/close.svg'
 import { selectUser } from '@/redux/slices/authSlice'
-import { handleInitializeUserTransaction } from '@/redux/slices/walletSlice'
 import { Modal } from '@mui/material'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -22,21 +21,7 @@ const FundingForm = ({ onClose }: { onClose: () => void }) => {
 	const toggleFLWFunding = async (e: any) => {
 		e.preventDefault()
 
-		const body = {
-			userId: user.id,
-			email: user.email,
-			amount: fundingAmount,
-			paymentRef: Date.now().toString(),
-			date: Date.now().toString(),
-			paymentMethod: 'flutterwave',
-			paymentType: 'wallet_funding',
-		}
-
-		const res = await dispatch(handleInitializeUserTransaction(body) as any)
-
-		if (res.meta.requestStatus === 'fulfilled') {
-			setFLWFundingModal(!fLWFundingModal)
-		}
+		setFLWFundingModal(!fLWFundingModal)
 	}
 
 	return (
