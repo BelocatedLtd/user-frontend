@@ -121,7 +121,9 @@ const FundWallet = ({
 							</p>
 
 							<button
+								disabled={isLoading}
 								onClick={async () => {
+									setisLoading(true)
 									const res = await dispatch(
 										handleInitializeUserTransaction(body) as any,
 									)
@@ -136,10 +138,12 @@ const FundWallet = ({
 												toggleFLWFunding()
 											},
 										})
+									setisLoading(false)
 								}}
-								className='px-6 py-2 bg-secondary text-primary hover:bg-gray-800'>
-								Fund Wallet
-								{isLoading && <LoaderIcon />}
+								className='px-6 py-2 bg-yellow-500 text-primary
+								disabled:bg-gray-400
+								hover:bg-gray-800'>
+								{isLoading ? <LoaderIcon /> : 'Fund Wallet'}
 							</button>
 						</div>
 					</div>
