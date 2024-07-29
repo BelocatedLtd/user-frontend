@@ -115,7 +115,7 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 							color='secondary'
 							variant='solid'
 							className='w-full mt-10 rounded-lg'>
-							Submit
+							Submittttt
 						</FormSubmitButton>
 					</Form>
 				)}

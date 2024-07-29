@@ -11,6 +11,12 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
 	...props
 }) => {
 	const { isSubmitting, isValid, dirty } = useFormikContext()
+	console.log(
+		'🚀 ~ isSubmitting, isValid, dirty:',
+		isSubmitting,
+		isValid,
+		dirty,
+	)
 
 	return (
 		<Button
