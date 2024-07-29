@@ -19,10 +19,7 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
 	)
 
 	return (
-		<Button
-			type='submit'
-			disabled={isSubmitting || !isValid || !dirty}
-			{...props}>
+		<Button type='submit' disabled={isSubmitting || !isValid} {...props}>
 			{children}
 		</Button>
 	)
