@@ -19,7 +19,6 @@ interface FormValues {
 
 export default function CompleteProfile({ next }: { next: () => void }) {
 	const user = useSelector(selectUser)
-	console.log('🚀 ~ CompleteProfile ~ user:', user)
 
 	const dispatch = useAppDispatch()
 
@@ -115,7 +114,7 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 							color='secondary'
 							variant='solid'
 							className='w-full mt-10 rounded-lg'>
-							Submittttt
+							Submit
 						</FormSubmitButton>
 					</Form>
 				)}
