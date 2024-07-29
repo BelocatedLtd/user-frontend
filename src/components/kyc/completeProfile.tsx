@@ -32,7 +32,6 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 		state: Yup.string().required('State is required'),
 		lga: Yup.string().required('LGA is required'),
 		gender: Yup.string().required('Gender is required'),
-		religion: Yup.string().required('Religion is required'),
 	})
 
 	const initialValues: FormValues = {
