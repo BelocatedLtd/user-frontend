@@ -30,6 +30,7 @@ const TaskSubmit = ({
 	taskId: string
 	onClose: () => void
 }) => {
+	console.log('🚀 ~ taskId:', taskId)
 	const dispatch = useDispatch()
 	const router = useRouter()
 	// const isLoading = useSelector(selectIsLoading)
@@ -39,6 +40,7 @@ const TaskSubmit = ({
 	const user = useSelector(selectUser)
 	const tasks = useSelector(selectTasks)
 	const [task, setTask] = useState<any>()
+	console.log('🚀 ~ task:', task)
 	const adverts = useSelector(selectAllAdverts)
 	const [ad, setAd] = useState<any>()
 	const [imageArray, setimageArray] = useState<any>([])

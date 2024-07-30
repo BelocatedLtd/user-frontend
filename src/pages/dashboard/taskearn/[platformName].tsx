@@ -63,6 +63,7 @@ const TaskEarn = () => {
 	const [newTask, setNewTask] = useState()
 
 	const [selectedAdvertId, setSelectedAdvertId] = useState<string | null>(null)
+	console.log('🚀 ~ TaskEarn ~ selectedAdvertId:', selectedAdvertId)
 
 	const tasks = useSelector(selectTasks)
 	// const { filteredServiceAdvert, asset, taskTitle, taskVerification } =
@@ -228,7 +229,8 @@ const TaskEarn = () => {
 			if (isSuccess) {
 				setModalOpen(false)
 				toast.success('Successfully created a Task from this advert')
-				setIsOpen(true)
+				router.push(`/dashboard/tasks`)
+				// setIsOpen(true)
 				// router.push(`/dashboard/submittask/${response?.payload?._id}`)
 			}
 		}
