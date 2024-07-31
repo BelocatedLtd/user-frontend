@@ -271,22 +271,25 @@ const TaskPerform = ({
 				{hideLinkInputFields ? (
 					''
 				) : (
-					<div className='flex flex-col gap-2'>
+					<div className='flexflex-col gap-2 p-2'>
 						<label
 							htmlFor='task link'
-							className='text-gray-500 font-bold text-center '>
+							className='text-gray-500 font-bold text-center'>
 							Task Link
 						</label>
-						<div className='w-full min-h-[20px] bg-gray-200 text-gray-800  rounded-r rounded-2xl flex items-center justify-center mx-auto'>
-							<p ref={linkRef} className='w-full px-6 py-3  text-sm truncate'>
-								{newTask?.socialPageLink}
-							</p>
-
+						<div className='bg-gray-200 text-gray-800 h-10 pl-4 mt-2  rounded-r rounded-2xl flex items-center w-full'>
+							<input
+								ref={linkRef}
+								type='text'
+								value={newTask?.socialPageLink || ''}
+								disabled
+								className='text-sm truncate w-[calc(100%-4rem)] bg-gray-200 border-none focus:outline-none'
+							/>
 							<Link
 								href={newTask?.socialPageLink || ''}
 								target='_blank'
 								rel='noopener noreferrer'
-								className='w-[4rem] h-full flex justify-center items-center  bg-secondary text-primary text-base'>
+								className='w-[4rem] h-full flex justify-center items-center bg-secondary text-primary text-base'>
 								Visit
 							</Link>
 						</div>
@@ -388,7 +391,7 @@ const TaskPerform = ({
 							<label
 								htmlFor='upload proof of work'
 								className='text-gray-500 font-bold text-center'>
-								Upload Proof of work
+								Upload Proof of workkkk
 							</label>
 							<p className='text-tertiary font-bold'>
 								Ensure to upload the right proof to avoid your account being
