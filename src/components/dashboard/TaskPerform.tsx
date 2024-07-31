@@ -391,7 +391,7 @@ const TaskPerform = ({
 							<label
 								htmlFor='upload proof of work'
 								className='text-gray-500 font-bold text-center'>
-								Upload Proof of workkkk
+								Upload Proof of work
 							</label>
 							<p className='text-tertiary font-bold'>
 								Ensure to upload the right proof to avoid your account being
