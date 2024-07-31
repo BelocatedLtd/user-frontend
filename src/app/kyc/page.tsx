@@ -60,12 +60,12 @@ const Kyc = () => {
 	}
 
 	return (
-		<div className='w-full bg-blue- items-center flex justify-center'>
+		<div className='w-full px- items-center md:flex justify-center'>
 			{/* <Header /> */}
 			<div className=' text-center mt-40'>
 				<Link
 					href='/'
-					className='logo cursor-pointer mx-auto text-4xl font-extrabold  w-[150px] md:w-[170px]'>
+					className='logo cursor-pointer mx-auto text-4xl font-extrabold  w-full md:w-[170px]'>
 					<Image
 						src={logo}
 						alt='logo'
@@ -76,7 +76,7 @@ const Kyc = () => {
 				<p>Just a few quick steps to get started with our platform!</p>
 				<div
 					// style={{ minHeight: '80vh' }}
-					className='flex p-1 md:p-6 w-full'>
+					className='flex p-2 md:p-6 w-full'>
 					<Stepper nonLinear className='' activeStep={activeStep}>
 						{steps.map((label, index) => (
 							<Step key={label} completed={completed[index]}>

@@ -26,9 +26,13 @@ export default function Whatsapp({ next }: { next: () => void }) {
 				onClick={handleLinkClick}>
 				<a
 					href='https://whatsapp.com/channel/0029Va7JRtyEVccRNhgObL3E'
-					target='_blank'
-					className='text-sm text-gray-500'>
-					https://whatsapp.com/channel/0029Va7JRtyEVccRNhgObL3E
+					target='_blank'>
+					<input
+						type='text'
+						value={'https://whatsapp.com/channel/0029Va7JRtyEVccRNhgObL3E'}
+						disabled
+						className='text-sm truncate w-[calc(100%-4rem)]   border-none focus:outline-none'
+					/>
 				</a>
 			</div>
 
