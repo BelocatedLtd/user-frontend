@@ -1,30 +1,30 @@
-import axios from 'axios'
+import api from '@/helpers/Api'
 import { toast } from 'react-hot-toast'
 import { BACKEND_URL } from '../utils/globalConfig'
-import { getToken } from '../utils/tokenHandler'
 
-const getAuthHeaders = () => {
-	const token = getToken()
+// Define the types for the transaction data
+interface TransactionData {
+	amount: number
+	accountNumber?: string
+	bankCode?: string
+	[key: string]: any
+}
 
-	if (token) {
-		return {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		}
-	}
+// Define the types for the responses
+interface ApiResponse<T> {
+	data: T
+	status: number
+	statusText: string
 }
 
 // Get User Wallet Details
-export const getWallet = async () => {
-	const headers = getAuthHeaders()
+export const getWallet = async (): Promise<any> => {
 	try {
-		const response = await axios.get(
+		const response: ApiResponse<any> = await api.get(
 			`${BACKEND_URL}/api/transactions/wallet/user`,
-			headers,
 		)
 		return response.data
-	} catch (error) {
+	} catch (error: any) {
 		const message =
 			(error.response && error.response.data && error.response.data.message) ||
 			error.message ||
@@ -34,15 +34,13 @@ export const getWallet = async () => {
 }
 
 // Get Wallet Details
-export const getUserWallet = async () => {
-	const headers = getAuthHeaders()
+export const getUserWallet = async (): Promise<any> => {
 	try {
-		const response = await axios.get(
+		const response: ApiResponse<any> = await api.get(
 			`${BACKEND_URL}/api/transactions/wallet/user`,
-			headers,
 		)
 		return response.data
-	} catch (error) {
+	} catch (error: any) {
 		const message =
 			(error.response && error.response.data && error.response.data.message) ||
 			error.message ||
@@ -51,16 +49,14 @@ export const getUserWallet = async () => {
 	}
 }
 
-// Get Wallet Details
-export const getSingleUserWallet = async (id) => {
-	const headers = getAuthHeaders()
+// Get Single User Wallet
+export const getSingleUserWallet = async (id: string): Promise<any> => {
 	try {
-		const response = await axios.get(
+		const response: ApiResponse<any> = await api.get(
 			`${BACKEND_URL}/api/transactions/wallet/user/${id}`,
-			headers,
 		)
 		return response.data
-	} catch (error) {
+	} catch (error: any) {
 		const message =
 			(error.response && error.response.data && error.response.data.message) ||
 			error.message ||
@@ -70,16 +66,14 @@ export const getSingleUserWallet = async (id) => {
 }
 
 // Fund User Wallet
-export const fundWallet = async (trxData) => {
-	const headers = getAuthHeaders()
+export const fundWallet = async (trxData: TransactionData): Promise<any> => {
 	try {
-		const response = await axios.patch(
+		const response: ApiResponse<any> = await api.patch(
 			`${BACKEND_URL}/api/transactions/fund`,
 			trxData,
-			headers,
 		)
 		return response.data
-	} catch (error) {
+	} catch (error: any) {
 		const message =
 			(error.response && error.response.data && error.response.data.message) ||
 			error.message ||
@@ -88,37 +82,36 @@ export const fundWallet = async (trxData) => {
 	}
 }
 
-// initialize user transaction
-export const initTransaction = async (trxData) => {
-	const headers = getAuthHeaders()
+// Initialize User Transaction
+export const initTransaction = async (
+	trxData: TransactionData,
+): Promise<any> => {
 	try {
-		const response = await axios.post(
+		const response: ApiResponse<any> = await api.post(
 			`${BACKEND_URL}/api/transactions/initialize-transaction`,
 			trxData,
-			headers,
 		)
 		return response.data
-	} catch (error) {
+	} catch (error: any) {
 		const message =
 			(error.response && error.response.data && error.response.data.message) ||
 			error.message ||
 			error.toString()
-
 		throw new Error(message)
 	}
 }
 
 // Withdraw User Wallet
-export const withdrawWallet = async (trxData) => {
-	const headers = getAuthHeaders()
+export const withdrawWallet = async (
+	trxData: TransactionData,
+): Promise<any> => {
 	try {
-		const response = await axios.post(
+		const response: ApiResponse<any> = await api.post(
 			`${BACKEND_URL}/api/transactions/withdraw`,
 			trxData,
-			headers,
 		)
 		return response.data
-	} catch (error) {
+	} catch (error: any) {
 		const message =
 			(error.response && error.response.data && error.response.data.message) ||
 			error.message ||
@@ -128,15 +121,13 @@ export const withdrawWallet = async (trxData) => {
 }
 
 // Get All Withdrawals
-export const getWithdrawals = async () => {
-	const headers = getAuthHeaders()
+export const getWithdrawals = async (): Promise<any> => {
 	try {
-		const response = await axios.get(
+		const response: ApiResponse<any> = await api.get(
 			`${BACKEND_URL}/api/transactions/withdrawals`,
-			headers,
 		)
 		return response.data
-	} catch (error) {
+	} catch (error: any) {
 		const message =
 			(error.response && error.response.data && error.response.data.message) ||
 			error.message ||
@@ -146,15 +137,13 @@ export const getWithdrawals = async () => {
 }
 
 // Get User Withdrawals
-export const getUserWithdrawals = async (userId) => {
-	const headers = getAuthHeaders()
+export const getUserWithdrawals = async (userId: string): Promise<any> => {
 	try {
-		const response = await axios.get(
+		const response: ApiResponse<any> = await api.get(
 			`${BACKEND_URL}/api/transactions/withdrawals/${userId}`,
-			headers,
 		)
 		return response.data
-	} catch (error) {
+	} catch (error: any) {
 		const message =
 			(error.response && error.response.data && error.response.data.message) ||
 			error.message ||
@@ -164,16 +153,16 @@ export const getUserWithdrawals = async (userId) => {
 }
 
 // Confirm User Withdrawal Request
-export const confirmWithdrawal = async (withdrawalRequestId) => {
-	const headers = getAuthHeaders()
+export const confirmWithdrawal = async (
+	withdrawalRequestId: string,
+): Promise<any> => {
 	try {
-		const response = await axios.patch(
+		const response: ApiResponse<any> = await api.patch(
 			`${BACKEND_URL}/api/transactions/withdrawals/confirm/${withdrawalRequestId}`,
 			null,
-			headers,
 		)
 		return response.data
-	} catch (error) {
+	} catch (error: any) {
 		const message =
 			(error.response && error.response.data && error.response.data.message) ||
 			error.message ||
@@ -182,16 +171,16 @@ export const confirmWithdrawal = async (withdrawalRequestId) => {
 	}
 }
 
-// Get User Withdrawals
-export const deleteWithdrawal = async (withdrawalRequestId) => {
-	const headers = getAuthHeaders()
+// Delete User Withdrawal
+export const deleteWithdrawal = async (
+	withdrawalRequestId: string,
+): Promise<any> => {
 	try {
-		const response = await axios.delete(
+		const response: ApiResponse<any> = await api.delete(
 			`${BACKEND_URL}/api/transactions/withdrawals/delete/${withdrawalRequestId}`,
-			headers,
 		)
 		return response.data
-	} catch (error) {
+	} catch (error: any) {
 		const message =
 			(error.response && error.response.data && error.response.data.message) ||
 			error.message ||

@@ -49,7 +49,6 @@ const Login = ({ showRegModal, closeModal }: any) => {
 
 		try {
 			const response = await loginUser(formData)
-			console.log('🚀 ~ handleOnSubmit ~ response:', response)
 			setIsLoading(false)
 
 			// When user email is not verified
