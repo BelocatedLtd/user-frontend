@@ -1,21 +1,14 @@
 'use client'
 import Loader from '@/components/loader/Loader'
 import { resendVerificationEmail } from '@/services/authServices'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { CheckmarkIcon, toast } from 'react-hot-toast'
-import {
-	FaAngleDoubleRight,
-	FaEnvelope,
-	FaTelegram,
-	FaWhatsapp,
-} from 'react-icons/fa'
 
 const VerifyEmail = () => {
 	const router = useRouter()
 
-	const email = router.query.email
+	const email = router.query.email as string
 
 	const [isLoading, setIsLoading] = useState(false)
 	const [timer, setTimer] = useState(10)
@@ -70,57 +63,13 @@ const VerifyEmail = () => {
 					<p className='w-fit my-[1rem] text-center px-6'>
 						Please check the email address{' '}
 						<span className='text-secondary font-bold'>{email!}</span> for
-						instructions href verify your belocated account
+						instructions to verify your belocated account
 					</p>
 					<small className='text-tertiary text-[12px] w-[300px] text-center mb-[1rem]'>
 						<span className='text-gray-800 font-bold'>Note:</span> Incase you
 						didnt see the email in your inbox, Kindly check your spam inbox
 					</small>
 
-					<div className='w-full h-fit px-1 py-1 my-2 flex flex-col items-center'>
-						<p className='w-[80%] text-[12px] px-2 text-center'>
-							For any other question, kindly join our telegram group, send an
-							email or send a WhatsApp message href chat with a customer rep.
-						</p>
-
-						<ul className='flex flex-col items-center mt-2 gap-2 text-[12px] text-center'>
-							<li className='flex items-center gap-1'>
-								<label className='flex items-center gap-1'>
-									<FaTelegram className='text-[12px] text-secondary' />
-								</label>
-								<Link
-									href={'https://t.me/belocated'}
-									target='_blank'
-									rel='noopener noreferrer'
-									className='flex items-center gap-1'>
-									Join Telegram Channel{' '}
-									<FaAngleDoubleRight className='text-[12px] text-secondary' />
-								</Link>
-							</li>
-
-							<li className='flex items-center gap-1'>
-								<label className='flex items-center gap-1'>
-									<FaWhatsapp className='text-[12px] text-green-400' />
-								</label>
-								<Link
-									href={'https://wa.me/2347031935276'}
-									target='_blank'
-									rel='noopener noreferrer'
-									className='flex items-center gap-1'>
-									Join Belocated WhatsApp Group{' '}
-									<FaAngleDoubleRight className='text-[12px] text-secondary' />
-								</Link>
-							</li>
-
-							<li className='flex items-center gap-1'>
-								<label className='flex items-center gap-1'>
-									<FaEnvelope className='text-[12px] text-tertiary' />
-									Email:
-								</label>
-								<p>cs@belocated.ng</p>
-							</li>
-						</ul>
-					</div>
 					<div className='flex items-center gap-2'>
 						{resendBtn && (
 							<button

@@ -1,5 +1,5 @@
 'use client'
-import banner from '@/assets/banner.png'
+import banner from '@/assets/homebanner.png'
 import ActivityFeed from '@/components/ActivityFeed'
 import ReferralsTable from '@/components/dashboard/referralTable'
 import useRedirectLoggedOutUser from '@/customHook/useRedirectLoggedOutUser'
@@ -202,13 +202,13 @@ const Dashboard = () => {
 					<div className='border md:row-span-2 col-span-2 md:col-span-1 border-gray-200 rounded-lg flex'>
 						<ActivityFeed />
 					</div>
-					<div className='border md:col-span-3 col-span-2 border-gray-200 rounded-lg flex'>
-						<Image
-							src={banner}
-							alt=''
-							className='w-full h-[8em] rounded-lg object-cover'
-						/>
-					</div>
+					{/* <div className='border bg-red-200 md:col-span-3 col-span-2 border-gray-200 rounded-lg flex'> */}
+					<Image
+						src={banner}
+						alt=''
+						className='w-full  md:col-span-3  rounded-lg object-contain'
+					/>
+					{/* </div> */}
 				</div>
 			</div>
 		</div>

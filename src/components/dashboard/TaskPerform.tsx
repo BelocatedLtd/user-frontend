@@ -486,7 +486,7 @@ const TaskPerform = ({
 							className='mt-4 w-1/2 mx-auto'
 							variant='solid'
 							color='secondary'
-							disabled={!userSocialName || selectedImages.length < 1}
+							disabled={selectedImages.length < 1}
 							type='submit'>
 							{!isLoading && 'Submit'}
 							{isLoading && 'Submitting...'}

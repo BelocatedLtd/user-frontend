@@ -31,7 +31,6 @@ const TaskList = () => {
 	const [icon, setIcon] = useState('')
 	const [platform, setPlatform] = useState('')
 	const tasks = useSelector(selectTasks)
-	console.log('🚀 ~ TaskList ~ tasks:', tasks)
 	const [sortedTasks, setSortedTasks] = useState<any>()
 	// const itemsPerPage = 5;
 
@@ -173,7 +172,10 @@ const TaskList = () => {
 
 				<Modal
 					open={isOpen}
-					onClose={() => setIsOpen(false)}
+					onClose={() => {
+						getUserTasks()
+						setIsOpen(false)
+					}}
 					aria-labelledby='modal-modal-title'
 					aria-describedby='modal-modal-description'>
 					<TaskSubmit onClose={() => setIsOpen(false)} taskId={selectedTask!} />

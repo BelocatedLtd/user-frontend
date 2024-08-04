@@ -60,7 +60,7 @@ const Kyc = () => {
 	}
 
 	return (
-		<div className='w-full px- items-center md:flex justify-center'>
+		<div className='w-full px- justify-center md:flex mt-[2em] '>
 			{/* <Header /> */}
 			<div className=' text-center mt-40'>
 				<Link

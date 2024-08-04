@@ -63,7 +63,7 @@ const Jumbotron = () => {
 				backgroundSize: 'cover',
 				backgroundRepeat: 'no-repeat',
 			}}
-			className='w-full h-screen flex flex-col items-center pt-[5rem] md:pt-[10rem]'>
+			className='w-full h-screen flex flex-col items-center pt-[2rem] md:pt-[10rem]'>
 			<div className='container flex mt-20 flex-col items-center'>
 				<h1 className='w-[90%] text-center text-[28px] text-gray-800 font-extrabold md:text-[3rem]'>
 					Earn Daily: Complete Lucrative <br /> Social Media Tasks Easily

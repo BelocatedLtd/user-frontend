@@ -1,7 +1,6 @@
 import whatsappimage from '@/assets/whatsapp.png'
 import Image from 'next/image'
 import { useState } from 'react'
-import Button from '../Button'
 
 export default function Whatsapp({ next }: { next: () => void }) {
 	const [linkClicked, setLinkClicked] = useState(false)
@@ -12,38 +11,22 @@ export default function Whatsapp({ next }: { next: () => void }) {
 
 	return (
 		<div className='bg-red- '>
-			<Image
-				src={whatsappimage}
-				alt='logo'
-				className='w-36 h-10 mx-auto object-contain'
-			/>
-			<b className='text-lg font-medium'>Join Our Community</b>
-			<p className='text-gray-400 text-sm'>
-				Follow the link below to join our WhatsApp group and stay updated
-			</p>
-			<div
-				className='bg-primary-light rounded-lg text-center py-2 mt-3 cursor-pointer'
-				onClick={handleLinkClick}>
-				<a
-					href='https://whatsapp.com/channel/0029Va7JRtyEVccRNhgObL3E'
-					target='_blank'>
-					<input
-						type='text'
-						value={'https://whatsapp.com/channel/0029Va7JRtyEVccRNhgObL3E'}
-						disabled
-						className='text-sm truncate w-[calc(100%-4rem)]   border-none focus:outline-none'
-					/>
-				</a>
-			</div>
+			<a
+				href='https://whatsapp.com/channel/0029Va7JRtyEVccRNhgObL3E'
+				target='_blank'>
+				<Image
+					src={whatsappimage}
+					alt='logo'
+					onClick={() => next()}
+					className='w-36 h-10 mx-auto object-contain'
+				/>
+			</a>
 
-			<Button
-				color='secondary'
-				variant='solid'
-				disabled={!linkClicked}
-				onClick={() => next()}
-				className='mt-10 w-full rounded-lg'>
-				Next Step
-			</Button>
+			<b className='text-lg font-medium'>Join Our Community</b>
+			<p className='text-gray-400 mt-2 text-sm'>
+				Click the whatsapp icon above to join our WhatsApp group and stay
+				updated
+			</p>
 		</div>
 	)
 }
