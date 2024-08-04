@@ -13,7 +13,7 @@ const EmailVerified = () => {
 
 	const searchParams = useSearchParams()
 
-	const token = searchParams?.get('token')
+	const token = searchParams?.get('token') as string
 
 	const [isLoading, setIsLoading] = useState(false)
 	const [formData, setFormData] = useState<any>()
