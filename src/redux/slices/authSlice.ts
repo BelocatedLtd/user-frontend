@@ -138,9 +138,9 @@ export const {
 	SET_USERNAME,
 } = authSlice.actions
 
-export const selectIsLoggedIn = (state: any) => state.auth.isLoggedIn
-export const selectUser = (state: any) => state.auth.user
-export const selectUsername = (state: any) => state.auth.username
+export const selectIsLoggedIn = (state: any) => state?.auth?.isLoggedIn
+export const selectUser = (state: any) => state?.auth?.user
+export const selectUsername = (state: any) => state?.auth?.username
 export const selectUserId = (state: any) => state.auth?.user?._id
 
 export default authSlice.reducer

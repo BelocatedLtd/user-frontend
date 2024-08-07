@@ -1,3 +1,5 @@
+import { SET_LOGOUT } from '@/redux/slices/authSlice'
+import { store } from '@/redux/store'
 import { BACKEND_URL } from '@/utils/globalConfig'
 import { getToken } from '@/utils/tokenHandler'
 import axios from 'axios'
@@ -35,12 +37,12 @@ api.interceptors.response.use(
 	(error) => {
 		if (error.response) {
 			const { status, data } = error.response
+			console.log('🚀 ~ status, data:', status, data)
 			if (
 				status === 401 &&
 				data.message === 'An error occurred - Token Expired'
 			) {
-				// Token has expired, redirect to the login page
-				window.location.href = '/auth/login'
+				store.dispatch(SET_LOGOUT())
 			}
 		}
 		return Promise.reject(error)
