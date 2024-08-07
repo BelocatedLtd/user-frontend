@@ -1,4 +1,5 @@
 import '@/app/index.css'
+import RootLayout from '@/app/layout'
 import DashboardLayout from '@/components/Layouts/dashboard'
 import ReduxProvider from '@/redux/provider'
 import { AppProps } from 'next/app'
@@ -15,7 +16,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 					<Component {...pageProps} />
 				</DashboardLayout>
 			) : (
-				<Component {...pageProps} />
+				<RootLayout>
+					<Component {...pageProps} />
+				</RootLayout>
 			)}
 		</ReduxProvider>
 	)

@@ -203,7 +203,7 @@ const Login = ({ showRegModal, closeModal }: any) => {
 	const handleRetrievePass = (e: any) => {
 		e.preventDefault()
 
-		router.push('/retrieve-pass')
+		router.push('/auth/retrieve-pass')
 	}
 
 	return (

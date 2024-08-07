@@ -1,7 +1,6 @@
-import { SET_LOGOUT } from '@/redux/slices/authSlice'
-import { store } from '@/redux/store'
 import { BACKEND_URL } from '@/utils/globalConfig'
 import { getToken } from '@/utils/tokenHandler'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 
 const baseURL = BACKEND_URL
@@ -34,7 +33,7 @@ api.interceptors.response.use(
 	(response) => {
 		return response
 	},
-	(error) => {
+	async (error) => {
 		if (error.response) {
 			const { status, data } = error.response
 			console.log('🚀 ~ status, data:', status, data)
@@ -42,7 +41,7 @@ api.interceptors.response.use(
 				status === 401 &&
 				data.message === 'An error occurred - Token Expired'
 			) {
-				store.dispatch(SET_LOGOUT())
+				await AsyncStorage.clear()
 			}
 		}
 		return Promise.reject(error)

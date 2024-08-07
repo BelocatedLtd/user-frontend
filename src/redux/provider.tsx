@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux'
-import { store } from './store'
 import { persistStore } from 'redux-persist'
+import { store } from './store'
 
 persistStore(store) // persist the store
 

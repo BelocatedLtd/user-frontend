@@ -1,36 +1,29 @@
-import React from 'react'
-import close from '../../../../assets/close.svg'
-import ReactDOM from 'react-dom'
-import { toast } from 'react-hot-toast'
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
-import Loader from '../../../../components/loader/Loader'
+'use client'
+
+import close from '@/assets/close.svg'
+import Loader from '@/components/loader/Loader'
 import {
 	confirmEmailOTP,
 	resendOTPVerificationEmail,
-} from '../../../../services/authServices'
+} from '@/services/authServices'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 const initialState = {
 	OTP: '',
 }
 
-const ForgottenPasswordVerify = ({
-	accountDetailsData,
-	handleModal,
-	email,
-	userId,
-}) => {
-	const navigate = useNavigate()
-	const dispatch = useDispatch()
+const ForgottenPasswordVerify = ({ handleModal, email, userId }: any) => {
+	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
 	const [values, setValues] = useState(initialState)
 	const [timer, setTimer] = useState(10)
 	const [resendBtn, setResendBtn] = useState(false)
 	const [isUpdating, setIsUpdating] = useState(false)
 
-	let interval
+	let interval: any
 
 	useEffect(() => {
 		if (timer === 0) {
@@ -48,7 +41,7 @@ const ForgottenPasswordVerify = ({
 
 	const { OTP } = values
 
-	const handleInputChange = (e) => {
+	const handleInputChange = (e: any) => {
 		const { name, value } = e.target
 		setValues({ ...values, [name]: value })
 	}
@@ -58,7 +51,7 @@ const ForgottenPasswordVerify = ({
 		email,
 	}
 
-	const handleOnSubmit = async (e) => {
+	const handleOnSubmit = async (e: any) => {
 		e.preventDefault()
 
 		if (OTP.length > 6) {
@@ -89,21 +82,31 @@ const ForgottenPasswordVerify = ({
 
 		setIsLoading(false)
 
+		const transportDataString = JSON.stringify(transportData)
 		//Sending data to update user account details
 		if (response && response === 'Verification Successful') {
 			setIsUpdating(true)
-			navigate(`/forgot-password-change/${OTP}`, { state: { transportData } })
+			router.push(
+				{
+					pathname: '/auth/forgot-password-change/',
+					query: {
+						...transportData,
+						otp: OTP,
+					},
+				},
+				'/auth/forgot-password-change',
+			)
 			handleModal()
 			setIsUpdating(false)
 		}
 	}
 
-	const resendOTP = async (e) => {
+	const resendOTP = async (e: any) => {
 		e.preventDefault()
 
 		try {
 			setIsLoading(true)
-			const response = resendOTPVerificationEmail(email)
+			const response = await resendOTPVerificationEmail(email)
 			if (response) {
 				toast.success('OTP resent to your email')
 
@@ -117,16 +120,17 @@ const ForgottenPasswordVerify = ({
 		}
 	}
 
-	return ReactDOM.createPortal(
+	return (
 		<div className='wrapper'>
 			<Loader open={isLoading} />
 
 			<div className='relative modal w-fit h-fit py-[3rem] px-[3rem] bg-primary md:w-[400px]'>
-				<img
+				<Image
 					src={close}
 					alt='close'
 					onClick={handleModal}
-					size={40}
+					height={40}
+					width={40}
 					className='absolute top-[-1rem] right-[-1rem] text-tertiary'
 				/>
 				<div className='mb-5 flex flex-col items-center text-center'>
@@ -170,8 +174,7 @@ const ForgottenPasswordVerify = ({
 					</div>
 				</form>
 			</div>
-		</div>,
-		document.getElementById('backdrop'),
+		</div>
 	)
 }
 

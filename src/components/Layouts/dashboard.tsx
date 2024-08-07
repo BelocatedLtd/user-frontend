@@ -15,7 +15,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		if (user.token)
+		if (user?.token)
 			if (!user?.isKycDone) {
 				router.push(`/kyc`)
 				// setProfileComplete(true)
