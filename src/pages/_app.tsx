@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 
 function MyApp({ Component, pageProps }: AppProps) {
 	const router = useRouter()
-	const isDashboard = router.pathname.startsWith('/dashboard')
+	const isDashboard = router?.pathname?.startsWith('/dashboard')
 
 	return (
 		<ReduxProvider>
