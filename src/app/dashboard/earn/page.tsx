@@ -215,7 +215,7 @@ const Earn = () => {
 												Completed & Approved
 											</p>
 										</div>
-										{/* <div className='w-full '>
+										<div className='w-full '>
 											<small
 												className={`py-2 px-5 ${
 													user?.freeTaskCount === 0
@@ -231,7 +231,7 @@ const Earn = () => {
 												</span>
 												Tasks Available
 											</small>
-										</div> */}
+										</div>
 									</div>
 								</div>
 
