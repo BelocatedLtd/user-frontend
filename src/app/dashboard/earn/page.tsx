@@ -61,7 +61,6 @@ const Earn = () => {
 	const [platformName, setPlatformName] = useState<string>('')
 	useRedirectLoggedOutUser('/login')
 	const [taskList, setTaskList] = useState<Advert[] | undefined>()
-	console.log('🚀 ~ Earn ~ taskList:', taskList)
 	const [theSortedSocials, setTheSortedSocials] = useState<any[] | undefined>()
 
 	useEffect(() => {
