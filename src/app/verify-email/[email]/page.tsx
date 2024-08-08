@@ -1,12 +1,18 @@
-import { useEffect, useState } from 'react'
+'use client'
 import Loader from '@/components/loader/Loader'
 import { resendVerificationEmail } from '@/services/authServices'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import { CheckmarkIcon, toast } from 'react-hot-toast'
 
-const VerifyEmail = () => {
+const VerifyEmail = ({ params }: { params: { email: string } }) => {
 	const router = useRouter()
-	const email = router.query.email as string | undefined
+	const { isFallback } = useRouter()
+	if (isFallback) {
+		return <h1>Fallback</h1>
+	}
+
+	const email = params?.email as string | undefined
 
 	const [isLoading, setIsLoading] = useState(false)
 	const [timer, setTimer] = useState(10)
