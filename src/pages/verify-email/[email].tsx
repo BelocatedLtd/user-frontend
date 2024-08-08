@@ -1,51 +1,60 @@
-'use client'
+import { useEffect, useState } from 'react'
 import Loader from '@/components/loader/Loader'
 import { resendVerificationEmail } from '@/services/authServices'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
 import { CheckmarkIcon, toast } from 'react-hot-toast'
 
 const VerifyEmail = () => {
 	const router = useRouter()
-
-	const email = router.query.email as string
+	const email = router.query.email as string | undefined
 
 	const [isLoading, setIsLoading] = useState(false)
 	const [timer, setTimer] = useState(10)
 	const [resendBtn, setResendBtn] = useState(false)
-
-	let interval: any
+	const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null)
 
 	useEffect(() => {
+		// Ensure we're running on the client side before setting intervals
+		if (typeof window === 'undefined') return
+
 		if (timer === 0) {
 			setResendBtn(true)
-			clearInterval(interval)
+			if (intervalId) clearInterval(intervalId)
 			return
 		}
 
-		interval = setInterval(() => {
+		const id = setInterval(() => {
 			setTimer((prevTimer) => prevTimer - 1)
-		}, 2000)
+		}, 1000) // 1-second interval
 
-		return () => clearInterval(interval)
-	}, [timer])
+		setIntervalId(id)
 
-	const handleResendEmail = async (e: any) => {
+		return () => {
+			if (intervalId) clearInterval(intervalId)
+		}
+	}, [timer, intervalId])
+
+	const handleResendEmail = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault()
+
+		if (!email) {
+			toast.error('Email is missing!')
+			return
+		}
 
 		try {
 			setIsLoading(true)
 			const response = await resendVerificationEmail(email)
 			if (response) {
-				toast.success(`Verification link sent href ${email}`)
-
+				toast.success(`Verification link sent to ${email}`)
 				setResendBtn(false)
 				setTimer(10)
 			}
-			setIsLoading(false)
 		} catch (error) {
+			toast.error('Failed to resend verification email')
+			console.error(error)
+		} finally {
 			setIsLoading(false)
-			console.log(error)
 		}
 	}
 
@@ -62,19 +71,19 @@ const VerifyEmail = () => {
 					</h3>
 					<p className='w-fit my-[1rem] text-center px-6'>
 						Please check the email address{' '}
-						<span className='text-secondary font-bold'>{email!}</span> for
-						instructions to verify your belocated account
+						<span className='text-secondary font-bold'>{email || 'N/A'}</span>{' '}
+						for instructions to verify your belocated account
 					</p>
 					<small className='text-tertiary text-[12px] w-[300px] text-center mb-[1rem]'>
-						<span className='text-gray-800 font-bold'>Note:</span> Incase you
-						didnt see the email in your inbox, Kindly check your spam inbox
+						<span className='text-gray-800 font-bold'>Note:</span> In case you
+						didn’t see the email in your inbox, kindly check your spam folder.
 					</small>
 
 					<div className='flex items-center gap-2'>
 						{resendBtn && (
 							<button
 								onClick={handleResendEmail}
-								className='w-full mt-1  py-2 text-md rounded-xl bg-tertiary text-gray-100 text-center px-6 mb-5'>
+								className='w-full mt-1 py-2 text-md rounded-xl bg-tertiary text-gray-100 text-center px-6 mb-5'>
 								Resend Verification Link
 							</button>
 						)}
