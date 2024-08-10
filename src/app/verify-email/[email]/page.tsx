@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react'
 import { CheckmarkIcon, toast } from 'react-hot-toast'
 
 const VerifyEmail = ({ params }: { params: { email: string } }) => {
-	const email = params?.email as string | undefined
+	const encodedEmail = params?.email
+	const email = decodeURIComponent(encodedEmail) as string | undefined
 
 	const [isLoading, setIsLoading] = useState(false)
 	const [timer, setTimer] = useState(10)
