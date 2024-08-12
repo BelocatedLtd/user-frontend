@@ -54,7 +54,6 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 			),
 			path: '/dashboard/wallet',
 		},
-
 		{
 			title: 'Referral',
 			icon: <FaTrophy className='md:mr-2 text-[15px] md:text-[30px]' />,
@@ -110,11 +109,6 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 			icon: <GrSettingsOption className='md:mr-2 text-[15px] md:text-[30px]' />,
 			path: `/admin/dashboard/account-settings/${user?.username}`,
 		},
-		// {
-		//   title: "Support Messages",
-		//   icon: <BiMessageRoundedDetail className='md:mr-2 text-[15px] md:text-[30px]'/>,
-		//   path: `/admin/dashboard/support-messages/${user?.username}`,
-		// },
 		{
 			title: 'Referral Challenge',
 			icon: <IoTrophyOutline className='md:mr-2 text-[15px] md:text-[30px]' />,
@@ -122,11 +116,13 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 		},
 	]
 
+	const filteredMenu = menu.filter((item) => item.title !== 'Wallet')
+
 	return (
 		<div className=''>
-			{/* Desktop Sidbar menu */}
+			{/* Desktop Sidebar menu */}
 			<div
-				className={`hidden fixed top-0  left-0 w-[230px] h-screen shrink-0 border border-right border-gray-200 overflow-auto md:flex md:flex-col`}
+				className={`hidden fixed top-0 left-0 w-[230px] h-screen shrink-0 border border-right border-gray-200 overflow-auto md:flex md:flex-col`}
 				style={{ width: isOpen ? '230px' : '60px' }}>
 				<div className='top_section flex justify-between items-center w-full py-6 px-3 text-[20px]  bg-tertiary_bg'>
 					<h3
@@ -185,7 +181,7 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 				<div className='flex'>
 					{user?.accountType === 'User' && (
 						<>
-							{menu.map((item, index) => {
+							{filteredMenu.map((item, index) => {
 								return (
 									<SidebarItems
 										isMobile
@@ -203,14 +199,7 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 					<div className='flex gap-0'>
 						<>
 							{adminMenu.slice(0, -3).map((item, index) => {
-								return (
-									<SidebarItems
-										// className=''
-										key={index}
-										item={item}
-										isOpen={isOpen}
-									/>
-								)
+								return <SidebarItems key={index} item={item} isOpen={isOpen} />
 							})}
 						</>
 					</div>
