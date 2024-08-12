@@ -451,7 +451,7 @@ const TaskPerform = ({
 						)}
 
 						{/* Social Account Link */}
-						{hideUsernameDisplayField && (
+						{/* {hideUsernameDisplayField && (
 							<div className='w-full md:w-[500px] flex flex-col items-center mt-[2rem] mx-auto'>
 								<label
 									htmlFor='social media username'
@@ -467,7 +467,7 @@ const TaskPerform = ({
 									className='py-2 px-6 text-gray-800 bg-gray-200 rounded-2xl'
 								/>
 							</div>
-						)}
+						)} */}
 
 						{task?.status === 'Approved' ||
 						task?.status === 'Submitted' ||
@@ -479,8 +479,8 @@ const TaskPerform = ({
 								variant='solid'
 								color='secondary'
 								disabled={
-									selectedImages.length < 1 ||
-									(!hideUsernameDisplayField && !userSocialName)
+									selectedImages.length < 1
+									// || (!hideUsernameDisplayField && !userSocialName)
 								}
 								type='submit'>
 								{!isLoading && 'Submit'}
