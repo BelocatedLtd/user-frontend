@@ -17,7 +17,13 @@ interface FormValues {
 	religion: string
 }
 
-export default function CompleteProfile({ next }: { next: () => void }) {
+export default function CompleteProfile({
+	next,
+	header,
+}: {
+	next: () => void
+	header?: string
+}) {
 	const user = useSelector(selectUser)
 
 	const dispatch = useAppDispatch()
@@ -69,7 +75,9 @@ export default function CompleteProfile({ next }: { next: () => void }) {
 
 	return (
 		<div className=''>
-			<p className='text-lg text-left font-medium'>Complete Your Profile</p>
+			<p className='text-lg text-left font-medium'>
+				{header || 'Complete Your Profile'}
+			</p>
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema}

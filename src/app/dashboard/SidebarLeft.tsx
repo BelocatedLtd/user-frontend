@@ -3,6 +3,7 @@ import { ReactNode, useEffect, useState } from 'react'
 import { BiMenuAltRight } from 'react-icons/bi'
 import { FaAdversal, FaHome, FaTasks, FaTrophy, FaUsers } from 'react-icons/fa'
 import { GrSettingsOption, GrTransaction } from 'react-icons/gr'
+import { IoMdSettings } from 'react-icons/io'
 import { IoTrophyOutline } from 'react-icons/io5'
 import { MdOutlineSupportAgent } from 'react-icons/md'
 import { RiHome5Fill, RiMoneyDollarBoxFill } from 'react-icons/ri'
@@ -65,6 +66,11 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 				<MdOutlineSupportAgent className='md:mr-2 text-[15px] md:text-[30px]' />
 			),
 			path: '/dashboard/contact-support',
+		},
+		{
+			title: 'Settings',
+			icon: <IoMdSettings className='md:mr-2 text-[15px] md:text-[30px]' />,
+			path: '/dashboard/settings/edit-profile',
 		},
 	]
 

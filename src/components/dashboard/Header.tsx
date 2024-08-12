@@ -143,7 +143,9 @@ const Header = () => {
 									<Link href='/dashboard/advertise'>Advertise</Link>
 									<Link href='/terms'>Terms</Link>
 									<ShowOnLogin>
-										<Link href={'/dashboard/update-profile'}>Settings</Link>
+										<Link href={'/dashboard/settings/edit-profile'}>
+											Settings
+										</Link>
 										<Link
 											href={`/dashboard`}
 											className='text-gray-800 cursor-pointer'>
