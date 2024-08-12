@@ -400,7 +400,7 @@ const TaskEarn = () => {
 					open={isOpen}
 					onClose={() => {
 						setIsOpen(false)
-						router.push(`/dashboard/tasks`)
+						// router.push(`/dashboard/tasks`)
 					}}
 					aria-labelledby='modal-modal-title'
 					aria-describedby='modal-modal-description'>
