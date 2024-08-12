@@ -178,7 +178,13 @@ const TaskList = () => {
 					}}
 					aria-labelledby='modal-modal-title'
 					aria-describedby='modal-modal-description'>
-					<TaskSubmit onClose={() => setIsOpen(false)} taskId={selectedTask!} />
+					<TaskSubmit
+						onClose={() => {
+							getUserTasks()
+							setIsOpen(false)
+						}}
+						taskId={selectedTask!}
+					/>
 				</Modal>
 			</div>
 		</Suspense>

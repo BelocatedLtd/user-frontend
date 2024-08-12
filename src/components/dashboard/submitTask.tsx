@@ -141,7 +141,9 @@ const TaskSubmit = ({
 				selectedImages={selectedImages}
 				handleOnSubmit={handleOnSubmit}
 				handleInputChange={handleInputChange}
-				handleImageChange={(e) => handleImageChange(e?.target?.files)}
+				handleImageChange={(e) => {
+					handleImageChange(e)
+				}}
 				handleImageRemove={handleImageRemove}
 			/>
 		</>

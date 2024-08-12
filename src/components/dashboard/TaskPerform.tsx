@@ -431,7 +431,7 @@ const TaskPerform = ({
 
 								<div
 									{...getRootProps()}
-									className={`w-full p-6 border-2 border-dashed rounded-2xl h-22 ${
+									className={`w-full p-6 border-2 cursor-pointer border-dashed rounded-2xl h-22 ${
 										isDragActive
 											? 'border-blue-500 bg-blue-50'
 											: 'border-gray-300 bg-gray-50'
