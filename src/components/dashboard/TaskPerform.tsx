@@ -32,7 +32,7 @@ interface TaskPerformProps {
 	taskSubmitted: boolean
 	handleOnSubmit: (e: FormEvent) => void
 	handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void
-	handleImageChange: (e: any[]) => void
+	handleImageChange: (e: any) => void
 	handleImageRemove: (item: string) => void
 	isLoading: boolean
 	icons: any[]
