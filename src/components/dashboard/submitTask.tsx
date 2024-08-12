@@ -38,7 +38,7 @@ const TaskSubmit = ({
 	const loadTask = async () => {
 		try {
 			setIsLoading(true)
-			const fetchedTask = await dispatch(handleGetTaskById(taskId))
+			const fetchedTask = await dispatch(handleGetTaskById(taskId) as any)
 			console.log('🚀 ~ loadTask ~ fetchedTask:', fetchedTask)
 			if (fetchedTask.meta.requestStatus === 'fulfilled') {
 				setAd(fetchedTask.payload.advert)
@@ -141,7 +141,7 @@ const TaskSubmit = ({
 				selectedImages={selectedImages}
 				handleOnSubmit={handleOnSubmit}
 				handleInputChange={handleInputChange}
-				handleImageChange={(e) => handleImageChange(e.target.files)}
+				handleImageChange={(e) => handleImageChange(e?.target?.files)}
 				handleImageRemove={handleImageRemove}
 			/>
 		</>
