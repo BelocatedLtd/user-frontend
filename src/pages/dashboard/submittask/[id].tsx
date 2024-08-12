@@ -119,7 +119,7 @@ const TaskSubmit = () => {
 			<div className='w-full h-fit'>
 				<Loader open={isLoading} />
 				<TaskPerform
-					taskId={taskId}
+					task={taskId}
 					onClose={() => null}
 					ad={ad!}
 					isLoading={isLoading}
