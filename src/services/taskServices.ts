@@ -36,7 +36,12 @@ export const getTask = async (taskId: string): Promise<any> => {
 // Get User Tasks - Gets a specific user tasks
 export const getUserTasks = async (): Promise<any> => {
 	const response = await api.get(`${BACKEND_URL}/api/tasks/task`)
-	console.log('🚀 ~ getUserTasks ~ response:', response)
+	return response.data
+}
+
+// Get User Tasks - Gets a specific user tasks
+export const getUserTaskById = async (id: string): Promise<any> => {
+	const response = await api.get(`${BACKEND_URL}/api/tasks/${id}`)
 	return response.data
 }
 

@@ -16,7 +16,7 @@ import {
 import { submitTask } from '@/services/taskServices'
 import { BACKEND_URL } from '@/utils/globalConfig'
 import { useRouter } from 'next/router'
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
@@ -27,127 +27,90 @@ const TaskSubmit = () => {
 	const dispatch = useDispatch()
 	const router = useRouter()
 
-	const taskId = router.query.taskId as string
-	// const isLoading = useSelector(selectIsLoading)
-	// const isSuccess = useSelector(selectIsSuccess)
-	const isError = useSelector(selectIsError)
-	const [isLoading, setIsLoading] = useState(false)
+	const taskId = router.query.id as string
 	const user = useSelector(selectUser)
 	const tasks = useSelector(selectTasks)
-	const [task, setTask] = useState<any>()
 	const adverts = useSelector(selectAllAdverts)
-	const [ad, setAd] = useState<any>()
-	const [imageArray, setimageArray] = useState<any>()
+	const isError = useSelector(selectIsError)
+
+	const [isLoading, setIsLoading] = useState(false)
 	const [selectedImages, setSelectedImages] = useState<any>([])
 	const [userSocialName, setUserSocialName] = useState<any>()
 	const [taskSubmitted, setTaskSubmitted] = useState(false)
 
-	//const { userSocialName } = taskSubmitData
-
-	const getTask = async () => {
-		await dispatch(handleGetUserTasks() as any)
-		await dispatch(handleGetALLUserAdverts() as any)
-	}
-
+	// Fetch tasks and adverts on component mount
 	useEffect(() => {
-		getTask()
+		dispatch(handleGetUserTasks() as any)
+		dispatch(handleGetALLUserAdverts() as any)
 	}, [dispatch])
 
-	useEffect(() => {
-		setTask(tasks?.find((obj) => obj._id === taskId))
-	}, [])
+	// Find the task and related advert based on the taskId
+	const task = useMemo(
+		() => tasks?.find((obj) => obj._id === taskId),
+		[tasks, taskId],
+	)
+	const ad = useMemo(
+		() => adverts?.find((obj: any) => obj._id === task?.advertId),
+		[adverts, task],
+	)
 
-	useEffect(() => {
-		setAd(adverts?.find((obj: any) => obj._id === task?.advertId))
-	}, [task, adverts])
-
-	//Handle Input
+	// Handle input change for social media username
 	const handleInputChange = (e: any) => {
 		setUserSocialName(e.target.value)
 	}
 
-	// Upload and preview multiple screenshots
+	// Handle image upload and preview
 	const handleImageChange = (e: any) => {
 		const files = Array.from(e.target.files)
-		setimageArray(files)
-
-		//Create an array of files previews
-		const filePreviews = Array.from(files).map((file: any) =>
-			URL.createObjectURL(file),
-		)
-
-		setSelectedImages(filePreviews)
+		setSelectedImages(files.map((file: any) => URL.createObjectURL(file)))
 	}
 
-	//Remove uploaded images
+	// Remove uploaded image and revoke URL to free up memory
 	const handleImageRemove = (imagePreview: any) => {
-		//filter out the selected image and update the state
-		const updatedImages = selectedImages.filter(
-			(preview: any) => preview !== imagePreview,
+		setSelectedImages(
+			selectedImages.filter((preview: any) => preview !== imagePreview),
 		)
-
-		setSelectedImages(updatedImages)
-
-		//Revoke the object URL to release memory
 		URL.revokeObjectURL(imagePreview)
 		toast.success('Image discarded successfully')
 	}
 
-	//Append and prepare form data for transport
-	const formData = new FormData()
-
-	for (let i = 0; i < imageArray?.length; i++) {
-		formData?.append('images', imageArray[i])
-	}
-
-	formData.append('taskId', taskId)
-	formData.append('userSocialName', userSocialName)
-
+	// Form submission logic
 	const handleOnSubmit = async (e: any) => {
 		e.preventDefault()
 
 		if (ad && (ad.desiredROI === 0 || ad.status === 'Completed')) {
 			toast.error(
-				'Unfortunately, you cannot submit this task again because the advert has already being completed',
+				'This task cannot be submitted because the advert is already completed.',
 			)
 			return
 		}
 
-		if (!imageArray) {
-			toast.error('Please upload a screenshot to prove you performed the Task')
+		if (!selectedImages.length) {
+			toast.error('Please upload a screenshot to prove you performed the task.')
 			return
 		}
 
-		//await dispatch(handleSubmitTask(formData))
+		const formData = new FormData()
+		selectedImages.forEach((image: any) => formData.append('images', image))
+		formData.append('taskId', taskId)
+		formData.append('userSocialName', userSocialName)
 
 		setIsLoading(true)
 		const response = await submitTask(formData)
-
 		setIsLoading(false)
 
 		if (response === "Task submitted successfully, wait for Admin's Approval") {
-			setIsLoading(false)
 			setTaskSubmitted(true)
-			toast.success('Task submitted, wait for admins response')
+			toast.success('Task submitted, wait for admin response')
 
-			//Emit socket io event to the backend
-			const emitData = {
+			socket.emit('sendActivity', {
 				userId: user?.id,
 				action: `@${user?.username} just performed a task on ${task?.platform}`,
-			}
-
-			//Emit Socket event to update activity feed
-			socket.emit('sendActivity', emitData)
+			})
 
 			router.push('/dashboard/tasks')
-			return
-		}
-
-		if (!response) {
-			setIsLoading(false)
-			setTaskSubmitted(false)
+		} else {
 			toast.error('Error submitting task')
-			return
 		}
 	}
 
@@ -155,11 +118,9 @@ const TaskSubmit = () => {
 		<Suspense>
 			<div className='w-full h-fit'>
 				<Loader open={isLoading} />
-
 				<TaskPerform
-					taskId={taskId!}
+					taskId={taskId}
 					onClose={() => null}
-					// newTask= {task}
 					ad={ad!}
 					isLoading={isLoading}
 					icons={icons}

@@ -4,6 +4,7 @@ import {
 	approveTask,
 	createTask,
 	getTasks,
+	getUserTaskById,
 	getUserTasks,
 	rejectTask,
 	submitTask,
@@ -136,6 +137,24 @@ export const handleRejectTask = createAsyncThunk<any, any>(
 	async (taskData, thunkAPI) => {
 		try {
 			return await rejectTask(taskData)
+		} catch (error: any) {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString()
+			return thunkAPI.rejectWithValue(message)
+		}
+	},
+)
+
+export const handleGetTaskById = createAsyncThunk<any, string>(
+	'get/handleGetTaskById',
+	async (taskId, thunkAPI) => {
+		try {
+			const response = await getUserTaskById(taskId)
+			return response
 		} catch (error: any) {
 			const message =
 				(error.response &&
@@ -283,6 +302,27 @@ const taskSlice = createSlice({
 			)
 			.addCase(
 				handleRejectTask.rejected,
+				(state, action: PayloadAction<any>) => {
+					state.isLoading = false
+					state.isError = true
+					state.message = action.payload
+					toast.error(action.payload)
+				},
+			)
+			.addCase(handleGetTaskById.pending, (state) => {
+				state.isLoading = true
+			})
+			.addCase(
+				handleGetTaskById.fulfilled,
+				(state, action: PayloadAction<any>) => {
+					state.isLoading = false
+					state.isSuccess = true
+					state.isError = false
+					state.task = action.payload
+				},
+			)
+			.addCase(
+				handleGetTaskById.rejected,
 				(state, action: PayloadAction<any>) => {
 					state.isLoading = false
 					state.isError = true

@@ -63,6 +63,7 @@ const TaskEarn = () => {
 	const [newTask, setNewTask] = useState()
 
 	const [selectedAdvertId, setSelectedAdvertId] = useState<string | null>(null)
+	const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
 	console.log('🚀 ~ TaskEarn ~ selectedAdvertId:', selectedAdvertId)
 
 	const tasks = useSelector(selectTasks)
@@ -126,24 +127,8 @@ const TaskEarn = () => {
 		}
 
 		fetchQualifiedAdverts()
-
-		//Filter all ads to get the ones this user is qualified to perform
-		// const filteredTasks = filteredServiceAdvert?.filter((advert: any) => {
-		// 	const locationMatch =
-		// 		advert.state === user.location || advert.state === 'All'
-		// 	const communityMatch =
-		// 		advert.lga === user.community || advert.lga === 'All'
-		// 	const genderMatch =
-		// 		advert.gender === user.gender || advert.gender === 'All'
-
-		// 	return locationMatch && communityMatch && genderMatch
-		// })
-
-		//Setting the filtered ads to a state called finalFilteredTasks
-		// setFinalFilteredTasks(filteredTasks)
 	}, [platformName])
 
-	//Check if user has already opted in to perform a task, any task he/she is already performing will be marked submit task and new unperformed tasks marked perform task.
 	const checkTaskExistence = (advert_Id: string) => {
 		const existingTask = tasks?.find(
 			(task) => task.taskPerformerId === user.id && task.advertId === advert_Id,
@@ -218,8 +203,7 @@ const TaskEarn = () => {
 			console.log(taskData)
 
 			const response = await dispatch(createNewTask(taskData) as any)
-			console.log('🚀 ~ handleSelect ~ response:', response)
-			// setNewTask(response.payload)
+			console.log('🚀 ~ handleConfirm ~ response:', response)
 
 			if (isError) {
 				toast.error('Error Creating a Task from this advert')
@@ -227,10 +211,12 @@ const TaskEarn = () => {
 			}
 
 			if (isSuccess) {
+				setSelectedTaskId(response.payload._id)
 				setModalOpen(false)
+
 				toast.success('Successfully created a Task from this advert')
-				router.push(`/dashboard/tasks`)
-				// setIsOpen(true)
+				// router.push(`/dashboard/tasks`)
+				setIsOpen(true)
 				// router.push(`/dashboard/submittask/${response?.payload?._id}`)
 			}
 		}
@@ -412,12 +398,18 @@ const TaskEarn = () => {
 
 				<Modal
 					open={isOpen}
-					onClose={() => setIsOpen(false)}
+					onClose={() => {
+						setIsOpen(false)
+						router.push(`/dashboard/tasks`)
+					}}
 					aria-labelledby='modal-modal-title'
 					aria-describedby='modal-modal-description'>
 					<TaskSubmit
-						onClose={() => setIsOpen(false)}
-						taskId={selectedAdvertId!}
+						onClose={() => {
+							setIsOpen(false)
+							router.push(`/dashboard/tasks`)
+						}}
+						taskId={selectedTaskId!}
 					/>
 				</Modal>
 			</div>
