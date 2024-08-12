@@ -407,7 +407,6 @@ const TaskEarn = () => {
 					<TaskSubmit
 						onClose={() => {
 							setIsOpen(false)
-							router.push(`/dashboard/tasks`)
 						}}
 						taskId={selectedTaskId!}
 					/>
