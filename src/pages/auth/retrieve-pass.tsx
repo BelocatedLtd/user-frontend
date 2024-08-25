@@ -5,7 +5,7 @@ import Loader from '@/components/loader/Loader'
 import { resendOTPVerificationEmail } from '@/services/authServices'
 import { Modal } from '@mui/material'
 import React, { useState } from 'react'
-import { LoaderIcon, toast } from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 
 const initialState = {
 	email: '',
@@ -79,7 +79,7 @@ const RetrievePassword = () => {
 					<button
 						type='submit'
 						className='w-full mt-1 mb-[-0rem] py-2 text-md rounded-xl bg-secondary text-gray-100 mb-5'>
-						Retrieve Password! {isLoading && <LoaderIcon />}
+						Retrieve Password!
 					</button>
 				</form>
 			</div>

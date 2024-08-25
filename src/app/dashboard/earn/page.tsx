@@ -48,6 +48,7 @@ interface SocialPlatform {
 const Earn = () => {
 	const router = useRouter()
 	const adverts: Advert[] = useSelector(selectAllAdverts)
+	console.log('🚀 ~ Earn ~ adverts:', adverts)
 	const dispatch = useDispatch()
 	const isError: boolean = useSelector(selectIsError)
 	const [toggleServices, setToggleServices] = useState(false)
@@ -77,6 +78,8 @@ const Earn = () => {
 	}, [dispatch])
 
 	useEffect(() => {
+		if (!Array.isArray(adverts)) return
+
 		// Get the list of only adverts that are still running
 		const runningAdsList = adverts?.filter(
 			(ad) => ad.status == 'Running',

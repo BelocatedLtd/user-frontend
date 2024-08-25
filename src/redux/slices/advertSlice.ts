@@ -87,7 +87,8 @@ export const handleGetALLUserAdverts = createAsyncThunk(
 	'get/handleGetAllUserAdverts',
 	async (_, thunkAPI) => {
 		try {
-			return await getAllUserAdverts()
+			const res = await getAllUserAdverts()
+			return res.adverts
 		} catch (error: any) {
 			const message =
 				(error.response &&
