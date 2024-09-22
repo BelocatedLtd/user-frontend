@@ -33,7 +33,12 @@
 		"./dist/types/**/*.ts",
 		"./next-env.d.ts",
 		".next/types/**/*.ts",
-		"../(auth)"
-, "src/pages"	],
+		"../(auth)",
+		"src/pages",
+		"src/utils",
+		"src/components/ui",
+		"src/components/*",
+		"src/components/Pagination"
+	],
 	"exclude": ["./node_modules"]
 }

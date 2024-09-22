@@ -34,8 +34,17 @@ export const getTask = async (taskId: string): Promise<any> => {
 }
 
 // Get User Tasks - Gets a specific user tasks
-export const getUserTasks = async (): Promise<any> => {
-	const response = await api.get(`${BACKEND_URL}/api/tasks/task`)
+export const getUserTasks = async ({
+	page,
+	limit,
+}: {
+	page: number
+	limit: number
+}): Promise<any> => {
+	// TODO: Add pagination query params
+	const response = await api.get(
+		`${BACKEND_URL}/api/tasks/task?page=${page}&limit=${limit}`,
+	)
 	return response.data
 }
 

@@ -96,3 +96,13 @@ export const getQualifiedAdverts = async (platformName: string) => {
 		toast.error(message)
 	}
 }
+
+export const getTotalTasksByAllPlatforms = async () => {
+	const headers = getAuthHeaders()
+
+	const response = await axios.get(
+		`${BACKEND_URL}/api/adverts/qualified`,
+		headers,
+	)
+	return response.data
+}

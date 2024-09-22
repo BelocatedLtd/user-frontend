@@ -1,5 +1,7 @@
 import socialPlatforms, { IAssetData } from '@/components/data/assets'
+import { clsx, type ClassValue } from 'clsx'
 import toast from 'react-hot-toast'
+import { twMerge } from 'tailwind-merge'
 
 export const handleRefLinkCopy = async (text: string) => {
 	try {
@@ -68,4 +70,8 @@ export const getStatusBgColor = (taskStatus: string) => {
 		default:
 			return 'text-gray-200'
 	}
+}
+
+export const cn = (...inputs: ClassValue[]) => {
+	return twMerge(clsx(inputs))
 }
