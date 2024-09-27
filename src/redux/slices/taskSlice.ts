@@ -64,7 +64,7 @@ export const handleGetUserTasks = createAsyncThunk<any, void>(
 	'get/handleGetUserTasks',
 	async (_, thunkAPI) => {
 		try {
-			return await getUserTasks()
+			return await getUserTasks({})
 		} catch (error: any) {
 			const message =
 				(error.response &&
