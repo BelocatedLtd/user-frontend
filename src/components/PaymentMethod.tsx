@@ -107,15 +107,8 @@ const PaymentMethod = ({
 			paymentFormData.append('paymentRef', reference)
 			paymentFormData.append('paymentMethod', 'wallet')
 
-			console.log('🚀 ~ handlePayment ~ canPay:', {
-				canPay,
-				reference,
-				paymentFormData,
-			})
-
 			setIsLoading(true)
 			const response = await createAdvert(paymentFormData)
-			console.log('🚀 ~ handlePayment ~ response:', response)
 			console.log(response)
 			setIsLoading(false)
 
@@ -133,8 +126,7 @@ const PaymentMethod = ({
 
 				router.push('/dashboard/campaign-stats')
 				setIsLoading(false)
-			}
-			if (!response) {
+			} else {
 				toast.error('Error creating advert, failed to make payment')
 				router.push('/dashboard/campaign-stats')
 				setIsLoading(false)
@@ -142,6 +134,7 @@ const PaymentMethod = ({
 			}
 		} else {
 			toast.error('Insufficient fund, fund your wallet')
+			setIsLoading(false)
 		}
 	}
 
