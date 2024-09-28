@@ -27,7 +27,7 @@ interface AdItemProps {
 	status: string
 	item: any
 	url: string
-	users: any[]
+	// users: any[]
 	user: any
 }
 
@@ -41,13 +41,10 @@ const AdItem = ({
 	status,
 	item,
 	url,
-	users,
 	user,
 }: AdItemProps) => {
 	const [payBtn, setPayBtn] = useState('Pay Now')
 	const [toggleTaskPerformers, settoggleTaskPerformers] = useState(false)
-	const [adTaskPerformers, setAdTaskPerformers] = useState()
-	const [adTaskPerformerTasks, setAdTaskPerformerTasks] = useState()
 	const [taskSubmitters, setTaskSubmitters] = useState()
 	const [tasksUserAd, setTasksUserAd] = useState<any>()
 	const dispatch = useDispatch()
@@ -323,17 +320,18 @@ const AdItem = ({
 								key={tp._id}>
 								<div className='task performer details mb-[1rem] flex flex-col gap-1'>
 									<small className='text-gray-400 font-semibold'>
-										@
-										{
+										@perfomer username
+										{/* {
 											users?.find((u: any) => u._id === tp?.taskPerformerId)
 												?.username
-										}
+										} */}
 									</small>
 									<h3 className='font-bold text-gray-600'>
-										{
+										perfomer fullname
+										{/* {
 											users?.find((u: any) => u._id === tp?.taskPerformerId)
 												?.fullname
-										}
+										} */}
 									</h3>
 									<span className='text-gray-400 font-semibold text-[9px]'>
 										{formatDate(tp?.createdAt)}

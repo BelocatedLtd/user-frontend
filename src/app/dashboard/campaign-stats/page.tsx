@@ -14,30 +14,21 @@ import {
 	selectIsLoading,
 } from '../../../redux/slices/advertSlice'
 import { selectUser } from '../../../redux/slices/authSlice'
-import { handleGetTasks } from '../../../redux/slices/taskSlice'
-import { handleGetAllUser, selectUsers } from '../../../redux/slices/userSlice'
 
 const CampaignStats = () => {
 	const user = useSelector(selectUser)
 	const adverts = useSelector(selectAdverts)
-	console.log('🚀 ~ CampaignStats ~ adverts:', adverts)
-	const users = useSelector(selectUsers)
 	const isLoading = useSelector(selectIsLoading)
 	const isError = useSelector(selectIsError)
 	const dispatch = useDispatch()
 	const router = useRouter()
-	// useRedirectLoggedOutUser('/login')
 
 	const getAdverts = async () => {
 		dispatch(handleGetUserAdverts() as any)
-		dispatch(handleGetAllUser() as any)
-		dispatch(handleGetTasks() as any)
 	}
 
 	useEffect(() => {
 		getAdverts()
-
-		//console.log(tasksList)
 
 		if (isError) {
 			toast.error('Failed to retrieve adverts, please reload page')
@@ -78,25 +69,16 @@ const CampaignStats = () => {
 				{adverts.map((item: any) => (
 					<AdItem
 						key={item._id}
-						// socialIcon={item.platform as any}
 						date={item.createdAt}
 						title={`${item.service} on ${item?.platform?.toUpperCase()} `}
 						adperPostAmt={`${item.costPerTask} Per Ad`}
 						roi={item.desiredROI}
 						adBudget={item.adAmount}
-						// tasks={item.tasks}
 						adService={item.service}
 						status={item.status}
-						// adDesc={item.caption}
-						// state={item.state}
-						// lga={item.lga}
-						// religion={item.religion}
 						item={item}
 						url={item.socialPageLink}
-						//taskPerformers={item.taskPerformers}
-						users={users?.users}
 						user={user}
-						//taskList={tasksList}
 					/>
 				))}
 			</div>
