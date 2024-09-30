@@ -67,9 +67,9 @@ export const handleToggleFreeAdvert = createAsyncThunk(
 // Get User Adverts
 export const handleGetUserAdverts = createAsyncThunk(
 	'get/handleGetUserAdverts',
-	async (_, thunkAPI) => {
+	async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
 		try {
-			return await getUserAdverts()
+			return await getUserAdverts({ page, limit })
 		} catch (error: any) {
 			const message =
 				(error.response &&

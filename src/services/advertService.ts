@@ -38,9 +38,18 @@ export const initializeAdvert = async (adFormData: FormData) => {
 }
 
 // Get User Adverts
-export const getUserAdverts = async () => {
+export const getUserAdverts = async ({
+	page,
+	limit,
+}: {
+	page: number
+	limit: number
+}) => {
 	const headers = getAuthHeaders()
-	const response = await axios.get(`${BACKEND_URL}/api/adverts`, headers)
+	const response = await axios.get(
+		`${BACKEND_URL}/api/adverts?page=${page}&limit=${limit}`,
+		headers,
+	)
 	return response.data
 }
 

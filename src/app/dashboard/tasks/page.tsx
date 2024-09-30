@@ -34,7 +34,7 @@ const TaskList = () => {
 		try {
 			// setIsLoading(true)
 			const response = await getUserTasks({ page, limit })
-			
+
 			setTasks(response?.tasks)
 
 			setTotalTasks(response.totalTasks)
@@ -160,12 +160,11 @@ const TaskList = () => {
 						</div>
 
 						<div className='my-10'>
-							{/* Pass current page, limit, and total tasks to the Pagination component */}
 							<PaginatedComponent
-								totalTasks={totalTasks}
+								total={totalTasks}
 								initialPage={currentPage}
 								initialLimit={limit}
-								fetchTasks={getTasks} // Function to fetch tasks from the parent
+								fetch={getTasks}
 							/>
 						</div>
 

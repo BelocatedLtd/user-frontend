@@ -1,15 +1,15 @@
 'use client'
 import Button from '@/components/Button'
+import PaginatedComponent from '@/components/Pagination'
+import { getUserAdverts } from '@/services/advertService'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import AdItem from '../../../components/dashboard/AdItem'
 import Loader from '../../../components/loader/Loader'
 import {
-	handleGetUserAdverts,
-	selectAdverts,
 	selectIsError,
 	selectIsLoading,
 } from '../../../redux/slices/advertSlice'
@@ -17,24 +17,34 @@ import { selectUser } from '../../../redux/slices/authSlice'
 
 const CampaignStats = () => {
 	const user = useSelector(selectUser)
-	const adverts = useSelector(selectAdverts)
 	const isLoading = useSelector(selectIsLoading)
 	const isError = useSelector(selectIsError)
 	const dispatch = useDispatch()
 	const router = useRouter()
 
-	const getAdverts = async () => {
-		dispatch(handleGetUserAdverts() as any)
+	const [totalAdverts, setTotalAdverts] = useState(0)
+	const [currentPage, setCurrentPage] = useState(1)
+	const [limit, setLimit] = useState(10)
+	const [adverts, setAdverts] = useState([])
+
+	const getAdverts = async (page: number, limit: number) => {
+		try {
+			// setIsLoading(true)
+			const response = await getUserAdverts({ page, limit })
+
+			setAdverts(response?.adverts)
+
+			setTotalAdverts(response.totalAdverts)
+			// setIsLoading(false)
+		} catch (error) {
+			console.log('🚀 ~ getAdverts ~ error:', error)
+			toast.error('Failed to retrieve tasks, please reload page')
+		}
 	}
 
 	useEffect(() => {
-		getAdverts()
-
-		if (isError) {
-			toast.error('Failed to retrieve adverts, please reload page')
-			router.back()
-		}
-	}, [dispatch])
+		getAdverts(currentPage, limit)
+	}, [])
 
 	return (
 		<div className='w-fit md:w-full h-fit'>
@@ -81,6 +91,15 @@ const CampaignStats = () => {
 						user={user}
 					/>
 				))}
+			</div>
+
+			<div className='my-10'>
+				<PaginatedComponent
+					total={totalAdverts}
+					initialPage={currentPage}
+					initialLimit={limit}
+					fetch={getAdverts}
+				/>
 			</div>
 		</div>
 	)

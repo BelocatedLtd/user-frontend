@@ -10,23 +10,23 @@ import {
 import { useEffect, useState } from 'react'
 
 const PaginatedComponent = ({
-	totalTasks,
+	total,
 	initialPage = 1,
 	initialLimit = 10,
-	fetchTasks,
+	fetch,
 }: {
-	totalTasks: number
+	total: number
 	initialPage: number
 	initialLimit: number
-	fetchTasks: (currentPage: number, limit: number) => void
+	fetch: (currentPage: number, limit: number) => void
 }) => {
 	const [currentPage, setCurrentPage] = useState(initialPage)
 	const [limit, setLimit] = useState(initialLimit)
-	const totalPages = Math.ceil(totalTasks / limit)
+	const totalPages = Math.ceil(total / limit)
 
 	// Fetch the data whenever currentPage or limit changes
 	useEffect(() => {
-		fetchTasks(currentPage, limit)
+		fetch(currentPage, limit)
 	}, [currentPage, limit])
 
 	// Handle next page
