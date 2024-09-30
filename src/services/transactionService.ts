@@ -16,8 +16,10 @@ import { BACKEND_URL } from '../utils/globalConfig'
 // }
 
 // Get User Transactions List
-export const getUserTransactions = async () => {
-	const response = await api.get(`${BACKEND_URL}/api/transactions/userall`)
+export const getUserTransactions = async ({ page = 1, limit = 10 }) => {
+	const response = await api.get(
+		`${BACKEND_URL}/api/transactions/userall?page=${page}&limit=${limit}`,
+	)
 	return response.data
 }
 

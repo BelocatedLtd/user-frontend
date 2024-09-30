@@ -25,9 +25,10 @@ const initialState: TransactionState = {
 // Get User Transactions
 export const handleGetUserTransactions = createAsyncThunk(
 	'get/handleGetUserTransactions',
-	async (_, thunkAPI) => {
+	async (params: { page?: number; limit?: number } = {}, thunkAPI) => {
 		try {
-			return await getUserTransactions()
+			const { page = 1, limit = 10 } = params
+			return await getUserTransactions({ page, limit })
 		} catch (error: any) {
 			const message =
 				(error.response &&
