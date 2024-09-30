@@ -32,7 +32,6 @@ const TransHistory = () => {
 	const [isOpen, setIsOpen] = useState(false)
 	const [openWithdraw, setOpenWithdraw] = useState(false)
 	const wallet = useSelector(selectUserWallet)
-	console.log('🚀 ~ TransHistory ~ wallet:', wallet)
 
 	const handleWithdrawFunds = () => {
 		setOpenWithdraw(!openWithdraw)
@@ -40,10 +39,11 @@ const TransHistory = () => {
 
 	useRedirectLoggedOutUser('/login')
 
+	const getTransactions = async () => {
+		await dispatch(handleGetUserTransactions({ page: 1, limit: 10 }) as any)
+	}
+
 	useEffect(() => {
-		const getTransactions = async () => {
-			await dispatch(handleGetUserTransactions({ page: 1, limit: 10 }) as any)
-		}
 		getTransactions()
 		dispatch(getUserWallet() as any)
 
@@ -129,7 +129,12 @@ const TransHistory = () => {
 
 				<Modal
 					open={isOpen}
-					onClose={() => setIsOpen(false)}
+					onClose={() => {
+						getTransactions()
+						dispatch(getUserWallet() as any)
+
+						setIsOpen(false)
+					}}
 					aria-labelledby='modal-modal-title'
 					aria-describedby='modal-modal-description'>
 					<FundingForm
@@ -143,6 +148,9 @@ const TransHistory = () => {
 				<Modal
 					open={openWithdraw}
 					onClose={() => {
+						getTransactions()
+						dispatch(getUserWallet() as any)
+
 						setOpenWithdraw(false)
 					}}
 					aria-labelledby='modal-modal-title'
