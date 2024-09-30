@@ -42,7 +42,7 @@ const TransHistory = () => {
 
 	useEffect(() => {
 		const getTransactions = async () => {
-			await dispatch(handleGetUserTransactions() as any)
+			await dispatch(handleGetUserTransactions({ page: 1, limit: 10 }) as any)
 		}
 		getTransactions()
 		dispatch(getUserWallet() as any)
@@ -136,7 +136,7 @@ const TransHistory = () => {
 						onClose={() => {
 							setIsOpen(false)
 							dispatch(getUserWallet() as any)
-							dispatch(handleGetUserTransactions() as any)
+							dispatch(handleGetUserTransactions({ page: 1, limit: 10 }) as any)
 						}}
 					/>
 				</Modal>

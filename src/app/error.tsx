@@ -4,36 +4,10 @@ import errorPage from '@/assets/errorpage.png'
 import Button from '@/components/Button'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { Suspense, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { handleGetUserAdverts } from '../redux/slices/advertSlice'
-import { SET_USER, SET_USERNAME, selectUser } from '../redux/slices/authSlice'
-import { handleGetUserTasks } from '../redux/slices/taskSlice'
-import { handleGetUserTransactions } from '../redux/slices/transactionSlice'
-import { getUser } from '../services/authServices'
+import { Suspense } from 'react'
 
 const Error404Page = () => {
-	const dispatch = useDispatch()
-	const user = useSelector(selectUser)
 	const router = useRouter()
-
-	const getDetails = async () => {
-		if (user?.roken) {
-			if (user?.email === '') {
-				const data = await getUser()
-				dispatch(SET_USER(data))
-				dispatch(SET_USERNAME(data.username))
-			}
-
-			dispatch(handleGetUserTasks() as any)
-			dispatch(handleGetUserTransactions() as any)
-			dispatch(handleGetUserAdverts() as any)
-		}
-	}
-
-	useEffect(() => {
-		getDetails()
-	}, [dispatch])
 
 	return (
 		<Suspense>
