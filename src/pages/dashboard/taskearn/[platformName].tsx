@@ -18,7 +18,7 @@ import BackButton from '@/components/Button/BackButton'
 import ConfirmationModal from '@/components/ConfirmationModal'
 import TaskSubmit from '@/components/dashboard/submitTask'
 import Loader from '@/components/loader/Loader'
-import { selectUser, selectUsername } from '@/redux/slices/authSlice'
+import { selectUser } from '@/redux/slices/authSlice'
 import {
 	createNewTask,
 	handleGetUserTasks,
@@ -55,20 +55,15 @@ const TaskEarn = () => {
 
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
-	const username = useSelector(selectUsername)
 	const isError = useSelector(selectIsError)
 	const isSuccess = useSelector(selectIsSuccess)
 	const isLoading = useSelector(selectIsLoading)
 	const [icon, setIcon] = useState<StaticImageData>()
-	const [newTask, setNewTask] = useState()
 
 	const [selectedAdvertId, setSelectedAdvertId] = useState<string | null>(null)
 	const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
-	console.log('🚀 ~ TaskEarn ~ selectedAdvertId:', selectedAdvertId)
 
 	const tasks = useSelector(selectTasks)
-	// const { filteredServiceAdvert, asset, taskTitle, taskVerification } =
-	// 	location.state || {}
 	const [finalFilteredTasks, setFinalFilteredTasks] = useState([])
 
 	const getAllTasks = async () => {
@@ -129,36 +124,31 @@ const TaskEarn = () => {
 		fetchQualifiedAdverts()
 	}, [platformName])
 
-	const checkTaskExistence = (advert_Id: string) => {
-		const existingTask = tasks?.find(
-			(task) => task.taskPerformerId === user.id && task.advertId === advert_Id,
-		)
-		if (existingTask) {
-			return (
-				<button
-					onClick={() => goToTaskPage(existingTask._id)}
-					className='flex justify-center gap-1 text-primary text-[12px] md:text-[15px] py-2 px-5 rounded-2xl bg-secondary'>
-					View Task
-				</button>
-			)
-		} else {
-			return (
-				<button
-					onClick={() => handleSelect(advert_Id)}
-					className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-tertiary text-[12px] md:text-[15px]'>
-					Perform Task
-				</button>
-			)
-		}
-	}
-
-	const goToTaskPage = (existingTaskId: string) => {
-		router.push(`/dashboard/submittask/${existingTaskId}`)
-	}
+	// const checkTaskExistence = (advert_Id: string) => {
+	// 	const existingTask = tasks?.find(
+	// 		(task) => task.taskPerformerId === user.id && task.advertId === advert_Id,
+	// 	)
+	// 	if (existingTask) {
+	// 		return (
+	// 			<button
+	// 				onClick={() => goToTaskPage(existingTask._id)}
+	// 				className='flex justify-center gap-1 text-primary text-[12px] md:text-[15px] py-2 px-5 rounded-2xl bg-secondary'>
+	// 				View Task
+	// 			</button>
+	// 		)
+	// 	} else {
+	// 		return (
+	// 			<button
+	// 				onClick={() => handleSelect(advert_Id)}
+	// 				className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-tertiary text-[12px] md:text-[15px]'>
+	// 				Perform Task
+	// 			</button>
+	// 		)
+	// 	}
+	// }
 
 	const handleSelect = (advert_Id: string) => {
 		setSelectedAdvertId(advert_Id)
-		console.log('🚀 ~ handleConfirm ~ selectedAdvertId:', selectedAdvertId)
 
 		setModalOpen(true)
 	}
@@ -167,7 +157,8 @@ const TaskEarn = () => {
 		const taskToPerform: any = finalFilteredTasks?.find(
 			(advert: any) => advert._id === selectedAdvertId,
 		)
-		console.log('🚀 ~ handleSelect ~ taskToPerform:', taskToPerform)
+
+		console.log('🚀 ~ handleConfirm ~ taskToPerform:', taskToPerform)
 
 		const randomIndex = Math.floor(
 			Math.random() * taskToPerform?.caption.length,
@@ -198,8 +189,6 @@ const TaskEarn = () => {
 				adMedia: taskToPerform.mediaURL,
 			}
 
-			console.log('🚀 ~ handleSelect ~ result:', assetresult)
-
 			console.log(taskData)
 
 			const response = await dispatch(createNewTask(taskData) as any)
@@ -215,9 +204,7 @@ const TaskEarn = () => {
 				setModalOpen(false)
 
 				toast.success('Successfully created a Task from this advert')
-				// router.push(`/dashboard/tasks`)
 				setIsOpen(true)
-				// router.push(`/dashboard/submittask/${response?.payload?._id}`)
 			}
 		}
 
@@ -225,8 +212,6 @@ const TaskEarn = () => {
 			toast.error('Sorry, cannot find advert, so task cannot be created')
 		}
 	}
-
-	//console.log(finalFilteredTasks)
 
 	const handleCloseModal = () => {
 		setModalOpen(false)
@@ -259,22 +244,12 @@ const TaskEarn = () => {
 						<p className='font-normal text-[14px] text-gray-700 p-6 w-1/2'>
 							Earn by posting adverts and performing simple tasks on your social
 							media.
-							{/* You have{' '} */}
-							{/* <span className='text-tertiary font-bold'>
-							({finalFilteredTasks?.length})
-						</span>{' '}
-						tasks available on {platformName}. Click below to start. */}
 						</p>
 					</div>
 				</div>
 
 				<div className='mt-3 md:mt-8 grid md:grid-cols-3 gap-8 '>
 					{finalFilteredTasks?.map((task: any, index) => {
-						const status = tasks?.find(
-							(task) =>
-								task.taskPerformerId === user.id && task.advertId === task._id,
-						)?.status
-
 						return (
 							<div
 								key={index}
@@ -282,11 +257,6 @@ const TaskEarn = () => {
 								className='w-full cursor-pointer hover:shadow flex flex-col md:flex-row  md:items-center px-4 py-3  justify-between md:px-8 md:py-6 border rounded-lg'>
 								<div className='w-full fle flex-col  py-2 gap-2 md:items-center md:flex-row'>
 									<div className=' flex '>
-										{/* <Image
-									alt={platformName}
-									src={icon!}
-									className='hidden md:flex'
-								/> */}
 										<Image
 											src={icon!}
 											alt={platformName}
@@ -303,10 +273,6 @@ const TaskEarn = () => {
 
 												<span>{toIntlCurrency(task?.earnPerTask)}</span>
 											</h4>
-											{/* <small className='text-gray-600 text-[12px] mb-[1rem]'>
-										<span className='font-bold'>To Earn:</span> ₦
-										{task?.earnPerTask}
-									</small> */}
 										</div>
 									</div>
 									<hr />
@@ -366,21 +332,7 @@ const TaskEarn = () => {
 														tasks left to perform
 													</li>
 												</ul>
-
-												{/* Button */}
-												{/* <div className='hidden w-[30%] md:flex md:justify-end'>
-												{checkTaskExistence(task._id)}
-											</div> */}
 											</div>
-
-											{/* <div className='md:hidden w-fit flex gap-3 items-center md:mt-0 md:w-full md:justify-end'>
-											<Image
-												src={icon!}
-												alt={platformName}
-												className='flex w-[20px] h-[20px] md:hidden'
-											/>
-											{checkTaskExistence(task._id)}
-										</div> */}
 										</div>
 									</div>
 								</div>
@@ -400,7 +352,6 @@ const TaskEarn = () => {
 					open={isOpen}
 					onClose={() => {
 						setIsOpen(false)
-						// router.push(`/dashboard/tasks`)
 					}}
 					aria-labelledby='modal-modal-title'
 					aria-describedby='modal-modal-description'>

@@ -6,20 +6,15 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import AdItem from '../../../components/dashboard/AdItem'
 import Loader from '../../../components/loader/Loader'
-import {
-	selectIsError,
-	selectIsLoading,
-} from '../../../redux/slices/advertSlice'
+import { selectIsLoading } from '../../../redux/slices/advertSlice'
 import { selectUser } from '../../../redux/slices/authSlice'
 
 const CampaignStats = () => {
 	const user = useSelector(selectUser)
 	const isLoading = useSelector(selectIsLoading)
-	const isError = useSelector(selectIsError)
-	const dispatch = useDispatch()
 	const router = useRouter()
 
 	const [totalAdverts, setTotalAdverts] = useState(0)
@@ -29,15 +24,10 @@ const CampaignStats = () => {
 
 	const getAdverts = async (page: number, limit: number) => {
 		try {
-			// setIsLoading(true)
 			const response = await getUserAdverts({ page, limit })
-
 			setAdverts(response?.adverts)
-
 			setTotalAdverts(response.totalAdverts)
-			// setIsLoading(false)
 		} catch (error) {
-			console.log('🚀 ~ getAdverts ~ error:', error)
 			toast.error('Failed to retrieve tasks, please reload page')
 		}
 	}
@@ -63,7 +53,7 @@ const CampaignStats = () => {
 					</div>
 				</div>
 				<small className='hidden md:flex h-6 w-10 items-center justify-center bg-secondary rounded-full  text-primary'>
-					{adverts.length}
+					{adverts?.length}
 				</small>
 				<Button
 					variant='solid'
@@ -76,9 +66,10 @@ const CampaignStats = () => {
 			</div>
 
 			<div className='w-full grid mt-4 gap-6 grid-cols-1 md:grid-cols-3'>
-				{adverts.map((item: any) => (
+				{adverts?.map((item: any) => (
 					<AdItem
 						key={item._id}
+						id={item._id}
 						date={item.createdAt}
 						title={`${item.service} on ${item?.platform?.toUpperCase()} `}
 						adperPostAmt={`${item.costPerTask} Per Ad`}
@@ -89,6 +80,9 @@ const CampaignStats = () => {
 						item={item}
 						url={item.socialPageLink}
 						user={user}
+						taskSubmitters={item.taskSubmitters}
+						completedTasksCount={item.completedTasksCount}
+						callback={() => getAdverts(currentPage, limit)}
 					/>
 				))}
 			</div>

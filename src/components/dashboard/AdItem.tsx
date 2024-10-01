@@ -7,17 +7,18 @@ import {
 	selectIsError,
 	selectIsLoading,
 	selectIsSuccess,
-	selectTasks,
 } from '../../redux/slices/taskSlice'
 import { formatDate } from '../../utils/formatDate'
 import { icons } from '../data/socialIcon'
 import TaskProofModal from '../ui/TaskProofModal'
 //import Loader from '../../components/loader/Loader'
+import { Modal } from '@mui/material'
 import Image from 'next/image'
 import { cn } from '../../../helpers'
 import Loader from '../loader/Loader'
 
 interface AdItemProps {
+	id: string
 	date: string
 	title: string
 	adperPostAmt: string
@@ -27,8 +28,10 @@ interface AdItemProps {
 	status: string
 	item: any
 	url: string
-	// users: any[]
+	taskSubmitters: any[]
 	user: any
+	callback: () => void
+	completedTasksCount: number
 }
 
 const AdItem = ({
@@ -42,13 +45,15 @@ const AdItem = ({
 	item,
 	url,
 	user,
+	id,
+	taskSubmitters,
+	callback,
+	completedTasksCount,
 }: AdItemProps) => {
 	const [payBtn, setPayBtn] = useState('Pay Now')
 	const [toggleTaskPerformers, settoggleTaskPerformers] = useState(false)
-	const [taskSubmitters, setTaskSubmitters] = useState()
-	const [tasksUserAd, setTasksUserAd] = useState<any>()
+	// const [taskSubmitters, setTaskSubmitters] = useState()
 	const dispatch = useDispatch()
-	const tasks = useSelector(selectTasks)
 	const isError = useSelector(selectIsError)
 	const isSuccess = useSelector(selectIsSuccess)
 	const isLoading = useSelector(selectIsLoading)
@@ -67,30 +72,19 @@ const AdItem = ({
 		}
 	}, [status, payBtn])
 
-	useEffect(() => {
-		// Filter the task list and bring out all the tasks with their advertiserId as the user and task advertId is the same with the advertId being rendered.
-		const taskListUserAd = tasks?.filter(
-			(t) =>
-				t.advertiserId === user.id &&
-				t.advertId === item._id &&
-				(t.status === 'Approved' ||
-					t.status === 'Submitted' ||
-					t.status === 'Pending Approval'),
-		)
-		setTasksUserAd(taskListUserAd)
-	}, [])
-
-	//console.log(tasksUserAd)
-
 	const handleToggleTaskPerformers = (e: any) => {
 		e.preventDefault()
 
-		if (taskSubmitters && taskSubmitters > 1) {
+		console.log('🚀 ~ handleToggleTaskPerformers ~ taskSubmitters:', {
+			taskSubmitters,
+			id,
+		})
+
+		if (taskSubmitters && taskSubmitters.length === 0) {
 			toast.error('No Task Submitted')
 			return
 		}
 
-		//console.log(item)
 		settoggleTaskPerformers(!toggleTaskPerformers)
 	}
 
@@ -137,6 +131,7 @@ const AdItem = ({
 
 		if (isSuccess) {
 			toast.success('Task Approved')
+			callback()
 		}
 	}
 
@@ -159,7 +154,7 @@ const AdItem = ({
 	return (
 		<div
 			onClick={handleToggleTaskPerformers}
-			className='relative border cursorpointer hovershadow flex w-full h-fit p-[1.5rem] rounded-2xl '>
+			className='relative border cursor-pointer hovershadow flex w-full h-fit p-[1.5rem] rounded-2xl '>
 			<Loader open={isLoading} />
 
 			{toggleTaskProofModal && (
@@ -254,16 +249,19 @@ const AdItem = ({
 						</div>
 
 						<div className='w-fit flex flex-col justify-start gap-2 text-[10px] py-2 mt-[1rem] md:text-[14px]'>
-							<div className=''>
-								<label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>
-									Tasks Completed:
-								</label>
-								<p className='text-[12px]'>
-									{
-										tasksUserAd?.filter((t: any) => t.status === 'Approved')
-											.length
-									}
-								</p>
+							<div className='flex gap-2'>
+								<div className=''>
+									<label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>
+										Tasks Submitted:
+									</label>
+									<span className='text-[12px]'>{taskSubmitters?.length}</span>
+								</div>
+								<div className=''>
+									<label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>
+										Tasks Completed:
+									</label>
+									<span className='text-[12px]'>{completedTasksCount}</span>
+								</div>
 							</div>
 							<ul className='flex items-center gap-2'>
 								<li>
@@ -312,84 +310,86 @@ const AdItem = ({
 						View and Monitor Results <span>{tasksUserAd?.length}</span>
 					</Button>
 				</div> */}
-				{toggleTaskPerformers && (
-					<div className='flex flex-col gap-3'>
-						{tasksUserAd?.map((tp: any) => (
-							<div
-								className='w-full border-b border-gray-200 py-[1rem]'
-								key={tp._id}>
-								<div className='task performer details mb-[1rem] flex flex-col gap-1'>
-									<small className='text-gray-400 font-semibold'>
-										@perfomer username
-										{/* {
-											users?.find((u: any) => u._id === tp?.taskPerformerId)
-												?.username
-										} */}
-									</small>
-									<h3 className='font-bold text-gray-600'>
-										perfomer fullname
-										{/* {
-											users?.find((u: any) => u._id === tp?.taskPerformerId)
-												?.fullname
-										} */}
-									</h3>
-									<span className='text-gray-400 font-semibold text-[9px]'>
-										{formatDate(tp?.createdAt)}
-									</span>
-								</div>
-
-								<div className='flex flex-col gap-3 md:items-center justify-between mb-[1rem] md:flex-row'>
-									<div className='first columns flex flex-col'>
-										<label className='font-bold'>Social Media</label>
-										<a
-											href={tp?.socialPageLink}
-											className='text-blue-600 hover:text-red-600 cursor-pointer'>
-											{tp.socialPageLink.slice(0, 20)}...
-										</a>
-									</div>
-
-									<div className='second columns flex flex-col'>
-										<label className='font-bold'>Proof</label>
-										{tp?.proofOfWorkMediaURL?.[0]?.secure_url ? (
-											<a
-												onClick={(e) => openPopup(e, tp)}
-												className='text-blue-600 hover:text-red-600 cursor-pointer'>
-												Click to view
-											</a>
-										) : (
-											'N/A'
-										)}
-									</div>
-
-									<div className='third columns'>
-										<label className='font-bold'>Status</label>
-										<p className='flex items-center gap-1'>
-											<span>
-												<CheckmarkIcon />
+				{/* {!toggleTaskPerformers && ( */}
+				<Modal
+					open={toggleTaskPerformers}
+					onClose={() => {
+						settoggleTaskPerformers(false)
+					}}
+					aria-labelledby='modal-modal-title'
+					aria-describedby='modal-modal-description'>
+					<div className='flex flex-col justify-center items-center h-full '>
+						<div className='relative  w-[85%] md:w-[600px] h-fit md:py-[2rem] rounded-2xl p-4 bg-primary'>
+							{taskSubmitters?.map((tp: any) => (
+								<div className='w-full border-gray-200 py-[1rem]' key={tp._id}>
+									<div className='task performer details mb-[1rem] flex justify-between w-full gap-1'>
+										<div>
+											<small className='text-gray-400 font-semibold'>
+												Perfomer Username: @{tp?.taskPerformerId?.username}
+											</small>
+											<h3 className='font-bold text-gray-600'>
+												Perfomer Fullname: {tp?.taskPerformerId?.fullname}
+											</h3>
+											<span className='text-gray-400 font-semibold text-[9px]'>
+												{formatDate(tp?.createdAt)}
 											</span>
-											{tp?.status}
-										</p>
-									</div>
-								</div>
+										</div>
 
-								<div className='flex items-center gap-2'>
-									<button
-										onClick={(e) => handleTaskApproval(e, tp)}
-										className={`
+										<div className='flex items-center gap-2'>
+											<button
+												onClick={(e) => handleTaskApproval(e, tp)}
+												className={`
                                 ${
 																	tp?.status === 'Approved'
 																		? 'bg-green-600'
 																		: 'bg-yellow-600'
 																} 
                                 flex items-center gap-2 rounded-2xl px-3 py-2 text-primary hover:bg-orange-400`}>
-										{tp?.status === 'Approved' ? 'Approved' : 'Approve'}
-										<span>{isLoading && <LoaderIcon />}</span>
-									</button>
+												{tp?.status === 'Approved' ? 'Approved' : 'Approve'}
+												<span>{isLoading && <LoaderIcon />}</span>
+											</button>
+										</div>
+									</div>
+
+									<div className='flex flex-col gap-3 md:items-center justify-between mb-[1rem] md:flex-row'>
+										<div className='first columns flex flex-col'>
+											<label className='font-bold'>Social Media</label>
+											<a
+												href={tp?.socialPageLink}
+												className='text-blue-600 hover:text-red-600 cursor-pointer'>
+												{tp.socialPageLink.slice(0, 20)}...
+											</a>
+										</div>
+
+										<div className='third columns'>
+											<label className='font-bold'>Status</label>
+											<p className='flex items-center gap-1'>
+												<span>
+													<CheckmarkIcon />
+												</span>
+												{tp?.status}
+											</p>
+										</div>
+									</div>
+
+									<div className='second columns flex mt-4 flex-col'>
+										<label className='font-bold'>Proof</label>
+										{tp?.proofOfWorkMediaURL?.[0]?.secure_url ? (
+											<Image
+												src={tp?.proofOfWorkMediaURL?.[0]?.secure_url}
+												alt='proof'
+												width={300}
+												height={300}
+											/>
+										) : (
+											'N/A'
+										)}
+									</div>
 								</div>
-							</div>
-						))}
+							))}
+						</div>
 					</div>
-				)}
+				</Modal>
 			</div>
 		</div>
 	)

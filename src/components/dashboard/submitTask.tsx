@@ -24,7 +24,6 @@ const TaskSubmit = ({
 }) => {
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
-	const adverts = useSelector(selectAllAdverts)
 
 	const [isLoading, setIsLoading] = useState(false)
 	const [task, setTask] = useState<any>(null)

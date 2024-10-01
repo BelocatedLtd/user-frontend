@@ -182,7 +182,11 @@ const taskSlice = createSlice({
 				state.isSuccess = true
 				state.isError = false
 				state.task = action.payload
-				state.tasks.push(action.payload)
+				if (Array.isArray(state.tasks)) {
+					state.tasks.push(action.payload)
+				} else {
+					state.tasks = [action.payload]
+				}
 				toast.success('Task Created Successfully')
 			})
 			.addCase(createNewTask.rejected, (state, action: PayloadAction<any>) => {
