@@ -84,20 +84,13 @@ const TransactionList = () => {
 	}, [isError, dispatch])
 
 	const handlePageChange = (page: number) => {
-		console.log('🚀 ~ handlePageChange ~ page:', page)
 		setCurrentPage(page)
 		fetchTransactions(page, rowsPerPage)
 	}
 
 	const handleChangeRowsPerPage = (rowsPerPage: number) => {
-		console.log('🚀 ~ handlePageChange ~ rowsPerPage:', rowsPerPage)
 		setRowsPerPage(rowsPerPage)
 		fetchTransactions(currentPage, rowsPerPage)
-	}
-
-	const handleButtonClick = (e: any, trxId: string) => {
-		e.preventDefault()
-		router.push(`/admin/dashboard/transaction/${trxId}`)
 	}
 
 	return (
