@@ -319,7 +319,7 @@ const AdItem = ({
 					aria-labelledby='modal-modal-title'
 					aria-describedby='modal-modal-description'>
 					<div className='flex flex-col justify-center items-center h-full '>
-						<div className='relative  w-[85%] md:w-[600px] h-fit md:py-[2rem] rounded-2xl p-4 bg-primary'>
+						<div className='relative  w-[85%] md:w-[600px] h-1/2 overflow-y-auto md:py-[2rem] rounded-2xl p-4 bg-primary'>
 							{taskSubmitters?.map((tp: any) => (
 								<div className='w-full border-gray-200 py-[1rem]' key={tp._id}>
 									<div className='task performer details mb-[1rem] flex justify-between w-full gap-1'>
