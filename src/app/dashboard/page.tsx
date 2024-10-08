@@ -151,18 +151,18 @@ const Dashboard = () => {
         </h2>
         {/* Task completion message */}
         <p className='mt-1 text-sm text-gray-600'>
-          You have {taskCount} tasks to complete.
+          You have 789 tasks to complete.
         </p>
       </div>
     </div>
 
     {/* Buttons Section */}
     <div className='space-y-4 mt-2'>
-     
+    
 
       {/* Perform Task and Earn Button */}
       <button
-        onClick={handleTaskPerform}
+       onClick={() => router.push('/dashboard/earn')}
         className='text-sm bg-blue-500 text-white px-4 py-3 rounded-lg w-full'>
         Perform task and earn
       </button>
@@ -186,7 +186,6 @@ const Dashboard = () => {
         </button>
       </div>
     </div>
- 
 
 
 				<div
