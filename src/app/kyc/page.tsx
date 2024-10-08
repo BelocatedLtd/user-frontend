@@ -62,7 +62,7 @@ const Kyc = () => {
 	return (
 		<div className='w-full px- justify-center md:flex mt-[2em] '>
 			{/* <Header /> */}
-			<div className=' text-center mt-40'>
+			<div className=' text-center mt-10'>
 				<Link
 					href='/'
 					className='logo cursor-pointer mx-auto text-4xl font-extrabold  w-full md:w-[170px]'>
