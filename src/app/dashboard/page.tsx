@@ -108,38 +108,87 @@ const Dashboard = () => {
 	}
 
 	return (
-		<div className='container w-full h-fit'>
-			<div className='justify-between mx-auto md:mr-3'>
-				<div className='md:flex mb-10 px-3 items-center justify-between'>
-					<div>
-						<h2 className='mt-1 font-medium text-lg'>
-							Welcome, {user?.fullname ? user?.fullname : user?.username}
-						</h2>
-					</div>
+		// <div className='container w-full h-fit'>
+		// 	<div className='justify-between mx-auto md:mr-3'>
+		// 		<div className='md:flex mb-10 px-3 items-center justify-between'>
+		// 			<div>
+		// 				<h2 className='mt-1 font-medium text-lg'>
+		// 					Welcome, {user?.fullname ? user?.fullname : user?.username}
+		// 				</h2>
+		// 			</div>
 
-					<div className='space-x-2 mt-2'>
-						<button
-							onClick={() => router.push('/dashboard/earn')}
-							className='text-sm bg-secondary text-white px-4 py-2 rounded-lg'>
-							Earn
-						</button>
-						<button
-							onClick={handleAdvertise}
-							className='text-sm bg-tertiary text-white px-4 py-2 rounded-lg'>
-							Advertise
-						</button>
-						<button
-							onClick={() => router.push('/dashboard/wallet')}
-							className='text-sm bg-green-600 text-white px-4 py-2 rounded-lg'>
-							My Wallet
-						</button>
-						<button
-							onClick={() => router.push('/dashboard/referral')}
-							className='text-sm bg-gray-600 text-white px-4 py-2 rounded-lg'>
-							Refer
-						</button>
-					</div>
-				</div>
+		// 			<div className='space-x-2 mt-2'>
+		// 				<button
+		// 					onClick={() => router.push('/dashboard/earn')}
+		// 					className='text-sm bg-secondary text-white px-4 py-2 rounded-lg'>
+		// 					Earn
+		// 				</button>
+		// 				<button
+		// 					onClick={handleAdvertise}
+		// 					className='text-sm bg-tertiary text-white px-4 py-2 rounded-lg'>
+		// 					Advertise
+		// 				</button>
+		// 				<button
+		// 					onClick={() => router.push('/dashboard/wallet')}
+		// 					className='text-sm bg-green-600 text-white px-4 py-2 rounded-lg'>
+		// 					My Wallet
+		// 				</button>
+		// 				<button
+		// 					onClick={() => router.push('/dashboard/referral')}
+		// 					className='text-sm bg-gray-600 text-white px-4 py-2 rounded-lg'>
+		// 					Refer
+		// 				</button>
+		// 			</div>
+		// 		</div>
+
+		<div className='container w-full h-fit'>
+  <div className='justify-between mx-auto md:mr-3'>
+    <div className='md:flex mb-10 px-3 items-center justify-between'>
+      <div>
+        {/* Welcome message */}
+        <h2 className='mt-1 font-medium text-lg'>
+          Welcome, {user?.fullname ? user?.fullname : user?.username}
+        </h2>
+        {/* Task completion message */}
+        <p className='mt-1 text-sm text-gray-600'>
+          You have {taskCount} tasks to complete.
+        </p>
+      </div>
+    </div>
+
+    {/* Buttons Section */}
+    <div className='space-y-4 mt-2'>
+     
+
+      {/* Perform Task and Earn Button */}
+      <button
+        onClick={handleTaskPerform}
+        className='text-sm bg-blue-500 text-white px-4 py-3 rounded-lg w-full'>
+        Perform task and earn
+      </button>
+
+      {/* Remaining Buttons */}
+      <div className='space-y-2'>
+        <button
+          onClick={handleAdvertise}
+          className='text-sm bg-tertiary text-white px-4 py-2 rounded-lg w-full'>
+          Advertise
+        </button>
+        <button
+          onClick={() => router.push('/dashboard/wallet')}
+          className='text-sm bg-green-600 text-white px-4 py-2 rounded-lg w-full'>
+          My Wallet
+        </button>
+        <button
+          onClick={() => router.push('/dashboard/referral')}
+          className='text-sm bg-gray-600 text-white px-4 py-2 rounded-lg w-full'>
+          Refer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 				<div
 					className={`flex-1 grid grid-cols-2  md:grid-cols-4 gap-8  h-fit  justify-evenly md:flex-row`}>
