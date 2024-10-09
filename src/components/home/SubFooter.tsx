@@ -57,7 +57,7 @@ const SubFooter = () => {
 				<hr className='border-primary-border opacity-20' />
 
 				<div className='container  flex flex-col px-3 md:px-0 justify-between mx-auto pt-[3rem] pb-[3rem] md:flex-row'>
-					<div className='w-full text-gray-600 md:flex md:flex-col'>
+					<div className='w-full text-gray-600 md:flex md:flex-col pl-8 mt-10'>
 						<div className='text-lg text-primary md:w-[40%]' key='category.id'>
 							<p className='flex items-center gap-1'>
 								Belocated is an enterprising publicity and media service
