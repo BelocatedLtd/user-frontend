@@ -9,7 +9,7 @@ const CallToAction = () => {
 
 	return (
 		<div
-			className='w-full h-lvh bg-cover bg-center flex items-center justify-center '
+			className='w-full mt-10 bg-cover bg-center flex items-center justify-center '
 			style={{
 				backgroundImage: 'url(/section-bg.png)',
 				// backgroundImage: 'url(' + sectionBg + ')',
