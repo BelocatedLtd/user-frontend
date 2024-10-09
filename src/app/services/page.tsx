@@ -82,8 +82,8 @@ const ServicesPage = () => {
 
 	return (
 		<section className='w-full h-fit mb-5'>
-			<div className='flex flex-col justify-center mx-auto gap-[3rem]'>
-				<div className='w-full h-full py-[3rem] mt-[3rem] flex flex-col items-center justify-center mx-auto'>
+			<div className='flex flex-col justify-center mx-auto gap-[2rem]'>
+				<div className='w-full h-full py-[2rem] mt-[2rem] flex flex-col items-center justify-center mx-auto'>
 					<h3 className='text-[#0F1741] px-6 text-[30px] md:text-[38px] mb-[5px] font-bold text-center'>
 						Our Services
 					</h3>
