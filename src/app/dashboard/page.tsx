@@ -190,7 +190,7 @@ const Dashboard = () => {
 
 
 				<div
-					className={`flex-1 grid grid-cols-2  md:grid-cols-4 gap-8  h-fit  justify-evenly md:flex-row`}>
+					className={`flex-1 grid grid-cols-2  md:grid-cols-4 gap-8  h-fit  justify-evenly md:flex-row mt-4`}>
 					<div className='border w-full  flex-col text-center items-center justify-center py-8 space-y-2 rounded-lg border-gray-200'>
 						<span>Total Earnings</span>
 						<div>
