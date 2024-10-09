@@ -168,20 +168,20 @@ const Dashboard = () => {
 					</button>
 
 					{/* Remaining Buttons */}
-					<div className='space-y-2'>
+					<div className='flex space-x-2'>
 						<button
 							onClick={handleAdvertise}
-							className='text-sm bg-tertiary text-white px-4 py-2 rounded-lg w-full'>
+							 className='text-sm bg-tertiary text-white px-4 py-2 rounded-lg'>
 							Advertise
 						</button>
 						<button
 							onClick={() => router.push('/dashboard/wallet')}
-							className='text-sm bg-green-600 text-white px-4 py-2 rounded-lg w-full'>
+							className='text-sm bg-green-600 text-white px-4 py-2 rounded-lg'>
 							My Wallet
 						</button>
 						<button
 							onClick={() => router.push('/dashboard/referral')}
-							className='text-sm bg-gray-600 text-white px-4 py-2 rounded-lg w-full'>
+							className='text-sm bg-gray-600 text-white px-4 py-2 rounded-lg'>
 							Refer
 						</button>
 					</div>
