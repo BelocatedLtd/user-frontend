@@ -22,7 +22,7 @@ const ServicesPage = () => {
 						</p>
 					</div>
 
-					<div className='w-full h-fit flex justify-center bg-blue-50 py-[5rem]'>
+					<div className='w-full h-fit flex justify-center bg-blue-50 py-[3rem]'>
 						<div className='services-list flex flex-wrap w-fit md:w-[80%] h-fit px-[3rem] md:px-0'>
 							{services?.map((item, index) => (
 								<div
