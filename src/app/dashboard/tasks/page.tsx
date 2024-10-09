@@ -176,19 +176,25 @@ const TaskList = () => {
 													alt={task.platform}
 													className='hidden md:flex w-10 h-10 rounded-lg'
 												/>
-												<div>
-													<small>
-														<TimeAgo datetime={task.createdAt} />
-													</small>
-													<h1 className='text-[15px] md:text-[18px] font-bold truncate'>
-														{task?.title}
-													</h1>
-													<h1 className='text-[15px] md:text-[18px] font-bold truncate'>
-														{task?._id}
-													</h1>
-												</div>
-											</div>
-											<small className='font-bold text-right'>
+												 <div>
+            <small>
+              <TimeAgo datetime={task.createdAt} />
+            </small>
+            {/* Task Title with 2-line break or adjusted size */}
+            <h1 className='text-[15px] md:text-[18px] font-bold break-words'>
+              {task?.title?.length > 50 ? (
+                <span className='text-[14px] md:text-[16px]'>
+                  {task?.title}
+                </span>
+              ) : (
+                task?.title
+              )}
+            </h1>
+            <h1 className='text-[15px] md:text-[18px] font-bold truncate'>
+              {task?._id}
+            </h1>
+          </div>
+        </div>	<small className='font-bold text-right'>
 												{toIntlCurrency(task?.toEarn)}/task
 											</small>
 										</div>
