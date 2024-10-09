@@ -15,7 +15,7 @@ import Link from 'next/link'
 
 const SubFooter = () => {
 	return (
-		<section className='h-[70%] text-primary bg-gray-800'>
+		<section className='text-primary bg-gray-800'>
 			<div className='container h-full  mx-auto '>
 				<div className='flex  justify-between items-center gap-2 py-8 '>
 					<Image src={logo} alt='logo' width={150} className=' object-cover' />
