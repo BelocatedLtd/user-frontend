@@ -23,7 +23,7 @@ const MembersTab = () => {
 			{/* {regBtn && <Register handleRegister={handleRegister} regBtn={regBtn} />} */}
 			<div className='flex flex-col items-center justify-center'>
 				<div className='flex flex-col-reverse md:flex-row md:items-center justify-center mx-[1.5rem]  md:w-[80%] bg-red-3 md:h-[600px]'>
-					<div className='md:w-1/2'>
+					<div className='md:w-1/2' style={{textAlign:"justify"}}>
 						<h1 className='text-4xl text-gray-600 font-black'>Earners</h1>
 						<div className='mt-3'>
 							<p className='w-full text-gray-600'>
@@ -55,7 +55,7 @@ const MembersTab = () => {
 					<Image
 						src={earners}
 						alt='earners'
-						className='w-full h-full object-contain mt-10'
+						className='w-full object-contain mt-10'
 					/>
 					{/* <ShowOnLogout>
 							<button
@@ -76,10 +76,10 @@ const MembersTab = () => {
 					<Image
 						src={advertisers}
 						alt='Advertisers'
-						className='md:w-full -ml-10 h-full object-contain md:mt-0'
+						className='md:w-full -ml-10 object-contain md:mt-0'
 					/>
 
-					<div className='md:w-1/2 mt-6'>
+					<div className='md:w-1/2 mt-6' style={{textAlign:"justify"}}>
 						<h1 className='text-4xl text-gray-600 font-black'>Advertisers </h1>
 						<p className='w-full text-gray-600 mt-3'>
 							Enjoy fast and affordable media services across all media
