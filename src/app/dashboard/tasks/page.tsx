@@ -181,15 +181,15 @@ const TaskList = () => {
               <TimeAgo datetime={task.createdAt} />
             </small>
             {/* Task Title with 2-line break or adjusted size */}
-            <h1 className='text-[15px] md:text-[18px] font-bold break-words'>
-              {task?.title?.length > 50 ? (
-                <span className='text-[14px] md:text-[16px]'>
+            <h4 className='text-[10px] md:text-[12px] font-bold break-words'>
+              {task?.title?.length > 25 ? (
+                <span className='text-[10px] md:text-[14px]'>
                   {task?.title}
                 </span>
               ) : (
                 task?.title
               )}
-            </h1>
+            </h4>
             <h1 className='text-[15px] md:text-[18px] font-bold truncate'>
               {task?._id}
             </h1>
