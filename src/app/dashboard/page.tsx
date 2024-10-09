@@ -142,50 +142,51 @@ const Dashboard = () => {
 		// 		</div>
 
 		<div className='container w-full h-fit'>
-  <div className='justify-between mx-auto md:mr-3'>
-    <div className='md:flex mb-10 px-3 items-center justify-between'>
-      <div>
-        {/* Welcome message */}
-        <h2 className='mt-1 font-medium text-lg'>
-          Welcome, {user?.fullname ? user?.fullname : user?.username}
-        </h2>
-        {/* Task completion message */}
-        <p className='mt-1 text-sm text-gray-600'>
-          You have 789 tasks to complete.
-        </p>
-      </div>
-    </div>
+			<div className='justify-between mx-auto md:mr-3'>
+				<div className='md:flex mb-10 px-3 items-center justify-between'>
+					<div>
+						{/* Welcome message */}
+						<h2 className='mt-1 font-medium text-lg'>
+							Welcome, {user?.fullname ? user?.fullname : user?.username}
+						</h2>
+						{/* Task completion message */}
+						<p className='mt-1 text-sm text-gray-600'>
+							You have 789 tasks to complete.
+						</p>
+					</div>
+				</div>
 
-    {/* Buttons Section */}
-    <div className='space-y-4 mt-2'>
-    
+				{/* Buttons Section */}
+				<div className='space-y-4 mt-2'>
 
-      {/* Perform Task and Earn Button */}
-      <button
-       onClick={() => router.push('/dashboard/earn')}
-        className='text-sm bg-blue-500 text-white px-4 py-3 rounded-lg w-full'>
-        Perform task and earn
-      </button>
 
-      {/* Remaining Buttons */}
-      <div className='space-y-2'>
-        <button
-          onClick={handleAdvertise}
-          className='text-sm bg-tertiary text-white px-4 py-2 rounded-lg w-full'>
-          Advertise
-        </button>
-        <button
-          onClick={() => router.push('/dashboard/wallet')}
-          className='text-sm bg-green-600 text-white px-4 py-2 rounded-lg w-full'>
-          My Wallet
-        </button>
-        <button
-          onClick={() => router.push('/dashboard/referral')}
-          className='text-sm bg-gray-600 text-white px-4 py-2 rounded-lg w-full'>
-          Refer
-        </button>
-      </div>
-    </div>
+					{/* Perform Task and Earn Button */}
+					<button
+						onClick={() => router.push('/dashboard/earn')}
+						className='text-sm bg-blue-500 text-white px-4 py-3 rounded-lg w-full'>
+						Perform task and earn
+					</button>
+
+					{/* Remaining Buttons */}
+					<div className='space-y-2'>
+						<button
+							onClick={handleAdvertise}
+							className='text-sm bg-tertiary text-white px-4 py-2 rounded-lg w-full'>
+							Advertise
+						</button>
+						<button
+							onClick={() => router.push('/dashboard/wallet')}
+							className='text-sm bg-green-600 text-white px-4 py-2 rounded-lg w-full'>
+							My Wallet
+						</button>
+						<button
+							onClick={() => router.push('/dashboard/referral')}
+							className='text-sm bg-gray-600 text-white px-4 py-2 rounded-lg w-full'>
+							Refer
+						</button>
+					</div>
+				</div>
+
 
 
 				<div
