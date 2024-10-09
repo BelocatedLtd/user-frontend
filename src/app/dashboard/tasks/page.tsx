@@ -67,7 +67,7 @@ const TaskList = () => {
 								</div>
 							</div>
 
-							<div className='md:px-8 mt-3 md:mt-8 grid md:grid-cols-3 gap-6'>
+							{/* <div className='md:px-8 mt-3 md:mt-8 grid md:grid-cols-3 gap-6'>
 								{tasks?.map((task: any, index: number) => (
 									<div
 										key={index}
@@ -109,8 +109,8 @@ const TaskList = () => {
 												</small>
 											</div>
 											{/* <p className='text-gray-500 text-[15px]'>{task.caption}</p> */}
-											{/* <hr className='my-3' /> */}
-											<div className='flex flex-col gap-2 mt-4'>
+							{/* <hr className='my-3' /> */}
+							{/* <div className='flex flex-col gap-2 mt-4'>
 												<ul className='flex flex- gap-3 text-[13px]'>
 													<li>State: {task.state}</li>
 													<li>LGA: {task.lga}</li>
@@ -146,17 +146,96 @@ const TaskList = () => {
 														}
 														alt={task?.platform}
 														className='flex md:hidden w-[20px] h-[20px]'
-													/>
+													/> */}
 
-													{/* <div className='flex'>
+							{/* <div className='flex'>
 											{checkTaskStatus(task?._id, task.status)}
 										</div> */}
+							{/* </div>
+											</div>
+										</div>
+									</div>
+								))}
+							</div> */}
+
+							<div className='md:px-8 mt-3 md:mt-8 grid md:grid-cols-3 gap-6'>
+								{tasks?.map((task: any, index: number) => (
+									<div
+										key={index}
+										onClick={() => {
+											setIsOpen(true)
+											setSelectedTask(task._id)
+										}}
+										className='flex flex-col items-start border justify-between p-6 rounded-lg hover:shadow cursor-pointer box-border'>
+										<div className='w-full'>
+											<div className='flex items-center justify-between w-full'>
+												{/* Task Icon */}
+												<div className='flex gap-3 items-center'>
+													<Image
+														src={icons?.find(icon => icon.platform === task.platform)?.icon}
+														alt={task.platform}
+														className='hidden md:flex w-10 h-10 rounded-lg object-contain'
+													/>
+													{/* Task Details */}
+													<div>
+														<small>
+															<TimeAgo datetime={task.createdAt} />
+														</small>
+														<h1 className='text-[15px] md:text-[18px] font-bold md:my-[-5px] p-0 truncate'>
+															{task?.title}
+														</h1>
+														<h1 className='text-[15px] md:text-[18px] font-bold md:my-[-5px] p-0 truncate'>
+															{task?._id}
+														</h1>
+													</div>
+												</div>
+
+												{/* Earnings */}
+												<small className='font-bold ml-10 truncate'>
+													{toIntlCurrency(task?.toEarn)}/task
+												</small>
+											</div>
+
+											{/* Task Status and Details */}
+											<div className='flex flex-col gap-2 mt-4'>
+												<ul className='flex gap-3 text-[13px]'>
+													<li>State: {task.state}</li>
+													<li>LGA: {task.lga}</li>
+													<li>Status:
+														<span
+															className={cn(
+																'text-xs ml-1 text-white rounded-full',
+																getStatusBgColor(task.status)
+															)}>
+															{task.status}
+														</span>
+													</li>
+												</ul>
+
+												{/* Social Page Link */}
+												{task.socialPageLink && (
+													<p className='mt-2 text-sm truncate'>
+														Link:{' '}
+														<a href={task.socialPageLink} className='text-blue-600 truncate'>
+															{task.socialPageLink}
+														</a>
+													</p>
+												)}
+
+												{/* Small Icon for Mobile */}
+												<div className='flex gap-2 items-center'>
+													<Image
+														src={icons?.find(icon => icon.platform === task.platform)?.icon}
+														alt={task?.platform}
+														className='flex md:hidden w-[20px] h-[20px] object-contain'
+													/>
 												</div>
 											</div>
 										</div>
 									</div>
 								))}
 							</div>
+
 						</div>
 
 						<div className='my-10'>
