@@ -166,75 +166,66 @@ const TaskList = () => {
 											setIsOpen(true)
 											setSelectedTask(task._id)
 										}}
-										className='flex flex-col items-start border justify-between p-6 rounded-lg hover:shadow cursor-pointer box-border'>
-										<div className='w-full'>
-											<div className='flex items-center justify-between w-full'>
-												{/* Task Icon */}
-												<div className='flex gap-3 items-center'>
-													<Image
-														src={icons?.find(icon => icon.platform === task.platform)?.icon}
-														alt={task.platform}
-														className='hidden md:flex w-10 h-10 rounded-lg object-contain'
-													/>
-													{/* Task Details */}
-													<div>
-														<small>
-															<TimeAgo datetime={task.createdAt} />
-														</small>
-														<h1 className='text-[15px] md:text-[18px] font-bold md:my-[-5px] p-0 truncate'>
-															{task?.title}
-														</h1>
-														<h1 className='text-[15px] md:text-[18px] font-bold md:my-[-5px] p-0 truncate'>
-															{task?._id}
-														</h1>
-													</div>
-												</div>
+										className='flex flex-col border justify-between p-4 md:p-6 rounded-lg hover:shadow cursor-pointer max-w-full overflow-hidden'>
 
-												{/* Earnings */}
-												<small className='font-bold ml-10 truncate'>
-													{toIntlCurrency(task?.toEarn)}/task
-												</small>
+										{/* Task Header */}
+										<div className='flex items-center justify-between'>
+											<div className='flex gap-3 items-center'>
+												<Image
+													src={icons?.find((icon) => icon.platform === task.platform)?.icon}
+													alt={task.platform}
+													className='hidden md:flex w-10 h-10 rounded-lg'
+												/>
+												<div>
+													<small>
+														<TimeAgo datetime={task.createdAt} />
+													</small>
+													<h1 className='text-[15px] md:text-[18px] font-bold truncate'>
+														{task?.title}
+													</h1>
+													<h1 className='text-[15px] md:text-[18px] font-bold truncate'>
+														{task?._id}
+													</h1>
+												</div>
 											</div>
+											<small className='font-bold text-right'>
+												{toIntlCurrency(task?.toEarn)}/task
+											</small>
+										</div>
 
-											{/* Task Status and Details */}
-											<div className='flex flex-col gap-2 mt-4'>
-												<ul className='flex gap-3 text-[13px]'>
-													<li>State: {task.state}</li>
-													<li>LGA: {task.lga}</li>
-													<li>Status:
-														<span
-															className={cn(
-																'text-xs ml-1 text-white rounded-full',
-																getStatusBgColor(task.status)
-															)}>
-															{task.status}
-														</span>
-													</li>
-												</ul>
-
-												{/* Social Page Link */}
-												{task.socialPageLink && (
-													<p className='mt-2 text-sm truncate'>
-														Link:{' '}
-														<a href={task.socialPageLink} className='text-blue-600 truncate'>
-															{task.socialPageLink}
-														</a>
-													</p>
-												)}
-
-												{/* Small Icon for Mobile */}
-												<div className='flex gap-2 items-center'>
-													<Image
-														src={icons?.find(icon => icon.platform === task.platform)?.icon}
-														alt={task?.platform}
-														className='flex md:hidden w-[20px] h-[20px] object-contain'
-													/>
-												</div>
+										{/* Task Body */}
+										<div className='flex flex-col gap-2 mt-4'>
+											<ul className='flex flex-wrap gap-3 text-[13px]'>
+												<li>State: {task.state}</li>
+												<li>LGA: {task.lga}</li>
+												<li>
+													Status:{' '}
+													<span
+														className={`text-xs ml-1 text-white rounded-full ${getStatusBgColor(task.status)}`}>
+														{task.status}
+													</span>
+												</li>
+											</ul>
+											{task.socialPageLink && (
+												<p className='mt-2 text-sm truncate'>
+													Link:{' '}
+													<a href={task.socialPageLink} className='text-blue-600'>
+														{task.socialPageLink}
+													</a>
+												</p>
+											)}
+											<div className='flex gap-2 items-center mt-2'>
+												<Image
+													src={icons?.find((icon) => icon.platform === task.platform)?.icon}
+													alt={task?.platform}
+													className='flex md:hidden w-[20px] h-[20px]'
+												/>
 											</div>
 										</div>
 									</div>
 								))}
 							</div>
+
 
 						</div>
 
