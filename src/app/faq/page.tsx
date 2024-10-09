@@ -51,18 +51,22 @@
 // export default FAQ
 
 
-
 'use client'
 
 import { useState } from 'react'
 import { faqData } from '@/components/data/FAQData'
 import { AiOutlineHolder } from 'react-icons/ai'
 
+interface FAQItem {
+  question: string
+  answer: string
+}
+
 const FAQ = () => {
-  const [activeIndex, setActiveIndex] = useState(null)
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
   // Function to toggle the answer visibility
-  const toggleAnswer = (index) => {
+  const toggleAnswer = (index: number) => {
     setActiveIndex(index === activeIndex ? null : index)
   }
 
@@ -81,14 +85,14 @@ const FAQ = () => {
 
       <div className='w-full h-fit flex justify-center py-[5rem] bg-blue-50'>
         <div className='services-list grid md:grid-cols-3 px-10 md:gap-10 w-fit h-fit'>
-          {faqData?.map((item, index) => (
+          {faqData?.map((item: FAQItem, index: number) => (
             <div key={index} className='w-fit md:w-full py-6'>
               <div
                 className='flex items-center gap-2 mb-[1rem] cursor-pointer'
                 onClick={() => toggleAnswer(index)}
               >
                 <h1 className='text-[25px] w-fit md:w-[500px] font-bold text-gray-800 leading-[1.4em]'>
-                  {item?.question}
+                  {item.question}
                 </h1>
                 <AiOutlineHolder
                   className={`text-2xl text-tertiary transform transition-transform duration-300 ${
@@ -100,7 +104,7 @@ const FAQ = () => {
               {/* Conditionally render the answer based on the active index */}
               {activeIndex === index && (
                 <p className='w-fit md:w-[500px] text-[18px] my-6'>
-                  {item?.answer}
+                  {item.answer}
                 </p>
               )}
             </div>
@@ -112,4 +116,3 @@ const FAQ = () => {
 }
 
 export default FAQ
-
