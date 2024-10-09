@@ -84,9 +84,9 @@ const FAQ = () => {
       </div>
 
       <div className='w-full h-fit flex justify-center py-[5rem] bg-blue-50'>
-        <div className='services-list grid md:grid-cols-3 px-10 md:gap-10 w-fit h-fit'>
+       <div className='services-list grid md:grid-cols-3 px-4 md:px-10 gap-4 md:gap-10 max-w-[1200px] w-full'>
           {faqData?.map((item: FAQItem, index: number) => (
-            <div key={index} className='w-fit md:w-full py-6'>
+            <div key={index} className='w-full md:w-[400px]'>
               <div
                 className='flex items-center gap-2 mb-[1rem] cursor-pointer'
                 onClick={() => toggleAnswer(index)}
@@ -102,11 +102,15 @@ const FAQ = () => {
               </div>
 
               {/* Conditionally render the answer based on the active index */}
-              {activeIndex === index && (
-                <p className='w-fit md:w-[500px] text-[18px] my-6'>
+              <div
+                className={`${
+                  activeIndex === index ? 'block' : 'hidden'
+                } transition-all duration-300 overflow-hidden`}
+              >
+                <p className='text-[16px] text-gray-700 mt-2'>
                   {item.answer}
                 </p>
-              )}
+              </div>
             </div>
           ))}
         </div>
