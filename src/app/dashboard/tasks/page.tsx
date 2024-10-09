@@ -207,7 +207,7 @@ const TaskList = () => {
 												<li>
 													Status:{' '}
 													<span
-														className={`text-xs ml-1 text-white rounded-full ${getStatusBgColor(task.status)}`}>
+														className={cn('text-xs ml-1 text-white rounded-full', ${getStatusBgColor(task.status),)}}>
 														{task.status}
 													</span>
 												</li>
