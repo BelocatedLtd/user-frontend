@@ -12,7 +12,7 @@ const Services = () => {
 					WITH BELOCATED, EVERYONE IS A WINNER <br /> It's all about reward!
 				</h3>
 
-				<p className='flex text-[15px] mx-[1rem] w-fit md:w-[900px] mt-[1em] text-primary leading-[1.5]'>
+				<p className='flex text-[15px] mx-[1rem] w-fit md:w-[900px] mt-[1em] text-primary leading-[1.5]' style={{textAlign:"justify", lineHeight:"1.5rem"}}>
 					We prioritize our Clients/Advertisers with excellent services and
 					uphold our core values.
 					<br /> We also offer Earners opportunities to be rewarded for tasks on
@@ -34,7 +34,7 @@ const Services = () => {
 						<h2 className='text-[20px] font-[700] leading-[1.4em] '>
 							Massive ROI On Adverts
 						</h2>
-						<p className=''>
+						<p className='' style={{textAlign:"justify", lineHeight:"1.5rem"}}>
 							A guaranteed quick & positive return on your business publicity
 							investment. Monitor the progress of your order from your
 							dashboard. Transparency + Speed + Efficiency = BeLocated ROI
@@ -52,7 +52,7 @@ const Services = () => {
 						<h2 className='text-[20px] font-[700] leading-[1.4em]'>
 							Affordable Pricing
 						</h2>
-						<p className=''>
+						<p className='' style={{textAlign:"justify", lineHeight:"1.5rem"}}>
 							Get reliable publicity packages at very affordable rates. You can
 							dictate the budget and details of your campaign with just few
 							clicks. Are you in doubt? A trial will convince you and get you
@@ -71,7 +71,7 @@ const Services = () => {
 						<h2 className='text-[20px] font-[700] leading-[1.4em]'>
 							Earn Steady Income
 						</h2>
-						<p className=''>
+						<p className='' style={{textAlign:"justify", lineHeight:"1.5rem"}}>
 							BeLocated rewards you for media tasks, regardless of your status.
 							With just a mobile device and data, you can earn steadily on our
 							platform.
