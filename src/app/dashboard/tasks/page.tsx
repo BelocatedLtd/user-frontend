@@ -205,12 +205,15 @@ const TaskList = () => {
 												<li>State: {task.state}</li>
 												<li>LGA: {task.lga}</li>
 												<li>
-													Status:{' '}
-													<span
-														className={cn('text-xs ml-1 text-white rounded-full', {getStatusBgColor(task.status),)}}>
-														{task.status}
-													</span>
-												</li>
+														Status:{' '}
+														<span
+															className={cn(
+																' text-xs ml-1 text-white rounded-full',
+																getStatusBgColor(task.status),
+															)}>
+															{task.status}
+														</span>
+													</li>
 											</ul>
 											{task.socialPageLink && (
 												<p className='mt-2 text-sm truncate'>
