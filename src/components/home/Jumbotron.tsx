@@ -64,7 +64,7 @@ const Jumbotron = () => {
 				backgroundRepeat: 'no-repeat',
 			}}
 			className='w-full flex flex-col items-center'>
-			<div className='container flex mt-20 flex-col items-center'>
+			<div className='container flex mt-10 flex-col items-center'>
 				<h1 className='w-[90%] text-center text-[28px] text-gray-800 font-extrabold md:text-[3rem]'>
 					Earn Daily: Complete Lucrative <br /> Social Media Tasks Easily
 				</h1>
@@ -104,7 +104,7 @@ const Jumbotron = () => {
 				</small>
 			</ShowOnLogin>
 
-			<div className='mt-10 w-full bottom-0'>
+			<div className='mt-5 w-full bottom-0'>
 				<Marqueez />
 			</div>
 
