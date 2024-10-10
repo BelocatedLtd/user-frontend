@@ -64,7 +64,7 @@ const Jumbotron = () => {
 				backgroundRepeat: 'no-repeat',
 			}}
 			className='w-full flex flex-col items-center'>
-			<div className='container flex mt-10 flex-col items-center'>
+			<div className='container flex mt-5 flex-col items-center'>
 				<h1 className='w-[90%] text-center text-[28px] text-gray-800 font-extrabold md:text-[3rem]'>
 					Earn Daily: Complete Lucrative <br /> Social Media Tasks Easily
 				</h1>
@@ -75,7 +75,7 @@ const Jumbotron = () => {
 			</div>
 
 			<ShowOnLogout>
-				<div className='flex mt-6 items-center'>
+				<div className='flex mt-5 items-center'>
 					<button
 						onClick={() => router.push(`/?action=register`)}
 						className='bg-secondary text-primary font-bold px-10 py-3 rounded-full hover:bg-transparent hover:text-secondary hover:border-secondary hover:border'>
@@ -104,7 +104,7 @@ const Jumbotron = () => {
 				</small>
 			</ShowOnLogin>
 
-			<div className='mt-5 w-full bottom-0'>
+			<div className='mt-4 w-full bottom-0'>
 				<Marqueez />
 			</div>
 
