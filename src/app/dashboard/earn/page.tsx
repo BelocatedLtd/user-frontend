@@ -41,7 +41,11 @@ const Earn = () => {
 
 		getTasks()
 	}, [dispatch])
-
+	
+const totalTasksAcrossAllPlatforms = Object.values(platformTasks).reduce(
+		(acc, platform) => acc + platform.totalTasks,
+		0
+	)
 	return (
 		<Suspense>
 			{isLoading ? (
