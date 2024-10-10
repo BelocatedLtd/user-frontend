@@ -20,6 +20,12 @@ interface ApproveTaskData {
 interface RejectTaskData {
 	// Define the shape of your reject task data here
 }
+interface RemainingTasksResponse {
+    totalTasks: number;
+    completedTasks: number;
+    remainingTasks: number;
+}
+
 
 // Create Task
 export const createTask = async (taskData: TaskData): Promise<any> => {
@@ -94,3 +100,12 @@ export const deleteTask = async (taskId: string): Promise<any> => {
 		throw new Error(message)
 	}
 }
+export const getRemainingTasks = async (userId: string): Promise<RemainingTasksResponse | null> => {
+    try {
+        const response = await api.get(`${BACKEND_URL}/api/tasks/${userId}/remaining`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching remaining tasks:', error);
+        return null;  // or throw an error if you want to handle it further up the chain
+    }
+};
