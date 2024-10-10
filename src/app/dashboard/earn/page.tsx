@@ -32,6 +32,13 @@ const Earn = () => {
 				setIsLoading(true)
 				const res = await getTotalTasksByAllPlatforms()
 				setPlatformTasks(res)
+					const totalTasksAcrossAllPlatforms = Object.values(res).reduce(
+					(acc, platform) => acc + platform.totalTasks,
+					0
+				)
+
+				// Dispatch the total tasks to Redux store
+				dispatch(setTotalTasks(totalTasksAcrossAllPlatforms))
 				setIsLoading(false)
 			} catch (error) {
 				toast.error('Failed to retrieve tasks, please reload page')
@@ -40,12 +47,7 @@ const Earn = () => {
 		}
 
 		getTasks()
-	}, [dispatch])
-	
-const totalTasksAcrossAllPlatforms = Object.values(platformTasks).reduce(
-		(acc, platform) => acc + platform.totalTasks,
-		0
-	)
+	}, [dispatch]) 
 	return (
 		<Suspense>
 			{isLoading ? (
