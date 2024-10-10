@@ -197,7 +197,7 @@ const AdItem = ({
 							{url ? (
 								<small className='text-gray-500 font-bold'>
 									<a href={url} className='text-blue-600'>
-										{url.slice(0, 20)}...
+										{url.slice(0, 10)}...
 									</a>
 								</small>
 							) : (
