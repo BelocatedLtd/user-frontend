@@ -357,9 +357,8 @@ export const selectIsSuccess = (state: { task: TaskState }) =>
 	state.task.isSuccess
 export const selectIsError = (state: { task: TaskState }) => state.task.isError
 export const { setTotal } = taskSlice.actions;
-export const { setTotalTasks } = taskSlice.actions;
 
 // Create and export a selector to get totalTasks from the state
-export const selectTotalTasks = (state: { task: TaskState }) => state.task.totalTasks;
+export const selectTotalTasks = (state: { task: TaskState }) => state.task.total;
 
 export default taskSlice.reducer
