@@ -508,7 +508,7 @@ const remainTask = totalTasks - tasksCompleted;
 						<p className='mt-1 text-sm text-gray-600'>
 							You have {totalTasks} tasks to complete.
 							
-                       <p>Completed Tasks: {completedTasks}</p>
+                       <p>Completed Tasks: {dashboardData?.tasksCompleted.value ?? 0}</p>
                   <p>Remaining Tasks: {remainTask}</p>
 
 						</p>
