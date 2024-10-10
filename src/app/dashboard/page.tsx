@@ -17,8 +17,11 @@ import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { FaCopy } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
+import { getTotalTasksByAllPlatforms } from '@/services/advertService'
 
-
+interface PlatformTasks {
+	[key: string]: { totalTasks: number }
+  }
 
 const Dashboard = () => {
 	const inputRef = useRef<HTMLInputElement>(null)
@@ -26,9 +29,9 @@ const Dashboard = () => {
 	const dispatch = useDispatch()
 	const [profile, setProfile] = useState(null)
 	const wallet = useSelector(selectUserWallet)
-	const totalTasks = useSelector(selectTotalTasks)
 	const adverts = useSelector(selectAdverts)
-
+      const [totalTasks, setTotalTasks] = useState(0)
+	const [isLoading, setIsLoading] = useState(false)
 	const user = useSelector(selectUser)
 	const [profileComplete, setProfileComplete] = useState(false)
 	const [dashboardData, setDasboardData] = useState<{
@@ -50,7 +53,28 @@ const Dashboard = () => {
 	}>()
 	const [refLink, setRefLink] = useState('')
 	useRedirectLoggedOutUser('/')
+useEffect(() => {
+    async function fetchTotalTasks() {
+      try {
+        setIsLoading(true)
 
+        // Fetch the tasks by platform
+        const res: PlatformTasks = await getTotalTasksByAllPlatforms()
+
+        // Calculate the total tasks across all platforms
+        const total = Object.values(res).reduce((acc, platform) => acc + platform.totalTasks, 0)
+
+        // Set the total tasks in state
+        setTotalTasks(total)
+        setIsLoading(false)
+      } catch (error) {
+        console.error('Failed to retrieve tasks', error)
+        setIsLoading(false)
+      }
+    }
+
+    fetchTotalTasks()
+  }, [])
 	useEffect(() => {
 		async function getUserData() {
 			const data = await getUser()
