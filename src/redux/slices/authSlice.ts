@@ -39,7 +39,8 @@ export const fetchUserDetails = createAsyncThunk(
 	'auth/fetchUserDetails',
 	async (_, thunkAPI) => {
 		try {
-			return await getUser()
+			const user = await getUser();
+			return user;
 		} catch (error: any) {
 			const message =
 				(error.response &&
@@ -119,6 +120,7 @@ const authSlice = createSlice({
 				state.isSuccess = true
 				state.isError = false
 				state.user = action.payload
+				 
 				toast.success('User Details Fetched!')
 			})
 			.addCase(fetchUserDetails.rejected, (state, action) => {
