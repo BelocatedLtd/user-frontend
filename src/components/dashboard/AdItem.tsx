@@ -161,14 +161,14 @@ const AdItem = ({
 							className='w-full h-full object-cover'
 						/>
 					</div>
-					<div className='flex flex-col mb-[1.5rem] border-b border-gray-100 pb-4'>
+					<div className='flex flex-col mb-[1rem] border-b border-gray-100 pb-3'>
 						<small className='text-gray-400 font-semibold text-[9px]'>
 							{formatDate(date)}
 						</small>
-						<h1 className='font-bold text-sm md:text-lg text-gray-800'>
+						<h1 className='font-bold text-sm text-gray-800'>
 							{title}
 						</h1>
-						<small className='text-[9px] text-gray-400 font-semibold'>
+						<small className='text-[9px] text-gray-400'>
 							Pricing: ₦{adperPostAmt} per advert post
 						</small>
 					</div>
@@ -177,25 +177,25 @@ const AdItem = ({
 				<div className='flex flex-row gap-2 justify-between'>
 					<div className='flex flex-col'>
 						<div className='flex flex-col'>
-							<label className='font-extrabold text-[12px] text-gray-700 md:text-[14px] md:font-bold'>
+							<label className='font-extrabold text-[6px] text-gray-700 md:text-[8px]'>
 								Ad Unit Remaining:
 							</label>
-							<small className='text-gray-500 font-bold'>{roi}</small>
+							<small className='text-gray-500'>{roi}</small>
 						</div>
 
 						<div className='flex flex-col mt-[1rem]'>
-							<label className='font-extrabold text-[12px] text-gray-700 md:text-[14px] md:font-bold'>
+							<label className='font-extrabold text-[6px] text-gray-700 md:text-[8px] md:font-bold'>
 								Amount Paid:
 							</label>
-							<small className='text-gray-500 font-bold'>₦{adBudget}</small>
+							<small className='text-gray-500'>₦{adBudget}</small>
 						</div>
 
-						<div className='flex flex-col mt-[1rem]'>
+						<div className='flex flex-col mt-1'>
 							<label className='font-extrabold text-[12px] text-gray-700 md:text-[14px] md:font-bold'>
 								Link
 							</label>
 							{url ? (
-								<small className='text-gray-500 font-bold'>
+								<small className='text-gray-500'>
 									<a href={url} className='text-blue-600'>
 										{url.slice(0, 10)}...
 									</a>
@@ -208,10 +208,10 @@ const AdItem = ({
 
 					<div className='flex flex-col'>
 						<div>
-							<label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>
+							<label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px]'>
 								Ad Service:
 							</label>
-							<small className='text-gray-500 font-bold'>{adService}</small>
+							<small className='text-gray-500'>{adService}</small>
 						</div>
 
 						<div className=''>
@@ -220,14 +220,14 @@ const AdItem = ({
 							</label>
 							<small
 								className={cn(
-									'bg-yellow-600 text-primary px-3 py-1 rounded-full',
+									'bg-yellow-600 text-primary px-2 py-1 rounded-full',
 									getPaymentStatusBgColor(status),
 								)}>
 								{status}
 							</small>
 						</div>
 
-						<div className='w-fit flex flex-col justify-start gap-2 text-[10px] py-2 mt-[1rem] md:text-[14px]'>
+						<div className='w-fit flex flex-col justify-start gap-2 text-[6px] py-2 mt-[1rem] md:text-[8px]'>
 							<div className='flex gap-2'>
 								<div className=''>
 									<label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>
