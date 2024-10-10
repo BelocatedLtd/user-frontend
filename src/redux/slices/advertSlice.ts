@@ -23,7 +23,7 @@ const initialState: AdvertState = {
 	advert: null,
 	adverts: [],
 	allAdverts: [],
-	totalTasks: 0,
+	 totalTasks: 0,
 	isError: false,
 	isSuccess: false,
 	isLoading: false,
@@ -107,11 +107,8 @@ const advertSlice = createSlice({
 	name: 'advert',
 	initialState,
 	reducers: {
-    setTotalTasks: (state, action: PayloadAction<number>) => {
+   setTotalTasks: (state, action: PayloadAction<number>) => {
       state.totalTasks = action.payload
-    },
-    setIsError: (state, action: PayloadAction<boolean>) => {
-      state.isError = action.payload
     },
   },
 	extraReducers: (builder) => {
@@ -219,6 +216,7 @@ const advertSlice = createSlice({
 			)
 	},
 })
+export const { setTotalTasks } = advertSlice.actions;
 
 export const selectAdvert = (state: { advert: AdvertState }) =>
 	state.advert.advert
@@ -232,6 +230,5 @@ export const selectIsSuccess = (state: { advert: AdvertState }) =>
 	state.advert.isSuccess
 export const selectIsError = (state: { advert: AdvertState }) =>
 	state.advert.isError  
-export const { setTotalTasks, setIsError } = advertSlice.actions
-export const selectTotalTasks = (state: any) => state.advert.totalTask
+export const selectTotalTasks = (state: { advert: AdvertState }) => state.advert.totalTasks; // New selector
 export default advertSlice.reducer
