@@ -72,7 +72,7 @@ const CampaignStats = () => {
             </Button>
         </div>
 
-        <div className='w-full grid mt-4 gap-6 grid-cols-1 md:grid-cols-3'>
+        <div className='w-full grid mt-4 gap-6 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
             {adverts?.map((item: any) => (
                 <AdItem
                     key={item._id}
