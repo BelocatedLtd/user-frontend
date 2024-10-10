@@ -12,6 +12,7 @@ interface AdvertState {
 	advert: any | null // Replace 'any' with the actual advert type
 	adverts: any[] // Replace 'any' with the actual advert type
 	allAdverts: any[] // Replace 'any' with the actual advert type
+	totalTasks: number
 	isError: boolean
 	isSuccess: boolean
 	isLoading: boolean
@@ -22,6 +23,7 @@ const initialState: AdvertState = {
 	advert: null,
 	adverts: [],
 	allAdverts: [],
+	totalTasks: 0,
 	isError: false,
 	isSuccess: false,
 	isLoading: false,
@@ -104,7 +106,14 @@ export const handleGetALLUserAdverts = createAsyncThunk(
 const advertSlice = createSlice({
 	name: 'advert',
 	initialState,
-	reducers: {},
+	reducers: {
+    setTotalTasks: (state, action: PayloadAction<number>) => {
+      state.totalTasks = action.payload
+    },
+    setIsError: (state, action: PayloadAction<boolean>) => {
+      state.isError = action.payload
+    },
+  },
 	extraReducers: (builder) => {
 		builder
 
@@ -222,6 +231,7 @@ export const selectIsLoading = (state: { advert: AdvertState }) =>
 export const selectIsSuccess = (state: { advert: AdvertState }) =>
 	state.advert.isSuccess
 export const selectIsError = (state: { advert: AdvertState }) =>
-	state.advert.isError
-
+	state.advert.isError  
+export const { setTotalTasks, setIsError } = advertSlice.actions
+export const selectTotalTasks = (state: any) => state.advert.totalTask
 export default advertSlice.reducer
