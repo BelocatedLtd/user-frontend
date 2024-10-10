@@ -395,7 +395,11 @@ useEffect(() => {
 		const frontEndUrl = window.location.hostname
 		setRefLink(`https://${frontEndUrl}?ref=${user?.username}`)
 	}, [dispatch])
+const tasksCompleted = Number(dashboardData?.tasksCompleted?.value) || 0;
 
+
+// Perform arithmetic operation
+const remainTask = totalTasks - tasksCompleted;
 	const fetchRemainingTasks = async () => {
         if (!userId) return; // Ensure userId is defined
         setIsLoading(true); // Show loading state
@@ -505,7 +509,7 @@ useEffect(() => {
 							You have {totalTasks} tasks to complete.
 							
                        <p>Completed Tasks: {completedTasks}</p>
-                  <p>Remaining Tasks: {remainingTasks}</p>
+                  <p>Remaining Tasks: {remainTask}</p>
 
 						</p>
 					</div>
