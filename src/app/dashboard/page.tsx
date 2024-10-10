@@ -108,7 +108,6 @@ const totalTasks = useSelector(selectTotalTasks);
 		if (user.phone && user.location && user.community && user.gender)
 			router.push('/dashboard/advertise')
 	}
-
 	return (
 		// <div className='container w-full h-fit'>
 		// 	<div className='justify-between mx-auto md:mr-3'>
