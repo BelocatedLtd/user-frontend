@@ -11,7 +11,6 @@ import {
 import { formatDate } from '../../utils/formatDate'
 import { icons } from '../data/socialIcon'
 import TaskProofModal from '../ui/TaskProofModal'
-//import Loader from '../../components/loader/Loader'
 import { Modal } from '@mui/material'
 import Image from 'next/image'
 import { cn } from '../../../helpers'
@@ -52,7 +51,6 @@ const AdItem = ({
 }: AdItemProps) => {
 	const [payBtn, setPayBtn] = useState('Pay Now')
 	const [toggleTaskPerformers, settoggleTaskPerformers] = useState(false)
-	// const [taskSubmitters, setTaskSubmitters] = useState()
 	const dispatch = useDispatch()
 	const isError = useSelector(selectIsError)
 	const isSuccess = useSelector(selectIsSuccess)
@@ -61,24 +59,19 @@ const AdItem = ({
 	const [taskProof, setTaskProof] = useState()
 
 	useEffect(() => {
-		if (status == 'Pending') {
+		if (status === 'Pending') {
 			return setPayBtn('Pay Now')
 		}
-		if (status == 'Running' || status == 'Allocating') {
+		if (status === 'Running' || status === 'Allocating') {
 			return setPayBtn('Monitor Campaign')
 		}
-		if (status == 'Rejected') {
+		if (status === 'Rejected') {
 			return setPayBtn('Edit Campaign')
 		}
-	}, [status, payBtn])
+	}, [status])
 
 	const handleToggleTaskPerformers = (e: any) => {
 		e.preventDefault()
-
-		console.log('🚀 ~ handleToggleTaskPerformers ~ taskSubmitters:', {
-			taskSubmitters,
-			id,
-		})
 
 		if (taskSubmitters && taskSubmitters.length === 0) {
 			toast.error('No Task Submitted')
@@ -92,22 +85,14 @@ const AdItem = ({
 		e.preventDefault()
 
 		setTaskProof(tp)
-		// if (!tp) {
-		//     toast.error("Sorry, proof of task not available")
-		//     return
-		// }
-
 		setToggleTaskProofModal(!toggleTaskProofModal)
 	}
 
-	// Handle task for me.
 	const handleTaskApproval = async (e: any, clickedTask: any) => {
 		e.preventDefault()
 
-		console.log(clickedTask)
-
 		if (clickedTask.status === 'Approved') {
-			toast.success('Task has already being approved')
+			toast.success('Task has already been approved')
 			return
 		}
 
@@ -117,7 +102,6 @@ const AdItem = ({
 			message: 'The advertiser approved this task',
 		}
 
-		//If Advertiser Approves
 		if (!clickedTask?._id) {
 			toast.error('Task information missing')
 			return
@@ -160,20 +144,16 @@ const AdItem = ({
 			{toggleTaskProofModal && (
 				<TaskProofModal toggleTaskProof={openPopup} task={taskProof} />
 			)}
-			{/* Close icon to delete ad campaign */}
-			{status == 'pending' && (
+			{status === 'Pending' && (
 				<Image
 					src={close}
 					alt='close'
-					// size={20}
 					className=' text-tertiary w-[28px] h-[28px]'
 				/>
 			)}
 
-			{/* ad details left */}
 			<div className='w-full md:w-[92%] flex flex-3 flex-col'>
 				<div className='flex'>
-					{/* Social media icon  right */}
 					<div className='hidden w-[40px] h-[40px] md:flex md:mr-2'>
 						<Image
 							src={icons?.find((icon) => icon.platform === item.platform)?.icon}
@@ -181,7 +161,6 @@ const AdItem = ({
 							className='w-full h-full object-cover'
 						/>
 					</div>
-					{/* ad details first layer */}
 					<div className='flex flex-col mb-[1.5rem] border-b border-gray-100 pb-4'>
 						<small className='text-gray-400 font-semibold text-[9px]'>
 							{formatDate(date)}
@@ -229,7 +208,7 @@ const AdItem = ({
 
 					<div className='flex flex-col'>
 						<div>
-							<label className='font-extrabold text-[12px]  text-gray-700 mr-1 md:text-[14px] md:font-bold'>
+							<label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>
 								Ad Service:
 							</label>
 							<small className='text-gray-500 font-bold'>{adService}</small>
