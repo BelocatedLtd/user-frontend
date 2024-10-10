@@ -14,6 +14,11 @@ import { selectIsError, setTotalTasks} from '../../../redux/slices/advertSlice'
 import { selectUser } from '../../../redux/slices/authSlice'
 import Loading from '../loading'
 
+interface PlatformTasks {
+	[key: string]: { totalTasks: number }
+  }
+  
+
 const Earn = () => {
 	const router = useRouter()
 	const dispatch = useDispatch()
@@ -31,7 +36,9 @@ const Earn = () => {
 			
 try {
 				setIsLoading(true)
-				const res = await getTotalTasksByAllPlatforms()
+				
+				// Assuming the response is in the correct format
+				const res: PlatformTasks = await getTotalTasksByAllPlatforms()
 				setPlatformTasks(res)
 
 				// Calculate total tasks across all platforms
@@ -42,11 +49,10 @@ try {
 
 				// Dispatch the total tasks to Redux store
 				dispatch(setTotalTasks(totalTasksAcrossAllPlatforms))
-				
+
 				setIsLoading(false)
 			} catch (error) {
-				toast.error('Failed to retrieve tasks, please reload page')
-				router.back()
+				console.error('Failed to retrieve tasks', error)
 			}
 		}
 	
