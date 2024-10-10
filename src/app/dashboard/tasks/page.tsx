@@ -14,6 +14,8 @@ import { useDispatch } from 'react-redux'
 import TimeAgo from 'timeago-react'
 import { cn } from '../../../../helpers'
 import Loading from '../loading'
+import { setTotal, selectTotalTasks } from '@/redux/slices/taskSlice';
+
 
 const TaskList = () => {
 	const router = useRouter()
@@ -38,6 +40,7 @@ const TaskList = () => {
 			setTasks(response?.tasks)
 
 			setTotalTasks(response.totalTasks)
+		   dispatch(setTotal(Number(response.totalTasks)));
 			// setIsLoading(false)
 		} catch (error) {
 			toast.error('Failed to retrieve tasks, please reload page')
