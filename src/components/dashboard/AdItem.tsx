@@ -153,133 +153,129 @@ const AdItem = ({
 			)}
 
 			<div className='w-full md:w-[92%] lg:w-full flex flex-3 flex-col'>
-				<div className='flex'>
-					<div className='hidden w-[40px] h-[40px] md:flex md:mr-2'>
-						<Image
-							src={icons?.find((icon) => icon.platform === item.platform)?.icon}
-							alt=''
-							className='w-full h-full object-cover'
-						/>
-					</div>
-					<div className='flex flex-col mb-[1rem] border-b border-gray-100 pb-3'>
-						<small className='text-gray-400 font-semibold text-[9px]'>
-							{formatDate(date)}
-						</small>
-						<h1 className='font-bold text-sm text-gray-800'>
-							{title}
-						</h1>
-						<small className='text-[9px] text-gray-400'>
-							Pricing: ₦{adperPostAmt} per advert post
-						</small>
-					</div>
-				</div>
+  <div className='flex'>
+    <div className='hidden w-[40px] h-[40px] md:flex md:mr-2'>
+      <Image
+        src={icons?.find((icon) => icon.platform === item.platform)?.icon}
+        alt=''
+        className='w-full h-full object-cover'
+      />
+    </div>
+    <div className='flex flex-col mb-[1rem] border-b border-gray-100 pb-3'>
+      <small className='text-gray-400 font-medium text-[9px]'>
+        {formatDate(date)}
+      </small>
+      <h1 className='font-medium text-sm text-gray-800'>{title}</h1>
+      <small className='text-[9px] text-gray-400'>
+        Pricing: ₦{adperPostAmt} per advert post
+      </small>
+    </div>
+  </div>
 
-				<div className='flex flex-row gap-2 justify-between'>
-					<div className='flex flex-col'>
-						<div className='flex flex-col'>
-							<label className='font-extrabold text-[6px] text-gray-700 md:text-[8px]'>
-								Ad Unit Remaining:
-							</label>
-							<small className='text-gray-500'>{roi}</small>
-						</div>
+  <div className='flex flex-row gap-2 justify-between'>
+    <div className='flex flex-col'>
+      <div className='flex flex-col'>
+        <label className='font-semibold text-[6px] text-gray-700 md:text-[8px]'>
+          Ad Unit Remaining:
+        </label>
+        <small className='text-gray-500'>{roi}</small>
+      </div>
 
-						<div className='flex flex-col mt-[1rem]'>
-							<label className='font-extrabold text-[6px] text-gray-700 md:text-[8px] md:font-bold'>
-								Amount Paid:
-							</label>
-							<small className='text-gray-500'>₦{adBudget}</small>
-						</div>
+      <div className='flex flex-col mt-[1rem]'>
+        <label className='font-semibold text-[6px] text-gray-700 md:text-[8px]'>
+          Amount Paid:
+        </label>
+        <small className='text-gray-500'>₦{adBudget}</small>
+      </div>
 
-						<div className='flex flex-col mt-1'>
-							<label className='font-extrabold text-[12px] text-gray-700 md:text-[14px] md:font-bold'>
-								Link
-							</label>
-							{url ? (
-								<small className='text-gray-500'>
-									<a href={url} className='text-blue-600'>
-										{url.slice(0, 10)}...
-									</a>
-								</small>
-							) : (
-								'N/A'
-							)}
-						</div>
-					</div>
+      <div className='flex flex-col mt-1'>
+        <label className='font-semibold text-[12px] text-gray-700 md:text-[14px]'>
+          Link
+        </label>
+        {url ? (
+          <small className='text-gray-500'>
+            <a href={url} className='text-blue-600'>
+              {url.slice(0, 10)}...
+            </a>
+          </small>
+        ) : (
+          'N/A'
+        )}
+      </div>
+    </div>
 
-					<div className='flex flex-col'>
-						<div>
-							<label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px]'>
-								Ad Service:
-							</label>
-							<small className='text-gray-500'>{adService}</small>
-						</div>
+    <div className='flex flex-col'>
+      <div>
+        <label className='font-semibold text-[12px] text-gray-700 md:text-[14px]'>
+          Ad Service:
+        </label>
+        <small className='text-gray-500'>{adService}</small>
+      </div>
 
-						<div className=''>
-							<label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>
-								Status:
-							</label>
-							<small
-								className={cn(
-									'bg-yellow-600 text-primary px-2 py-1 rounded-full',
-									getPaymentStatusBgColor(status),
-								)}>
-								{status}
-							</small>
-						</div>
+      <div className=''>
+        <label className='font-semibold text-[12px] text-gray-700 md:text-[14px]'>
+          Status:
+        </label>
+        <small
+          className={cn(
+            'bg-yellow-600 text-primary px-2 py-1 rounded-full',
+            getPaymentStatusBgColor(status),
+          )}
+        >
+          {status}
+        </small>
+      </div>
 
-						<div className='w-fit flex flex-col justify-start gap-2 text-[6px] py-2 mt-[1rem] md:text-[8px]'>
-							<div className='flex gap-2'>
-								<div className=''>
-									<label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>
-										Tasks Submitted:
-									</label>
-									<span className='text-[12px]'>{taskSubmitters?.length}</span>
-								</div>
-								<div className=''>
-									<label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>
-										Tasks Completed:
-									</label>
-									<span className='text-[12px]'>{completedTasksCount}</span>
-								</div>
-							</div>
-							<ul className='flex items-center gap-2'>
-								<li>
-									<label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>
-										Gender:
-									</label>
-									<p className='text-[12px]'>{item?.gender}</p>
-								</li>
-								<li>
-									<label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>
-										State:
-									</label>
-									<p className='text-[12px]'>{item?.state}</p>
-								</li>
-								<li>
-									<label className='font-extrabold text-[12px] text-gray-700 mr-1 md:text-[14px] md:font-bold'>
-										LGA:
-									</label>
-									<p className='text-[12px]'>{item?.lga}</p>
-								</li>
+      <div className='flex flex-row gap-2 mt-[1rem]'>
+        <div className='flex flex-col'>
+          <label className='font-semibold text-[12px] text-gray-700 md:text-[14px]'>
+            Tasks Submitted:
+          </label>
+          <span className='text-[12px]'>{taskSubmitters?.length}</span>
+        </div>
 
-								<li>
-									{/* Social media icon  right */}
-									<div className='flex md:hidden w-[25px] h-[25px]'>
-										<Image
-											src={
-												icons?.find((icon) => icon.platform === item.platform)
-													?.icon
-											}
-											alt=''
-											className='w-full h-full'
-										/>
-									</div>
-								</li>
-							</ul>
-							{/* Task Performer Button */}
-						</div>
-					</div>
-				</div>
+        <div className='flex flex-col'>
+          <label className='font-semibold text-[12px] text-gray-700 md:text-[14px]'>
+            Tasks Completed:
+          </label>
+          <span className='text-[12px]'>{completedTasksCount}</span>
+        </div>
+      </div>
+      
+      <ul className='flex items-center gap-2 mt-2'>
+        <li>
+          <label className='font-semibold text-[12px] text-gray-700 md:text-[14px]'>
+            Gender:
+          </label>
+          <p className='text-[12px]'>{item?.gender}</p>
+        </li>
+        <li>
+          <label className='font-semibold text-[12px] text-gray-700 md:text-[14px]'>
+            State:
+          </label>
+          <p className='text-[12px]'>{item?.state}</p>
+        </li>
+        <li>
+          <label className='font-semibold text-[12px] text-gray-700 md:text-[14px]'>
+            LGA:
+          </label>
+          <p className='text-[12px]'>{item?.lga}</p>
+        </li>
+
+        <li>
+          <div className='flex md:hidden w-[25px] h-[25px]'>
+            <Image
+              src={icons?.find((icon) => icon.platform === item.platform)?.icon}
+              alt=''
+              className='w-full h-full'
+            />
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 				{/* <div className='w-full'>
 					<Button
 						onClick={handleToggleTaskPerformers}
