@@ -3,7 +3,7 @@ import banner from '@/assets/homebanner.png'
 import ActivityFeed from '@/components/ActivityFeed'
 import ReferralsTable from '@/components/dashboard/referralTable'
 import useRedirectLoggedOutUser from '@/customHook/useRedirectLoggedOutUser'
-import { selectAdverts } from '@/redux/slices/advertSlice'
+import { selectAdverts, selectTotalTasks } from '@/redux/slices/advertSlice'
 import { SET_USER, selectUser } from '@/redux/slices/authSlice'
 import { handleGetAllReferrals } from '@/redux/slices/referrals'
 import { selectUserWallet } from '@/redux/slices/walletSlice'
@@ -16,7 +16,7 @@ import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { FaCopy } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectTotalTasks } from '@/redux/slices/taskSlice';
+
 
 
 const Dashboard = () => {
