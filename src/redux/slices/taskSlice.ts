@@ -18,6 +18,7 @@ interface TaskState {
 	isSuccess: boolean
 	isLoading: boolean
 	message: string
+	total:number
 }
 
 // Define task data types
@@ -39,6 +40,7 @@ const initialState: TaskState = {
 	isSuccess: false,
 	isLoading: false,
 	message: '',
+	total:0,
 }
 
 // Create New Task
@@ -170,7 +172,9 @@ export const handleGetTaskById = createAsyncThunk<any, string>(
 const taskSlice = createSlice({
 	name: 'task',
 	initialState,
-	reducers: {},
+	reducers: {setTotal(state, action: PayloadAction<number>) {
+		state.total = action.payload; }
+	},
 	extraReducers: (builder) => {
 		builder
 			// Create New Task
@@ -187,6 +191,7 @@ const taskSlice = createSlice({
 				} else {
 					state.tasks = [action.payload]
 				}
+				state.total += 1; 
 				toast.success('Task Created Successfully')
 			})
 			.addCase(createNewTask.rejected, (state, action: PayloadAction<any>) => {
@@ -207,6 +212,8 @@ const taskSlice = createSlice({
 					state.isSuccess = true
 					state.isError = false
 					state.tasks = action.payload
+					state.total = action.payload.length; 
+					
 				},
 			)
 			.addCase(
@@ -230,6 +237,7 @@ const taskSlice = createSlice({
 					state.isSuccess = true
 					state.isError = false
 					state.tasks = action.payload
+					state.total = action.payload.length; 
 				},
 			)
 			.addCase(handleGetTasks.rejected, (state, action: PayloadAction<any>) => {
@@ -251,6 +259,7 @@ const taskSlice = createSlice({
 					state.isError = false
 					state.task = action.payload
 					state.tasks.push(action.payload)
+					state.total += 1;
 					toast.success('Task Submitted Successfully')
 				},
 			)
@@ -276,6 +285,7 @@ const taskSlice = createSlice({
 					state.isError = false
 					state.task = action.payload
 					state.tasks.push(action.payload)
+					state.total += 1;
 					toast.success('Task has been approved by admin')
 				},
 			)
@@ -301,6 +311,7 @@ const taskSlice = createSlice({
 					state.isError = false
 					state.task = action.payload
 					state.tasks.push(action.payload)
+					state.total += 1;
 					toast.success('Task has been rejected by admin')
 				},
 			)
@@ -323,6 +334,7 @@ const taskSlice = createSlice({
 					state.isSuccess = true
 					state.isError = false
 					state.task = action.payload
+					state.total = action.payload.length; 
 				},
 			)
 			.addCase(
@@ -344,5 +356,6 @@ export const selectIsLoading = (state: { task: TaskState }) =>
 export const selectIsSuccess = (state: { task: TaskState }) =>
 	state.task.isSuccess
 export const selectIsError = (state: { task: TaskState }) => state.task.isError
+export const { setTotal } = taskSlice.actions;
 
 export default taskSlice.reducer
