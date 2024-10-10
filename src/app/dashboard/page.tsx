@@ -16,6 +16,7 @@ import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { FaCopy } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
+import { selectTotalTasks } from '@/redux/slices/taskSlice';
 
 
 const Dashboard = () => {
@@ -24,7 +25,7 @@ const Dashboard = () => {
 	const dispatch = useDispatch()
 	const [profile, setProfile] = useState(null)
 	const wallet = useSelector(selectUserWallet)
-
+const totalTasks = useSelector(selectTotalTasks);
 	const adverts = useSelector(selectAdverts)
 
 	const user = useSelector(selectUser)
@@ -152,7 +153,7 @@ const Dashboard = () => {
 						</h2>
 						{/* Task completion message */}
 						<p className='mt-1 text-sm text-gray-600'>
-							You have this amount tasks to complete.
+							You have {totalTasks} tasks to complete.
 						</p>
 					</div>
 				</div>
