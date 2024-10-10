@@ -395,11 +395,7 @@ useEffect(() => {
 		const frontEndUrl = window.location.hostname
 		setRefLink(`https://${frontEndUrl}?ref=${user?.username}`)
 	}, [dispatch])
-const tasksCompleted = Number(dashboardData?.tasksCompleted?.value) || 0;
 
-
-// Perform arithmetic operation
-const remainTask = totalTasks - tasksCompleted;
 	const fetchRemainingTasks = async () => {
         if (!userId) return; // Ensure userId is defined
         setIsLoading(true); // Show loading state
@@ -409,6 +405,7 @@ const remainTask = totalTasks - tasksCompleted;
                 setTotalTasks(data.totalTasks);
                 setCompletedTasks(data.completedTasks);
                 setRemainingTasks(data.remainingTasks);
+		    
             }
         } catch (error) {
             console.error('Error fetching remaining tasks:', error);
@@ -420,7 +417,11 @@ const remainTask = totalTasks - tasksCompleted;
     useEffect(() => {
         fetchRemainingTasks();
     }, [userId]);
+const tasksCompleted = Number(dashboardData?.tasksCompleted?.value) || 0;
 
+
+// Perform arithmetic operation
+const remainTask = totalTasks - tasksCompleted;
 	if (isLoading) {
         return <div>Loading...</div>; // Loading state
     }
