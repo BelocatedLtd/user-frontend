@@ -152,7 +152,7 @@ const AdItem = ({
 				/>
 			)}
 
-			<div className='w-full md:w-[92%] flex flex-3 flex-col'>
+			<div className='w-full md:w-[92%] lg:w-full flex flex-3 flex-col'>
 				<div className='flex'>
 					<div className='hidden w-[40px] h-[40px] md:flex md:mr-2'>
 						<Image
