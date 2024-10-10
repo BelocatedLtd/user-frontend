@@ -28,22 +28,27 @@ const Earn = () => {
 
 	useEffect(() => {
 		async function getTasks() {
-			try {
+			
+try {
 				setIsLoading(true)
 				const res = await getTotalTasksByAllPlatforms()
 				setPlatformTasks(res)
-					const totalTasksAcrossAllPlatforms = Object.values(res).reduce(
+
+				// Calculate total tasks across all platforms
+				const totalTasksAcrossAllPlatforms = Object.values(res).reduce(
 					(acc, platform) => acc + platform.totalTasks,
 					0
 				)
 
 				// Dispatch the total tasks to Redux store
 				dispatch(setTotalTasks(totalTasksAcrossAllPlatforms))
+				
 				setIsLoading(false)
 			} catch (error) {
 				toast.error('Failed to retrieve tasks, please reload page')
 				router.back()
 			}
+		}
 		}
 
 		getTasks()
