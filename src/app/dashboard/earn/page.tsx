@@ -49,7 +49,7 @@ try {
 				router.back()
 			}
 		}
-		}
+	
 
 		getTasks()
 	}, [dispatch]) 
