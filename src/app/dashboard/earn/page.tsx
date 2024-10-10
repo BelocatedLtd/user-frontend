@@ -10,7 +10,8 @@ import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { socialMenu } from '../../../components/data/SocialData'
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
-import { selectIsError, setTotalTasks} from '../../../redux/slices/advertSlice'
+import { selectIsError} from '../../../redux/slices/advertSlice'
+import { setTotalTasks } from '../../../redux/slices/advertSlice'
 import { selectUser } from '../../../redux/slices/authSlice'
 import Loading from '../loading'
 
@@ -32,33 +33,29 @@ const Earn = () => {
 	useRedirectLoggedOutUser('/login')
 
 	useEffect(() => {
-		async function getTasks() {
-			
-try {
-				setIsLoading(true)
-				
-				// Assuming the response is in the correct format
-				const res: PlatformTasks = await getTotalTasksByAllPlatforms()
-				setPlatformTasks(res)
+  async function getTasks() {
+    try {
+      setIsLoading(true)
+      const res: PlatformTasks = await getTotalTasksByAllPlatforms()
+      setPlatformTasks(res)
 
-				// Calculate total tasks across all platforms
-				const totalTasksAcrossAllPlatforms = Object.values(res).reduce(
-					(acc, platform) => acc + platform.totalTasks,
-					0
-				)
+      // Calculate total tasks across all platforms
+      const totalTasksAcrossAllPlatforms = Object.values(res).reduce(
+        (acc, platform) => acc + platform.totalTasks,
+        0
+      )
 
-				// Dispatch the total tasks to Redux store
-				dispatch(setTotalTasks(totalTasksAcrossAllPlatforms))
+      // Dispatch the total tasks to Redux store
+      dispatch(setTotalTasks(totalTasksAcrossAllPlatforms))
 
-				setIsLoading(false)
-			} catch (error) {
-				console.error('Failed to retrieve tasks', error)
-			}
-		}
-	
+      setIsLoading(false)
+    } catch (error) {
+      console.error('Failed to retrieve tasks', error)
+    }
+  }
 
-		getTasks()
-	}, [dispatch]) 
+  getTasks()
+}, [dispatch])
 	return (
 		<Suspense>
 			{isLoading ? (
