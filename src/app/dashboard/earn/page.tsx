@@ -10,7 +10,7 @@ import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { socialMenu } from '../../../components/data/SocialData'
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
-import { selectIsError } from '../../../redux/slices/advertSlice'
+import { selectIsError, setTotalTasks} from '../../../redux/slices/advertSlice'
 import { selectUser } from '../../../redux/slices/authSlice'
 import Loading from '../loading'
 
