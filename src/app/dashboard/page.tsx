@@ -3,7 +3,8 @@ import banner from '@/assets/homebanner.png'
 import ActivityFeed from '@/components/ActivityFeed'
 import ReferralsTable from '@/components/dashboard/referralTable'
 import useRedirectLoggedOutUser from '@/customHook/useRedirectLoggedOutUser'
-import { selectAdverts, selectTotalTasks } from '@/redux/slices/advertSlice'
+import { selectAdverts } from '@/redux/slices/advertSlice'
+import { selectTotalTasks } from '../../redux/slices/advertSlice'
 import { SET_USER, selectUser } from '@/redux/slices/authSlice'
 import { handleGetAllReferrals } from '@/redux/slices/referrals'
 import { selectUserWallet } from '@/redux/slices/walletSlice'
@@ -25,7 +26,7 @@ const Dashboard = () => {
 	const dispatch = useDispatch()
 	const [profile, setProfile] = useState(null)
 	const wallet = useSelector(selectUserWallet)
-const totalTasks = useSelector(selectTotalTasks);
+	const totalTasks = useSelector(selectTotalTasks)
 	const adverts = useSelector(selectAdverts)
 
 	const user = useSelector(selectUser)
