@@ -16,6 +16,7 @@ import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { FaCopy } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
+import { taskPerform } from '@/components/dashboard/taskPerform'
 
 const Dashboard = () => {
 	const inputRef = useRef<HTMLInputElement>(null)
@@ -151,7 +152,7 @@ const Dashboard = () => {
 						</h2>
 						{/* Task completion message */}
 						<p className='mt-1 text-sm text-gray-600'>
-							You have 789 tasks to complete.
+							You have {taskPerform?.ad.tasks} tasks to complete.
 						</p>
 					</div>
 				</div>
