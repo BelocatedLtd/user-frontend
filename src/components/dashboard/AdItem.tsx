@@ -152,7 +152,7 @@ const AdItem = ({
 				/>
 			)}
 
-			<div className='w-full md:w-[92%] lg:w-full flex flex-3 flex-col'>
+			{/*	<div className='w-full md:w-[92%] lg:w-full flex flex-3 flex-col'>
   <div className='flex'>
     <div className='hidden w-[40px] h-[40px] md:flex md:mr-2'>
       <Image
@@ -274,7 +274,119 @@ const AdItem = ({
       </ul>
     </div>
   </div>
+</div>*/}
+
+
+
+
+
+			
+			<div className="my-orders-section w-full md:w-[92%] lg:w-full flex flex-col gap-4">
+  {orders.map((order, index) => (
+    <div key={index} className="order-card flex flex-col border rounded-lg p-4 bg-white shadow-sm">
+      {/* Order Header */}
+      <div className="order-header flex justify-between items-center mb-2">
+        <div className="flex items-center">
+          {/* Icon */}
+          <div className="icon-container w-[40px] h-[40px] mr-2">
+            <Image
+              src={icons?.find((icon) => icon.platform === item.platform)?.icon}
+              alt={`${order.platform} icon`}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          {/* Order Details */}
+          <div className="order-details">
+            <small className="text-gray-400 font-medium text-xs">{formatDate(order.date)}</small>
+            <h1 className="font-medium text-lg text-gray-800">{title}</h1>
+            <small className="text-xs text-gray-400">Pricing: ₦{adperPostAmt} per advert post</small>
+          </div>
+        </div>
+      </div>
+
+      {/* Order Body */}
+      <div className="order-body flex flex-col md:flex-row justify-between items-center gap-2">
+        {/* Left Side */}
+        <div className="flex flex-col space-y-2">
+          {adService}
+          <div>
+            <label className="font-semibold text-xs text-gray-700">Ad Unit Remaining</label>
+            <small className="text-gray-500">{roi}</small>
+          </div>
+          {/* Amount Paid */}
+          <div>
+            <label className="font-semibold text-xs text-gray-700">Amount Paid</label>
+            <small className="text-gray-500">₦{adBudget}</small>
+          </div>
+          {/* Link */}
+          <div>
+            <label className="font-semibold text-xs text-gray-700">Your Link</label> {url ? (
+            <small className="text-blue-600">
+                    <a href={url} className='text-blue-600'>
+              {url.slice(0, 10)}...
+            </a>
+          </small>
+        ) : (
+          'N/A'
+        )}
+          </div>
+        </div>
+
+        {/* Right Side */}
+        <div className="flex flex-col space-y-2">
+          {/* Status */}
+          <div>
+        <div className='flex flex-col'>
+          <label className="font-semibold text-xs text-gray-700">
+            Tasks Submitted:
+          </label>
+          <span className='text-[12px]'>{taskSubmitters?.length}</span>
+        </div>
+
+        <div className='flex flex-col'>
+          <label className="font-semibold text-xs text-gray-700">
+            Tasks Completed:
+          </label>
+          <span className='text-[12px]'>{completedTasksCount}</span>
+        </div>
+      </div>
+      
+      <ul className='flex items-center gap-2 mt-2'>
+        <li>
+          <label className="font-semibold text-xs text-gray-700">
+            Gender:
+          </label>
+          <p className='text-[12px]'>{item?.gender}</p>
+        </li>
+        <li>
+          <label className="font-semibold text-xs text-gray-700">
+            State:
+          </label>
+          <p className='text-[12px]'>{item?.state}</p>
+        </li>
+        <li>
+          <label className="font-semibold text-xs text-gray-700">
+            LGA:
+          </label>
+          <p className='text-[12px]'>{item?.lga}</p>
+        </li>
+        
+            <label className="font-semibold text-xs text-gray-700">Status</label>
+            <small className={`px-2 py-1 rounded-full ${getPaymentStatusBgColor(status)}`}>{status}</small>
+          </div>
+          {/* Button */}
+          <div>
+            <button className="btn bg-green-500 text-white rounded-md px-4 py-2">
+              View & Monitor Results
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
 </div>
+
+			
 
 				<Modal
 					className='overflow-y-auto bg-none max-h-[80vh]'
