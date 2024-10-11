@@ -42,35 +42,37 @@ const CampaignStats = () => {
 			<Loader open={isLoading} />
 
 			{/* Header Section */}
-			<div className='flex items-center justify-between gap-3 border-b border-gray-200 py-5'>
- 				<div className='flex items-center'>
- 					<div className='flex flex-col'>
- 						<p className='font-semibold text-xl text-gray-700'>
-						My Ad Campaigns
-						
- 			<Loader open={isLoading} />
-					
-						</p>
-					
-					 <small className='font-medium text-gray-500'>
-                        Click <span className='text-secondary'>here</span> to see and
-                        monitor your adverts
-                    </small>
-                </div>
-            </div>
-            <small className='hidden md:flex h-6 w-10 items-center justify-center bg-secondary rounded-full text-primary'>
-                {adverts?.length}
-            </small>
-            <Button
-                variant='solid'
-                color='danger'
-                onClick={() => router.push('/dashboard/advertise')}
-                className='flex items-center gap-1 bg-secondary text-primary rounded-full px-5 py-2 mr-5 text-[12px] md:text-[15px] hover:bg-tertiary'
-            >
-                <BsFillPlusCircleFill />
-                Campaign
-            </Button>
-        </div>
+		<div className='flex items-center justify-between gap-4 border-b border-gray-300 py-5 px-6 bg-white shadow-sm'>
+  <div className='flex items-center'>
+    <div className='flex flex-col'>
+      <p className='font-semibold text-2xl text-gray-800 flex items-center'>
+        My Ad Campaigns
+        <Loader open={isLoading} />
+      </p>
+      <small className='font-medium text-gray-500 mt-1'>
+        Click <span className='text-blue-500 cursor-pointer'>here</span> to see and monitor your adverts
+      </small>
+    </div>
+  </div>
+
+  <div className='flex items-center gap-3'>
+    {/* Adverts Count */}
+    <small className='hidden md:flex h-8 w-8 items-center justify-center bg-blue-500 text-white rounded-full text-sm'>
+      {adverts?.length}
+    </small>
+
+    {/* Campaign Button */}
+    <Button
+      variant='solid'
+      color='primary'
+      onClick={() => router.push('/dashboard/advertise')}
+      className='flex items-center gap-2 bg-blue-500 text-white text-sm px-4 py-2 rounded-md hover:bg-blue-600'>
+      <BsFillPlusCircleFill className='text-lg' />
+      Create Campaign
+    </Button>
+  </div>
+</div>
+
 
         <div className='w-full grid mt-4 gap-6 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6'>
             {adverts?.map((item: any) => (
