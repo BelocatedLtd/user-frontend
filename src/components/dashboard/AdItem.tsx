@@ -1,3 +1,4 @@
+
 import close from '@/assets/close.svg'
 import { useEffect, useState } from 'react'
 import toast, { CheckmarkIcon, LoaderIcon } from 'react-hot-toast'
@@ -136,9 +137,7 @@ const AdItem = ({
 	}
 
 	return (
-		<div
-			onClick={handleToggleTaskPerformers}
-			className='relative border cursor-pointer hovershadow flex w-full h-fit p-[1.5rem] rounded-2xl '>
+		<div onClick={handleToggleTaskPerformers} className='relative border cursor-pointer hovershadow flex w-full h-fit p-[1.5rem] rounded-2xl '>
 			<Loader open={isLoading} />
 
 			{toggleTaskProofModal && (
@@ -282,8 +281,8 @@ const AdItem = ({
 
 			
 			<div className="my-orders-section w-full md:w-[92%] lg:w-full flex flex-col gap-4">
-  {orders.map((order, index) => (
-    <div key={index} className="order-card flex flex-col border rounded-lg p-4 bg-white shadow-sm">
+  
+    <div className="order-card flex flex-col border rounded-lg p-4 bg-white shadow-sm">
       {/* Order Header */}
       <div className="order-header flex justify-between items-center mb-2">
         <div className="flex items-center">
@@ -291,13 +290,13 @@ const AdItem = ({
           <div className="icon-container w-[40px] h-[40px] mr-2">
             <Image
               src={icons?.find((icon) => icon.platform === item.platform)?.icon}
-              alt={`${order.platform} icon`}
+              alt="icon"
               className="w-full h-full object-cover"
             />
           </div>
           {/* Order Details */}
           <div className="order-details">
-            <small className="text-gray-400 font-medium text-xs">{formatDate(order.date)}</small>
+            <small className="text-gray-400 font-medium text-xs">{formatDate(date)}</small>
             <h1 className="font-medium text-lg text-gray-800">{title}</h1>
             <small className="text-xs text-gray-400">Pricing: ₦{adperPostAmt} per advert post</small>
           </div>
@@ -382,8 +381,6 @@ const AdItem = ({
           </div>
         </div>
       </div>
-				
-  ))}
 </div>
 
 			
