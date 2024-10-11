@@ -333,12 +333,12 @@ const AdItem = ({
         </div>
 
         {/* Right Side */}
-        <div className="flex flex-col space-y-2">col
+        <div className="flex flex-col space-y-2">
           {/* Status */}
           <div>
         <div className='flex flex-wrap'>
           <label className="font-semibold text-xs text-gray-600">
-            Tasks Submitted :
+            Tasks Submitted  :
           </label>
           <span className='text-[12px]'>{taskSubmitters?.length}</span>
         </div>
@@ -372,7 +372,7 @@ const AdItem = ({
         </li>
         </ul>
             <label className="font-semibold text-xs text-gray-700">Status</label>
-            <small className={`px-2 py-1 rounded-full bg-yellow-600 text-primary ${getPaymentStatusBgColor(status)}`}>{status}</small>
+            <small className={`px-2 py-1 rounded-full  ${getPaymentStatusBgColor(status)}`}>{status}</small>
           </div>
           {/* Button */}
           <div>
