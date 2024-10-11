@@ -386,57 +386,85 @@ const AdItem = ({
 
 			
 
-				<Modal
-					className='overflow-y-auto bg-none max-h-[80vh]'
+						
+
+<Modal
 					open={toggleTaskPerformers}
-					onClose={handleToggleTaskPerformers}>
-					<div className='absolute max-h-[80%] mt-[10%] overflow-y-scroll left-[5%] right-[5%] w-[90%] md:w-[60%] top-12 max-w-[80%] p-2 bg-white rounded-md shadow-lg'>
-						<div className='flex items-center justify-between pb-5'>
-							<h2 className='text-lg font-medium'>Task Performers</h2>
-							<button
-								onClick={handleToggleTaskPerformers}
-								className='cursor-pointer font-medium'>
-								Close
-							</button>
-						</div>
+					onClose={() => {
+						settoggleTaskPerformers(false)
+					}}
+					aria-labelledby='modal-modal-title'
+					aria-describedby='modal-modal-description'>
+					<div className='flex flex-col justify-center items-center h-full '>
+						<div className='relative  w-[85%] md:w-[600px] h-1/2 overflow-y-auto md:py-[2rem] rounded-2xl p-4 bg-primary'>
+							{taskSubmitters?.map((tp: any) => (
+								<div className='w-full border-gray-200 py-[1rem]' key={tp._id}>
+									<div className='task performer details mb-[1rem] flex justify-between w-full gap-1'>
+										<div>
+											<small className='text-gray-400 font-semibold'>
+												Perfomer Username: @{tp?.taskPerformerId?.username}
+											</small>
+											<h3 className='font-bold text-gray-600'>
+												Perfomer Fullname: {tp?.taskPerformerId?.fullname}
+											</h3>
+											<span className='text-gray-400 font-semibold text-[9px]'>
+												{formatDate(tp?.createdAt)}
+											</span>
+										</div>
 
-						<ul className='space-y-3'>
-							{taskSubmitters?.map((tp) => (
-								<li
-									key={tp._id}
-									className='p-4 border flex flex-col gap-3 rounded-md bg-gray-50'>
-									<div className='flex justify-between items-center'>
-										<span className='font-semibold'>{tp.user?.username}</span>
-										<button
-											className='font-medium bg-secondary text-primary p-2 rounded-lg'
-											onClick={(e) => openPopup(e, tp)}>
-											View Task Proof
-										</button>
+										<div className='flex items-center gap-2'>
+											<button
+												onClick={(e) => handleTaskApproval(e, tp)}
+												className={`
+                                ${
+																	tp?.status === 'Approved'
+																		? 'bg-green-600'
+																		: 'bg-yellow-600'
+																} 
+                                flex items-center gap-2 rounded-2xl px-3 py-2 text-primary hover:bg-orange-400`}>
+												{tp?.status === 'Approved' ? 'Approved' : 'Approve'}
+												<span>{isLoading && <LoaderIcon />}</span>
+											</button>
+										</div>
 									</div>
 
-									<div className='flex flex-col'>
-										<label className='font-semibold text-[14px] text-gray-700'>
-											Status:
-										</label>
-										<small
-											className={cn(
-												'bg-yellow-600 text-primary px-2 py-1 rounded-full',
-												getPaymentStatusBgColor(tp.status),
-											)}>
-											{tp.status}
-										</small>
+									<div className='flex flex-col gap-3 md:items-center justify-between mb-[1rem] md:flex-row'>
+										<div className='first columns flex flex-col'>
+											<label className='font-bold'>Social Media</label>
+											<a
+												href={tp?.socialPageLink}
+												className='text-blue-600 hover:text-red-600 cursor-pointer'>
+												{tp.socialPageLink.slice(0, 20)}...
+											</a>
+										</div>
+
+										<div className='third columns'>
+											<label className='font-bold'>Status</label>
+											<p className='flex items-center gap-1'>
+												<span>
+													<CheckmarkIcon />
+												</span>
+												{tp?.status}
+											</p>
+										</div>
 									</div>
 
-									<button
-										onClick={(e) => handleTaskApproval(e, tp)}
-										className='bg-green-500 text-white p-2 rounded-lg'>
-										{tp.status === 'Approved'
-											? 'Approved'
-											: 'Approve Task'}
-									</button>
-								</li>
+									<div className='second columns flex mt-4 flex-col'>
+										<label className='font-bold'>Proof</label>
+										{tp?.proofOfWorkMediaURL?.[0]?.secure_url ? (
+											<Image
+												src={tp?.proofOfWorkMediaURL?.[0]?.secure_url}
+												alt='proof'
+												width={300}
+												height={300}
+											/>
+										) : (
+											'N/A'
+										)}
+									</div>
+								</div>
 							))}
-						</ul>
+						</div>
 					</div>
 				</Modal>
 		</div>
