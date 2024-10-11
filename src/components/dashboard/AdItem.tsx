@@ -307,7 +307,7 @@ const AdItem = ({
       <div className="order-body flex flex-col md:flex-row justify-between items-center gap-2">
         {/* Left Side */}
 	<label className="font-semibold text-xs text-gray-700">Ad Service : </label>
-        <div className="flex flex-wrap space-x-4 space-y-2">
+        <div className="flex flex-wrap space-y-2">
           {adService}
           <div>
             <label className="font-semibold text-xs text-gray-700">Ad Unit Remaining : </label>
@@ -333,7 +333,7 @@ const AdItem = ({
         </div>
 
         {/* Right Side */}
-        <div className="flex flex-wrap space-x-4 space-y-2">
+        <div className="flex flex-wrap space-x-2 space-y-2">
           {/* Status */}
           <div>
         <div className='flex flex-col'>
