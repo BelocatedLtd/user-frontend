@@ -336,16 +336,16 @@ const AdItem = ({
         <div className="flex flex-wrap space-x-2 space-y-2">
           {/* Status */}
           <div>
-        <div className='flex flex-col'>
-          <label className="font-semibold text-xs text-gray-700">
+        <div className='flex flex-wrap'>
+          <label className="font-semibold text-xs text-gray-600">
             Tasks Submitted :
           </label>
           <span className='text-[12px]'>{taskSubmitters?.length}</span>
         </div>
 
-        <div className='flex flex-col'>
-          <label className="font-semibold text-xs text-gray-700">
-            Tasks Completed:
+        <div className='flex flex-wrap'>
+          <label className="font-semibold text-xs text-gray-600">
+            Tasks Completed :
           </label>
           <span className='text-[12px]'>{completedTasksCount}</span>
         </div>
