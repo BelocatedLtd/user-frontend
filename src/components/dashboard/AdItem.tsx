@@ -372,7 +372,7 @@ const AdItem = ({
         </li>
         </ul>
             <label className="font-semibold text-xs text-gray-700">Status</label>
-            <small className={`px-2 py-1 rounded-full  ${getPaymentStatusBgColor(status)}`}>{status}</small>
+            <small className={`px-2 py-1 rounded-full ${getPaymentStatusBgColor(status)}`} style={{textAlign:"center"}}>{status}</small>
           </div>
           {/* Button */}
           <div>
