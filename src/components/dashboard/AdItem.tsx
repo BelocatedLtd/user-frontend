@@ -306,20 +306,21 @@ const AdItem = ({
       {/* Order Body */}
       <div className="order-body flex flex-col md:flex-row justify-between items-center gap-2">
         {/* Left Side */}
-        <div className="flex flex-col space-y-2">
+	<label className="font-semibold text-xs text-gray-700">Ad Service : </label>
+        <div className="flex flex-wrap space-x-4 space-y-2">
           {adService}
           <div>
-            <label className="font-semibold text-xs text-gray-700">Ad Unit Remaining</label>
+            <label className="font-semibold text-xs text-gray-700">Ad Unit Remaining : </label>
             <small className="text-gray-500">{roi}</small>
           </div>
           {/* Amount Paid */}
           <div>
-            <label className="font-semibold text-xs text-gray-700">Amount Paid</label>
+            <label className="font-semibold text-xs text-gray-700">Amount Paid : </label>
             <small className="text-gray-500">₦{adBudget}</small>
           </div>
           {/* Link */}
           <div>
-            <label className="font-semibold text-xs text-gray-700">Your Link</label> {url ? (
+            <label className="font-semibold text-xs text-gray-700">Your Link : </label> {url ? (
             <small className="text-blue-600">
                     <a href={url} className='text-blue-600'>
               {url.slice(0, 10)}...
@@ -332,12 +333,12 @@ const AdItem = ({
         </div>
 
         {/* Right Side */}
-        <div className="flex flex-col space-y-2">
+        <div className="flex flex-wrap space-x-4 space-y-2">
           {/* Status */}
           <div>
         <div className='flex flex-col'>
           <label className="font-semibold text-xs text-gray-700">
-            Tasks Submitted:
+            Tasks Submitted :
           </label>
           <span className='text-[12px]'>{taskSubmitters?.length}</span>
         </div>
