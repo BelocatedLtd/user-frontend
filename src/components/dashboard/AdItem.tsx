@@ -370,7 +370,7 @@ const AdItem = ({
           </label>
           <p className='text-[12px]'>{item?.lga}</p>
         </li>
-        
+        </ul>
             <label className="font-semibold text-xs text-gray-700">Status</label>
             <small className={`px-2 py-1 rounded-full ${getPaymentStatusBgColor(status)}`}>{status}</small>
           </div>
@@ -382,7 +382,7 @@ const AdItem = ({
           </div>
         </div>
       </div>
-    </div>
+				
   ))}
 </div>
 
