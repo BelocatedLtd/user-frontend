@@ -1,5 +1,4 @@
 'use client'
-
 import { getTotalTasksByAllPlatforms } from '@/services/advertService'
 import { cn, toIntlCurrency } from '@/utils'
 import Image from 'next/image'
@@ -38,24 +37,7 @@ const Earn = () => {
       setIsLoading(true)
       const res: PlatformTasks = await getTotalTasksByAllPlatforms()
       setPlatformTasks(res)
-const updatedPlatformTasks: PlatformTasks = {}
-        Object.keys(res).forEach((platform) => {
-          const totalTasks = res[platform].totalTasks
 
-          // Count only tasks the user hasn't performed or submitted
-          const remainingTasks = tasks.filter(
-            (task) =>
-              task.platform === platform &&
-              task.taskPerformerId !== user._id &&
-              task.status !== 'Submitted'
-          ).length
-
-          updatedPlatformTasks[platform] = {
-            totalTasks: Math.min(remainingTasks, totalTasks),
-          }
-        })
-
-        setPlatformTasks(updatedPlatformTasks)
       // Calculate total tasks across all platforms
       const totalTasksAcrossAllPlatforms = Object.values(res).reduce(
         (acc, platform) => acc + platform.totalTasks,
