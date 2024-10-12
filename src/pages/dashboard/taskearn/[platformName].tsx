@@ -46,13 +46,6 @@ const TaskEarn = () => {
 	const router = useRouter()
 
 	const platformName = router.query.platformName as string
-
-useEffect(() => {
-  if (!platformName) {
-    console.error('Platform name is missing in the query');
-  }
-}, [platformName]);
-
 	console.log('🚀 ~ TaskEarn ~ platformName:', platformName)
 	const [isModalOpen, setModalOpen] = useState(false)
 
@@ -70,23 +63,16 @@ useEffect(() => {
 	const [selectedAdvertId, setSelectedAdvertId] = useState<string | null>(null)
 	const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
 
-const tasks = useSelector(selectTasks) as any[];
-	const [finalFilteredTasks, setFinalFilteredTasks] = useState<any[]>([]);
-
-
+	const tasks = useSelector(selectTasks)
+	const [finalFilteredTasks, setFinalFilteredTasks] = useState([])
 
 	const getAllTasks = async () => {
-  try {
-    await dispatch(handleGetUserTasks() as any);
-  } catch (error) {
-    console.error('Error fetching tasks:', error);
-  }
-};
+		dispatch(handleGetUserTasks() as any)
+	}
 
 	useEffect(() => {
-  getAllTasks(); // Ensure it runs only once
-}, []);
-
+		getAllTasks()
+	}, [dispatch])
 
 	useEffect(() => {
 		if (platformName === 'tiktok') {
@@ -127,14 +113,13 @@ const tasks = useSelector(selectTasks) as any[];
 		}
 
 		const fetchQualifiedAdverts = async () => {
-    try {
-      const data = await getQualifiedAdverts(platformName);
-      console.log('Fetched Adverts:', data); // Check if data is valid
-      setFinalFilteredTasks(data);
-    } catch (error) {
-      console.error('Failed to fetch qualified adverts:', error);
-    }
-  };
+			try {
+				const data = await getQualifiedAdverts(platformName)
+				setFinalFilteredTasks(data)
+			} catch (error) {
+				console.error('Failed to fetch qualified adverts:', error)
+			}
+		}
 
 		fetchQualifiedAdverts()
 	}, [platformName])
@@ -167,7 +152,6 @@ const tasks = useSelector(selectTasks) as any[];
 
 		setModalOpen(true)
 	}
-		
 
 	const handleConfirm = async () => {
 		const taskToPerform: any = finalFilteredTasks?.find(
@@ -232,16 +216,6 @@ const tasks = useSelector(selectTasks) as any[];
 	const handleCloseModal = () => {
 		setModalOpen(false)
 	}
-	const calculateRemainingTasks = (taskId: string) => {
-  const completedTasks = tasks.filter(
-    (task) => task.taskPerformerId === user.id && task.advertId === taskId
-  ).length;
-
-  const taskData = finalFilteredTasks.find((task: any) => task._id === taskId);
-
-  // Ensure taskData is defined to avoid TypeScript errors
-  return taskData ? (taskData.availableTasks ?? 0) - completedTasks : 0;
-};
 
 	return (
 		<Suspense>
@@ -277,7 +251,8 @@ const tasks = useSelector(selectTasks) as any[];
 				<div className='mt-3 md:mt-8 grid md:grid-cols-3 gap-8 '>
 					{finalFilteredTasks?.map((task: any, index) => {
 						return (
-							<div key={index}
+							<div
+								key={index}
 								onClick={() => handleSelect(task._id)}
 								className='w-full cursor-pointer hover:shadow flex flex-col md:flex-row  md:items-center px-4 py-3  justify-between md:px-8 md:py-6 border rounded-lg'>
 								<div className='w-full fle flex-col  py-2 gap-2 md:items-center md:flex-row'>
@@ -294,7 +269,7 @@ const tasks = useSelector(selectTasks) as any[];
 											</small>
 
 											<h4 className='text-gray-600 flex text-[15px] md:text-[18px] font-bold p-0  border-gray-200 pb-2'>
-												<p className='w-1/8'>{task?.adTitle || 'no task'}</p>
+												<p className='w-1/8'>{task?.adTitle}</p>
 
 												<span>{toIntlCurrency(task?.earnPerTask)}</span>
 											</h4>
@@ -329,7 +304,7 @@ const tasks = useSelector(selectTasks) as any[];
 													)}
 													<li className='font-bold'>
 														{' '}
-														{/* <span className='font-bold'>Fee:</span>{' '}  */}
+														{/* <span className='font-bold'>Fee:</span>{' '} */}
 														{task.isFree ? 'Free' : 'Paid'}
 													</li>
 													{task.socialPageLink ? (
@@ -352,9 +327,7 @@ const tasks = useSelector(selectTasks) as any[];
 																	? 'text-green-600'
 																	: 'text-red-600',
 															)}>
-															
-                  {calculateRemainingTasks(task._id)} 
-                
+															{task.availableTasks}{' '}
 														</span>
 														tasks left to perform
 													</li>
@@ -368,25 +341,30 @@ const tasks = useSelector(selectTasks) as any[];
 					})}
 				</div>
 				<ConfirmationModal
-  open={isModalOpen}
-  title="Perform task"
-  message="Are you sure you want to perform this task?"
-  onClose={handleCloseModal}
-  onConfirm={handleConfirm}
-/>
+					open={isModalOpen}
+					title='Perform task'
+					message='Are you sure you want to perform this task?'
+					onClose={handleCloseModal}
+					onConfirm={handleConfirm}
+				/>
 
-<Modal open={isOpen} onClose={() => setIsOpen(false)}>
-  <TaskSubmit
-    onClose={() => setIsOpen(false)}
-    taskId={selectedTaskId}
-  />
-</Modal>
-
+				<Modal
+					open={isOpen}
+					onClose={() => {
+						setIsOpen(false)
+					}}
+					aria-labelledby='modal-modal-title'
+					aria-describedby='modal-modal-description'>
+					<TaskSubmit
+						onClose={() => {
+							setIsOpen(false)
+						}}
+						taskId={selectedTaskId!}
+					/>
+				</Modal>
 			</div>
 		</Suspense>
 	)
 }
 
 export default TaskEarn
-
-
