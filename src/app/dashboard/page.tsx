@@ -634,7 +634,7 @@ import ReferralsTable from '@/components/dashboard/referralTable'
 import useRedirectLoggedOutUser from '@/customHook/useRedirectLoggedOutUser'
 import { selectAdverts } from '@/redux/slices/advertSlice'
 import { selectTotalTasks } from '../../redux/slices/advertSlice'
-import { SET_USER, selectUser } from '@/redux/slices/authSlice'
+import { SET_USER, selectUser, selectUserId } from '@/redux/slices/authSlice'
 import { handleGetAllReferrals } from '@/redux/slices/referrals'
 import { selectUserWallet } from '@/redux/slices/walletSlice'
 import { getDashboardData, getUser } from '@/services/authServices'
@@ -667,9 +667,10 @@ const Dashboard = () => {
 	  const [approvedTasks, setApprovedTasks] = useState<number>(0);
 	  const [remainingTasksToComplete, setRemainingTasksToComplete] = useState<number>(0);
 	  const [remainingTasksToApprove, setRemainingTasksToApprove] = useState<number>(0);
-	  const userId = useSelector(selectUser)?.userId;
+	 
 	const [isLoading, setIsLoading] = useState(false)
 	const user = useSelector(selectUser)
+	const userId = useSelector(selectUserId);
 	const [profileComplete, setProfileComplete] = useState(false)
 	const [dashboardData, setDasboardData] = useState<{
 		totalEarnings: {
@@ -739,6 +740,7 @@ useEffect(() => {
         if (!userId) return; // Ensure userId is defined
         setIsLoading(true); // Show loading state
         try {
+			
             const data = await getApprovedTasks(userId);
             if (data) {
                 setTotalTasks(data.totalTasks);
