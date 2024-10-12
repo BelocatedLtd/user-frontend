@@ -63,8 +63,9 @@ const TaskEarn = () => {
 	const [selectedAdvertId, setSelectedAdvertId] = useState<string | null>(null)
 	const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
 
-	const tasks = useSelector(selectTasks)
-	const [finalFilteredTasks, setFinalFilteredTasks] = useState([])
+const tasks = useSelector(selectTasks) as any[];
+	const [finalFilteredTasks, setFinalFilteredTasks] = useState<any[]>([]);
+
 
 	const getAllTasks = async () => {
 		dispatch(handleGetUserTasks() as any)
@@ -152,13 +153,7 @@ const TaskEarn = () => {
 
 		setModalOpen(true)
 	}
-		const calculateRemainingTasks = (taskId: string) => {
-		const completedTasks = tasks.filter(
-			(task) => task.taskPerformerId === user.id && task.advertId === taskId
-		).length
-		const taskData = finalFilteredTasks.find((task: any) => task._id === taskId)
-		return taskData ? taskData.availableTasks - completedTasks : 0
-	}
+		
 
 	const handleConfirm = async () => {
 		const taskToPerform: any = finalFilteredTasks?.find(
@@ -222,6 +217,13 @@ const TaskEarn = () => {
 
 	const handleCloseModal = () => {
 		setModalOpen(false)
+	}
+	const calculateRemainingTasks = (taskId: string) => {
+		const completedTasks = tasks.filter(
+			(task) => task.taskPerformerId === user.id && task.advertId === taskId
+		).length
+		const taskData = finalFilteredTasks.find((task: any) => task._id === taskId)
+		return taskData ? taskData.availableTasks - completedTasks : 0
 	}
 
 	return (
@@ -376,5 +378,6 @@ const TaskEarn = () => {
 	)
 }
 
-export default TaskEarnTaskEarn 
+export default TaskEarn
+
 
