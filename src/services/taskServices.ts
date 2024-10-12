@@ -218,7 +218,7 @@ export const deleteTask = async (taskId: string): Promise<any> => {
 }
 export const getCompletedTasks = async (userId: string): Promise<CompletedTasksResponse | null> => {
     try {
-        const response = await api.get(`${BACKEND_URL}/api/tasks/remaining/${userId}`);
+        const response = await api.get(`${BACKEND_URL}/api/tasks/remaining/64a6ceb04df3554e57f7980e`);
         return response.data;
     } catch (error) {
         console.error('Error fetching remaining tasks:', error);
@@ -227,7 +227,7 @@ export const getCompletedTasks = async (userId: string): Promise<CompletedTasksR
 };
 export const getApprovedTasks = async (userId: string): Promise<ApprovedTasksResponse | null> => {
     try {
-        const response = await api.get(`${BACKEND_URL}/api/tasks/approved/${userId}`);
+        const response = await api.get(`${BACKEND_URL}/api/tasks/approved/64a6ceb04df3554e57f7980e`);
         return response.data;
     } catch (error) {
         console.error('Error fetching remaining tasks:', error);
