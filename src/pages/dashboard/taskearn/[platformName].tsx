@@ -489,7 +489,13 @@ const TaskEarn: React.FC = () => {
         setSelectedAdvertId(advertId)
         setModalOpen(true)
     }
-
+ const calculateRemainingTasks = (taskId: string) => {
+    const completedTasks = tasks.filter(
+      (task) => task.taskPerformerId === user.id && task.advertId === taskId
+    ).length
+    const taskData = finalFilteredTasks.find((task: any) => task._id === taskId)
+    return taskData ? taskData.availableTasks - completedTasks : 0
+  }
     const handleConfirm = async () => {
         const taskToPerform = finalFilteredTasks.find(
             (advert) => advert._id === selectedAdvertId
@@ -577,6 +583,66 @@ const TaskEarn: React.FC = () => {
                                     </h4>
                                 </div>
                             </div>
+				<hr/>
+				<div className='w-full flex flex-col mt-3'>
+										{/* Demographics and platform and create task button */}
+										<div className='flex flex-col w-full gap-3 md:flex-row'>
+ 											<div className='flex w-full justify-between items-center gap-[2rem]'>
+												<ul className='grid  grid-cols-4 gap-3 text-[12px] font-light'>
+ 													<li>
+ 														<span className='font-bold'>State:</span>{' '}
+														{task.state}
+													</li>
+ 													<li>
+														<span className='font-bold'>LGA:</span> {task.lga}
+ 													</li>
+
+													{status && (
+														<li>
+															<span className='font-bold'>Status:</span>{' '}
+															<span
+																className={cn(
+																	'p-2 text-xs ml-2 text-white rounded-full',
+																	getStatusBgColor(status),
+																)}>
+																{status}
+															</span>
+														</li>
+													)}
+													<li className='font-bold'>
+														{' '}
+														{/* <span className='font-bold'>Fee:</span>{' '} */}
+														{task.isFree ? 'Free' : 'Paid'}
+													</li>
+													{task.socialPageLink ? (
+														<li className='flex col-span-4  w-full'>
+															<span className='font-bold'>Link:</span>{' '}
+															<a
+																href={task.socialPageLink}
+																className='text-blue-600 ml-2'>
+																{task.socialPageLink}
+															</a>
+														</li>
+													) : (
+														''
+													)}
+													<li className='bg-red- text-sm col-span-4'>
+														<span
+															className={cn(
+																'font-bold',
+																task.availableTasks > 4
+																	? 'text-green-600'
+																	: 'text-red-600',
+															)}>
+															{task.availableTasks}{' '}
+														</span>
+														tasks left to perform
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+						
                         </div>
                     ))}
                 </div>
