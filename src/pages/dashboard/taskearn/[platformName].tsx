@@ -124,28 +124,28 @@ const TaskEarn = () => {
 		fetchQualifiedAdverts()
 	}, [platformName])
 
-	// const checkTaskExistence = (advert_Id: string) => {
-	// 	const existingTask = tasks?.find(
-	// 		(task) => task.taskPerformerId === user.id && task.advertId === advert_Id,
-	// 	)
-	// 	if (existingTask) {
-	// 		return (
-	// 			<button
-	// 				onClick={() => goToTaskPage(existingTask._id)}
-	// 				className='flex justify-center gap-1 text-primary text-[12px] md:text-[15px] py-2 px-5 rounded-2xl bg-secondary'>
-	// 				View Task
-	// 			</button>
-	// 		)
-	// 	} else {
-	// 		return (
-	// 			<button
-	// 				onClick={() => handleSelect(advert_Id)}
-	// 				className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-tertiary text-[12px] md:text-[15px]'>
-	// 				Perform Task
-	// 			</button>
-	// 		)
-	// 	}
-	// }
+	const checkTaskExistence = (advert_Id: string) => {
+	 	const existingTask = tasks?.find(
+			(task) => task.taskPerformerId === user.id && task.advertId === advert_Id,
+		)
+		if (existingTask) {
+			return (
+				<button
+		onClick={() => goToTaskPage(existingTask._id)}
+				className='flex justify-center gap-1 text-primary text-[12px] md:text-[15px] py-2 px-5 rounded-2xl bg-secondary'>
+			View Task
+			</button>
+			)
+		} else {
+			return (
+				<button
+				onClick={() => handleSelect(advert_Id)}
+				className='flex justify-center gap-1 text-primary py-2 px-5 rounded-2xl bg-tertiary text-[12px] md:text-[15px]'>
+				Perform Task
+				</button>
+			)
+		}
+	 }
 
 	const handleSelect = (advert_Id: string) => {
 		setSelectedAdvertId(advert_Id)
