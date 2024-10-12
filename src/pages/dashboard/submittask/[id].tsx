@@ -77,6 +77,12 @@ const TaskSubmit = () => {
 	// Form submission logic
 	const handleOnSubmit = async (e: any) => {
 		e.preventDefault()
+
+		if{taskSubmitted === 1}{
+			toast.error('task completed') 
+return 
+
+		}
 	if(task && (task?.taskPerformerId === user._id && task.advertId === ad && task.status === 'Submitted')){
 			toast.error('You have completed this task',)
 			return
