@@ -544,6 +544,9 @@ const TaskEarn: React.FC = () => {
             setIsOpen(true)
         }
     }
+		const handleCloseModal = () => {
+		setModalOpen(false)
+	}
 
     return (
         <Suspense fallback={<Loader open={isLoading} />}>
