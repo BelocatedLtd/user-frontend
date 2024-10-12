@@ -1,4 +1,4 @@
-'use client'
+/*'use client'
 
 import appstore from '@/assets/animated icons/appstore.svg'
 import audiomack from '@/assets/animated icons/audiomack.svg'
@@ -262,7 +262,7 @@ const TaskEarn = () => {
 											alt={platformName}
 											className='w-16 h-16'
 										/>
-										{/* Ad details to perform as Task */}
+										{/* Ad details to perform as Task
 										<div className='flex flex-col gap-[0.3rem] ml-3'>
 											<small className=' text-[9px] '>
 												<TimeAgo datetime={task.createdAt} />
@@ -278,7 +278,7 @@ const TaskEarn = () => {
 									<hr />
 
 									<div className='w-full flex flex-col mt-3'>
-										{/* Demographics and platform and create task button */}
+										{/* Demographics and platform and create task button 
 										<div className='flex flex-col w-full gap-3 md:flex-row'>
 											<div className='flex w-full justify-between items-center gap-[2rem]'>
 												<ul className='grid  grid-cols-4 gap-3 text-[12px] font-light'>
@@ -304,7 +304,7 @@ const TaskEarn = () => {
 													)}
 													<li className='font-bold'>
 														{' '}
-														{/* <span className='font-bold'>Fee:</span>{' '} */}
+														{/* <span className='font-bold'>Fee:</span>{' '} 
 														{task.isFree ? 'Free' : 'Paid'}
 													</li>
 													{task.socialPageLink ? (
@@ -367,4 +367,196 @@ const TaskEarn = () => {
 	)
 }
 
+export default TaskEarnTaskEarn */
+
+
+'use client'
+
+import { Suspense, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
+import Image from 'next/image'
+import TimeAgo from 'timeago-react'
+import { toast } from 'react-hot-toast'
+import { Modal } from '@mui/material'
+
+import BackButton from '@/components/Button/BackButton'
+import ConfirmationModal from '@/components/ConfirmationModal'
+import TaskSubmit from '@/components/dashboard/submitTask'
+import Loader from '@/components/loader/Loader'
+import { selectUser } from '@/redux/slices/authSlice'
+import {
+  createNewTask,
+  handleGetUserTasks,
+  selectTasks,
+  selectIsError,
+  selectIsSuccess,
+  selectIsLoading,
+} from '@/redux/slices/taskSlice'
+import { getQualifiedAdverts } from '@/services/advertService'
+import { getSocialPlatformAsset, getStatusBgColor, toIntlCurrency } from '@/utils'
+import { cn } from '../../../../helpers'
+
+const TaskEarn = () => {
+  const router = useRouter()
+  const platformName = router.query.platformName as string
+
+  const [isModalOpen, setModalOpen] = useState(false)
+  const [selectedAdvertId, setSelectedAdvertId] = useState<string | null>(null)
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
+  const [isOpen, setIsOpen] = useState(false)
+  const [finalFilteredTasks, setFinalFilteredTasks] = useState([])
+
+  const dispatch = useDispatch()
+  const user = useSelector(selectUser)
+  const tasks = useSelector(selectTasks)
+  const isLoading = useSelector(selectIsLoading)
+  const isError = useSelector(selectIsError)
+  const isSuccess = useSelector(selectIsSuccess)
+
+  const [icon, setIcon] = useState()
+
+  const getAllTasks = async () => {
+    dispatch(handleGetUserTasks() as any)
+  }
+
+  useEffect(() => {
+    getAllTasks()
+  }, [dispatch])
+
+  useEffect(() => {
+    const fetchQualifiedAdverts = async () => {
+      try {
+        const data = await getQualifiedAdverts(platformName)
+        setFinalFilteredTasks(data)
+      } catch (error) {
+        console.error('Failed to fetch qualified adverts:', error)
+      }
+    }
+
+    fetchQualifiedAdverts()
+
+    const platformIcons: { [key: string]: any } = {
+      tiktok, facebook, twitter, instagram, linkedin, whatsapp,
+      youtube, appstore, playstore, audiomack, spotify, boomplay,
+    }
+    setIcon(platformIcons[platformName])
+  }, [platformName])
+
+  const calculateRemainingTasks = (taskId: string) => {
+    const completedTasks = tasks.filter(
+      (task) => task.taskPerformerId === user.id && task.advertId === taskId
+    ).length
+    const taskData = finalFilteredTasks.find((task: any) => task._id === taskId)
+    return taskData ? taskData.availableTasks - completedTasks : 0
+  }
+
+  const handleSelect = (advert_Id: string) => {
+    setSelectedAdvertId(advert_Id)
+    setModalOpen(true)
+  }
+
+  const handleConfirm = async () => {
+    const taskToPerform = finalFilteredTasks.find(
+      (advert: any) => advert._id === selectedAdvertId
+    )
+
+    if (!taskToPerform) {
+      toast.error('Sorry, cannot find advert, so task cannot be created')
+      return
+    }
+
+    const randomIndex = Math.floor(Math.random() * taskToPerform.caption.length)
+    const pickedCaption = taskToPerform.caption[randomIndex]
+
+    const taskData = {
+      advertId: taskToPerform._id,
+      advertiserId: taskToPerform.userId,
+      taskPerformerId: user?.id,
+      title: getSocialPlatformAsset(
+        taskToPerform.platform, taskToPerform.service
+      ).SC,
+      platform: taskToPerform.platform,
+      service: taskToPerform.service,
+      desiredROI: taskToPerform.desiredROI,
+      toEarn: taskToPerform.earnPerTask,
+      gender: taskToPerform.gender,
+      state: taskToPerform.state,
+      lga: taskToPerform.lga,
+      caption: pickedCaption,
+      taskVerification: getSocialPlatformAsset(
+        taskToPerform.platform, taskToPerform.service
+      ).verification,
+      socialPageLink: taskToPerform.socialPageLink,
+      adMedia: taskToPerform.mediaURL,
+    }
+
+    const response = await dispatch(createNewTask(taskData) as any)
+
+    if (isError) {
+      toast.error('Error Creating a Task from this advert')
+      return
+    }
+
+    if (isSuccess) {
+      setSelectedTaskId(response.payload._id)
+      setModalOpen(false)
+      toast.success('Successfully created a Task from this advert')
+      setIsOpen(true)
+    }
+  }
+
+  const handleCloseModal = () => {
+    setModalOpen(false)
+  }
+
+  return (
+    <Suspense>
+      <div className='w-full'>
+        <Loader open={isLoading} />
+        <BackButton />
+        <h4>Perform Social Tasks on {platformName} and Earn Money</h4>
+
+        <div className='grid md:grid-cols-3 gap-8 mt-3'>
+          {finalFilteredTasks.map((task: any) => (
+            <div
+              key={task._id}
+              onClick={() => handleSelect(task._id)}
+              className='border rounded-lg p-4 cursor-pointer hover:shadow'>
+              <Image src={icon!} alt={platformName} className='w-16 h-16' />
+              <div>
+                <TimeAgo datetime={task.createdAt} />
+                <h4>{task.adTitle} - {toIntlCurrency(task.earnPerTask)}</h4>
+                <p>
+                  {calculateRemainingTasks(task._id)} tasks left to perform
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <ConfirmationModal
+          open={isModalOpen}
+          title='Perform task'
+          message='Are you sure you want to perform this task?'
+          onClose={handleCloseModal}
+          onConfirm={handleConfirm}
+        />
+
+        <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+          <TaskSubmit onClose={() => setIsOpen(false)} taskId={selectedTaskId!} />
+        </Modal>
+      </div>
+    </Suspense>
+  )
+}
+
 export default TaskEarn
+
+
+
+
+
+
+
+
