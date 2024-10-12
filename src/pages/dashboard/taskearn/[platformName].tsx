@@ -152,6 +152,13 @@ const TaskEarn = () => {
 
 		setModalOpen(true)
 	}
+		const calculateRemainingTasks = (taskId: string) => {
+		const completedTasks = tasks.filter(
+			(task) => task.taskPerformerId === user.id && task.advertId === taskId
+		).length
+		const taskData = finalFilteredTasks.find((task: any) => task._id === taskId)
+		return taskData ? taskData.availableTasks - completedTasks : 0
+	}
 
 	const handleConfirm = async () => {
 		const taskToPerform: any = finalFilteredTasks?.find(
@@ -327,7 +334,9 @@ const TaskEarn = () => {
 																	? 'text-green-600'
 																	: 'text-red-600',
 															)}>
-															{task.availableTasks}{' '}
+															
+                  {calculateRemainingTasks(task._id)} 
+                
 														</span>
 														tasks left to perform
 													</li>
