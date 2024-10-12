@@ -78,15 +78,6 @@ const TaskSubmit = () => {
 	const handleOnSubmit = async (e: any) => {
 		e.preventDefault()
 
-		if{taskSubmitted === 1}{
-			toast.error('task completed') 
-return 
-
-		}
-	if(task && (task?.taskPerformerId === user._id && task.advertId === ad && task.status === 'Submitted')){
-			toast.error('You have completed this task',)
-			return
-		}
 		if (ad && (ad.desiredROI === 0 || ad.status === 'Completed')) {
 			toast.error(
 				'This task cannot be submitted because the advert is already completed.',
