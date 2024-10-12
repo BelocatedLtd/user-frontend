@@ -124,7 +124,7 @@ const TaskEarn = () => {
 		fetchQualifiedAdverts()
 	}, [platformName])
 
-	const checkTaskExistence = (advert_Id: string) => {
+/*	const checkTaskExistence = (advert_Id: string) => {
 	 	const existingTask = tasks?.find(
 			(task) => task.taskPerformerId === user.id && task.advertId === advert_Id,
 		)
@@ -146,7 +146,7 @@ const TaskEarn = () => {
 			)
 		}
 	 }
-
+*/
 	const handleSelect = (advert_Id: string) => {
 		setSelectedAdvertId(advert_Id)
 
