@@ -713,6 +713,43 @@ useEffect(() => {
 
     fetchTotalTasks()
   }, [])
+
+	const fetchApprovedTasks = async () => {
+		 console.log("Fetching approved tasks for user:", userId);
+		toast("Fetching approved tasks for user:", userId);// Debugging log
+    if (!userId) return;
+       // Ensure userId is defined
+        setIsLoading(true); // Show loading state
+        try {
+			
+            const data = await getApprovedTasks(userId);
+            if (data) {
+                setTotalTasks(data.totalTasks);
+                setApprovedTasks(data.approvedTasks);
+                setRemainingTasksToApprove(data.remainingTaskstoApprove);
+            }
+        } catch (error) {
+            console.error('Error fetching remaining tasks:', error);
+        } finally {
+            setIsLoading(false); // Hide loading state
+        }
+    };
+	const fetchCompletedTasks = async () => {
+        if (!userId) return; // Ensure userId is defined
+        setIsLoading(true); // Show loading state
+        try {
+            const data = await getCompletedTasks(userId);
+            if (data) {
+                setTotalTasks(data.totalTasks);
+                setCompletedTasks(data.completedTasks);
+                setRemainingTasksToComplete(data.remainingTaskToComplete);
+            }
+        } catch (error) {
+            console.error('Error fetching remaining tasks:', error);
+        } finally {
+            setIsLoading(false); // Hide loading state
+        }
+    };
 	useEffect(() => {
 		async function getUserData() {
 			const data = await getUser()
@@ -736,45 +773,13 @@ useEffect(() => {
 		setRefLink(`https://${frontEndUrl}?ref=${user?.username}`)
 	}, [dispatch])
 
-	const fetchApprovedTasks = async () => {
-        if (!userId) return; // Ensure userId is defined
-        setIsLoading(true); // Show loading state
-        try {
-			
-            const data = await getApprovedTasks(userId);
-            if (data) {
-                setTotalTasks(data.totalTasks);
-                setApprovedTasks(data.approvedTasks);
-                setRemainingTasksToApprove(data.remainingTaskstoApprove);
-            }
-        } catch (error) {
-            console.error('Error fetching remaining tasks:', error);
-        } finally {
-            setIsLoading(false); // Hide loading state
-        }
-    };
+	
 	
 	
     useEffect(() => {
         fetchApprovedTasks();
     }, [userId]);
 	
-	const fetchCompletedTasks = async () => {
-        if (!userId) return; // Ensure userId is defined
-        setIsLoading(true); // Show loading state
-        try {
-            const data = await getCompletedTasks(userId);
-            if (data) {
-                setTotalTasks(data.totalTasks);
-                setCompletedTasks(data.completedTasks);
-                setRemainingTasksToComplete(data.remainingTaskToComplete);
-            }
-        } catch (error) {
-            console.error('Error fetching remaining tasks:', error);
-        } finally {
-            setIsLoading(false); // Hide loading state
-        }
-    };
 	
 	
     useEffect(() => {
