@@ -109,7 +109,6 @@
 //         return null;  // or throw an error if you want to handle it further up the chain
 //     }
 // };
-
 import api from '@/helpers/Api'
 import { toast } from 'react-hot-toast'
 import { BACKEND_URL } from '../utils/globalConfig'
@@ -219,7 +218,7 @@ export const deleteTask = async (taskId: string): Promise<any> => {
 }
 export const getCompletedTasks = async (userId: string): Promise<CompletedTasksResponse | null> => {
     try {
-        const response = await api.get(`${BACKEND_URL}/api/tasks/${userId}/remaining`);
+        const response = await api.get(`${BACKEND_URL}/api/tasks/remaining/${userId}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching remaining tasks:', error);
@@ -228,7 +227,7 @@ export const getCompletedTasks = async (userId: string): Promise<CompletedTasksR
 };
 export const getApprovedTasks = async (userId: string): Promise<ApprovedTasksResponse | null> => {
     try {
-        const response = await api.get(`${BACKEND_URL}/api/tasks/${userId}/approved`);
+        const response = await api.get(`${BACKEND_URL}/api/tasks/approved/${userId}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching remaining tasks:', error);
