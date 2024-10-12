@@ -87,6 +87,7 @@ useEffect(() => {
 
 	const fetchApprovedTasks = async () => {
 		 console.log("Fetching approved tasks for user:", userId);
+		toast.errror("Fetching approved tasks for user:", userId);
 		toast("Fetching approved tasks for user:", userId);// Debugging log
     if (!userId) return;
        // Ensure userId is defined
