@@ -106,6 +106,23 @@ export const getQualifiedAdverts = async (platformName: string) => {
 	}
 }
 
+export const submitTask = async () => {
+	const headers = getAuthHeaders()
+	try {
+		const response = await axios.get(
+			`${BACKEND_URL}/api/adverts/submitTask`,
+			headers,
+		)
+		return response.data
+	} catch (error: any) {
+		const message =
+			(error.response && error.response.data && error.response.data.message) ||
+			error.message ||
+			error.toString()
+		toast.error(message)
+	}
+}
+
 export const getTotalTasksByAllPlatforms = async () => {
 	const headers = getAuthHeaders()
 
