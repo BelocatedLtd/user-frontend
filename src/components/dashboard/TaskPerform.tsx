@@ -20,6 +20,8 @@ import { useDispatch } from 'react-redux'
 import { cn } from '../../../helpers'
 import loaderImg from '../../assets/loader.gif'
 import Button from '../Button'
+import { submitTask } from '@/services/advertService'
+
 
 interface TaskPerformProps {
 	task: any
@@ -478,6 +480,7 @@ const TaskPerform = ({
 								className='mt-4 w-1/2 mx-auto'
 								variant='solid'
 								color='secondary'
+								onClick={submitTask}
 								disabled={
 									selectedImages.length < 1
 									// || (!hideUsernameDisplayField && !userSocialName)
