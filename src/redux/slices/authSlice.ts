@@ -9,6 +9,7 @@ const initialState = {
 	isLoggedIn: false,
 	user: null as any,
 	username: '',
+	userId:'',
 	isLoading: false,
 	isSuccess: false,
 	isError: false,
@@ -68,6 +69,9 @@ const authSlice = createSlice({
 		},
 		SET_USERNAME(state, action: PayloadAction<string>) {
 			state.username = action.payload
+		},
+		SET_USERID(state, action: PayloadAction<string>) {
+			state.userId = action.payload
 		},
 		SET_USER_WALLET(state, action: PayloadAction<string>) {
 			state.user.walletId = action.payload
@@ -138,6 +142,7 @@ export const {
 	SET_USER,
 	SET_LOGOUT,
 	SET_USERNAME,
+	SET_USERID,
 } = authSlice.actions
 
 export const selectIsLoggedIn = (state: any) => state?.auth?.isLoggedIn
