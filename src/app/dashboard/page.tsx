@@ -41,7 +41,7 @@ const Dashboard = () => {
 	 
 	const [isLoading, setIsLoading] = useState(false)
 	const user = useSelector(selectUser)
-	const userId = useSelector(selectUserId);
+	const userId = user?.id
 	const [profileComplete, setProfileComplete] = useState(false)
 	const [dashboardData, setDasboardData] = useState<{
 		totalEarnings: {
