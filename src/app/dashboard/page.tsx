@@ -85,6 +85,31 @@ useEffect(() => {
     fetchTotalTasks()
   }, [])
 
+	
+	useEffect(() => {
+		async function getUserData() {
+			const data = await getUser()
+			const dashboard = await getDashboardData()
+			setDasboardData(dashboard)
+console.log("useEffect triggered, userId:", user?.id); 
+			// if (!data || data === undefined) {
+			// 	// toast.error('Unable to retrieve user data, session will be terminated')
+			// 	await dispatch(SET_LOGOUT())
+			// 	router.push('/')
+			// 	return
+			// }
+
+			dispatch(SET_USER(data))
+
+			dispatch(handleGetAllReferrals() as any)
+		}
+		getUserData()
+
+		const frontEndUrl = window.location.hostname
+		setRefLink(`https://${frontEndUrl}?ref=${user?.username}`)
+	}, [dispatch])
+
+	
 	const fetchApprovedTasks = async () => {
 		 console.log("Fetching approved tasks for user:", userId);
 		
@@ -122,31 +147,6 @@ useEffect(() => {
             setIsLoading(false); // Hide loading state
         }
     };
-	useEffect(() => {
-		async function getUserData() {
-			const data = await getUser()
-			const dashboard = await getDashboardData()
-			setDasboardData(dashboard)
-console.log("useEffect triggered, userId:", userId); 
-			// if (!data || data === undefined) {
-			// 	// toast.error('Unable to retrieve user data, session will be terminated')
-			// 	await dispatch(SET_LOGOUT())
-			// 	router.push('/')
-			// 	return
-			// }
-
-			dispatch(SET_USER(data))
-
-			dispatch(handleGetAllReferrals() as any)
-		}
-		getUserData()
-
-		const frontEndUrl = window.location.hostname
-		setRefLink(`https://${frontEndUrl}?ref=${user?.username}`)
-	}, [dispatch])
-
-	
-	
 	
     useEffect(() => {
         fetchApprovedTasks();
