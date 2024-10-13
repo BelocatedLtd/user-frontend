@@ -278,10 +278,10 @@ const remainTask = totalTasks - tasksCompleted;
     <p>
       <strong> {approvedTasks} </strong> Approved of <strong> {completedTasks} </strong> Completed Tasks
     </p>
-    <p className="text-gray-700">
+    <p className="text-gray-700 mt-2">
       Remaining Tasks to Perform: <strong> {remainingTasksToComplete} </strong>
     </p>
-    <p className="text-gray-700">
+    <p className="text-gray-700 mt-2 mb-2">
       <strong> {remainingTasksToApprove} </strong> Tasks waiting Approval
     </p>
   </div>
