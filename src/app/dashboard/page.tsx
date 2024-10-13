@@ -263,22 +263,28 @@ const remainTask = totalTasks - tasksCompleted;
 		<div className='container w-full h-fit'>
 			<div className='justify-between mx-auto md:mr-3'>
 				<div className='md:flex mb-10 px-3 items-center justify-between'>
-					<div>
-						{/* Welcome message */}
-						<h2 className='mt-1 font-medium text-lg'>
-							Welcome, {user?.fullname ? user?.fullname : user?.username}
-						</h2>
-						{/* Task completion message */}
-						<p className='mt-1 text-sm text-gray-600'>
-							You have {totalTasks} available tasks to complete.
-							
-                       <p>Completed Tasks: {completedTasks}</p>
-                       <p>Approved Tasks: {approvedTasks}</p>
-                  <p>Remaining Tasks to Complete: {remainingTasksToComplete}</p>
-                  <p>Remaining Tasks to Approve: {remainingTasksToApprove}</p>
+					<div className="p-4 bg-white rounded-lg shadow-md">
+  {/* Welcome message */}
+  <h2 className="mt-1 font-medium text-lg text-gray-800">
+    Welcome, {user?.fullname ? user?.fullname : user?.username}!
+  </h2>
 
-						</p>
-					</div>
+  {/* Task completion message */}
+  <p className="mt-2 text-sm text-gray-600">
+    You have <strong> {totalTasks} </strong> available tasks to complete.
+  </p>
+  
+  <div className="mt-2 bg-gray-100 p-3 rounded-md">
+    <p>
+      <strong> {approvedTasks} </strong> Approved of <strong> {completedTasks} </strong> Completed Tasks
+    </p>
+    <p className="text-gray-700">
+      Remaining Tasks to Perform: <strong> {remainingTasksToComplete} </strong>
+    </p>
+    <p className="text-gray-700">
+      <strong> {remainingTasksToApprove} </strong> Tasks waiting Approval
+    </p>
+  </div>
 				</div>
 
 				{/* Buttons Section */}
