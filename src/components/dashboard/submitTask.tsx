@@ -87,6 +87,7 @@ const TaskSubmit = ({
 		e.preventDefault()
 const advertId = ad.id;
 		const performerId = user?.id;
+		console.log(advertId,performerId);
 		if (ad && (ad.desiredROI === 0 || ad.status === 'Completed')) {
 			toast.error(
 				'This task cannot be submitted because the advert is already completed.',
