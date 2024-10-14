@@ -146,7 +146,9 @@ interface RemainingPlatformTasksResponse{
 	platform:String;
 	remainingTasks:number;
 }
-
+export interface CheckExistingTasksResponse {
+  exists: boolean; // Adjust this according to your API response structure
+}
 // Create Task
 export const createTask = async (taskData: TaskData): Promise<any> => {
 	const response = await api.post(`${BACKEND_URL}/api/tasks/create`, taskData)
@@ -249,3 +251,11 @@ export const getRemainingTasksByPlatform = async (userId: string): Promise<Remai
         return null;  // or throw an error if you want to handle it further up the chain
     }
 };
+export const checkExistingTask = async (advertId: string, performerId: string): Promise<CheckExistingTasksResponse | null> => {
+	try {
+	  const response = await api.get(`${BACKEND_URL}/api/tasks/check/${advertId}/${performerId}`);
+	   return response.data; // Assuming your API returns { exists: true/false }
+	} catch (error) {
+	  throw new Error('Error checking existing task');
+	}
+  };
