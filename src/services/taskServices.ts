@@ -144,7 +144,7 @@ interface ApprovedTasksResponse {
 }
 interface RemainingPlatformTasksResponse{
 	platform:String;
-	remainingTasks:Number;
+	remainingTasks:number;
 }
 
 // Create Task
