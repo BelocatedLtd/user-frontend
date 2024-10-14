@@ -1,6 +1,6 @@
+
 'use client'
 import { getTotalTasksByAllPlatforms } from '@/services/advertService'
-import {getRemainingTasksByPlatform } from '@/services/taskServices'
 import { cn, toIntlCurrency } from '@/utils'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -10,86 +10,52 @@ import { MdOutlineKeyboardArrowLeft } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { socialMenu } from '../../../components/data/SocialData'
 import useRedirectLoggedOutUser from '../../../customHook/useRedirectLoggedOutUser'
-import { selectIsError, setTotalTasks} from '../../../redux/slices/advertSlice'
+import { selectIsError} from '../../../redux/slices/advertSlice'
+import { setTotalTasks } from '../../../redux/slices/advertSlice'
 import { selectUser } from '../../../redux/slices/authSlice'
 import Loading from '../loading'
 
 interface PlatformTasks {
 	[key: string]: { totalTasks: number }
   }
+  
 
 const Earn = () => {
 	const router = useRouter()
 	const dispatch = useDispatch()
 	const isError: boolean = useSelector(selectIsError)
 	const user = useSelector(selectUser)
-	const userId = user?.id
-
 	const [platformTasks, setPlatformTasks] = useState<{
 		[key: string]: { totalTasks: number }
 	}>({})
-	const [data, setData] = useState<{ platform:String;
-		remainingTasks: number; }>({
-		platform:'',
-	remainingTasks:0
-	  });
-	
 	const [isLoading, setIsLoading] = useState(false)
-
 
 	useRedirectLoggedOutUser('/login')
 
 	useEffect(() => {
-		async function getTasks() {
+  async function getTasks() {
+    try {
+      setIsLoading(true)
+      const res: PlatformTasks = await getTotalTasksByAllPlatforms()
+      setPlatformTasks(res)
 
-			try {
-				setIsLoading(true)
+      // Calculate total tasks across all platforms
+      const totalTasksAcrossAllPlatforms = Object.values(res).reduce(
+        (acc, platform) => acc + platform.totalTasks,
+        0
+      )
 
-				// Assuming the response is in the correct format
-				const res: PlatformTasks = await getTotalTasksByAllPlatforms()
-				setPlatformTasks(res)
+      // Dispatch the total tasks to Redux store
+      dispatch(setTotalTasks(totalTasksAcrossAllPlatforms))
 
-				// Calculate total tasks across all platforms
+      setIsLoading(false)
+    } catch (error) {
+      console.error('Failed to retrieve tasks', error)
+    }
+  }
 
-
-				const totalTasksAcrossAllPlatforms = Object.values(res).reduce(
-					(acc, platform) => acc + platform.totalTasks,
-					0
-				)
-
-				// Dispatch the total tasks to Redux store
-				dispatch(setTotalTasks(totalTasksAcrossAllPlatforms))
-
-				setIsLoading(false)
-			} catch (error) {
-				console.error('Failed to retrieve tasks', error)
-			}
-		}
-
-
-		getTasks()
-	}, [dispatch]) 
-
-	useEffect(() => {
-		const fetchRemainingTasks = async () => {
-		  try {
-			const response = await getRemainingTasksByPlatform(userId);
-			if (response) {
-			  setData(response);
-			} else {
-			  toast.error('No remaining tasks found.');
-			}
-		  } catch (err) {
-			toast.error('Error fetching remaining tasks.');
-			console.error(err);
-		  } finally {
-			setIsLoading(false);
-		  }
-		};
-	
-		fetchRemainingTasks();
-	  }, [userId]);
-	
+  getTasks()
+}, [dispatch])
 	return (
 		<Suspense>
 			{isLoading ? (
@@ -151,7 +117,7 @@ const Earn = () => {
 															: 'bg-secondary'
 													} text-primary rounded-2xl`}>
 													<span className={cn('mr-1')}>
-														{data.remainingTasks}
+														{platformTasks[menu.value]?.totalTasks || 0}
 													</span>
 													Tasks Available
 												</small>
