@@ -4,6 +4,8 @@ import TaskPerform from '@/components/dashboard/TaskPerform'
 import { icons } from '@/components/data/socialIcon'
 import Loader from '@/components/loader/Loader'
 import { selectAllAdverts } from '@/redux/slices/advertSlice'
+import { selectAdvert } from '@/redux/slices/advertSlice'
+import { selectAdverts } from '@/redux/slices/advertSlice'
 import { selectUser } from '@/redux/slices/authSlice'
 import { handleGetTaskById } from '@/redux/slices/taskSlice'
 import { submitTask } from '@/services/taskServices' // Import the fetchTaskById function
@@ -24,6 +26,7 @@ const TaskSubmit = ({
 }) => {
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
+	const advert = useSelector(selectAdvert)
 
 	const [isLoading, setIsLoading] = useState(false)
 	const [task, setTask] = useState<any>(null)
@@ -82,13 +85,23 @@ const TaskSubmit = ({
 	// Handle form submission
 	const handleOnSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
-
+const advertId = ad?.id;
+		const performerId = user?.id;
 		if (ad && (ad.desiredROI === 0 || ad.status === 'Completed')) {
 			toast.error(
 				'This task cannot be submitted because the advert is already completed.',
 			)
 			return
 		}
+			const existingTask = await task.findOne({
+			advertId: advertId,
+			taskPerformerId: performerId,
+		  });
+		
+		  if (existingTask) {
+			toast.error('This task cannot be submitted because it has already been created for this advert.');
+			return;
+		  }
 
 		if (!imageArray.length) {
 			toast.error('Please upload a screenshot to prove you performed the task.')
