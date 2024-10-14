@@ -234,3 +234,14 @@ export const getApprovedTasks = async (userId: string): Promise<ApprovedTasksRes
         return null;  // or throw an error if you want to handle it further up the chain
     }
 };
+
+export const getRemainingTasksByPlatform = async (userId: string): Promise<ApprovedTasksResponse | null> => {
+    try {
+		
+        const response = await api.get(`${BACKEND_URL}/api/tasks/remaining-tasks/${userId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching remaining tasks:', error);
+        return null;  // or throw an error if you want to handle it further up the chain
+    }
+};
