@@ -142,6 +142,10 @@ interface ApprovedTasksResponse {
 	approvedTasks:number;
 	remainingTaskstoApprove:number;
 }
+interface RemainingPlatformTasksResponse{
+	platform:String;
+	remainingTasks:Number;
+}
 
 // Create Task
 export const createTask = async (taskData: TaskData): Promise<any> => {
@@ -235,7 +239,7 @@ export const getApprovedTasks = async (userId: string): Promise<ApprovedTasksRes
     }
 };
 
-export const getRemainingTasksByPlatform = async (userId: string): Promise<ApprovedTasksResponse | null> => {
+export const getRemainingTasksByPlatform = async (userId: string): Promise<RemainingPlatformTasksResponse | null> => {
     try {
 		
         const response = await api.get(`${BACKEND_URL}/api/tasks/remaining-tasks/${userId}`);
