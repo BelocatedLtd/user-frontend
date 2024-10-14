@@ -350,7 +350,7 @@ const remainTask = totalTasks - tasksCompleted;
 						<p>Tasks Completed</p>
 						<div>
 							<strong className='text-xl md:text-3xl'>
-								{dashboardData?.tasksCompleted.value ?? 0}
+								{completedTasks}
 							</strong>
 						</div>
 					</div>
