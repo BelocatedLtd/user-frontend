@@ -150,60 +150,67 @@ const AdItem = ({
           className=' text-tertiary w-[28px] h-[28px]'
         />
       )}
-
-      <div className="bg-white p-4 rounded-lg shadow-md mb-4">
-        {/* Platform and Time */}
-        <div className="flex items-center justify-between text-gray-600 text-sm">
-          <div className="flex items-center gap-2">
-            <img
-              src={icons?.find((icon) => icon.platform === item.platform)?.icon}
-              alt={item.platform}
-              className="w-6 h-6"
-            />
-            <span>{formatDate(date)}</span>
-          </div>
+ <div className="bg-white p-4 rounded-lg shadow-md mb-4">
+      {/* Platform and Time */}
+      <div className="flex items-center justify-between text-gray-600 text-sm">
+        <div className="flex items-center gap-2">
+          <Image
+           src={icons?.find((icon) => icon.platform === item.platform)?.icon}
+            alt={item.platform}
+            className="w-6 h-6"
+          />
+          <span>{formatDate(date)}</span>
         </div>
+      </div>
 
-        {/* Order Title */}
-        <h3 className="text-lg font-semibold text-black mt-2">
-          {title}
-        </h3>
+      {/* Order Title */}
+      <h3 className="text-lg font-semibold text-black mt-2">
+      {title}
+      </h3>
 
-        {/* Pricing and Followers */}
-        <div className="mt-2 text-gray-700 text-sm">
-          <p>Pricing: ₦{adperPostAmt}  per advert post</p>
+      {/* Pricing and Followers */}
+      <div className="mt-2 text-gray-700 text-sm">
+      <p>Pricing: ₦{adperPostAmt} per advert post</p>
+    <p>Task Completed: {completedTasksCount}</p>
+    <p>Ad Unit: {roi}</p>
+       
+      </div>
 
+      {/* Link */}
+      <div className="mt-2">
+        <span>Link - </span>
+        <a
+          href={url} 
+          className="text-blue-500 underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+         {url.slice(0, 10)}...
+        </a>
+      </div>
+
+      <div className="mt-4 grid grid-cols-2 gap-4 text-sm text-gray-700">
+    <div>
+      <span className="font-semibold">Gender:</span> {item?.gender}
+    </div>
+    <div>
+      <span className="font-semibold">LGA:</span> {item?.lga}
+    </div>
+    <div>
+      <span className="font-semibold">State:</span> {item?.state}
+    </div>
+  </div>
+      {/* Amount Paid and Status */}
+      <div className="mt-4 flex justify-between items-center">
+        <div className="text-lg text-black font-medium">
+          Amount Paid:₦{adBudget}
         </div>
-
-        {/* Link */}
-        <div className="mt-2">
-          <span>Your Link - </span>
-          <a
-            href={url}
-            className="text-blue-500 underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {url.slice(0, 10)}...
-          </a>
-        </div>
-
-        {/* Amount Paid and Status */}
-        <div className="mt-4 flex justify-between items-center">
-          <div className="text-lg text-black font-medium">
-            Amount Paid:₦{adBudget}
-          </div>
-          <div className="flex items-center">
-            <span className={`text-green-500 px-2 py-1 border border-green-500 rounded ${getPaymentStatusBgColor(status)}`}>{status}
-            </span>
-          </div>
-        </div>
-
-        {/* View Button */}
-        <div className="mt-4">
-          <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full">
-            View & Monitor Results
-          </button>
+        <div className="flex items-center">
+           <span
+        className={`text-green-500 px-2 py-1 border border-green-500 rounded ${getPaymentStatusBgColor(status)}`}
+      >
+        {status}
+      </span>
         </div>
       </div>
 
