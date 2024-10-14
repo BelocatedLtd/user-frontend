@@ -87,7 +87,7 @@ const TaskSubmit = ({
 	const handleOnSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 const performerId = user?.id
-const advertId = ad.id
+const advertId = ad?.id
 		console.log(advertId,performerId);
 		if (ad && (ad.desiredROI === 0 || ad.status === 'Completed')) {
 			toast.error(
