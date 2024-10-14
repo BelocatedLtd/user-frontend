@@ -74,7 +74,7 @@ useEffect(() => {
         const total = Object.values(res).reduce((acc, platform) => acc + platform.totalTasks, 0)
 
         // Set the total tasks in state
-        setTotalTasks(total)
+        
         setIsLoading(false)
       } catch (error) {
         console.error('Failed to retrieve tasks', error)
