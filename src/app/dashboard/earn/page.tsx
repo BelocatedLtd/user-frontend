@@ -1,5 +1,4 @@
 'use client'
-
 import { getTotalTasksByAllPlatforms } from '@/services/advertService'
 import {getRemainingTasksByPlatform } from '@/services/taskServices'
 import { cn, toIntlCurrency } from '@/utils'
