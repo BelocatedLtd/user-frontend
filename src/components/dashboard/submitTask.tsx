@@ -85,8 +85,8 @@ const TaskSubmit = ({
 	// Handle form submission
 	const handleOnSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
-const advertId = ad.id;
-		const performerId = user?.id;
+const performerId = user?.id
+const advertId = advert?.id
 		console.log(advertId,performerId);
 		if (ad && (ad.desiredROI === 0 || ad.status === 'Completed')) {
 			toast.error(
@@ -94,10 +94,7 @@ const advertId = ad.id;
 			)
 			return
 		}
-			const existingTask = await task.findOne({
-			advertId: advertId,
-			taskPerformerId: performerId,
-		  });
+			const existingTask = await checkExistingTask(advertId, performerId);
 		
 		  if (existingTask) {
 			toast.error('This task cannot be submitted because it has already been created for this advert.');
