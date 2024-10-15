@@ -41,7 +41,7 @@ export const icons = [
         icon: linkedin
     },
     {
-        platform: 'appstore',
+        platform: 'iOS App Download',
         icon: appstore
     },
     {
