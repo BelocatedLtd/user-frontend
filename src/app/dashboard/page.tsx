@@ -137,7 +137,7 @@ console.log("useEffect triggered, userId:", user?.id);
         try {
             const data = await getCompletedTasks(userId);
             if (data) {
-                setTotalTasks(data.totalTasks);
+               
                 setCompletedTasks(data.completedTasks);
                 setRemainingTasksToComplete(data.remainingTaskToComplete);
             }
