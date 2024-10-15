@@ -207,11 +207,11 @@ const AdItem = ({
             Amount Paid:₦{adBudget}
           </div>
           <div className="flex items-center">
-            <span
-              className={`text-green-500 px-2 py-1 border border-green-500 rounded ${getPaymentStatusBgColor(status)}`}
-            >
-              {status}
-            </span>
+           <span
+  className={`text-black px-2 py-1 border border-green-500 rounded ${getPaymentStatusBgColor(status)}`}
+>
+  {status}
+</span>
           </div>
         </div>
 
