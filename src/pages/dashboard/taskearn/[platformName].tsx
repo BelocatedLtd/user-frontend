@@ -75,55 +75,62 @@ const TaskEarn = () => {
 		getAllTasks()
 	}, [dispatch])
 
-	useEffect(() => {
-		if (platformName === 'tiktok') {
-			setIcon(tiktok)
-		}
-		if (platformName === 'facebook') {
-			setIcon(facebook)
-		}
-		if (platformName === 'twitter') {
-			setIcon(twitter)
-		}
-		if (platformName === 'instagram') {
-			setIcon(instagram)
-		}
-		if (platformName === 'linkedin') {
-			setIcon(linkedin)
-		}
-		if (platformName === 'whatsapp') {
-			setIcon(whatsapp)
-		}
-		if (platformName === 'youtube') {
-			setIcon(youtube)
-		}
-		if (platformName === 'appstore') {
-			setIcon(appstore)
-		}
-		if (platformName === 'playstore') {
-			setIcon(playstore)
-		}
-		if (platformName === 'audiomack') {
-			setIcon(audiomack)
-		}
-		if (platformName === 'spotify') {
-			setIcon(spotify)
-		}
-		if (platformName === 'boomplay') {
-			setIcon(boomplay)
-		}
+	
+ useEffect(() => {
+    switch (platformName) {
+      case 'tiktok':
+        setIcon(tiktok)
+        break
+      case 'facebook':
+        setIcon(facebook)
+        break
+      case 'twitter':
+        setIcon(twitter)
+        break
+      case 'instagram':
+        setIcon(instagram)
+        break
+      case 'linkedin':
+        setIcon(linkedin)
+        break
+      case 'whatsapp':
+        setIcon(whatsapp)
+        break
+      case 'youtube':
+        setIcon(youtube)
+        break
+      case 'appstore':
+        setIcon(appstore)
+        break
+      case 'playstore':
+        setIcon(playstore)
+        break
+      case 'audiomack':
+        setIcon(audiomack)
+        break
+      case 'spotify':
+        setIcon(spotify)
+        break
+      case 'boomplay':
+        setIcon(boomplay)
+        break
+     
+    }
+  }, [platformName])
 
+			useEffect(() => {
 		const fetchQualifiedAdverts = async () => {
-			try {
-				const data = await getQualifiedAdverts(platformName)
-				setFinalFilteredTasks(data)
-			} catch (error) {
-				console.error('Failed to fetch qualified adverts:', error)
-			}
+		  try {
+			const data = await getQualifiedAdverts(platformName)
+			setFinalFilteredTasks(data)
+		  } catch (error) {
+			console.error('Failed to fetch qualified adverts:', error)
+		  }
 		}
-
+	
 		fetchQualifiedAdverts()
-	}, [platformName])
+	  }, [platformName])
+
 
 	// const checkTaskExistence = (advert_Id: string) => {
 	// 	const existingTask = tasks?.find(
