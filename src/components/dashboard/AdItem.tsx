@@ -88,7 +88,18 @@ const AdItem = ({
     setTaskProof(tp)
     setToggleTaskProofModal(!toggleTaskProofModal)
   }
+const [openProofModal, setOpenProofModal] = useState(false);
+  const [selectedProof, setSelectedProof] = useState<string | null>(null);
 
+  const handleProofClick = (proofUrl: string) => {
+    setSelectedProof(proofUrl);
+    setOpenProofModal(true);
+  };
+
+  const handleCloseProofModal = () => {
+    setOpenProofModal(false);
+    setSelectedProof(null);
+  };
   const handleTaskApproval = async (e: any, clickedTask: any) => {
     e.preventDefault()
 
