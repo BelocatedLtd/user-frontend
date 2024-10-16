@@ -294,31 +294,31 @@ const [openProofModal, setOpenProofModal] = useState(false);
                   </button>
                 </div>
 
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-1">
                   <div>
                     <label className="font-bold text-xs">Social Media:</label>
                     <a
                       href={tp?.socialPageLink}
-                      className="text-blue-600 hover:text-red-600"
+                      className="text-blue-600 hover:text-red-600 text-xs"
                     >
                       {tp?.socialPageLink.slice(0, 13)}...
                     </a>
                   </div>
 
                   <div>
-                    <label className="font-bold">Status</label>
-                    <p className="flex items-center gap-2">
+                    <label className="font-bold text-xs">Status</label>
+                    <p className="flex items-center gap-2 text-xs">
                       <CheckmarkIcon /> {tp?.status}
                     </p>
                   </div>
                 </div>
 
                 <div className="mt-1">
-                  <label className="font-bold">Proof: </label>
+                  <label className="font-bold text-xs">Proof: </label>
                   {tp?.proofOfWorkMediaURL?.[0]?.secure_url ? (
                     <span
                       onClick={() => handleProofClick(tp?.proofOfWorkMediaURL?.[0]?.secure_url)}
-                      className="text-blue-600 hover:text-red-600 cursor-pointer"
+                      className="text-blue-600 hover:text-red-600 cursor-pointer text-xs"
                     >
                       Click here to view proof
                     </span>
@@ -339,8 +339,14 @@ const [openProofModal, setOpenProofModal] = useState(false);
         aria-labelledby="proof-modal-title"
         aria-describedby="proof-modal-description"
       >
-        <div className="flex justify-center items-center h-full">
+        <div className="flex justify-center items-center h-[85%]">
           <div className="bg-white p-4 rounded-lg shadow-md">
+             <button
+              onClick={handleCloseProofModal}
+              className="mt-4 bg-gray-500 text-white px-4 py-2 rounded"
+            >
+              Close
+            </button>
             {selectedProof ? (
               <Image
                 src={selectedProof}
@@ -352,12 +358,7 @@ const [openProofModal, setOpenProofModal] = useState(false);
             ) : (
               'No proof available.'
             )}
-            <button
-              onClick={handleCloseProofModal}
-              className="mt-4 bg-gray-500 text-white px-4 py-2 rounded"
-            >
-              Close
-            </button>
+           
           </div>
         </div>
       </Modal>
