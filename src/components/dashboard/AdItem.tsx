@@ -268,10 +268,10 @@ const [openProofModal, setOpenProofModal] = useState(false);
                 <div className="mb-4 flex justify-between items-center gap-2">
                   <div>
                     <small className="text-xs text-gray-500 font-medium">
-                      Performer Username: @{tp?.username}
+                      @{tp?.username}
                     </small>
                     <h3 className="text-sm font-medium text-gray-800 mt-1 mb-0">
-                      Performer Fullname: {tp?.fullname}
+                     {tp?.fullname}
                     </h3>
                     <span className="text-xs text-gray-400">
                       {formatDate(tp?.createdAt)}
@@ -307,7 +307,7 @@ const [openProofModal, setOpenProofModal] = useState(false);
                   </div>
                 </div>
 
-                <div className="mt-2">
+                <div className="mt-1">
                   <label className="font-bold">Proof: </label>
                   {tp?.proofOfWorkMediaURL?.[0]?.secure_url ? (
                     <span
