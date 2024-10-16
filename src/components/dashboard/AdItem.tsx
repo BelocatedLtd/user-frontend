@@ -269,16 +269,16 @@ const [openProofModal, setOpenProofModal] = useState(false);
                 <h3 className="text-sm font-semibold text-gray-800 mb-1">Allocation Result</h3>
                 <div className="mb-4 flex justify-between items-center gap-2">
     <div>
-        {performerDetails?.map((user: any, index: number) => (
-            <div key={user?.taskPerformersDetails?.username || index} className="mb-1">
+        
+            <div className="mb-1">
                 <small className="text-xs text-gray-500 font-medium">
-                    @{user?.taskPerformersDetails?.username}
+                    @{tp?.username}
                 </small>
                 <h3 className="text-sm font-medium text-gray-800 mt-1 mb-0">
-                    {user?.taskPerformersDetails?.fullname}
+                    {tp?.fullname}
                 </h3>
             </div>
-        ))}
+       
         <span className="text-xs text-gray-400">
             {formatDate(tp?.createdAt)}
         </span>
