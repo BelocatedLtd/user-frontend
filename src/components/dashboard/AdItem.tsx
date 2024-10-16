@@ -295,22 +295,13 @@ const AdItem = ({
   {/* View and Monitor Buttons */}
   <div className="mt-4 flex justify-end gap-2">
     <button className="px-3 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">
-      View
+      View & Monitor Results
     </button>
     <button className="px-3 py-1 text-white bg-gray-500 rounded hover:bg-gray-600">
       Monitor
     </button>
   </div>
-       <\div>
-
-
-        {/* View Button */}
-        <div className="mt-4">
-          <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full">
-            View & Monitor Results
-          </button>
-        </div>
-      </div>
+      
 
       <Modal
         open={toggleTaskPerformers}
