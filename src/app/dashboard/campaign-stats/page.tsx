@@ -41,7 +41,7 @@ const CampaignStats = () => {
 const fetchPerformers = async () => {
 		try{
 			const response = await getAllUserAdverts()
-			setPerformerDetails(response?.data?.adverts)
+			setPerformerDetails(response?.adverts)
 	
 			}
 			catch(error){
