@@ -263,7 +263,7 @@ const [openProofModal, setOpenProofModal] = useState(false);
             </button>
 
             {taskSubmitters?.map((tp: any) => (// Use the defined type here
-              <div className="border-b border-gray-200 py-6" key={tp._id}>
+              <div className="border-b border-gray-500 py-6" key={tp._id}>
                 <h3 className="text-sm font-semibold text-gray-800 mb-1">Allocation Result</h3>
                 <div className="mb-4 flex justify-between items-center gap-2">
                   <div>
@@ -288,14 +288,14 @@ const [openProofModal, setOpenProofModal] = useState(false);
                   </button>
                 </div>
 
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
                   <div>
-                    <label className="font-bold">Social Media</label>
+                    <label className="font-bold text-xs">Social Media:</label>
                     <a
                       href={tp?.socialPageLink}
                       className="text-blue-600 hover:text-red-600"
                     >
-                      {tp?.socialPageLink.slice(0, 20)}...
+                      {tp?.socialPageLink.slice(0, 13)}...
                     </a>
                   </div>
 
@@ -307,8 +307,8 @@ const [openProofModal, setOpenProofModal] = useState(false);
                   </div>
                 </div>
 
-                <div className="mt-4">
-                  <label className="font-bold">Proof</label>
+                <div className="mt-2">
+                  <label className="font-bold">Proof: </label>
                   {tp?.proofOfWorkMediaURL?.[0]?.secure_url ? (
                     <span
                       onClick={() => handleProofClick(tp?.proofOfWorkMediaURL?.[0]?.secure_url)}
