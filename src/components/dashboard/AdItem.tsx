@@ -233,7 +233,8 @@ const AdItem = ({
           </button>
         </div>
 
-      </div><Modal
+      </div>
+      <Modal
         open={toggleTaskPerformers}
         onClose={() => {
           settoggleTaskPerformers(false);
@@ -250,17 +251,18 @@ const AdItem = ({
               ✕
             </button>
 
-            {taskSubmitters?.map((tp: any) => (
-              <div className="border-b border-gray-200 py-6" key={tp._id}> Allocation Result
-                <div className="mb-4 flex justify-between items-center">
+            {taskSubmitters?.map((tp: any) => (// Use the defined type here
+              <div className="border-b border-gray-200 py-6" key={tp._id}>
+                <h3 className="text-sm font-semibold text-gray-800 mb-1">Allocation Result</h3>
+                <div className="mb-4 flex justify-between items-center gap-2">
                   <div>
-                    <small className="text-gray-500 font-medium">
+                    <small className="text-xs text-gray-500 font-medium">
                       Performer Username: @{tp?.taskPerformerId?.username}
                     </small>
-                    <h3 className="text-lg font-medium text-gray-800">
+                    <h3 className="text-sm font-medium text-gray-800 mt-1 mb-0">
                       Performer Fullname: {tp?.taskPerformerId?.fullname}
                     </h3>
-                    <span className="text-sm text-gray-400">
+                    <span className="text-xs text-gray-400">
                       {formatDate(tp?.createdAt)}
                     </span>
                   </div>
@@ -297,13 +299,12 @@ const AdItem = ({
                 <div className="mt-4">
                   <label className="font-bold">Proof</label>
                   {tp?.proofOfWorkMediaURL?.[0]?.secure_url ? (
-                    <Image
-                      src={tp?.proofOfWorkMediaURL?.[0]?.secure_url}
-                      alt="proof"
-                      width={300}
-                      height={300}
-                      className="rounded-lg"
-                    />
+                    <span
+                      onClick={() => handleProofClick(tp?.proofOfWorkMediaURL?.[0]?.secure_url)}
+                      className="text-blue-600 hover:text-red-600 cursor-pointer"
+                    >
+                      Click here to view proof
+                    </span>
                   ) : (
                     'N/A'
                   )}
@@ -313,6 +314,38 @@ const AdItem = ({
           </div>
         </div>
       </Modal>
+
+      {/* Modal for Image Proof */}
+      <Modal
+        open={openProofModal}
+        onClose={handleCloseProofModal}
+        aria-labelledby="proof-modal-title"
+        aria-describedby="proof-modal-description"
+      >
+        <div className="flex justify-center items-center h-full">
+          <div className="bg-white p-4 rounded-lg shadow-md">
+            {selectedProof ? (
+              <Image
+                src={selectedProof}
+                alt="Proof of Work"
+                width={600}
+                height={600}
+                className="rounded-lg"
+              />
+            ) : (
+              'No proof available.'
+            )}
+            <button
+              onClick={handleCloseProofModal}
+              className="mt-4 bg-gray-500 text-white px-4 py-2 rounded"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+
 
 
       {/* <Modal
