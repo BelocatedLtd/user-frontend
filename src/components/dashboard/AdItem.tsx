@@ -163,7 +163,7 @@ const AdItem = ({
             />
             <div>
               <span className="text-gray-500">{formatDate(date)}</span>
-              <h3 className="text-base font-semibold text-black">{title}</h3>
+              <h3 className="text-base font-medium text-black">{title}</h3>
             </div>
           </div>
         </div>
@@ -171,20 +171,20 @@ const AdItem = ({
         {/* Pricing, Completed Tasks, and Submitted Tasks */}
         <div className="mt-2">
           <p className="text-gray-700">
-            <span className="font-semibold">Pricing:</span> ₦{adperPostAmt} per advert
+            <span className="font-medium">Pricing:</span> ₦{adperPostAmt} per advert
           </p>
           <p className="text-gray-700">
-            <span className="font-semibold">Completed Tasks:</span> {completedTasksCount}
+            <span className="font-medium">Completed Tasks:</span> {completedTasksCount}
           </p>
           <p className="text-gray-700">
-            <span className="font-semibold">Submitted Tasks:</span> {taskSubmitters?.length}
+            <span className="font-medium">Submitted Tasks:</span> {taskSubmitters?.length}
           </p>
         </div>
 
         {/* Link and Ad Unit */}
         <div className="mt-2">
           <p>
-            <span className="font-semibold">Link:</span>{' '}
+            <span className="font-medium">Link:</span>{' '}
             <a
               href={url}
               className="text-blue-500 underline"
@@ -195,20 +195,20 @@ const AdItem = ({
             </a>
           </p>
           <p className="text-gray-700">
-            <span className="font-semibold">Ad Unit:</span> {roi}
+            <span className="font-medium">Ad Unit:</span> {roi}
           </p>
         </div>
 
         {/* Location Details */}
         <div className="mt-2 grid grid-cols-2 gap-4">
           <div>
-            <span className="font-semibold">Gender:</span> {item?.gender}
+            <span className="font-medium">Gender:</span> {item?.gender}
           </div>
           <div>
-            <span className="font-semibold">LGA:</span> {item?.lga}
+            <span className="font-medium">LGA:</span> {item?.lga}
           </div>
           <div>
-            <span className="font-semibold">State:</span> {item?.state}
+            <span className="font-medium">State:</span> {item?.state}
           </div>
         </div>
 
@@ -231,13 +231,91 @@ const AdItem = ({
           <button className="px-3 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">
             View & Monitor Results
           </button>
-          <button className="px-3 py-1 text-white bg-gray-500 rounded hover:bg-gray-600">
-            Monitor
-          </button>
         </div>
 
-</div>
-{/*         <Modal
+      </div><Modal
+        open={toggleTaskPerformers}
+        onClose={() => {
+          settoggleTaskPerformers(false);
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div className="fixed inset-0 bg-white z-50 flex flex-col overflow-y-auto">
+          <div className="relative flex-1 p-6 md:p-12">
+            <button
+              onClick={() => settoggleTaskPerformers(false)}
+              className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200"
+            >
+              ✕
+            </button>
+
+            {taskSubmitters?.map((tp: any) => (
+              <div className="border-b border-gray-200 py-6" key={tp._id}> Allocation Result
+                <div className="mb-4 flex justify-between items-center">
+                  <div>
+                    <small className="text-gray-500 font-medium">
+                      Performer Username: @{tp?.taskPerformerId?.username}
+                    </small>
+                    <h3 className="text-lg font-medium text-gray-800">
+                      Performer Fullname: {tp?.taskPerformerId?.fullname}
+                    </h3>
+                    <span className="text-sm text-gray-400">
+                      {formatDate(tp?.createdAt)}
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={(e) => handleTaskApproval(e, tp)}
+                    className={`${tp?.status === 'Approved' ? 'bg-green-600' : 'bg-yellow-600'
+                      } flex items-center gap-2 px-4 py-2 text-white rounded-md hover:bg-orange-400`}
+                  >
+                    {tp?.status === 'Approved' ? 'Approved' : 'Approve'}
+                    <span>{isLoading && <LoaderIcon />}</span>
+                  </button>
+                </div>
+
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+                  <div>
+                    <label className="font-bold">Social Media</label>
+                    <a
+                      href={tp?.socialPageLink}
+                      className="text-blue-600 hover:text-red-600"
+                    >
+                      {tp?.socialPageLink.slice(0, 20)}...
+                    </a>
+                  </div>
+
+                  <div>
+                    <label className="font-bold">Status</label>
+                    <p className="flex items-center gap-2">
+                      <CheckmarkIcon /> {tp?.status}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <label className="font-bold">Proof</label>
+                  {tp?.proofOfWorkMediaURL?.[0]?.secure_url ? (
+                    <Image
+                      src={tp?.proofOfWorkMediaURL?.[0]?.secure_url}
+                      alt="proof"
+                      width={300}
+                      height={300}
+                      className="rounded-lg"
+                    />
+                  ) : (
+                    'N/A'
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Modal>
+
+
+      {/* <Modal
           open={toggleTaskPerformers}
           onClose={() => {
             settoggleTaskPerformers(false)
@@ -314,93 +392,10 @@ const AdItem = ({
               ))}
             </div>
           </div>
-        </Modal>
- */}
+        </Modal> */}
 
-      <Modal
-  open={toggleTaskPerformers}
-  onClose={() => {
-    settoggleTaskPerformers(false);
-  }}
-  aria-labelledby="modal-modal-title"
-  aria-describedby="modal-modal-description"
->
-  <div className="flex flex-col items-center h-full">
-    <div className="relative w-[85%] md:w-[600px] max-h-[80vh] overflow-y-auto rounded-2xl p-6 bg-white shadow-lg">
-      <h2 className="text-center text-lg font-bold mb-4">Allocation Results</h2>
-      {taskSubmitters?.map((tp) => (
-        <div className="w-full border-b border-gray-300 py-4" key={tp._id}>
-          <div className="flex justify-between items-center mb-2">
-            <div>
-              <small className="text-gray-500 font-semibold">
-                @{tp?.taskPerformerId?.username}
-              </small>
-              <h3 className="font-bold text-gray-800">
-                {tp?.taskPerformerId?.fullname}
-              </h3>
-              <span className="text-gray-400 text-sm">
-                {formatDate(tp?.createdAt)}
-              </span>
-            </div>
-            <div className="flex gap-2">
-              <button
-                onClick={(e) => handleTaskApproval(e, tp)}
-                className={`px-4 py-2 text-white rounded-full ${
-                  tp?.status === "Approved" ? "bg-green-600" : "bg-red-600"
-                } hover:opacity-90`}
-              >
-                {tp?.status === "Approved" ? "Approved" : "Approve"}
-                {isLoading && <LoaderIcon />}
-              </button>
-              <button
-                className="px-4 py-2 text-white bg-red-500 rounded-full hover:bg-red-600"
-              >
-                Reject
-              </button>
-            </div>
-          </div>
-
-          <div className="flex flex-col md:flex-row justify-between mb-3">
-            <div>
-              <label className="font-bold">Social Media</label>
-              <a
-                href={tp?.socialPageLink}
-                className="text-blue-600 hover:text-red-600 underline"
-              >
-                {tp?.socialPageLink.slice(0, 20)}...
-              </a>
-            </div>
-            <div>
-              <label className="font-bold">Status</label>
-              <p className="flex items-center gap-1">
-                <CheckmarkIcon />
-                {tp?.status}
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-3">
-            <label className="font-bold">Proof</label>
-            {tp?.proofOfWorkMediaURL?.[0]?.secure_url ? (
-              <Image
-                src={tp?.proofOfWorkMediaURL?.[0]?.secure_url}
-                alt="proof"
-                width={300}
-                height={300}
-                className="mt-2 rounded-lg"
-              />
-            ) : (
-              <p className="text-gray-500">No Proof Uploaded</p>
-            )}
-          </div>
-        </div>
-      ))}
     </div>
-  </div>
-</Modal>
-
-      </div>
-      )
+  )
 }
 
-      export default AdItem
+export default AdItem
