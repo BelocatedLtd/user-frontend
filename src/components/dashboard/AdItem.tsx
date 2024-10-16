@@ -28,6 +28,7 @@ interface AdItemProps {
   status: string
   item: any
   url: string
+  performerDetails: any[]
   taskSubmitters: any[]
   user: any
   callback: () => void
@@ -46,6 +47,7 @@ const AdItem = ({
   url,
   user,
   id,
+  performerDetails,
   taskSubmitters,
   callback,
   completedTasksCount,
@@ -267,12 +269,15 @@ const [openProofModal, setOpenProofModal] = useState(false);
                 <h3 className="text-sm font-semibold text-gray-800 mb-1">Allocation Result</h3>
                 <div className="mb-4 flex justify-between items-center gap-2">
                   <div>
-                    <small className="text-xs text-gray-500 font-medium">
-                      @{tp?.username}
-                    </small>
-                    <h3 className="text-sm font-medium text-gray-800 mt-1 mb-0">
-                     {tp?.fullname}
-                    </h3>
+                    {performerDetails?.map((user: any) => (
+                      <><small className="text-xs text-gray-500 font-medium">
+                        @{user?.username}
+                      </small>
+                        <h3 className="text-sm font-medium text-gray-800 mt-1 mb-0">
+                          {user?.fullname}
+                        </h3>
+                      </>
+                    ))}
                     <span className="text-xs text-gray-400">
                       {formatDate(tp?.createdAt)}
                     </span>
