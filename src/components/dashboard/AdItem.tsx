@@ -265,23 +265,24 @@ const [openProofModal, setOpenProofModal] = useState(false);
             </button>
 
             {taskSubmitters?.map((tp: any) => (// Use the defined type here
-              <div className="border-b border-gray-500 py-6" key={tp._id}>
+              <div className="border-b border-gray-200 py-6" key={tp._id}>
                 <h3 className="text-sm font-semibold text-gray-800 mb-1">Allocation Result</h3>
                 <div className="mb-4 flex justify-between items-center gap-2">
-                  <div>
-                    {performerDetails?.map((user: any) => (
-                      <><small className="text-xs text-gray-500 font-medium">
-                        @{user?.username}
-                      </small>
-                        <h3 className="text-sm font-medium text-gray-800 mt-1 mb-0">
-                          {user?.fullname}
-                        </h3>
-                      </>
-                    ))}
-                    <span className="text-xs text-gray-400">
-                      {formatDate(tp?.createdAt)}
-                    </span>
-                  </div>
+    <div>
+        {performerDetails?.map((user: any, index: number) => (
+            <div key={user?.taskPerformersDetails?.username || index} className="mb-1">
+                <small className="text-xs text-gray-500 font-medium">
+                    @{user?.taskPerformersDetails?.username}
+                </small>
+                <h3 className="text-sm font-medium text-gray-800 mt-1 mb-0">
+                    {user?.taskPerformersDetails?.fullname}
+                </h3>
+            </div>
+        ))}
+        <span className="text-xs text-gray-400">
+            {formatDate(tp?.createdAt)}
+        </span>
+    </div>
 
                   <button
                     onClick={(e) => handleTaskApproval(e, tp)}
