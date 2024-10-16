@@ -339,14 +339,9 @@ const [openProofModal, setOpenProofModal] = useState(false);
         aria-labelledby="proof-modal-title"
         aria-describedby="proof-modal-description"
       >
-        <div className="flex justify-center items-center h-[85%]">
+        <div className="flex justify-center items-center h-[75%]">
           <div className="bg-white p-4 rounded-lg shadow-md">
-             <button
-              onClick={handleCloseProofModal}
-              className="mt-4 bg-gray-500 text-white px-4 py-2 rounded"
-            >
-              Close
-            </button>
+           
             {selectedProof ? (
               <Image
                 src={selectedProof}
@@ -358,7 +353,12 @@ const [openProofModal, setOpenProofModal] = useState(false);
             ) : (
               'No proof available.'
             )}
-           
+             <button
+              onClick={handleCloseProofModal}
+              className="mt-4 bg-gray-500 text-white px-4 py-2 rounded"
+            >
+              Close
+            </button>
           </div>
         </div>
       </Modal>
