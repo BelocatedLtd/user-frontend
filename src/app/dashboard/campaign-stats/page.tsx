@@ -12,8 +12,6 @@ import AdItem from '../../../components/dashboard/AdItem'
 import Loader from '../../../components/loader/Loader'
 import { selectIsLoading } from '../../../redux/slices/advertSlice'
 import { selectUser } from '../../../redux/slices/authSlice'
-import { getAllUserAdverts } from '@/services/advertService'
-
 
 const CampaignStats = () => {
 	const user = useSelector(selectUser)
@@ -24,7 +22,7 @@ const CampaignStats = () => {
 	const [currentPage, setCurrentPage] = useState(1)
 	const [limit, setLimit] = useState(10)
 	const [adverts, setAdverts] = useState([])
-        const [performerDetails, setPerformerDetails] = useState([])
+
 	const getAdverts = async (page: number, limit: number) => {
 		try {
 			const response = await getUserAdverts({ page, limit })
@@ -38,22 +36,7 @@ const CampaignStats = () => {
 	useEffect(() => {
 		getAdverts(currentPage, limit)
 	}, [currentPage, limit])
-const fetchPerformers = async () => {
-		try{
-			const response = await getAllUserAdverts()
-			setPerformerDetails(response?.adverts)
-	
-			}
-			catch(error){
-				toast.error('failed to fetch username and fullname')
-			}
-		}
 
-	useEffect(()=> {
-		fetchPerformers()
-	},[]);
-
-	
 	return (
 		<div className='w-full p-5 md:p-10'>
 			<Loader open={isLoading} />
@@ -106,7 +89,6 @@ const fetchPerformers = async () => {
                     item={item}
                     url={item.socialPageLink}
                     user={user}
-		    performerDetails={performerDetails}
                     taskSubmitters={item.taskSubmitters}
                     completedTasksCount={item.completedTasksCount}
                     callback={() => getAdverts(currentPage, limit)}
