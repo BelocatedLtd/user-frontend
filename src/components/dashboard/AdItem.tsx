@@ -28,8 +28,8 @@ interface AdItemProps {
   status: string
   item: any
   url: string
-  taskPerformersDetails: any[]
-  taskPerformers: any[]
+  performerDetails: any[]
+  taskSubmitters: any[]
   user: any
   callback: () => void
   completedTasksCount: number
@@ -47,8 +47,8 @@ const AdItem = ({
   url,
   user,
   id,
-  taskPerformersDetails,
-  taskPerformers,
+  performerDetails,
+  taskSubmitters,
   callback,
   completedTasksCount,
 }: AdItemProps) => {
@@ -76,7 +76,7 @@ const AdItem = ({
   const handleToggleTaskPerformers = (e: any) => {
     e.preventDefault()
 
-    if (taskPerformers && taskPerformers.length === 0) {
+    if (taskSubmitters && taskSubmitters.length === 0) {
       toast.error('No Task Submitted')
       return
     }
@@ -90,7 +90,7 @@ const AdItem = ({
     setTaskProof(tp)
     setToggleTaskProofModal(!toggleTaskProofModal)
   }
-  const [openProofModal, setOpenProofModal] = useState(false);
+const [openProofModal, setOpenProofModal] = useState(false);
   const [selectedProof, setSelectedProof] = useState<string | null>(null);
 
   const handleProofClick = (proofUrl: string) => {
@@ -190,7 +190,7 @@ const AdItem = ({
             <span className="font-medium">Completed Tasks:</span> {completedTasksCount}
           </p>
           <p className="text-gray-700">
-            <span className="font-medium">Submitted Tasks:</span> {taskPerformers?.length}
+            <span className="font-medium">Submitted Tasks:</span> {taskSubmitters?.length}
           </p>
         </div>
 
@@ -264,21 +264,25 @@ const AdItem = ({
               ✕
             </button>
 
-            {taskPerformersDetails?.map((tp: any) => (// Use the defined type here
-              <div className="border-b border-gray-500 py-6" key={tp._id}>
+            {taskSubmitters?.map((tp: any) => (// Use the defined type here
+              <div className="border-b border-gray-200 py-6" key={tp._id}>
                 <h3 className="text-sm font-semibold text-gray-800 mb-1">Allocation Result</h3>
                 <div className="mb-4 flex justify-between items-center gap-2">
-                  <div>
-                    <small className="text-xs text-gray-500 font-medium">
-                      Performer Username: @{tp?.username}
-                    </small>
-                    <h3 className="text-sm font-medium text-gray-800 mt-1 mb-0">
-                      Performer Fullname: {tp?.fullname}
-                    </h3>
-                    <span className="text-xs text-gray-400">
-                      {formatDate(tp?.createdAt)}
-                    </span>
-                  </div>
+    <div>
+        
+            <div className="mb-1">
+                <small className="text-xs text-gray-500 font-medium">
+                    @{tp?.username}
+                </small>
+                <h3 className="text-sm font-medium text-gray-800 mt-1 mb-0">
+                    {tp?.fullname}
+                </h3>
+            </div>
+       
+        <span className="text-xs text-gray-400">
+            {formatDate(tp?.createdAt)}
+        </span>
+    </div>
 
                   <button
                     onClick={(e) => handleTaskApproval(e, tp)}
@@ -290,7 +294,7 @@ const AdItem = ({
                   </button>
                 </div>
 
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-1">
                   <div>
                     <label className="font-bold text-xs">Social Media:</label>
                     <a
@@ -309,7 +313,7 @@ const AdItem = ({
                   </div>
                 </div>
 
-                <div className="mt-2">
+                <div className="mt-1">
                   <label className="font-bold text-xs">Proof: </label>
                   {tp?.proofOfWorkMediaURL?.[0]?.secure_url ? (
                     <span
@@ -335,8 +339,9 @@ const AdItem = ({
         aria-labelledby="proof-modal-title"
         aria-describedby="proof-modal-description"
       >
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center h-[75%]">
           <div className="bg-white p-4 rounded-lg shadow-md">
+           
             {selectedProof ? (
               <Image
                 src={selectedProof}
@@ -348,7 +353,7 @@ const AdItem = ({
             ) : (
               'No proof available.'
             )}
-            <button
+             <button
               onClick={handleCloseProofModal}
               className="mt-4 bg-gray-500 text-white px-4 py-2 rounded"
             >
@@ -356,7 +361,89 @@ const AdItem = ({
             </button>
           </div>
         </div>
-      </Modal>    
+      </Modal>
+
+
+
+
+      {/* <Modal
+          open={toggleTaskPerformers}
+          onClose={() => {
+            settoggleTaskPerformers(false)
+          }}
+          aria-labelledby='modal-modal-title'
+          aria-describedby='modal-modal-description'>
+          <div className='flex flex-col justify-center items-center h-full '>
+            <div className='relative  w-[85%] md:w-[600px] h-1/2 overflow-y-auto md:py-[2rem] rounded-2xl p-4 bg-primary'>
+              {taskSubmitters?.map((tp: any) => (
+                <div className='w-full border-gray-200 py-[1rem]' key={tp._id}>
+                  <div className='task performer details mb-[1rem] flex justify-between w-full gap-1'>
+                    <div>
+                      <small className='text-gray-400 font-semibold'>
+                        Perfomer Username: @{tp?.taskPerformerId?.username}
+                      </small>
+                      <h3 className='font-bold text-gray-600'>
+                        Perfomer Fullname: {tp?.taskPerformerId?.fullname}
+                      </h3>
+                      <span className='text-gray-400 font-semibold text-[9px]'>
+                        {formatDate(tp?.createdAt)}
+                      </span>
+                    </div>
+
+                    <div className='flex items-center gap-2'>
+                      <button
+                        onClick={(e) => handleTaskApproval(e, tp)}
+                        className={`
+                                ${tp?.status === 'Approved'
+                            ? 'bg-green-600'
+                            : 'bg-yellow-600'
+                          } 
+                                flex items-center gap-2 rounded-2xl px-3 py-2 text-primary hover:bg-orange-400`}>
+                        {tp?.status === 'Approved' ? 'Approved' : 'Approve'}
+                        <span>{isLoading && <LoaderIcon />}</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className='flex flex-col gap-3 md:items-center justify-between mb-[1rem] md:flex-row'>
+                    <div className='first columns flex flex-col'>
+                      <label className='font-bold'>Social Media</label>
+                      <a
+                        href={tp?.socialPageLink}
+                        className='text-blue-600 hover:text-red-600 cursor-pointer'>
+                        {tp.socialPageLink.slice(0, 20)}...
+                      </a>
+                    </div>
+
+                    <div className='third columns'>
+                      <label className='font-bold'>Status</label>
+                      <p className='flex items-center gap-1'>
+                        <span>
+                          <CheckmarkIcon />
+                        </span>
+                        {tp?.status}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className='second columns flex mt-4 flex-col'>
+                    <label className='font-bold'>Proof</label>
+                    {tp?.proofOfWorkMediaURL?.[0]?.secure_url ? (
+                      <Image
+                        src={tp?.proofOfWorkMediaURL?.[0]?.secure_url}
+                        alt='proof'
+                        width={300}
+                        height={300}
+                      />
+                    ) : (
+                      'N/A'
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Modal> */}
 
     </div>
   )
