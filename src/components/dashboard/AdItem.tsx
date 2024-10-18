@@ -270,10 +270,10 @@ const [openProofModal, setOpenProofModal] = useState(false);
         
             <div className="mb-1">
                 <small className="text-xs text-gray-500 font-medium">
-                    @{tp?.username}
+                    @{tp?.taskPerformerId.username}
                 </small>
                 <h3 className="text-sm font-medium text-gray-800 mt-1 mb-0">
-                    {tp?.fullname}
+                    {tp?.taskPerformerId.fullname}
                 </h3>
             </div>
        
@@ -337,7 +337,7 @@ const [openProofModal, setOpenProofModal] = useState(false);
         aria-labelledby="proof-modal-title"
         aria-describedby="proof-modal-description"
       >
-        <div className="flex justify-center items-center h-[75%]">
+        <div className="flex justify-center items-center">
           <div className="bg-white p-4 rounded-lg shadow-md">
            
             {selectedProof ? (
