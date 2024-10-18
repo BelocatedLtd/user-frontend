@@ -55,8 +55,10 @@ export default function RootLayout({
 					<Script
 						dangerouslySetInnerHTML={{
 							__html: `
-              var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-			  Tawk_API.customStyle = {
+               var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+             Tawk_API.onLoad = function() {
+        Tawk_API.setAttributes({ visibility: 'minimized' }); // Minimize on load
+      };
 		visibility : {
 			desktop : {
 				position : 'br',
