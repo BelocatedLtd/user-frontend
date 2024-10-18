@@ -1,3 +1,4 @@
+
 'use client'
 import Button from '@/components/Button'
 import PaginatedComponent from '@/components/Pagination'
@@ -23,11 +24,25 @@ const CampaignStats = () => {
 	const [currentPage, setCurrentPage] = useState(1)
 	const [limit, setLimit] = useState(10)
 	const [adverts, setAdverts] = useState([])
-	const [performerDetails, setPerformerDetails] = useState([])
+	const [allAdverts, setAllAdverts] = useState([])
 
-	const getAdverts = async () => {
+	const getAllAdverts = async () => {
 		try {
 			const response = await getAllUserAdverts()
+			setAllAdverts(response?.adverts)
+			
+		} catch (error) {
+			toast.error('Failed to retrieve tasks, please reload page')
+		}
+	}
+
+	useEffect(() => {
+		getAllAdverts()
+	}, [])
+
+	const getAdverts = async (page: number, limit: number) => {
+		try {
+			const response = await getUserAdverts({ page, limit })
 			setAdverts(response?.adverts)
 			setTotalAdverts(response.totalAdverts)
 		} catch (error) {
@@ -36,23 +51,8 @@ const CampaignStats = () => {
 	}
 
 	useEffect(() => {
-		getAdverts()
+		getAdverts(currentPage, limit)
 	}, [currentPage, limit])
-
-	const fetchPerformers = async () => {
-		try{
-			const response = await getAllUserAdverts()
-			setPerformerDetails(response?.adverts)
-	
-			}
-			catch(error){
-				toast.error('failed to fetch username and fullname')
-			}
-		}
-
-	useEffect(()=> {
-		fetchPerformers()
-	},[]);
 
 	return (
 		<div className='w-full p-5 md:p-10'>
@@ -60,39 +60,39 @@ const CampaignStats = () => {
 
 			{/* Header Section */}
 			<div className='flex items-center justify-between gap-4 border-b border-gray-300 py-5 px-6 bg-white shadow-sm'>
-  <div className='flex items-center'>
-    <div className='flex flex-col'>
-      <p className='font-semibold text-2xl text-gray-800 flex items-center'>
-        My Ad Campaigns
-        <Loader open={isLoading}  />
-      </p>
-      <small className='font-medium text-gray-500 mt-1'>
-        Click <span className='text-blue-500 cursor-pointer'>here</span> to see and monitor your adverts
-      </small>
-    </div>
-  </div>
+				<div className='flex items-center'>
+					<div className='flex flex-col'>
+						<p className='font-semibold text-2xl text-gray-800 flex items-center'>
+							My Ad Campaigns
+							<Loader open={isLoading} />
+						</p>
+						<small className='font-medium text-gray-500 mt-1'>
+							Click <span className='text-blue-500 cursor-pointer'>here</span> to see and monitor your adverts
+						</small>
+					</div>
+				</div>
 
-  <div className='flex items-center gap-3'>
-    {/* Adverts Count */}
-    <small className='hidden md:flex h-8 w-8 items-center justify-center bg-blue-500 text-white rounded-full text-sm'>
-      {adverts?.length}
-    </small>
+				<div className='flex items-center gap-3'>
+					{/* Adverts Count */}
+					<small className='hidden md:flex h-8 w-8 items-center justify-center bg-blue-500 text-white rounded-full text-sm'>
+						{adverts?.length}
+					</small>
 
-    {/* Campaign Button */}
-    <Button
-      variant='solid'
-      color='primary'
-      onClick={() => router.push('/dashboard/advertise')}
-      className='flex items-center gap-2 bg-blue-500 text-white text-sm px-4 py-2 rounded-md hover:bg-blue-600'>
-      <BsFillPlusCircleFill className='text-lg' />
-      Create Campaign
-    </Button>
-  </div>
-</div>
+					{/* Campaign Button */}
+					<Button
+						variant='solid'
+						color='primary'
+						onClick={() => router.push('/dashboard/advertise')}
+						className='flex items-center gap-2 bg-blue-500 text-white text-sm px-4 py-2 rounded-md hover:bg-blue-600'>
+						<BsFillPlusCircleFill className='text-lg' />
+						Create Campaign
+					</Button>
+				</div>
+			</div>
 
 
 			<div className='w-full grid mt-4 gap-6 grid-cols-1 md:grid-cols-3'>
-				{adverts?.map((item: any) => (
+				{allAdverts?.map((item: any) => (
 					<AdItem
 						key={item._id}
 						id={item._id}
@@ -108,7 +108,7 @@ const CampaignStats = () => {
 						user={user}
 						taskPerformersDetails={item.taskPerformersDetails}
 
-						taskSubmitters={item.taskSubmitters}
+						taskPerformers={item.taskSubmitters}
 						completedTasksCount={item.completedTasksCount}
 						callback={() => getAllUserAdverts()}
 					/>
@@ -129,3 +129,8 @@ const CampaignStats = () => {
 }
 
 export default CampaignStats
+
+
+
+
+
