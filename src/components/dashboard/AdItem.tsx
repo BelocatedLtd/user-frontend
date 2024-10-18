@@ -28,8 +28,8 @@ interface AdItemProps {
   status: string
   item: any
   url: string
-  taskPerformersDetails:any[]
-  taskSubmitters: any[]
+  taskPerformersDetails: any[]
+  taskPerformers: any[]
   user: any
   callback: () => void
   completedTasksCount: number
@@ -48,7 +48,7 @@ const AdItem = ({
   user,
   id,
   taskPerformersDetails,
-  taskSubmitters,
+  taskPerformers,
   callback,
   completedTasksCount,
 }: AdItemProps) => {
@@ -76,7 +76,7 @@ const AdItem = ({
   const handleToggleTaskPerformers = (e: any) => {
     e.preventDefault()
 
-    if (taskSubmitters && taskSubmitters.length === 0) {
+    if (taskPerformers && taskPerformers.length === 0) {
       toast.error('No Task Submitted')
       return
     }
@@ -90,7 +90,7 @@ const AdItem = ({
     setTaskProof(tp)
     setToggleTaskProofModal(!toggleTaskProofModal)
   }
-const [openProofModal, setOpenProofModal] = useState(false);
+  const [openProofModal, setOpenProofModal] = useState(false);
   const [selectedProof, setSelectedProof] = useState<string | null>(null);
 
   const handleProofClick = (proofUrl: string) => {
@@ -190,7 +190,7 @@ const [openProofModal, setOpenProofModal] = useState(false);
             <span className="font-medium">Completed Tasks:</span> {completedTasksCount}
           </p>
           <p className="text-gray-700">
-            <span className="font-medium">Submitted Tasks:</span> {taskSubmitters?.length}
+            <span className="font-medium">Submitted Tasks:</span> {taskPerformers?.length}
           </p>
         </div>
 
@@ -335,7 +335,7 @@ const [openProofModal, setOpenProofModal] = useState(false);
         aria-labelledby="proof-modal-title"
         aria-describedby="proof-modal-description"
       >
-        <div className="flex justify-center items-center h-full">
+        <div className="flex justify-center items-center">
           <div className="bg-white p-4 rounded-lg shadow-md">
             {selectedProof ? (
               <Image
@@ -356,4 +356,10 @@ const [openProofModal, setOpenProofModal] = useState(false);
             </button>
           </div>
         </div>
-      </Modal>
+      </Modal>    
+
+    </div>
+  )
+}
+
+export default AdItem
