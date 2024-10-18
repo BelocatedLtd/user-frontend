@@ -331,37 +331,37 @@ const [openProofModal, setOpenProofModal] = useState(false);
       </Modal>
 
       {/* Modal for Image Proof */}
-      <Modal
-        open={openProofModal}
-        onClose={handleCloseProofModal}
-        aria-labelledby="proof-modal-title"
-        aria-describedby="proof-modal-description"
-      >
-        <div className="flex justify-center items-center h-[20%]">
-          <div className="bg-white p-4 rounded-lg shadow-md">
-           
-            {selectedProof ? (
-              <Image
-                src={selectedProof}
-                alt="Proof of Work"
-                width={600}
-                height={600}
-                className="rounded-lg"
-              />
-            ) : (
-              'No proof available.'
-            )}
-             <button
-              onClick={handleCloseProofModal}
-              className="mt-4 bg-gray-500 text-white px-4 py-2 rounded"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </Modal>
 
 
+
+<Modal
+  open={openProofModal}
+  onClose={handleCloseProofModal}
+  aria-labelledby="proof-modal-title"
+  aria-describedby="proof-modal-description"
+  className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+>
+  <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+    {selectedProof ? (
+      <Image
+        src={selectedProof}
+        alt="Proof of Work"
+        width={400}
+        height={400}
+        className="rounded-lg"
+      />
+    ) : (
+      <p className="text-center">No proof available.</p>
+    )}
+
+    <button
+      onClick={handleCloseProofModal}
+      className="mt-4 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded w-full"
+    >
+      Close
+    </button>
+  </div>
+</Modal>
 
 
       {/* <Modal
