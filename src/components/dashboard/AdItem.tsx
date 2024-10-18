@@ -28,7 +28,6 @@ interface AdItemProps {
   status: string
   item: any
   url: string
-  performerDetails: any[]
   taskSubmitters: any[]
   user: any
   callback: () => void
@@ -47,7 +46,6 @@ const AdItem = ({
   url,
   user,
   id,
-  performerDetails,
   taskSubmitters,
   callback,
   completedTasksCount,
