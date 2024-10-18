@@ -195,6 +195,7 @@ const TaskList = () => {
             </h4>
             <h1 className='text-[15px] md:text-[18px] font-bold truncate'>
               {task?._id}
+		   advertId : {task?.advertId}
             </h1>
           </div>
         </div>	<small className='font-bold text-right'>
