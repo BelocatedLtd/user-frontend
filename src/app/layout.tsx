@@ -13,6 +13,7 @@ import { usePathname } from 'next/navigation'
 import Script from 'next/script'
 import { Suspense } from 'react'
 import { Toaster } from 'react-hot-toast'
+import { FiMessageCircle } from 'react-icons/fi'
 import './index.css'
 
 // Extend the global Window object
@@ -86,7 +87,7 @@ export default function RootLayout({
           <SpeedInsights />
 
           {tawkLoaded && (
-            <button
+            <div
               onClick={openChat}
               style={{
                 position: 'fixed',
@@ -100,8 +101,8 @@ export default function RootLayout({
                 cursor: 'pointer',
               }}
             >
-              Chat with us
-            </button>
+               <FiMessageCircle className='text-2xl' />
+            </div>
           )}
 
           <Script
