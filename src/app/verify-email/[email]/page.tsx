@@ -1,7 +1,8 @@
 'use client'
+
 import Loader from '@/components/loader/Loader'
 import { resendVerificationEmail } from '@/services/authServices'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { CheckmarkIcon, toast } from 'react-hot-toast'
 
 const VerifyEmail = ({ params }: { params: { email: string } }) => {
@@ -11,28 +12,32 @@ const VerifyEmail = ({ params }: { params: { email: string } }) => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [timer, setTimer] = useState(10)
 	const [resendBtn, setResendBtn] = useState(false)
-	const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null)
+
+	// Use useRef to store the interval ID
+	const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
 	useEffect(() => {
-		// Ensure we're running on the client side before setting intervals
-		if (typeof window === 'undefined') return
+		if (typeof window === 'undefined') return // Ensure client-side execution
 
-		if (timer === 0) {
-			setResendBtn(true)
-			if (intervalId) clearInterval(intervalId)
-			return
+		// Start interval only if the timer is greater than 0
+		if (timer > 0) {
+			intervalRef.current = setInterval(() => {
+				setTimer((prevTimer) => prevTimer - 1)
+			}, 1000)
+		} else {
+			setResendBtn(true) // Enable the resend button when timer reaches 0
+			if (intervalRef.current) {
+				clearInterval(intervalRef.current) // Clear the interval
+			}
 		}
 
-		const id = setInterval(() => {
-			setTimer((prevTimer) => prevTimer - 1)
-		}, 1000) // 1-second interval
-
-		setIntervalId(id)
-
+		// Cleanup interval on component unmount
 		return () => {
-			if (intervalId) clearInterval(intervalId)
+			if (intervalRef.current) {
+				clearInterval(intervalRef.current)
+			}
 		}
-	}, [timer, intervalId])
+	}, [timer])
 
 	const handleResendEmail = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault()
@@ -48,7 +53,7 @@ const VerifyEmail = ({ params }: { params: { email: string } }) => {
 			if (response) {
 				toast.success(`Verification link sent to ${email}`)
 				setResendBtn(false)
-				setTimer(10)
+				setTimer(10) // Reset the timer
 			}
 		} catch (error) {
 			toast.error('Failed to resend verification email')
@@ -80,14 +85,13 @@ const VerifyEmail = ({ params }: { params: { email: string } }) => {
 					</small>
 
 					<div className='flex items-center gap-2'>
-						{resendBtn && (
+						{resendBtn ? (
 							<button
 								onClick={handleResendEmail}
 								className='w-full mt-1 py-2 text-md rounded-xl bg-tertiary text-gray-100 text-center px-6 mb-5'>
 								Resend Verification Link
 							</button>
-						)}
-						{!resendBtn && (
+						) : (
 							<span className='ml-4 p-3 bg-slate-100 text-gray-800 rounded-full'>
 								Resend in: {timer}
 							</span>
