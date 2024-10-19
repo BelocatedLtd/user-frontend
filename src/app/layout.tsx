@@ -111,23 +111,23 @@ export default function RootLayout({
               __html: `
                 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
                 Tawk_API.customStyle = {
-        visibility: {
-          desktop: {
-            position: 'br', // bottom-right
-            xOffset: '60px', // Horizontal shift
-            yOffset: 80 // Vertical shift (increase this to raise it up)
-          },
-          mobile: {
-            position: 'br', // bottom-right
-            xOffset: '10px', 
-            yOffset: 60 // Raise it up on mobile as well
-          },
-          bubble: {
-            rotate: '0deg',
-            xOffset: -20,
-            yOffset: 0
-          }
-        }
+        visibility : {
+			desktop : {
+				position : 'br',
+				xOffset : '60px',
+				yOffset : 20
+			},
+			mobile : {
+				position : 'br',
+				xOffset : '10px',
+				yOffset : '40px'
+			},
+			bubble : {
+				rotate : '0deg',
+			 	xOffset : -20,
+			 	yOffset : 0
+			}
+		}
       };
 
                 (function() {
