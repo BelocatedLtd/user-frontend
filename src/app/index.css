@@ -69,17 +69,23 @@
 @tailwind utilities;
 
 * {
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html,
-#root,
-body {
-	height: 100%;
-	width: 100%;
-	font-family: GT Walsheim Pro, sans-serif;
+body,
+#root {
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  font-family:  GT Walsheim Pro, sans-serif; /* Replace with your preferred font */
+}
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%; /* Prevent overflowing */
 }
 
 .wrapper {
