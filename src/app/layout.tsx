@@ -110,6 +110,26 @@ export default function RootLayout({
             dangerouslySetInnerHTML={{
               __html: `
                 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+                Tawk_API.customStyle = {
+        visibility: {
+          desktop: {
+            position: 'br', // bottom-right
+            xOffset: '60px', // Horizontal shift
+            yOffset: 80 // Vertical shift (increase this to raise it up)
+          },
+          mobile: {
+            position: 'br', // bottom-right
+            xOffset: '10px', 
+            yOffset: 60 // Raise it up on mobile as well
+          },
+          bubble: {
+            rotate: '0deg',
+            xOffset: -20,
+            yOffset: 0
+          }
+        }
+      };
+
                 (function() {
                   var s1=document.createElement("script"),
                       s0=document.getElementsByTagName("script")[0];
