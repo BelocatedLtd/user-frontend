@@ -177,8 +177,8 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 			</main>
 
 			{/* Mobile footer menu */}
-			<div className='fixed bottom-0 z-50 w-full -translate-x-1/2 bg-white border-t border-gray-200 left-1/2 dark:bg-gray-700 dark:border-gray-600'>
-				<div className='flex'>
+			<div className='fixed bottom-0 sm:bottom-5 sm:shadow-lg sm:shadow-neutral-500/30 hover:shadow-md left-0 duration-300 overflow-hidden border-t sm:border z-50 w-full h-16 sm:max-w-md sm:rounded-xl inset-x-0 mx-auto'>
+				<div className='grid h-full grid-cols-5 mx-auto'>
 					{user?.accountType === 'User' && (
 						<>
 							{filteredMenu.map((item, index) => {
