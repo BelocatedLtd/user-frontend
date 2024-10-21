@@ -42,6 +42,8 @@ import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import TimeAgo from 'timeago-react'
 import { cn } from '../../../../helpers'
+import { submitTask } from '@/services/advertService'
+
 
 const TaskEarn = () => {
 	const router = useRouter()
@@ -166,6 +168,17 @@ const TaskEarn = () => {
 			(advert: any) => advert._id === selectedAdvertId,
 		)
 
+	const existingTask = await submitTask();
+
+	if(existingTask){
+		
+
+			toast.error('task has been created already')
+			router.push('/dashboard/tasks')
+		}
+		else{
+	
+
 		console.log('🚀 ~ handleConfirm ~ taskToPerform:', taskToPerform)
 
 		const randomIndex = Math.floor(
@@ -220,7 +233,7 @@ const TaskEarn = () => {
 			toast.error('Sorry, cannot find advert, so task cannot be created')
 		}
 	}
-
+	}
 	const handleCloseModal = () => {
 		setModalOpen(false)
 	}
