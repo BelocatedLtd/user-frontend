@@ -185,7 +185,7 @@ const [openProofModal, setOpenProofModal] = useState(false);
             <span className="font-medium">Pricing:</span> ₦{adperPostAmt} per advert
           </p>
           <p className="text-gray-700">
-            <span className="font-medium">Completed Tasks:</span> {completedTasksCount}
+            <span className="font-semi-bold">Approved Tasks:</span> {completedTasksCount}
           </p>
           <p className="text-gray-700">
             <span className="font-medium">Submitted Tasks:</span> {taskSubmitters?.length}
