@@ -45,7 +45,7 @@ export const icons = [
         icon: appstore
     },
     {
-        platform: 'playstore',
+        platform: 'android app download',
         icon: playstore
     },
     {
