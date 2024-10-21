@@ -122,7 +122,7 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 		<div className=''>
 			{/* Desktop Sidebar menu */}
 			<div
-				className={`hidden fixed top-0 left-0 w-[230px] h-screen shrink-0 border border-right border-gray-200 overflow-auto md:flex md:flex-col`}
+				className={`hidden fixed top-0 left-0 w-[230px] h-screen shrink-0 border border-right border-gray-200 overflow-auto md:flex md:flex-col mt-4`}
 				style={{ width: isOpen ? '230px' : '60px' }}>
 				<div className='top_section flex justify-between items-center w-full py-6 px-3 text-[20px]  bg-tertiary_bg'>
 					<h3
