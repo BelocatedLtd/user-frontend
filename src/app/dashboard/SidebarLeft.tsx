@@ -177,7 +177,7 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 			</main>
 
 			{/* Mobile footer menu */}
-			<div className='flex fixed bottom-0 w-full md:hidden bg-white p-2 h-fit shrink-0 border border-top border-gray-200 justify-center mt-5' style={{ marginTop: '150px' }}>
+			<div className='fixed bottom-0 z-50 w-full -translate-x-1/2 bg-white border-t border-gray-200 left-1/2 dark:bg-gray-700 dark:border-gray-600'>
 				<div className='flex'>
 					{user?.accountType === 'User' && (
 						<>
