@@ -166,11 +166,7 @@ const TaskEarn = () => {
 	const handleConfirm = async () => {
 		setIsLoading(true);
 		try {
-			if (data) {
-				toast.error('Task has been created already');
-				router.push('/dashboard/tasks');
-				return; // Exit early if the task exists
-			}
+			
 
 			const taskToPerform: any = finalFilteredTasks?.find(
 				(advert: any) => advert._id === selectedAdvertId,
