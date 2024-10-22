@@ -1,4 +1,6 @@
 
+
+
 import close from '@/assets/close.svg'
 import { useEffect, useState } from 'react'
 import toast, { CheckmarkIcon, LoaderIcon } from 'react-hot-toast'
@@ -101,35 +103,36 @@ const [openProofModal, setOpenProofModal] = useState(false);
     setSelectedProof(null);
   };
   const handleTaskApproval = async (e: any, clickedTask: any) => {
-    e.preventDefault()
-
-    if (clickedTask.status === 'Approved') {
-      toast.success('Task has already been approved')
-      return
-    }
-
-    const approveTaskData = {
-      taskId: clickedTask?._id,
-      status: 'Approved',
-      message: 'The advertiser approved this task',
-    }
-
-    if (!clickedTask?._id) {
-      toast.error('Task information missing')
-      return
-    }
-
-    dispatch(handleApproveTask(approveTaskData) as any)
-
-    if (isError) {
-      toast.error('Error Approving Task')
-    }
-
-    if (isSuccess) {
-      toast.success('Task Approved')
-      callback()
-    }
-  }
+    		e.preventDefault()
+    
+    		if (clickedTask.status === 'Approved') {
+    			toast.success('Task has already been approved')
+    			return
+    		}
+    
+    		const approveTaskData = {
+    			taskId: clickedTask?._id,
+    			status: 'Approved',
+    			message: 'The advertiser approved this task',
+    		}
+    
+    		if (!clickedTask?._id) {
+    			toast.error('Task information missing')
+    			return
+    		}
+    
+    		dispatch(handleApproveTask(approveTaskData) as any)
+    
+    		if (isError) {
+    			toast.error('Error Approving Task')
+    		}
+    
+    		if (isSuccess) {
+    			toast.success('Task Approved')
+    			callback()
+    		}
+    	}
+    
 
   const getPaymentStatusBgColor = (status: any) => {
     switch (status) {
@@ -245,7 +248,7 @@ const [openProofModal, setOpenProofModal] = useState(false);
         </div>
 
       </div>
-       <div onClick={() => settoggleTaskPerformers(!toggleTaskPerformers)} className="border rounded-xl p-6 hover:shadow-lg">
+      <div onClick={() => settoggleTaskPerformers(!toggleTaskPerformers)} className="border rounded-xl p-6 hover:shadow-lg">
       {/* Task Performers Modal */}
       <Modal
         open={toggleTaskPerformers}
@@ -260,7 +263,7 @@ const [openProofModal, setOpenProofModal] = useState(false);
             ✕
           </button>
 
-          {taskPerformersDetails?.map((tp: any) => (
+          {taskSubmitters?.map((tp: any) => (
             <div key={tp._id} className="border-b py-6">
               <h3 className="font-semibold">Allocation Result</h3>
               <div className="flex justify-between items-center my-4">
@@ -270,19 +273,14 @@ const [openProofModal, setOpenProofModal] = useState(false);
                   <p className="text-xs text-gray-500">{formatDate(tp.createdAt)}</p>
                 </div>
 
-                 <div className='flex items-center gap-2'>
-                      <button
-                        onClick={(e) => handleTaskApproval(e, tp)}
-                        className={`
-                                ${tp?.status === 'Approved'
-                            ? 'bg-green-600'
-                            : 'bg-yellow-600'
-                          } 
-                                flex items-center gap-2 rounded-2xl px-3 py-2 text-primary hover:bg-orange-400`}>
-                        {tp?.status === 'Approved' ? 'Approved' : 'Approve'}
-                        <span>{isLoading && <LoaderIcon />}</span>
-                      </button>
-                    </div>
+                <button
+                  onClick={(e) => handleTaskApproval(e, tp)}
+                  className={`px-4 py-2 rounded-md text-white ${
+                    tp.status === 'Approved' ? 'bg-green-500' : 'bg-yellow-500 hover:bg-yellow-600'
+                  }`}
+                >
+                  {tp.status === 'Approved' ? 'Approved' : 'Approve'}
+                </button>
               </div>
 
               <div className="flex justify-between items-center text-sm">
@@ -340,6 +338,7 @@ const [openProofModal, setOpenProofModal] = useState(false);
         </div>
       </Modal>
     </div>
+
 
 
       {/* <Modal
