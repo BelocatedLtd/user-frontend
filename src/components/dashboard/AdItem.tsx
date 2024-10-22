@@ -245,123 +245,101 @@ const [openProofModal, setOpenProofModal] = useState(false);
         </div>
 
       </div>
+       <div onClick={() => settoggleTaskPerformers(!toggleTaskPerformers)} className="border rounded-xl p-6 hover:shadow-lg">
+      {/* Task Performers Modal */}
       <Modal
         open={toggleTaskPerformers}
-        onClose={() => {
-          settoggleTaskPerformers(false);
-        }}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        onClose={() => settoggleTaskPerformers(false)}
+        aria-labelledby="task-performers-modal"
       >
-        <div className="fixed inset-0 bg-white z-50 flex flex-col overflow-y-auto">
-          <div className="relative flex-1 p-6 md:p-12">
-            <button
-              onClick={() => settoggleTaskPerformers(false)}
-              className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200"
-            >
-              ✕
-            </button>
+        <div className="fixed inset-0 bg-white z-50 p-8 overflow-y-auto">
+          <button
+            onClick={() => settoggleTaskPerformers(false)}
+            className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full hover:bg-gray-200"
+          >
+            ✕
+          </button>
 
-            {taskSubmitters?.map((tp: any) => (// Use the defined type here
-              <div className="border-b border-gray-200 py-6" key={tp._id}>
-                <h3 className="text-sm font-semibold text-gray-800 mb-1">Allocation Result</h3>
-                <div className="mb-4 flex justify-between items-center gap-2">
-    <div>
-        
-            <div className="mb-1">
-                <small className="text-xs text-gray-500 font-medium">
-                    @{tp?.taskPerformerId?.username}
-                </small>
-                <h3 className="text-sm font-medium text-gray-800 mt-1 mb-0">
-                    {tp?.taskPerformerId?.fullname}
-                </h3>
-            </div>
-       
-        <span className="text-xs text-gray-400">
-            {formatDate(tp?.createdAt)}
-        </span>
-    </div>
+          {taskPerformersDetails?.map((tp: any) => (
+            <div key={tp._id} className="border-b py-6">
+              <h3 className="font-semibold">Allocation Result</h3>
+              <div className="flex justify-between items-center my-4">
+                <div>
+                  <p className="text-sm">Username: @{tp?.taskPerformerId?.username}</p>
+                  <p className="text-sm">Fullname: {tp?.taskPerformerId?.fullname}</p>
+                  <p className="text-xs text-gray-500">{formatDate(tp.createdAt)}</p>
+                </div>
 
-                  <button
-                    onClick={(e) => handleTaskApproval(e, tp)}
-                    className={`${tp?.status === 'Approved' ? 'bg-green-600' : 'bg-yellow-600'
-                      } flex items-center gap-2 px-4 py-2 text-white rounded-md hover:bg-orange-400`}
+                 <div className='flex items-center gap-2'>
+                      <button
+                        onClick={(e) => handleTaskApproval(e, tp)}
+                        className={`
+                                ${tp?.status === 'Approved'
+                            ? 'bg-green-600'
+                            : 'bg-yellow-600'
+                          } 
+                                flex items-center gap-2 rounded-2xl px-3 py-2 text-primary hover:bg-orange-400`}>
+                        {tp?.status === 'Approved' ? 'Approved' : 'Approve'}
+                        <span>{isLoading && <LoaderIcon />}</span>
+                      </button>
+                    </div>
+              </div>
+
+              <div className="flex justify-between items-center text-sm">
+                <div>
+                  <label>Social Media:</label>{' '}
+                  <a
+                    href={tp.socialPageLink}
+                    className="text-blue-500 hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    {tp?.status === 'Approved' ? 'Approved' : 'Approve'}
-                    <span>{isLoading && <LoaderIcon />}</span>
-                  </button>
+                    {tp.socialPageLink.slice(0, 13)}...
+                  </a>
                 </div>
 
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-1">
-                  <div>
-                    <label className="font-bold text-xs">Social Media:</label>
-                    <a
-                      href={tp?.socialPageLink}
-                      className="text-blue-600 hover:text-red-600 text-xs"
-                    >
-                      {tp?.socialPageLink.slice(0, 13)}...
-                    </a>
-                  </div>
-
-                  <div>
-                    <label className="font-bold text-xs">Status</label>
-                    <p className="flex items-center gap-2 text-xs">
-                      <CheckmarkIcon /> {tp?.status}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-1">
-                  <label className="font-bold text-xs">Proof: </label>
-                  {tp?.proofOfWorkMediaURL?.[0]?.secure_url ? (
-                    <span
-                      onClick={() => handleProofClick(tp?.proofOfWorkMediaURL?.[0]?.secure_url)}
-                      className="text-blue-600 hover:text-red-600 cursor-pointer text-xs"
-                    >
-                      Click here to view proof
-                    </span>
-                  ) : (
-                    'N/A'
-                  )}
+                <div>
+                  <label>Status:</label> {tp.status}
                 </div>
               </div>
-            ))}
-          </div>
+
+              <div className="mt-2">
+                <label>Proof:</label>{' '}
+                {tp.proofOfWorkMediaURL?.[0]?.secure_url ? (
+                  <span
+                    onClick={() => handleProofClick(tp.proofOfWorkMediaURL[0].secure_url)}
+                    className="text-blue-500 hover:text-red-500 cursor-pointer"
+                  >
+                    View Proof
+                  </span>
+                ) : (
+                  'N/A'
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </Modal>
 
-      {/* Modal for Image Proof */}
-
-
-
-<Modal
-  open={openProofModal}
-  onClose={handleCloseProofModal}
-  aria-labelledby="proof-modal-title"
-  aria-describedby="proof-modal-description"
-  className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
->
-  <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-    {selectedProof ? (
-      <Image
-        src={selectedProof}
-        alt="Proof of Work"
-        width={400}
-        height={400}
-        className="rounded-lg"
-      />
-    ) : (
-      <p className="text-center">No proof available.</p>
-    )}
-
-    <button
-      onClick={handleCloseProofModal}
-      className="mt-4 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded w-full"
-    >
-      Close
-    </button>
-  </div>
-</Modal>
+      {/* Proof Modal */}
+      <Modal open={openProofModal} onClose={handleCloseProofModal} aria-labelledby="proof-modal">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            {selectedProof ? (
+              <Image src={selectedProof} alt="Proof" width={600} height={600} className="rounded-md" />
+            ) : (
+              'No proof available.'
+            )}
+            <button
+              onClick={handleCloseProofModal}
+              className="mt-4 bg-gray-500 text-white px-4 py-2 rounded"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </Modal>
+    </div>
 
 
       {/* <Modal
