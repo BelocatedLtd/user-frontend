@@ -166,11 +166,6 @@ const TaskEarn = () => {
 	const handleConfirm = async () => {
 		setIsLoading(true);
 		try {
-			const data = await submitTask();
-
-
-			console.log('🚀 ~ handleConfirm ~ submitTask response:', data); // Debugging log
-
 			if (data) {
 				toast.error('Task has been created already');
 				router.push('/dashboard/tasks');
