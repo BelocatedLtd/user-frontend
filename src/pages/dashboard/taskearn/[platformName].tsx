@@ -165,29 +165,18 @@ const TaskEarn = () => {
 
 	const handleConfirm = async () => {
 
-		const taskToPerform: any = finalFilteredTasks?.find(
-			(advert: any) => advert._id === selectedAdvertId,
-		)
-		useEffect(() => {
-	const existingTask = async () => {
-		try {
 			const data = await submitTask()
 
-	if(data){
-		
-
+	                 if(data){
 			toast.error('task has been created already')
 			router.push('/dashboard/tasks')
 		}
-
+	
+		const taskToPerform: any = finalFilteredTasks?.find(
+			(advert: any) => advert._id === selectedAdvertId,
+		)
 		
-	 }catch (error) {
-			console.error('Failed ', error)
-		  }
-		}
-		  existingTask()
-		},[]);
-
+	
 		console.log('🚀 ~ handleConfirm ~ taskToPerform:', taskToPerform)
 
 		const randomIndex = Math.floor(
