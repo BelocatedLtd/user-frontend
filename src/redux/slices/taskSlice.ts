@@ -18,7 +18,6 @@ interface TaskState {
 	isSuccess: boolean
 	isLoading: boolean
 	message: string
-	total:number
 }
 
 // Define task data types
