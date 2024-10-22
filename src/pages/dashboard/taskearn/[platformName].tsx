@@ -164,20 +164,29 @@ const TaskEarn = () => {
 	}
 
 	const handleConfirm = async () => {
+
 		const taskToPerform: any = finalFilteredTasks?.find(
 			(advert: any) => advert._id === selectedAdvertId,
 		)
+		useEffect(() => {
+	const existingTask = async () => {
+		try {
+			const data = await submitTask()
 
-	const existingTask = await submitTask();
-
-	if(existingTask){
+	if(data){
 		
 
 			toast.error('task has been created already')
 			router.push('/dashboard/tasks')
 		}
-		else{
-	
+
+		
+	 }catch (error) {
+			console.error('Failed ', error)
+		  }
+		}
+		  existingTask()
+		},[]);
 
 		console.log('🚀 ~ handleConfirm ~ taskToPerform:', taskToPerform)
 
@@ -233,7 +242,7 @@ const TaskEarn = () => {
 			toast.error('Sorry, cannot find advert, so task cannot be created')
 		}
 	}
-	}
+	
 	const handleCloseModal = () => {
 		setModalOpen(false)
 	}
