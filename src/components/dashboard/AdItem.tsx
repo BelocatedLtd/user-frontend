@@ -1,6 +1,3 @@
-
-
-
 import close from '@/assets/close.svg'
 import { useEffect, useState } from 'react'
 import toast, { CheckmarkIcon, LoaderIcon } from 'react-hot-toast'
@@ -184,14 +181,14 @@ const [openProofModal, setOpenProofModal] = useState(false);
 
         {/* Pricing, Completed Tasks, and Submitted Tasks */}
         <div className="mt-2">
-          <p className="text-gray-700">
-            <span className="font-medium">Pricing:</span> ₦{adperPostAmt} per advert
+          <p className="text-gray-700 text-xs">
+            <span className="font-bold">Pricing:</span> ₦{adperPostAmt} per advert
           </p>
-          <p className="text-gray-700">
-            <span className="font-semi-bold">Approved Tasks:</span> {completedTasksCount}
+          <p className="text-gray-700 text-xs">
+            <span className="font-bold">Approved Tasks:</span> {completedTasksCount}
           </p>
-          <p className="text-gray-700">
-            <span className="font-medium">Submitted Tasks:</span> {taskSubmitters?.length}
+          <p className="text-gray-700 text-xs">
+            <span className="font-bold">Submitted Tasks:</span> {taskSubmitters?.length}
           </p>
         </div>
 
@@ -208,27 +205,27 @@ const [openProofModal, setOpenProofModal] = useState(false);
               {url.slice(0, 20)}...
             </a>
           </p>
-          <p className="text-gray-700">
-            <span className="font-medium">Ad Unit:</span> {roi}
+          <p className="text-gray-700 text-xs">
+            <span className="font-bold">Ad Unit:</span> {roi}
           </p>
         </div>
 
         {/* Location Details */}
-        <div className="mt-2 grid grid-cols-2 gap-4">
+        <div className="mt-2 grid grid-cols-2 gap-4 text-xs">
           <div>
-            <span className="font-medium">Gender:</span> {item?.gender}
+            <span className="font-bold">Gender:</span> {item?.gender}
           </div>
           <div>
-            <span className="font-medium">LGA:</span> {item?.lga}
+            <span className="font-bold">LGA:</span> {item?.lga}
           </div>
           <div>
-            <span className="font-medium">State:</span> {item?.state}
+            <span className="font-bold">State:</span> {item?.state}
           </div>
         </div>
 
         {/* Amount Paid and Status */}
         <div className="mt-4 flex justify-between items-center">
-          <div className="text-lg font-medium">
+          <div className="text-lg font-bold text-xs">
             <span>Amount Paid:</span> ₦{adBudget}
           </div>
           <div>
@@ -265,11 +262,11 @@ const [openProofModal, setOpenProofModal] = useState(false);
 
           {taskSubmitters?.map((tp: any) => (
             <div key={tp._id} className="border-b py-6">
-              <h3 className="font-semibold">Allocation Result</h3>
+              <h3 className="font-bold">Allocation Result</h3>
               <div className="flex justify-between items-center my-4">
                 <div>
-                  <p className="text-sm">Username: @{tp?.taskPerformerId?.username}</p>
-                  <p className="text-sm">Fullname: {tp?.taskPerformerId?.fullname}</p>
+                  <p className="text-sm">@{tp?.taskPerformerId?.username}</p>
+                  <p className="text-sm">{tp?.taskPerformerId?.fullname}</p>
                   <p className="text-xs text-gray-500">{formatDate(tp.createdAt)}</p>
                 </div>
 
