@@ -1,3 +1,4 @@
+
 import close from '@/assets/close.svg';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -14,8 +15,10 @@ import { icons } from '../data/socialIcon';
 import TaskProofModal from '../ui/TaskProofModal';
 import { Modal } from '@mui/material';
 import Image from 'next/image';
-import { cn } from '../../../helpers';
 import Loader from '../loader/Loader';
+
+
+
 
 interface AdItemProps {
   id: string;
@@ -59,7 +62,6 @@ const AdItem = ({
   const isLoading = useSelector(selectIsLoading);
   const [toggleTaskProofModal, setToggleTaskProofModal] = useState(false);
   const [taskProof, setTaskProof] = useState<any>(null);
-  const tasks = useSelector(selectTasks);
 
   useEffect(() => {
     if (status === 'Pending') {
@@ -73,7 +75,7 @@ const AdItem = ({
 
   const handleToggleTaskPerformers = (e: any) => {
     e.preventDefault();
-    if (taskSubmitters && taskSubmitters.length === 0) {
+    if (!taskSubmitters || taskSubmitters.length === 0) {
       toast.error('No Task Submitted');
       return;
     }
@@ -85,7 +87,6 @@ const AdItem = ({
     setTaskProof(tp);
     setToggleTaskProofModal(!toggleTaskProofModal);
   }
-
   const [openProofModal, setOpenProofModal] = useState(false);
   const [selectedProof, setSelectedProof] = useState<string | null>(null);
 
@@ -112,28 +113,32 @@ const AdItem = ({
       return;
     }
 
-    const approveTaskData = {
-      taskId: clickedTask?._id,
-      status: 'Approved',
-      message: 'The advertiser approved this task',
-    };
-
     if (!clickedTask?._id) {
       toast.error('Task information missing');
       return;
     }
 
-    await dispatch(handleApproveTask(approveTaskData) as any);
+    const updatedTask = { ...clickedTask, status: 'Approved' };
+    
+    // Optimistically update UI
+    setTaskPerformers((prevTaskPerformers) =>
+      prevTaskPerformers.map((tp) =>
+        tp._id === clickedTask._id ? updatedTask : tp
+      )
+    );
+
+    await approveTask(clickedTask._id);
 
     if (isError) {
       toast.error('Error Approving Task');
-    } else if (isSuccess) {
-      toast.success('Task Approved');
+      // Revert UI update on error
       setTaskPerformers((prevTaskPerformers) =>
         prevTaskPerformers.map((tp) =>
-          tp._id === clickedTask._id ? { ...tp, status: 'Approved' } : tp
+          tp._id === clickedTask._id ? { ...tp, status: 'Pending' } : tp
         )
       );
+    } else if (isSuccess) {
+      toast.success('Task Approved');
     }
   };
 
@@ -167,7 +172,7 @@ const AdItem = ({
         <Image
           src={close}
           alt="close"
-          className=" text-tertiary w-[28px] h-[28px]"
+          className="text-tertiary w-[28px] h-[28px]"
         />
       )}
 
@@ -191,11 +196,12 @@ const AdItem = ({
             <span className="font-bold">Pricing:</span> ₦{adperPostAmt} per advert
           </p>
           <p className="text-gray-700 text-xs">
-            <span className="font-bold">Submitted Tasks:</span>{' '}
-            {taskSubmitters?.length}
+            <span className="font-bold">Approved Tasks:</span> {completedTasksCount}
+          </p>
+          <p className="text-gray-700 text-xs">
+            <span className="font-bold">Submitted Tasks:</span> {taskSubmitters?.length}
           </p>
         </div>
-
         <div className="mt-2">
           <p>
             <span className="font-medium">Link:</span>{' '}
@@ -213,6 +219,7 @@ const AdItem = ({
           </p>
         </div>
 
+        {/* Location Details */}
         <div className="mt-2 grid grid-cols-2 gap-4 text-xs">
           <div>
             <span className="font-bold">Gender:</span> {item?.gender}
@@ -225,21 +232,19 @@ const AdItem = ({
           </div>
         </div>
 
+        {/* Amount Paid and Status */}
         <div className="mt-4 flex justify-between items-center">
           <div className="text-lg font-bold text-xs">
             <span>Amount Paid:</span> ₦{adBudget}
           </div>
           <div>
             <span
-              className={`px-2 py-1 border border-green-500 rounded text-black ${getPaymentStatusBgColor(
-                status
-              )}`}
+              className={`px-2 py-1 border border-green-500 rounded text-black ${getPaymentStatusBgColor(status)}`}
             >
               {status}
             </span>
           </div>
         </div>
-
         <div className="mt-4 flex justify-end gap-2">
           <button className="px-3 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">
             View & Monitor Results
@@ -268,7 +273,7 @@ const AdItem = ({
                   <p className="text-sm">@{tp?.taskPerformerId?.username}</p>
                   <p className="text-sm">{tp?.taskPerformerId?.email}</p>
                 </div>
-                <button
+               <button
                   onClick={(e) => handleTaskApproval(e, tp)}
                   className={`px-4 py-2 text-xs rounded ${
                     tp.status === 'Approved'
@@ -279,17 +284,62 @@ const AdItem = ({
                   {tp.status === 'Approved' ? 'Approved' : 'Approve'}
                 </button>
               </div>
-              <button
-                onClick={() => handleProofClick(tp.proofUrl)}
-                className="text-blue-500 underline"
-              >
-                View Proof
-              </button>
+
+              <div className="flex justify-between items-center text-sm">
+                <div>
+                  <label>Social Media:</label>{' '}
+                  <a
+                    href={tp.socialPageLink}
+                    className="text-blue-500 hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {tp.socialPageLink.slice(0, 13)}...
+                  </a>
+                </div>
+
+                <div>
+                  <label>Status:</label> {tp.status}
+                </div>
+              </div>
+
+              <div className="mt-2">
+                <label>Proof:</label>{' '}
+                {tp.proofOfWorkMediaURL?.[0]?.secure_url ? (
+                  <span
+                    onClick={() => handleProofClick(tp.proofOfWorkMediaURL[0].secure_url)}
+                    className="text-blue-500 hover:text-red-500 cursor-pointer"
+                  >
+                    View Proof
+                  </span>
+                ) : (
+                  'N/A'
+                )}
+              </div>
             </div>
           ))}
         </div>
       </Modal>
-    </div>
+       {/* Proof Modal */}
+       <Modal open={openProofModal} onClose={handleCloseProofModal} aria-labelledby="proof-modal">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            {selectedProof ? (
+              <Image src={selectedProof} alt="Proof" width={600} height={600} className="rounded-md" />
+            ) : (
+              'No proof available.'
+            )}
+            <button
+              onClick={handleCloseProofModal}
+              className="mt-4 bg-gray-500 text-white px-4 py-2 rounded"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+          </div>
   );
 };
 
