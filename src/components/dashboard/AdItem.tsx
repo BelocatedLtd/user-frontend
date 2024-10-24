@@ -51,7 +51,7 @@ const AdItem = ({
 }: AdItemProps) => {
   const [payBtn, setPayBtn] = useState('Pay Now')
   const [toggleTaskPerformers, settoggleTaskPerformers] = useState(false)
-  const [taskPerformers, setTaskPerformers] = useState(taskSubmitters || []) // Initialize with taskSubmitters
+  const [taskPerformers, setTaskPerformers] = useState(taskSubmitters || []);
   const dispatch = useDispatch()
   const isError = useSelector(selectIsError)
   const isSuccess = useSelector(selectIsSuccess)
@@ -103,42 +103,41 @@ const AdItem = ({
   };
 
 
- const handleTaskApproval = async (e: any, clickedTask: any) => {
+const handleTaskApproval = async (e: any, clickedTask: any) => {
     e.preventDefault();
     e.stopPropagation();
 
     if (clickedTask.status === 'Approved') {
-      toast.success('Task has already been approved');
-      return;
+        toast.success('Task has already been approved');
+        return;
     }
 
     const approveTaskData = {
-      taskId: clickedTask?._id,
-      status: 'Approved',
-      message: 'The advertiser approved this task',
+        taskId: clickedTask?._id,
+        status: 'Approved',
+        message: 'The advertiser approved this task',
     };
 
     if (!clickedTask?._id) {
-      toast.error('Task information missing');
-      return;
+        toast.error('Task information missing');
+        return;
     }
 
-    // Dispatch the action to approve the task
-    await dispatch(handleApproveTask(approveTaskData) as any); // Ensure it's awaited
+    await dispatch(handleApproveTask(approveTaskData) as any);
 
     if (isError) {
-      toast.error('Error Approving Task');
+        toast.error('Error Approving Task');
     } else if (isSuccess) {
-      toast.success('Task Approved');
-
-      // Update local state directly to reflect the change
-      setTaskPerformers((prevTaskPerformers) =>
-        prevTaskPerformers.map((tp) =>
-          tp._id === clickedTask._id ? { ...tp, status: 'Approved' } : tp
-        )
-      );
+        toast.success('Task Approved');
+        // Update local state directly to reflect the change
+        setTaskPerformers((prevTaskPerformers) =>
+            prevTaskPerformers.map((tp) =>
+                tp._id === clickedTask._id ? { ...tp, status: 'Approved' } : tp
+            )
+        );
     }
-  };
+};
+
   
   const getPaymentStatusBgColor = (status: any) => {
     switch (status) {
@@ -267,7 +266,7 @@ const AdItem = ({
             ✕
           </button>
 
-          {taskSubmitters?.map((tp: any) => (
+          {taskPerformers?.map((tp: any) => (
             <div key={tp._id} className="border-b py-6">
               <h3 className="font-bold">Allocation Result</h3>
               <div className="flex justify-between items-center my-4">
@@ -278,11 +277,11 @@ const AdItem = ({
                 </div>
 
                 <button
-                  onClick={(e) => handleTaskApproval(e, tp)}
-                  className={`px-4 py-2 rounded-md text-white ${tp.status === 'Approved' ? 'bg-green-500' : 'bg-yellow-500 hover:bg-yellow-600'
-                    }`}
-                >
-                  {tp.status === 'Approved' ? 'Approved' : 'Approve'}
+                   onClick={(e) => handleTaskApproval(e, tp)}
+                   className={`px-4 py-2 rounded-md text-white ${tp.status === 'Approved' ? 'bg-green-500' : 'bg-yellow-500 hover:bg-yellow-600'
+                }`}
+        >
+            {tp.status === 'Approved' ? 'Approved' : 'Approve'}
                 </button>
               </div>
 
