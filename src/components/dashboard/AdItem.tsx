@@ -102,6 +102,7 @@ const AdItem = ({
   };
   const handleTaskApproval = async (e: any, clickedTask: any) => {
     e.preventDefault();
+    e.stopPropagation();
 
     if (clickedTask.status === 'Approved') {
       toast.success('Task has already been approved');
@@ -119,7 +120,7 @@ const AdItem = ({
       return;
     }
 
-    dispatch(handleApproveTask(approveTaskData) as any);
+   await dispatch(handleApproveTask(approveTaskData) as any);
   };
 
   useEffect(() => {
@@ -252,9 +253,9 @@ const AdItem = ({
 
       {/* Task Performers Modal */}
       <Modal
-        open={toggleTaskPerformers}
-        onClose={() => settoggleTaskPerformers(false)} // Control closing explicitly.
-        aria-labelledby="task-performers-modal"
+        open={toggleTaskPerformers} // Keeps the modal open if state is true
+  onClose={() => settoggleTaskPerformers(false)}
+  aria-labelledby="task-performers-modal"
       >
         <div className="fixed inset-0 bg-white z-50 p-8 overflow-y-auto">
           <button
