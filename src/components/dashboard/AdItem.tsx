@@ -193,9 +193,7 @@ const AdItem = ({
           <p className="text-gray-700 text-xs">
             <span className="font-bold">Pricing:</span> ₦{adperPostAmt} per advert
           </p>
-          <p className="text-gray-700 text-xs">
-            <span className="font-bold">Approved Tasks:</span> {completedTasksCount}
-          </p>
+         
           <p className="text-gray-700 text-xs">
             <span className="font-bold">Submitted Tasks:</span> {taskSubmitters?.length}
           </p>
