@@ -18,6 +18,7 @@ interface TaskState {
 	isSuccess: boolean
 	isLoading: boolean
 	message: string
+	
 }
 
 // Define task data types
@@ -271,13 +272,24 @@ const taskSlice = createSlice({
 			.addCase(
 				handleApproveTask.fulfilled,
 				(state, action: PayloadAction<any>) => {
-					state.isLoading = false
-					state.isSuccess = true
-					state.isError = false
-					state.task = action.payload
-					state.tasks.push(action.payload)
-					toast.success('Task has been approved by admin')
-				},
+					state.isLoading = false;
+					state.isSuccess = true;
+					state.isError = false;
+			
+					// Find the task to update by ID and update its status
+					const updatedTaskIndex = state.tasks.findIndex(
+						(task) => task._id === action.payload._id
+					);
+			
+					if (updatedTaskIndex !== -1) {
+						state.tasks[updatedTaskIndex] = {
+							...state.tasks[updatedTaskIndex],
+							...action.payload,
+						};
+					}
+			
+					toast.success('Task has been approved by admin');
+				}
 			)
 			.addCase(
 				handleApproveTask.rejected,
@@ -286,6 +298,7 @@ const taskSlice = createSlice({
 					state.isError = true
 					state.message = action.payload
 					toast.error(action.payload)
+					
 				},
 			)
 
