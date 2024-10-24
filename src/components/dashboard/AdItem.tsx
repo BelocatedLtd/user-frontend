@@ -33,7 +33,6 @@ interface AdItemProps {
   callback: () => void
   completedTasksCount: number
 }
-
 const AdItem = ({
   date,
   title,
@@ -52,12 +51,14 @@ const AdItem = ({
 }: AdItemProps) => {
   const [payBtn, setPayBtn] = useState('Pay Now')
   const [toggleTaskPerformers, settoggleTaskPerformers] = useState(false)
+  const [taskPerformers, setTaskPerformers] = useState(taskSubmitters || []) // Initialize with taskSubmitters
   const dispatch = useDispatch()
   const isError = useSelector(selectIsError)
   const isSuccess = useSelector(selectIsSuccess)
   const isLoading = useSelector(selectIsLoading)
   const [toggleTaskProofModal, setToggleTaskProofModal] = useState(false)
   const [taskProof, setTaskProof] = useState()
+
 
   useEffect(() => {
     if (status === 'Pending') {
@@ -100,7 +101,9 @@ const AdItem = ({
     setOpenProofModal(false);
     setSelectedProof(null);
   };
-  const handleTaskApproval = async (e: any, clickedTask: any) => {
+
+
+ const handleTaskApproval = async (e: any, clickedTask: any) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -120,22 +123,23 @@ const AdItem = ({
       return;
     }
 
-   await dispatch(handleApproveTask(approveTaskData) as any);
-  };
+    // Dispatch the action to approve the task
+    await dispatch(handleApproveTask(approveTaskData) as any); // Ensure it's awaited
 
-  useEffect(() => {
-    if (isError) toast.error('Error Approving Task');
-    if (isSuccess) {
+    if (isError) {
+      toast.error('Error Approving Task');
+    } else if (isSuccess) {
       toast.success('Task Approved');
-      // Ensure the modal stays open without calling callback() to toggle it.
-      // callback(); <-- Remove this line if it closes the modal.
+
+      // Update local state directly to reflect the change
+      setTaskPerformers((prevTaskPerformers) =>
+        prevTaskPerformers.map((tp) =>
+          tp._id === clickedTask._id ? { ...tp, status: 'Approved' } : tp
+        )
+      );
     }
-  }, [isError, isSuccess]);
-
-
-
-
-
+  };
+  
   const getPaymentStatusBgColor = (status: any) => {
     switch (status) {
       case 'Pending':
