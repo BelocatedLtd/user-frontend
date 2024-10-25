@@ -123,20 +123,20 @@ const TaskSubmit = ({
 			formData.append('taskId', taskId);
 			formData.append('userSocialName', userSocialName);
 	
-			const response = await submitTask(formData);
-	
-			if (response === "Task submitted successfully, wait for Admin's Approval") {
-				setTaskSubmitted(true);
-				toast.success('Task submitted, wait for admin response');
-	
-				// Notify via socket
-				socket.emit('sendActivity', {
-					userId: user?.id,
-					action: `@${user?.username} just performed a task on ${task?.platform}`,
-				});
-	
-				onClose(); // Close modal or dialog
-			} else {
+			const responseMessage = await submitTask(formData);
+
+			if (responseMessage === "Task submitted successfully, wait for Admin's Approval") {
+			  setTaskSubmitted(true);
+			  toast.success('Task submitted, wait for admin response');
+		
+			  // Notify via WebSocket
+			  socket.emit('sendActivity', {
+				userId: user?.id,
+				action: `@${user?.username} just performed a task on ${task?.platform}`,
+			  });
+			  onClose();
+			
+		} else {
 				toast.error('Error submitting task');
 			}
 		} catch (error) {
