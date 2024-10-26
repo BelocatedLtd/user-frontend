@@ -271,7 +271,7 @@ const AdItem = ({
               <div className="flex justify-between items-center my-4">
                 <div>
                   <p className="text-sm">@{tp?.taskPerformerId?.username}</p>
-                  <p className="text-sm">{tp?.taskPerformerId?.email}</p>
+                
                 </div>
                <button
                   onClick={(e) => handleTaskApproval(e, tp)}
