@@ -118,7 +118,7 @@ const Referral = () => {
 
 	return (
 		<Suspense>
-			<div className='w-full lg:mr-5'>
+			<div className='w-full lg:mr-5 min-h-screen pb-20'>
 				<Loader open={isLoading} />
 
 				<h2 className='mt-1 mb-10 font-semibold text-xl text-gray-700'>
