@@ -53,7 +53,7 @@ const TaskList = () => {
 
 	return (
 		<Suspense>
-			<div className='w-full h-fit'>
+			<div className='w-full min-h-screen pb-20'>
 				{isLoading ? (
 					<Loading />
 				) : (
