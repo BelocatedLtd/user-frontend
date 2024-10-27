@@ -167,7 +167,7 @@ export const getDashboardData = async (): Promise<any> => {
 			(error.response && error.response.data && error.response.data.message) ||
 			error.message ||
 			error.toString()
-		toast.error(`${message}, Error retrieving user data`)
+		toast.error(`${message}, Error retrieving user data, please Logout`)
 		throw new Error(message)
 	}
 }
