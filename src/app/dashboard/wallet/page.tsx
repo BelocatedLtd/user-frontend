@@ -55,7 +55,7 @@ const TransHistory = () => {
 
 	return (
 		<Suspense>
-			<div className='w-full h-fit'>
+			<div className='w-full min-h-screen pb-20'>
 				<Loader open={isLoading} />
 				<div className='md:flex items-center justify-between gap-3  py-5'>
 					<div>
