@@ -260,7 +260,7 @@ const remainTask = totalTasks - tasksCompleted;
 		// 			</div>
 		// 		</div>
 
-		<div className='container w-full h-fit'>
+		<div className='container w-full min-h-screen pb-20'>
 			<div className='justify-between mx-auto md:mr-3'>
 				<div className='md:flex mb-10 px-3 items-center justify-between'>
 					<div className="p-4 bg-white rounded-lg shadow-md">
