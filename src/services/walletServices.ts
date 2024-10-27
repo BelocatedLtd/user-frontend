@@ -29,7 +29,7 @@ export const getWallet = async (): Promise<any> => {
 			(error.response && error.response.data && error.response.data.message) ||
 			error.message ||
 			error.toString()
-		toast.error(`${message}, Error retrieving user wallet`)
+		toast.error(`${message}, Error retrieving user wallet, Please Logout`)
 	}
 }
 
