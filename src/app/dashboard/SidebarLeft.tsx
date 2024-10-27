@@ -177,34 +177,36 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 			</main>
 
 			{/* Mobile footer menu */}
-			<div className='sticky bottom-0 sm:bottom-5 sm:shadow-lg sm:shadow-neutral-500/30 hover:shadow-md left-0 duration-300 border-t sm:border z-10 w-full h-16 sm:max-w-md sm:rounded-xl inset-x-0 mx-auto bg-white'>
-				<div className='flex justify-around items-center h-full'>
-					{user?.accountType === 'User' && (
-						<>
-							{filteredMenu.map((item, index) => {
-								return (
-									<SidebarItems
-										isMobile
-										key={index}
-										item={item}
-										isOpen={isOpen}
-									/>
-								)
-							})}
-						</>
-					)}
-				</div>
+			{/* Mobile footer menu */}
+<div className='fixed bottom-0 sm:bottom-5 sm:shadow-lg sm:shadow-neutral-500/30 hover:shadow-md left-0 duration-300 border-t sm:border z-10 w-full h-16 sm:max-w-md sm:rounded-xl inset-x-0 mx-auto bg-white'>
+  <div className='flex justify-around items-center h-full'>
+    {user?.accountType === 'User' && (
+      <>
+        {filteredMenu.map((item, index) => {
+          return (
+            <SidebarItems
+              isMobile
+              key={index}
+              item={item}
+              isOpen={isOpen}
+            />
+          );
+        })}
+      </>
+    )}
+  </div>
 
-				{user?.accountType === 'Admin' && (
-					<div className='flex gap-0'>
-						<>
-							{adminMenu.slice(0, -3).map((item, index) => {
-								return <SidebarItems key={index} item={item} isOpen={isOpen} />
-							})}
-						</>
-					</div>
-				)}
-			</div>
+  {user?.accountType === 'Admin' && (
+    <div className='flex gap-0'>
+      <>
+        {adminMenu.slice(0, -3).map((item, index) => {
+          return <SidebarItems key={index} item={item} isOpen={isOpen} />;
+        })}
+      </>
+    </div>
+  )}
+</div>
+
 		</div>
 	)
 }
