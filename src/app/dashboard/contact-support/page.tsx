@@ -17,7 +17,7 @@ const ContactSupport = () => {
 
 	return (
 		<Suspense>
-			<div className='w-full h-fit'>
+			<div className='w-full h-fit min-h-screen pb-20'>
 				<div className='flex items-center gap-3 border-b border-gray-200 pb-6 mb-3'>
 					<BackButton />
 					<div className='flex flex-col'>
