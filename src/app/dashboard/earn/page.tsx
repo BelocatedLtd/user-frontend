@@ -61,7 +61,7 @@ const Earn = () => {
 			{isLoading ? (
 				<Loading />
 			) : (
-				<div className='w-full h-fit'>
+				<div className='w-full min-h-screen pb-20'>
 					<div className='justify-between mx-auto md:mr-5'>
 						<div className='flex items-center gap-3 border-b border-gray-200 py-5'>
 							<MdOutlineKeyboardArrowLeft
