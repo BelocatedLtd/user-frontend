@@ -10,7 +10,7 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
 	if (!pathname) redirect('/dashboard/settings/edit-profile')
 
 	return (
-		<div className='w-full'>
+		<div className='w-full min-h-screen pb-20'>
 			<div className='mb-4'>
 				<h2 className='mt-1 font-semibold text-xl text-gray-700'>Settings</h2>
 			</div>
