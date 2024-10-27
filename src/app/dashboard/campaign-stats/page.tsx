@@ -38,7 +38,7 @@ const CampaignStats = () => {
 	}, [currentPage, limit])
 
 	return (
-		<div className='w-full p-5 md:p-10'>
+		<div className='w-full p-5 md:p-10 min-h-screen pb-20'>
 			<Loader open={isLoading} />
 
 			{/* Header Section */}
