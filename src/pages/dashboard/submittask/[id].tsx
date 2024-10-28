@@ -107,9 +107,9 @@ const TaskSubmit = () => {
 		const response = await submitTask(formData)
 		setIsLoading(false)
 
-		if (response === "Task submitted successfully, wait for Admin's Approval") {
+		if (response.data.status === 200) {
 			setTaskSubmitted(true)
-			toast.success('Task submitted, wait for admin response')
+			toast.success(response.data.message || response.message)
 
 			socket.emit('sendActivity', {
 				userId: user?.id,
