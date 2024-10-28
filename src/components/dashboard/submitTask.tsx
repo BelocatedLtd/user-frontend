@@ -125,7 +125,7 @@ const TaskSubmit = ({
 	
 			const responseMessage = await submitTask(formData);
 
-			if (responseMessage === "Task submitted successfully, wait for Admin's Approval") {
+			if (responseMessage) {
 			  setTaskSubmitted(true);
 			  toast.success('Task submitted, wait for admin response');
 		
