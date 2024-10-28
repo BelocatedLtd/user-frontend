@@ -243,7 +243,7 @@ const TaskEarn = () => {
 
 	return (
 		<Suspense>
-			<div className='w-full '>
+			<div className='w-full min-h-screen pb-20'>
 				<Loader open={isLoading} />
 				<div>
 					<div className='flex items-center gap-3 border-b border-gray-200 py-5'>
