@@ -124,11 +124,10 @@ const TaskSubmit = ({
 			formData.append('userSocialName', userSocialName);
 	
 			const responseMessage = await submitTask(formData);
-			console.log(responseMessage)
-				if (responseMessage) {
+			if (responseMessage.status === 200) {
+			 toast.success(response.data.message); 
+			 console.log('Message:', response.data.message);
 			setTaskSubmitted(true)
-			toast.success(responseMessage)
-		
 			  // Notify via WebSocket
 			  socket.emit('sendActivity', {
 				userId: user?.id,
