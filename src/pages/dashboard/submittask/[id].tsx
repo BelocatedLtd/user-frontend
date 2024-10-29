@@ -107,9 +107,9 @@ const TaskSubmit = () => {
 		const response = await submitTask(formData)
 		setIsLoading(false)
 
-		if (response.data.status === 200) {
+		if (response) {
 			setTaskSubmitted(true)
-			toast.success(response.data.message || response.message)
+			toast.success(response)
 
 			socket.emit('sendActivity', {
 				userId: user?.id,
