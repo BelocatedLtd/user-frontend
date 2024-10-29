@@ -125,8 +125,8 @@ const TaskSubmit = ({
 	
 			const responseMessage = await submitTask(formData);
 			if (responseMessage.status === 200) {
-			 toast.success(response.data.message); 
-			 console.log('Message:', response.data.message);
+			 toast.success(responseMessage.data.message); 
+			 console.log('MYMessage:', responseMessage.data.message);
 			setTaskSubmitted(true)
 			  // Notify via WebSocket
 			  socket.emit('sendActivity', {
