@@ -123,7 +123,7 @@ const AdBuy = () => {
 
 	return (
 		<Suspense>
-			<div>
+			<div className="w-full min-h-screen pb-20">
 				<div className='flex items-center gap-3 border-b border-gray-200 py-5 mb-3'>
 					<BackButton />
 					<div className='flex flex-col'>
