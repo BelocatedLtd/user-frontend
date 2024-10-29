@@ -109,7 +109,7 @@ const TaskSubmit = () => {
 
 		if (response.status === 200) {
 			 toast.success(response.data.message); 
-			 console.log('Message:', response.data.message);
+			 console.log('myMessage:', response.data.message);
 			setTaskSubmitted(true)
 			socket.emit('sendActivity', {
 				userId: user?.id,
