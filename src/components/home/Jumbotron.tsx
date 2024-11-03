@@ -17,7 +17,8 @@ const Jumbotron = () => {
 	const [isLogin, setIsLogIn] = useState(false)
 	const dispatch = useAppDispatch()
 	const searchParam = useSearchParams()
-	const referralToken = searchParam?.get('referralToken')
+	const referralToken = searchParam?.get('referralToken');
+	const referralUsername = searchParam?.get('ref')
 	const action = searchParam?.get('action')
 
 	const showRegModal = () => {
@@ -54,6 +55,23 @@ const Jumbotron = () => {
 			setIsLogIn(false)
 		}
 	}, [action])
+
+		useEffect(() => {
+		if(referralToken){
+			console.log('Referral Token', referralToken);
+
+			localStorage.setItem('referralToken', referralToken);
+		}
+
+		}, [referralToken])
+	
+	useEffect(() => {
+			if(referralUsername){
+				console.log('Referral Token', referralUsername);
+	
+				localStorage.setItem('referralToken', referralUsername);
+			}
+			}, [referralUsername])
 
 	return (
 		<section
@@ -115,7 +133,6 @@ const Jumbotron = () => {
 				aria-describedby='modal-modal-description'>
 				<div className='flex items-center justify-center h-full'>
 					<Register
-						referralToken={referralToken}
 						showRegModal={showRegModal}
 						showLoginModal={showLoginModal}
 						closeModal={closeModal}
