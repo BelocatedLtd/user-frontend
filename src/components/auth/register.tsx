@@ -30,10 +30,10 @@ const initialState = {
 	password2: '',
 }
 
-const Register = ({ showLoginModal, closeModal, referralToken }: any) => {
+const Register = ({ showLoginModal, closeModal}: any) => {
+		const referralToken = localStorage.getItem('referralToken')
 	const searchParam = useSearchParams()
-	const referralUsername = searchParam?.get('ref')
-
+	const referralUsername = localStorage.getItem('referralUsername')
 	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
 	const [isError, setIsError] = useState(false)
