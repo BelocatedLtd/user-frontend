@@ -67,9 +67,9 @@ const Jumbotron = () => {
 	
 	useEffect(() => {
 			if(referralUsername){
-				console.log('Referral Token', referralUsername);
+				console.log('Referral Username', referralUsername);
 	
-				localStorage.setItem('referralToken', referralUsername);
+				localStorage.setItem('referralUsername', referralUsername);
 			}
 			}, [referralUsername])
 
