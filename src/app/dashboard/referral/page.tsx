@@ -250,7 +250,14 @@ const Referral = () => {
 						<h3 className='mb-6'>Referral</h3>
 						<ReferralsTable />
 					</div>
-
+<div style={{ marginTop: '20px', fontSize: '14px', color: '#555' }}>
+      <h4>Referral Points System:</h4>
+      <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
+        <li>1 successful referral = 10 points</li>
+        <li>10 points = ₦50</li>
+        <li>Your points will automatically convert to Naira when you reach 100 points.</li>
+      </ul>
+    </div>
 					<div className='border p-6 border-gray-200 rounded-lg '>
 						<p>Referral Challenge</p>
 						<div className='flex text-tertiary items-center justify-center h-full w-full'>
