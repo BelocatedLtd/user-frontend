@@ -36,7 +36,10 @@ const TaskSubmit = ({
 	const [selectedImages, setSelectedImages] = useState<string[]>([])
 	const [userSocialName, setUserSocialName] = useState<string>('')
 	const [taskSubmitted, setTaskSubmitted] = useState(false)
-
+	
+useEffect(() => {
+  toast.success("Toast is working!");
+}, []);
 	// Fetch task by ID from backend
 	const loadTask = async () => {
 		try {
