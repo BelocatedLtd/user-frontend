@@ -19,43 +19,50 @@ interface PlatformTasks {
 	[key: string]: { totalTasks: number }
   }
   
+// Import necessary dependencies and interfaces here
 
 const Earn = () => {
 	const router = useRouter()
 	const dispatch = useDispatch()
 	const isError: boolean = useSelector(selectIsError)
 	const user = useSelector(selectUser)
-	const [platformTasks, setPlatformTasks] = useState<{
-		[key: string]: { totalTasks: number }
-	}>({})
+	const [platformTasks, setPlatformTasks] = useState<PlatformTasks>({})
 	const [isLoading, setIsLoading] = useState(false)
 
 	useRedirectLoggedOutUser('/login')
 
 	useEffect(() => {
-  async function getTasks() {
-    try {
-      setIsLoading(true)
-      const res: PlatformTasks = await getTotalTasksByAllPlatforms()
-      setPlatformTasks(res)
+		async function getTasks() {
+			try {
+				setIsLoading(true)
+				const res: PlatformTasks = await getTotalTasksByAllPlatforms()
+				setPlatformTasks(res)
 
-      // Calculate total tasks across all platforms
-      const totalTasksAcrossAllPlatforms = Object.values(res).reduce(
-        (acc, platform) => acc + platform.totalTasks,
-        0
-      )
+				// Calculate total tasks across all platforms
+				const totalTasksAcrossAllPlatforms = Object.values(res).reduce(
+					(acc, platform) => acc + platform.totalTasks,
+					0
+				)
 
-      // Dispatch the total tasks to Redux store
-      dispatch(setTotalTasks(totalTasksAcrossAllPlatforms))
+				// Dispatch the total tasks to Redux store
+				dispatch(setTotalTasks(totalTasksAcrossAllPlatforms))
 
-      setIsLoading(false)
-    } catch (error) {
-      console.error('Failed to retrieve tasks', error)
-    }
-  }
+				setIsLoading(false)
+			} catch (error) {
+				console.error('Failed to retrieve tasks', error)
+			}
+		}
 
-  getTasks()
-}, [dispatch])
+		getTasks()
+	}, [dispatch])
+
+	// Create a sorted version of socialMenu based on totalTasks from platformTasks
+	const sortedMenu = [...socialMenu].sort((a, b) => {
+		const tasksA = platformTasks[a.value]?.totalTasks || 0
+		const tasksB = platformTasks[b.value]?.totalTasks || 0
+		return tasksB - tasksA // Sort in descending order
+	})
+
 	return (
 		<Suspense>
 			{isLoading ? (
@@ -81,7 +88,7 @@ const Earn = () => {
 						</div>
 
 						<div className='grid md:grid-cols-3 gap-8 items-center justify-center mt-[1rem] px-3 py-5'>
-							{socialMenu.map((menu, index) => (
+							{sortedMenu.map((menu, index) => (
 								<div
 									key={index}
 									onClick={(e) => {
@@ -99,16 +106,15 @@ const Earn = () => {
 												/>
 											</div>
 										</div>
-										<div className='flex flex-col md:flex-ro md:justify-between md:items-center md:border-gray-100'>
+										<div className='flex flex-col md:flex-row md:justify-between md:items-center md:border-gray-100'>
 											<div className='flex flex-col w-full'>
 												<h3 className='font-bold text-[20px]'>{menu.title}</h3>
 												<p className='pb-3 text-[14px] text-gray-500 font-semibold'>
-													<span className='font-extrabold'>Earning: </span>{' '}
-													Starts from {toIntlCurrency(menu.earn.toString())}
-													/Task
+													<span className='font-extrabold'>Earning: </span>
+													Starts from {toIntlCurrency(menu.earn.toString())}/Task
 												</p>
 											</div>
-											<div className='w-full '>
+											<div className='w-full'>
 												<small
 													className={`py-2 px-5 ${
 														!platformTasks[menu.value]?.totalTasks ||
