@@ -172,7 +172,7 @@ const TaskEarn = () => {
 			console.log('🚀 ~ handleConfirm ~ submitTask response:', taskExistsResponse); // Debugging log
 
 			// Check if the task already exists and show a message if it does
-			if (taskExistsResponse?.status === 400) {
+			if (taskExistsResponse) {
 				toast.error('Task already exists.');
 				router.push('/dashboard/tasks');
 				return;
