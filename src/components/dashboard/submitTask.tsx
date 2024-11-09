@@ -105,7 +105,7 @@ const TaskSubmit = ({
 				toast.error(
 					'This task cannot be submitted because it has already been created for this advert.'
 				);
-				return;
+				
 			}
 	
 			// Ensure that at least one image is uploaded
@@ -113,7 +113,7 @@ const TaskSubmit = ({
 				toast.error(
 					'Please upload a screenshot to prove you performed the task.'
 				);
-				return;
+				
 			}
 	
 			// Proceed with the task submission
