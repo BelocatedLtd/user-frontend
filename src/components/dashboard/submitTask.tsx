@@ -81,6 +81,7 @@ const TaskSubmit = ({
 		setSelectedImages(updatedImages)
 		URL.revokeObjectURL(imagePreview)
 		toast.success('Image discarded successfully')
+		console.log('Image discarded successfully')
 	}
 
 	// Handle form submission
@@ -106,6 +107,9 @@ const TaskSubmit = ({
 					'This task cannot be submitted because it has already been created for this advert.'
 				);
 				
+			}
+			else{
+toast.success('Task submitted, wait for Admin Approval.');
 			}
 	
 			// Ensure that at least one image is uploaded
