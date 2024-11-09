@@ -292,7 +292,7 @@ const remainTask = totalTasks - tasksCompleted;
 
 
 					{/* Perform Task and Earn Button */}
-					<button
+					<button style={{fontFamily: "'Poppins', sans-serif"}}
 						onClick={() => router.push('/dashboard/earn')}
 						className='text-sm bg-blue-500 text-white px-4 py-3 rounded-lg w-full'>Click here to
 						Perform task and earn
