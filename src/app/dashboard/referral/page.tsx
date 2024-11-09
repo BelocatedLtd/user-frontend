@@ -154,7 +154,7 @@ const Referral = () => {
       <h4>Referral Points System:</h4>
       <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
         <li>1 successful referral = 10 points</li>
-        <li>10 points = ₦50</li>
+        <li>10 points = ₦100</li>
         <li>Your points will automatically convert to Naira when you reach 100 points.</li>
       </ul>
     </div>
