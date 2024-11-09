@@ -127,10 +127,20 @@ toast.success('Task submitted, wait for Admin Approval.');
 			formData.append('taskId', taskId);
 			formData.append('userSocialName', userSocialName);
 	
-			const responseMessage = await submitTask(formData);
-			if (responseMessage.status === 200) {
-			 toast.success(responseMessage.data.message); 
-			 console.log('MYMessage:', responseMessage.data.message);
+			try {
+  const responseMessage = await submitTask(formData);
+  if (responseMessage.status === 200) {
+    toast.success(responseMessage.data.message); 
+	  console.log(responseMessage.data.message);
+  } else {
+    toast.error('Error submitting task');
+	  console.log('error submitting task');
+  }
+} catch (error) {
+  console.error('Task submission error:', error);
+  toast.error('Error submitting task');
+}
+
 			setTaskSubmitted(true)
 			  // Notify via WebSocket
 			  socket.emit('sendActivity', {
