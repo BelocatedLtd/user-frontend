@@ -132,7 +132,7 @@ useEffect(() => {
 
 			try {
 				const responseMessage = await submitTask(formData);
-				if (responseMessage.status === 200) {
+				if (responseMessage) {
 					toast.success(responseMessage.data.message);
 					console.log(responseMessage.data.message);
 				} else {
