@@ -167,16 +167,7 @@ const TaskEarn = () => {
     setIsLoading(true);
     try {
         // Time the taskExistsResponse
-        const taskExistsStartTime = Date.now();
-        const taskExistsResponse = await submitTask();
-        console.log(`submitTask took ${Date.now() - taskExistsStartTime}ms`);
-
-        // Check if the task already exists and show a message if it does
-        if (taskExistsResponse) {
-            toast.error('Task already exists.');
-            router.push('/dashboard/tasks');
-            return;
-        }
+      
 
         const taskToPerform: any = finalFilteredTasks?.find(
             (advert: any) => advert._id === selectedAdvertId
