@@ -98,21 +98,21 @@ export const handleGetTasks = createAsyncThunk<any, void>(
 
 // Submit Task
 export const handleSubmitTask = createAsyncThunk<any, FormData>(
-	'create/handlesubmitTask',
-	async ({ formData }, thunkAPI) => {
-		try {
-			return await submitTask(formData)
-		} catch (error: any) {
-			const message =
-				(error.response &&
-					error.response.data &&
-					error.response.data.message) ||
-				error.message ||
-				error.toString()
-			return thunkAPI.rejectWithValue(message)
-		}
-	},
-)
+  'create/handlesubmitTask',
+  async (formData, thunkAPI) => {
+    try {
+      const response = await submitTask(formData);
+      if (response.status !== 200) {
+        throw new Error(response.data.message || 'Task submission failed');
+      }
+      return response.data;
+    } catch (error: any) {
+      const message = error.response?.data?.message || error.message || 'Task submission error';
+      toast.error(message);  // Ensure toast is here for visibility
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 // Approve Task
 export const handleApproveTask = createAsyncThunk<any, TaskData>(
