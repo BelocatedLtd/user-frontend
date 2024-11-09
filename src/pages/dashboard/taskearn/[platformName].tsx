@@ -163,83 +163,80 @@ const TaskEarn = () => {
 		setModalOpen(true)
 	}
 
-		const handleConfirm = async () => {
-		setIsLoading(true);
-		try {
-			const taskExistsResponse = await submitTask();
+	const handleConfirm = async () => {
+    setIsLoading(true);
+    try {
+        // Time the taskExistsResponse
+        const taskExistsStartTime = Date.now();
+        const taskExistsResponse = await submitTask();
+        console.log(`submitTask took ${Date.now() - taskExistsStartTime}ms`);
 
+        // Check if the task already exists and show a message if it does
+        if (taskExistsResponse) {
+            toast.error('Task already exists.');
+            router.push('/dashboard/tasks');
+            return;
+        }
 
-			console.log('🚀 ~ handleConfirm ~ submitTask response:', taskExistsResponse); // Debugging log
+        const taskToPerform: any = finalFilteredTasks?.find(
+            (advert: any) => advert._id === selectedAdvertId
+        );
 
-			// Check if the task already exists and show a message if it does
-			if (taskExistsResponse) {
-				toast.error('Task already exists.');
-				router.push('/dashboard/tasks');
-				return;
-			}
+        if (!taskToPerform) {
+            toast.error('Cannot find advert, task creation failed');
+            return;
+        }
 
-			const taskToPerform: any = finalFilteredTasks?.find(
-				(advert: any) => advert._id === selectedAdvertId,
-			)
+        console.log('🚀 ~ handleConfirm ~ taskToPerform:', taskToPerform);
 
-		if (!taskToPerform) {
-			toast.error('Cannot find advert, task creation failed');
-			return;
-		}
+        const randomIndex = Math.floor(Math.random() * taskToPerform?.caption.length);
+        const pickedCaption = taskToPerform?.caption[randomIndex];
 
-			console.log('🚀 ~ handleConfirm ~ taskToPerform:', taskToPerform)
+        if (taskToPerform) {
+            // Optimize this by executing in parallel if needed
+            const assetresult = await getSocialPlatformAsset(taskToPerform.platform, taskToPerform.service);
 
-			const randomIndex = Math.floor(
-				Math.random() * taskToPerform?.caption.length,
-			)
-			const pickedCaption = taskToPerform?.caption[randomIndex]
+            const taskData = {
+                advertId: taskToPerform._id,
+                advertiserId: taskToPerform.userId,
+                taskPerformerId: user?.id,
+                title: assetresult.SC,
+                platform: taskToPerform.platform,
+                service: taskToPerform.service,
+                desiredROI: taskToPerform.desiredROI,
+                toEarn: taskToPerform.earnPerTask,
+                gender: taskToPerform.gender,
+                state: taskToPerform.state,
+                lga: taskToPerform.lga,
+                caption: pickedCaption,
+                taskVerification: assetresult.verification,
+                socialPageLink: taskToPerform.socialPageLink,
+                adMedia: taskToPerform.mediaURL,
+            };
 
-			if (taskToPerform) {
-				const assetresult = getSocialPlatformAsset(
-					taskToPerform.platform,
-					taskToPerform.service,
-				)
+            console.log('Task data being created:', taskData);
 
-				const taskData = {
-					advertId: taskToPerform._id,
-					advertiserId: taskToPerform.userId,
-					taskPerformerId: user?.id,
-					title: assetresult.SC,
-					platform: taskToPerform.platform,
-					service: taskToPerform.service,
-					desiredROI: taskToPerform.desiredROI,
-					toEarn: taskToPerform.earnPerTask,
-					gender: taskToPerform.gender,
-					state: taskToPerform.state,
-					lga: taskToPerform.lga,
-					caption: pickedCaption,
-					taskVerification: assetresult.verification,
-					socialPageLink: taskToPerform.socialPageLink,
-					adMedia: taskToPerform.mediaURL,
-				}
+            // Create task
+            const response = await dispatch(createNewTask(taskData) as any);
 
-				console.log('Task data being created:', taskData);
+            if (response.meta.requestStatus === 'rejected') {
+                toast.error('Error creating task.');
+                return;
+            }
 
-				const response = await dispatch(createNewTask(taskData) as any)
-				
-				if (response.meta.requestStatus === 'rejected') {
-					toast.error('Error creating task.');
-					return;
-				}
-		
-				if (response.meta.requestStatus === 'fulfilled') {
-					setSelectedTaskId(response.payload._id);
-					setModalOpen(false);
-					setIsOpen(true);
-				}
-		
-			}
-		} catch (error) {
-				toast.error('An error occurred while processing the task.');
-			} finally {
-				setIsLoading(false);
-			}
-		};
+            if (response.meta.requestStatus === 'fulfilled') {
+                setSelectedTaskId(response.payload._id);
+                setModalOpen(false);
+                setIsOpen(true);
+            }
+        }
+    } catch (error) {
+        console.error('Error during handleConfirm:', error);
+        toast.error('An error occurred while processing the task.');
+    } finally {
+        setIsLoading(false);
+    }
+};
 
 	const handleCloseModal = () => {
 		setModalOpen(false)
