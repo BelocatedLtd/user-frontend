@@ -163,15 +163,29 @@ const TaskEarn = () => {
 		setModalOpen(true)
 	}
 
-	const handleConfirm = async () => {
+		const handleConfirm = async () => {
 		setIsLoading(true);
 		try {
-			
+			const taskExistsResponse = await submitTask();
+
+
+			console.log('🚀 ~ handleConfirm ~ submitTask response:', taskExistsResponse); // Debugging log
+
+			// Check if the task already exists and show a message if it does
+			if (taskExistsResponse?.status === 400) {
+				toast.error('Task already exists.');
+				router.push('/dashboard/tasks');
+				return;
+			}
 
 			const taskToPerform: any = finalFilteredTasks?.find(
 				(advert: any) => advert._id === selectedAdvertId,
 			)
 
+		if (!taskToPerform) {
+			toast.error('Cannot find advert, task creation failed');
+			return;
+		}
 
 			console.log('🚀 ~ handleConfirm ~ taskToPerform:', taskToPerform)
 
@@ -204,36 +218,29 @@ const TaskEarn = () => {
 					adMedia: taskToPerform.mediaURL,
 				}
 
-				console.log(taskData)
+				console.log('Task data being created:', taskData);
 
 				const response = await dispatch(createNewTask(taskData) as any)
-				console.log('🚀 ~ handleConfirm ~ response:', response)
-
-				if (isError) {
-					toast.error('Error Creating a Task from this advert')
-					return
+				
+				if (response.meta.requestStatus === 'rejected') {
+					toast.error('Error creating task.');
+					return;
 				}
-
-				if (isSuccess) {
-					setSelectedTaskId(response.payload._id)
-					setModalOpen(false)
-
-					toast.success('Successfully created a Task from this advert')
-					setIsOpen(true)
+		
+				if (response.meta.requestStatus === 'fulfilled') {
+					setSelectedTaskId(response.payload._id);
+					setModalOpen(false);
+					setIsOpen(true);
 				}
+		
 			}
-
-			if (!taskToPerform) {
-				toast.error('Sorry, cannot find advert, so task cannot be created')
-			}
-
 		} catch (error) {
-			console.error('Error in handleConfirm:', error); // Handle any potential errors
-			toast.error('An error occurred while processing the task.');
-		} finally {
-			setIsLoading(false); // Stop loading
-		}
-	}
+				toast.error('An error occurred while processing the task.');
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
 	const handleCloseModal = () => {
 		setModalOpen(false)
 	}
