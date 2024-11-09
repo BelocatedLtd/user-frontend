@@ -80,8 +80,8 @@ const TaskSubmit = ({
 		)
 		setSelectedImages(updatedImages)
 		URL.revokeObjectURL(imagePreview)
-		toast.success('Image discarded successfully')
-		console.log('Image discarded successfully')
+		toast.success('Image discarded successfully');
+		console.log('Image discarded successfully');
 	}
 
 	// Handle form submission
