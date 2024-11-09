@@ -4,7 +4,7 @@ import TaskPerform from '@/components/dashboard/TaskPerform'
 import { icons } from '@/components/data/socialIcon'
 import Loader from '@/components/loader/Loader'
 import { selectAllAdverts } from '@/redux/slices/advertSlice'
-import {checkExistingTask} from '@/services/taskServices' 
+import { checkExistingTask } from '@/services/taskServices'
 import { selectAdvert } from '@/redux/slices/advertSlice'
 import { selectAdverts } from '@/redux/slices/advertSlice'
 import { selectUser } from '@/redux/slices/authSlice'
@@ -36,7 +36,7 @@ const TaskSubmit = ({
 	const [selectedImages, setSelectedImages] = useState<string[]>([])
 	const [userSocialName, setUserSocialName] = useState<string>('')
 	const [taskSubmitted, setTaskSubmitted] = useState(false)
-	
+
 	// Fetch task by ID from backend
 	const loadTask = async () => {
 		try {
@@ -96,92 +96,90 @@ const TaskSubmit = ({
 			);
 			return;
 		}
-	
+
 		try {
 			// Check if the task already exists for the user and advert
 			const existingTask = await checkExistingTask(advertId, performerId);
-	
+
 			// Ensure the task exists check is handled properly
 			if (existingTask?.exists) {
 				toast.error(
 					'This task cannot be submitted because it has already been created for this advert.'
 				);
-				
+
 			}
-			else{
-toast.success('Task submitted, wait for Admin Approval.');
+			else {
+				toast.success('Task submitted, wait for Admin Approval.');
 			}
-	
+
 			// Ensure that at least one image is uploaded
 			if (!imageArray.length) {
 				toast.error(
 					'Please upload a screenshot to prove you performed the task.'
 				);
-				
+
 			}
-	
+
 			// Proceed with the task submission
 			setIsLoading(true);
 			const formData = new FormData();
 			imageArray.forEach((image) => formData.append('images', image));
 			formData.append('taskId', taskId);
 			formData.append('userSocialName', userSocialName);
-	
-			try {
-  const responseMessage = await submitTask(formData);
-  if (responseMessage.status === 200) {
-    toast.success(responseMessage.data.message); 
-	  console.log(responseMessage.data.message);
-  } else {
-    toast.error('Error submitting task');
-	  console.log('error submitting task');
-  }
-} catch (error) {
-  console.error('Task submission error:', error);
-  toast.error('Error submitting task');
-}
 
-			setTaskSubmitted(true)
-			  // Notify via WebSocket
-			  socket.emit('sendActivity', {
-				userId: user?.id,
-				action: `@${user?.username} just performed a task on ${task?.platform}`,
-			  });
-			  onClose();
-			
-		} else {
+			try {
+				const responseMessage = await submitTask(formData);
+				if (responseMessage.status === 200) {
+					toast.success(responseMessage.data.message);
+					console.log(responseMessage.data.message);
+				} else {
+					toast.error('Error submitting task');
+					console.log('error submitting task');
+				}
+			} catch (error) {
+				console.error('Task submission error:', error);
 				toast.error('Error submitting task');
 			}
-		} catch (error) {
-			toast.error('Error submitting task');
-		} finally {
-			setIsLoading(false);
-		}
-	};
-	
-	
 
-	return (
-		<>
-			<Loader open={isLoading} />
-			<TaskPerform
-				task={task}
-				onClose={onClose}
-				ad={ad!}
-				isLoading={isLoading}
-				icons={icons}
-				taskSubmitted={taskSubmitted}
-				userSocialName={userSocialName}
-				selectedImages={selectedImages}
-				handleOnSubmit={handleOnSubmit}
-				handleInputChange={handleInputChange}
-				handleImageChange={(e) => {
-					handleImageChange(e)
-				}}
-				handleImageRemove={handleImageRemove}
-			/>
-		</>
-	)
+			setTaskSubmitted(true)
+			// Notify via WebSocket
+			socket.emit('sendActivity', {
+				userId: user?.id,
+				action: `@${user?.username} just performed a task on ${task?.platform}`,
+			});
+			onClose();
+
+	
+	} catch (error) {
+		toast.error('Error submitting task');
+	} finally {
+		setIsLoading(false);
+	}
+};
+
+
+
+return (
+	<>
+		<Loader open={isLoading} />
+		<TaskPerform
+			task={task}
+			onClose={onClose}
+			ad={ad!}
+			isLoading={isLoading}
+			icons={icons}
+			taskSubmitted={taskSubmitted}
+			userSocialName={userSocialName}
+			selectedImages={selectedImages}
+			handleOnSubmit={handleOnSubmit}
+			handleInputChange={handleInputChange}
+			handleImageChange={(e) => {
+				handleImageChange(e)
+			}}
+			handleImageRemove={handleImageRemove}
+		/>
+	</>
+)
 }
 
 export default TaskSubmit
