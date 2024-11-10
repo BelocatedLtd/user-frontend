@@ -60,7 +60,7 @@ const TaskEarn = () => {
 	const user = useSelector(selectUser)
 	const isError = useSelector(selectIsError)
 	const isSuccess = useSelector(selectIsSuccess)
-	const isLoading = useSelector(selectIsLoading)
+	// const isLoading = useSelector(selectIsLoading)
 	const [icon, setIcon] = useState<StaticImageData>()
 
 	const [selectedAdvertId, setSelectedAdvertId] = useState<string | null>(null)
