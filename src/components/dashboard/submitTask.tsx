@@ -110,9 +110,7 @@ const TaskSubmit = ({
 				);
 
 			}
-			else {
-				toast.success('Task submitted, wait for Admin Approval.');
-			}
+			
 
 			// Ensure that at least one image is uploaded
 			if (!imageArray.length) {
@@ -131,7 +129,7 @@ const TaskSubmit = ({
 
 			try {
 				const responseMessage = await submitTask(formData);
-				if (responseMessage) {
+				if (responseMessage.data.message) {
 					toast.success(responseMessage.data.message);
 					console.log(responseMessage.data.message);
 				} 
