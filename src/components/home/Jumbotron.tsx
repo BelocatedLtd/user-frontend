@@ -62,18 +62,21 @@ const Jumbotron = () => {
 	}, [searchParam])
 
 	useEffect(() => {
-		if (referralToken === referralToken || referralUsername === referralUsername){
+		if (referralToken) {
 			showRegModal()
 		}
-			if (action === 'register') {
-				showRegModal()
-			} else if (action === 'login') {
-				showLoginModal()
-			} else {
-				setIsReg(false)
-				setIsLogIn(false)
-			}
-	}, [action])
+		else if (referralUsername) {
+			showRegModal()
+		} 
+		else if (action === 'register') {
+			showRegModal()
+		} else if (action === 'login') {
+			showLoginModal()
+		} else {
+			setIsReg(false)
+			setIsLogIn(false)
+		}
+	}, [action, referralToken, referralUsername])
 
 	return (
 		<section
