@@ -46,32 +46,32 @@ const Jumbotron = () => {
 	}
 
 	useEffect(() => {
-		if (action === 'register') {
-			showRegModal()
-		} else if (action === 'login') {
-			showLoginModal()
-		} else {
-			setIsReg(false)
-			setIsLogIn(false)
-		}
-	}, [action])
-
-		useEffect(() => {
-		if(referralToken){
+		if (referralToken) {
 			console.log('Referral Token', referralToken);
 
 			localStorage.setItem('referralToken', referralToken);
 		}
 
-		}, [referralToken])
-	
+	}, [searchParam])
 	useEffect(() => {
-			if(referralUsername){
-				console.log('Referral Username', referralUsername);
-	
-				localStorage.setItem('referralUsername', referralUsername);
+		if (referralUsername) {
+			console.log('Referral Username', referralUsername);
+
+			localStorage.setItem('referralUsername', referralUsername);
+		}
+	}, [searchParam])
+
+	useEffect(() => {
+		if (referralToken || referralUsername)
+			if (action === 'register') {
+				showRegModal()
+			} else if (action === 'login') {
+				showLoginModal()
+			} else {
+				setIsReg(false)
+				setIsLogIn(false)
 			}
-			}, [referralUsername])
+	}, [action])
 
 	return (
 		<section
