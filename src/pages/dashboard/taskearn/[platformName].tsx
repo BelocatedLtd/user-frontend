@@ -68,7 +68,7 @@ const TaskEarn = () => {
 
 	const tasks = useSelector(selectTasks)
 	const [finalFilteredTasks, setFinalFilteredTasks] = useState([])
-	const [isaLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 	const getAllTasks = async () => {
 		dispatch(handleGetUserTasks() as any)
 	}
