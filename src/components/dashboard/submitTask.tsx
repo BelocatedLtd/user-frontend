@@ -138,7 +138,7 @@ const TaskSubmit = ({
 				action: `@${user?.username} just performed a task on ${task?.platform}`,
 			  });
 			  onClose();
-				router.push('/dashboard/tasks');
+				//router.push('/dashboard/tasks');
 			
 		} else {
 				toast.error('Error submitting task');
