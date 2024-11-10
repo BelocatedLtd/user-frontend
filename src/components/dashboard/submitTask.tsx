@@ -4,7 +4,7 @@ import TaskPerform from '@/components/dashboard/TaskPerform'
 import { icons } from '@/components/data/socialIcon'
 import Loader from '@/components/loader/Loader'
 import { selectAllAdverts } from '@/redux/slices/advertSlice'
-import { checkExistingTask } from '@/services/taskServices'
+import {checkExistingTask} from '@/services/taskServices' 
 import { selectAdvert } from '@/redux/slices/advertSlice'
 import { selectAdverts } from '@/redux/slices/advertSlice'
 import { selectUser } from '@/redux/slices/authSlice'
@@ -37,9 +37,6 @@ const TaskSubmit = ({
 	const [userSocialName, setUserSocialName] = useState<string>('')
 	const [taskSubmitted, setTaskSubmitted] = useState(false)
 	
-useEffect(() => {
-  toast.success("Toast is working!");
-}, []);
 	// Fetch task by ID from backend
 	const loadTask = async () => {
 		try {
@@ -83,8 +80,7 @@ useEffect(() => {
 		)
 		setSelectedImages(updatedImages)
 		URL.revokeObjectURL(imagePreview)
-		toast.success('Image discarded successfully');
-		console.log('Image discarded successfully');
+		toast.success('Image discarded successfully')
 	}
 
 	// Handle form submission
@@ -99,91 +95,80 @@ useEffect(() => {
 			);
 			return;
 		}
-
+	
 		try {
 			// Check if the task already exists for the user and advert
 			const existingTask = await checkExistingTask(advertId, performerId);
-
+	
 			// Ensure the task exists check is handled properly
 			if (existingTask?.exists) {
 				toast.error(
 					'This task cannot be submitted because it has already been created for this advert.'
 				);
-
+				return;
 			}
-			else {
-				toast.success('Task submitted, wait for Admin Approval.');
-				alert("Task Submitted, wait for admin Approval");
-			}
-
+	
 			// Ensure that at least one image is uploaded
 			if (!imageArray.length) {
 				toast.error(
 					'Please upload a screenshot to prove you performed the task.'
 				);
-
+				return;
 			}
-
+	
 			// Proceed with the task submission
 			setIsLoading(true);
 			const formData = new FormData();
 			imageArray.forEach((image) => formData.append('images', image));
 			formData.append('taskId', taskId);
 			formData.append('userSocialName', userSocialName);
+	
+			const responseMessage = await submitTask(formData);
 
-			try {
-				const responseMessage = await submitTask(formData);
-				if (responseMessage) {
-					toast.success(responseMessage.data.message);
-					console.log(responseMessage.data.message);
-				} else {
-					toast.error('Error submitting task');
-					console.log('error submitting task');
-				}
-			} catch (error) {
-				console.error('Task submission error:', error);
-				toast.error('Error submitting task');
-			}
-
-			setTaskSubmitted(true)
-			// Notify via WebSocket
-			socket.emit('sendActivity', {
+			if (responseMessage) {
+			  setTaskSubmitted(true);
+			  toast.success('Task submitted, wait for admin response');
+		
+			  // Notify via WebSocket
+			  socket.emit('sendActivity', {
 				userId: user?.id,
 				action: `@${user?.username} just performed a task on ${task?.platform}`,
-			});
-			onClose();
-
+			  });
+			  onClose();
+			
+		} else {
+				toast.error('Error submitting task');
+			}
+		} catch (error) {
+			toast.error('Error submitting task');
+		} finally {
+			setIsLoading(false);
+		}
+	};
 	
-	} catch (error) {
-		toast.error('Error submitting task');
-	} finally {
-		setIsLoading(false);
-	}
-};
+	
 
-
-
-return (
-	<>
-		<Loader open={isLoading} />
-		<TaskPerform
-			task={task}
-			onClose={onClose}
-			ad={ad!}
-			isLoading={isLoading}
-			icons={icons}
-			taskSubmitted={taskSubmitted}
-			userSocialName={userSocialName}
-			selectedImages={selectedImages}
-			handleOnSubmit={handleOnSubmit}
-			handleInputChange={handleInputChange}
-			handleImageChange={(e) => {
-				handleImageChange(e)
-			}}
-			handleImageRemove={handleImageRemove}
-		/>
-	</>
-)
+	return (
+		<>
+			<Loader open={isLoading} />
+			<TaskPerform
+				task={task}
+				onClose={onClose}
+				ad={ad!}
+				isLoading={isLoading}
+				icons={icons}
+				taskSubmitted={taskSubmitted}
+				userSocialName={userSocialName}
+				selectedImages={selectedImages}
+				handleOnSubmit={handleOnSubmit}
+				handleInputChange={handleInputChange}
+				handleImageChange={(e) => {
+					handleImageChange(e)
+				}}
+				handleImageRemove={handleImageRemove}
+			/>
+		</>
+	)
 }
 
 export default TaskSubmit
