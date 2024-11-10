@@ -42,7 +42,6 @@ import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import TimeAgo from 'timeago-react'
 import { cn } from '../../../../helpers'
-import { submitTask } from '@/services/advertService'
 
 
 const TaskEarn = () => {
@@ -60,7 +59,7 @@ const TaskEarn = () => {
 	const user = useSelector(selectUser)
 	const isError = useSelector(selectIsError)
 	const isSuccess = useSelector(selectIsSuccess)
-	// const isLoading = useSelector(selectIsLoading)
+	const isLoading = useSelector(selectIsLoading)
 	const [icon, setIcon] = useState<StaticImageData>()
 
 	const [selectedAdvertId, setSelectedAdvertId] = useState<string | null>(null)
@@ -68,7 +67,7 @@ const TaskEarn = () => {
 
 	const tasks = useSelector(selectTasks)
 	const [finalFilteredTasks, setFinalFilteredTasks] = useState([])
-	const [isLoading, setIsLoading] = useState(false);
+
 	const getAllTasks = async () => {
 		dispatch(handleGetUserTasks() as any)
 	}
@@ -77,50 +76,44 @@ const TaskEarn = () => {
 		getAllTasks()
 	}, [dispatch])
 
-
 	useEffect(() => {
-		switch (platformName) {
-			case 'tiktok':
-				setIcon(tiktok)
-				break
-			case 'facebook':
-				setIcon(facebook)
-				break
-			case 'twitter':
-				setIcon(twitter)
-				break
-			case 'instagram':
-				setIcon(instagram)
-				break
-			case 'linkedin':
-				setIcon(linkedin)
-				break
-			case 'whatsapp':
-				setIcon(whatsapp)
-				break
-			case 'youtube':
-				setIcon(youtube)
-				break
-			case 'appstore':
-				setIcon(appstore)
-				break
-			case 'playstore':
-				setIcon(playstore)
-				break
-			case 'audiomack':
-				setIcon(audiomack)
-				break
-			case 'spotify':
-				setIcon(spotify)
-				break
-			case 'boomplay':
-				setIcon(boomplay)
-				break
-
+		if (platformName === 'tiktok') {
+			setIcon(tiktok)
 		}
-	}, [platformName])
+		if (platformName === 'facebook') {
+			setIcon(facebook)
+		}
+		if (platformName === 'twitter') {
+			setIcon(twitter)
+		}
+		if (platformName === 'instagram') {
+			setIcon(instagram)
+		}
+		if (platformName === 'linkedin') {
+			setIcon(linkedin)
+		}
+		if (platformName === 'whatsapp') {
+			setIcon(whatsapp)
+		}
+		if (platformName === 'youtube') {
+			setIcon(youtube)
+		}
+		if (platformName === 'appstore') {
+			setIcon(appstore)
+		}
+		if (platformName === 'playstore') {
+			setIcon(playstore)
+		}
+		if (platformName === 'audiomack') {
+			setIcon(audiomack)
+		}
+		if (platformName === 'spotify') {
+			setIcon(spotify)
+		}
+		if (platformName === 'boomplay') {
+			setIcon(boomplay)
+		}
 
-	useEffect(() => {
 		const fetchQualifiedAdverts = async () => {
 			try {
 				const data = await getQualifiedAdverts(platformName)
@@ -132,7 +125,6 @@ const TaskEarn = () => {
 
 		fetchQualifiedAdverts()
 	}, [platformName])
-
 
 	// const checkTaskExistence = (advert_Id: string) => {
 	// 	const existingTask = tasks?.find(
@@ -164,81 +156,72 @@ const TaskEarn = () => {
 	}
 
 	const handleConfirm = async () => {
-    setIsLoading(true);
-    try {
-        // Time the taskExistsResponse
-      
+		const taskToPerform: any = finalFilteredTasks?.find(
+			(advert: any) => advert._id === selectedAdvertId,
+		)
 
-        const taskToPerform: any = finalFilteredTasks?.find(
-            (advert: any) => advert._id === selectedAdvertId
-        );
+		console.log('🚀 ~ handleConfirm ~ taskToPerform:', taskToPerform)
 
-        if (!taskToPerform) {
-            toast.error('Cannot find advert, task creation failed');
-            return;
-        }
+		const randomIndex = Math.floor(
+			Math.random() * taskToPerform?.caption.length,
+		)
+		const pickedCaption = taskToPerform?.caption[randomIndex]
 
-        console.log('🚀 ~ handleConfirm ~ taskToPerform:', taskToPerform);
+		if (taskToPerform) {
+			const assetresult = getSocialPlatformAsset(
+				taskToPerform.platform,
+				taskToPerform.service,
+			)
 
-        const randomIndex = Math.floor(Math.random() * taskToPerform?.caption.length);
-        const pickedCaption = taskToPerform?.caption[randomIndex];
+			const taskData = {
+				advertId: taskToPerform._id,
+				advertiserId: taskToPerform.userId,
+				taskPerformerId: user?.id,
+				title: assetresult.SC,
+				platform: taskToPerform.platform,
+				service: taskToPerform.service,
+				desiredROI: taskToPerform.desiredROI,
+				toEarn: taskToPerform.earnPerTask,
+				gender: taskToPerform.gender,
+				state: taskToPerform.state,
+				lga: taskToPerform.lga,
+				caption: pickedCaption,
+				taskVerification: assetresult.verification,
+				socialPageLink: taskToPerform.socialPageLink,
+				adMedia: taskToPerform.mediaURL,
+			}
 
-        if (taskToPerform) {
-            // Optimize this by executing in parallel if needed
-            const assetresult = await getSocialPlatformAsset(taskToPerform.platform, taskToPerform.service);
+			console.log(taskData)
 
-            const taskData = {
-                advertId: taskToPerform._id,
-                advertiserId: taskToPerform.userId,
-                taskPerformerId: user?.id,
-                title: assetresult.SC,
-                platform: taskToPerform.platform,
-                service: taskToPerform.service,
-                desiredROI: taskToPerform.desiredROI,
-                toEarn: taskToPerform.earnPerTask,
-                gender: taskToPerform.gender,
-                state: taskToPerform.state,
-                lga: taskToPerform.lga,
-                caption: pickedCaption,
-                taskVerification: assetresult.verification,
-                socialPageLink: taskToPerform.socialPageLink,
-                adMedia: taskToPerform.mediaURL,
-            };
+			const response = await dispatch(createNewTask(taskData) as any)
+			console.log('🚀 ~ handleConfirm ~ response:', response)
 
-            console.log('Task data being created:', taskData);
+			if (isError) {
+				toast.error('Error Creating a Task from this advert')
+				return
+			}
 
-            // Create task
-            const response = await dispatch(createNewTask(taskData) as any);
+			if (isSuccess) {
+				setSelectedTaskId(response.payload._id)
+				setModalOpen(false)
 
-            if (response.meta.requestStatus === 'rejected') {
-                toast.error('Error creating task.');
-                return;
-            }
+				toast.success('Successfully created a Task from this advert')
+				setIsOpen(true)
+			}
+		}
 
-            if (response.meta.requestStatus === 'fulfilled') {
-                setSelectedTaskId(response.payload._id);
-                setModalOpen(false);
-                setIsOpen(true);
-            }
-        }
-    } catch (error) {
-        console.error('Error during handleConfirm:', error);
-        toast.error('An error occurred while processing the task.');
-    } finally {
-        setIsLoading(false);
-    }
-};
+		if (!taskToPerform) {
+			toast.error('Sorry, cannot find advert, so task cannot be created')
+		}
+	}
 
 	const handleCloseModal = () => {
 		setModalOpen(false)
 	}
-	const renderLoader = () => {
-		return isLoading ? <Loader open={isLoading} /> : null; // Adjust according to your Loader component's implementation
-	};
 
 	return (
 		<Suspense>
-			<div className='w-full min-h-screen pb-20'>
+			<div className='w-full '>
 				<Loader open={isLoading} />
 				<div>
 					<div className='flex items-center gap-3 border-b border-gray-200 py-5'>
@@ -387,3 +370,4 @@ const TaskEarn = () => {
 }
 
 export default TaskEarn
+
