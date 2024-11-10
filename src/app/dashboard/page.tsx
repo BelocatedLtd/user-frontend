@@ -292,28 +292,28 @@ const remainTask = totalTasks - tasksCompleted;
 
 
 					{/* Perform Task and Earn Button */}
-					<button style={{fontFamily: "'Poppins', sans-serif"}}
+					<button style={{fontFamily: 'Merriweather', serif"}}
 						onClick={() => router.push('/dashboard/earn')}
-						className='text-sm bg-blue-500 text-white px-4 py-3 rounded-lg w-full'>Click here to
+						className='text-sm bg-blue-500 text-white px-4 py-3 rounded-lg w-full'>Click Here to
 						Perform task and earn
 					</button>
 
 					{/* Remaining Buttons */}
 					<div className='flex space-x-2'>
-						<button
+						<button style={{fontFamily: 'Merriweather', serif"}}
 							onClick={handleAdvertise}
 							 className='text-sm bg-tertiary text-white px-4 py-2 rounded-lg'>
 							Advertise
 						</button>
-						<button
+						<button style={{fontFamily: 'Merriweather', serif"}}
 							onClick={() => router.push('/dashboard/wallet')}
 							className='text-sm bg-green-600 text-white px-4 py-2 rounded-lg'>
 							My Wallet
 						</button>
-						<button
+						<button style={{fontFamily: 'Merriweather', serif"}}
 							onClick={() => router.push('/dashboard/referral')}
 							className='text-sm bg-gray-600 text-white px-4 py-2 rounded-lg'>
-							Refer
+							Referral Programs
 						</button>
 					</div>
 				</div>
