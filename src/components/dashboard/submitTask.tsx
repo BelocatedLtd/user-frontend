@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation'
 
 const socket = io(`${BACKEND_URL}`)
 
@@ -27,9 +27,10 @@ const TaskSubmit = ({
 	onClose: () => void
 }) => {
 	const dispatch = useDispatch()
+	const router = useRouter();
 	const user = useSelector(selectUser)
 	const advert = useSelector(selectAdverts)
-	const router = useRouter();
+	
 	const [isLoading, setIsLoading] = useState(false)
 	const [task, setTask] = useState<any>(null)
 	const [ad, setAd] = useState<any>(null)
