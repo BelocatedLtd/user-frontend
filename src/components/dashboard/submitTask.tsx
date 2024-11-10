@@ -113,6 +113,7 @@ useEffect(() => {
 			}
 			else {
 				toast.success('Task submitted, wait for Admin Approval.');
+				alert("Task Submitted, wait for admin Approval");
 			}
 
 			// Ensure that at least one image is uploaded
