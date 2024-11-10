@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
+import { useRouter } from 'next/router';
 
 const socket = io(`${BACKEND_URL}`)
 
@@ -27,6 +28,7 @@ const TaskSubmit = ({
 }) => {
 	const dispatch = useDispatch()
 	const user = useSelector(selectUser)
+	const router = useRouter();
 	const advert = useSelector(selectAdverts)
 
 	const [isLoading, setIsLoading] = useState(false)
@@ -128,6 +130,7 @@ const TaskSubmit = ({
 			if (responseMessage) {
 			  setTaskSubmitted(true);
 			  toast.success('Task submitted, wait for admin response');
+				
 		
 			  // Notify via WebSocket
 			  socket.emit('sendActivity', {
@@ -135,6 +138,7 @@ const TaskSubmit = ({
 				action: `@${user?.username} just performed a task on ${task?.platform}`,
 			  });
 			  onClose();
+				router.push('/dashboard/tasks');
 			
 		} else {
 				toast.error('Error submitting task');
