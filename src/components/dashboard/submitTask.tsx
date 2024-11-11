@@ -135,7 +135,7 @@ const TaskSubmit = ({
 				console.log(responseMessage);
 				if (responseMessage.message) {
 					toast.success(responseMessage.message);
-					  // Show success modal
+					setIsSucOpen(true); // Show success modal
 					console.log(responseMessage.message);
 				} 
 			} catch (error) {
@@ -179,7 +179,7 @@ window.location.reload();
 			/>
 
 			{/* Success Modal */}
-			
+		{isSucOpen && (
   <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
     <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full text-center">
       <h2 className="text-2xl font-semibold mb-4">Task Submitted Successfully!</h2>
@@ -194,6 +194,7 @@ window.location.reload();
       </button>
     </div>
   </div>
+			) }
 
 		</>
 	)
