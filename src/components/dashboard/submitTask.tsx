@@ -1,5 +1,3 @@
-'use client'
-
 import TaskPerform from '@/components/dashboard/TaskPerform'
 import { icons } from '@/components/data/socialIcon'
 import Loader from '@/components/loader/Loader'
@@ -9,7 +7,7 @@ import { selectAdvert } from '@/redux/slices/advertSlice'
 import { selectAdverts } from '@/redux/slices/advertSlice'
 import { selectUser } from '@/redux/slices/authSlice'
 import { handleGetTaskById } from '@/redux/slices/taskSlice'
-import { submitTask } from '@/services/taskServices' // Import the fetchTaskById function
+import { submitTask } from '@/services/taskServices'
 import { BACKEND_URL } from '@/utils/globalConfig'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -38,6 +36,11 @@ const TaskSubmit = ({
 	const [selectedImages, setSelectedImages] = useState<string[]>([])
 	const [userSocialName, setUserSocialName] = useState<string>('')
 	const [taskSubmitted, setTaskSubmitted] = useState(false)
+	const [isSucOpen, setIsSucOpen] = useState(false);
+
+	const closeModal = () => {
+		setIsSucOpen(false);
+	};
 
 	// Fetch task by ID from backend
 	const loadTask = async () => {
@@ -60,37 +63,12 @@ const TaskSubmit = ({
 		loadTask()
 	}, [taskId, dispatch])
 
-	// Handle input change
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setUserSocialName(e.target.value)
-	}
-
-	// Handle image upload and preview
-	const handleImageChange = (files: FileList) => {
-		const newFiles = Array.from(files)
-		setImageArray((prev) => [...prev, ...newFiles])
-		setSelectedImages((prev) => [
-			...prev,
-			...newFiles.map((file) => URL.createObjectURL(file)),
-		])
-	}
-
-	// Remove uploaded images
-	const handleImageRemove = (imagePreview: string) => {
-		const updatedImages = selectedImages.filter(
-			(preview) => preview !== imagePreview,
-		)
-		setSelectedImages(updatedImages)
-		URL.revokeObjectURL(imagePreview)
-		toast.success('Image discarded successfully')
-		console.log('Image discarded successfully')
-	}
-
 	// Handle form submission
 	const handleOnSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		const performerId = user?.id
 		const advertId = ad?._id
+
 		// Check if the ad is already completed or desired ROI is 0
 		if (ad && (ad.desiredROI === 0 || ad.status === 'Completed')) {
 			toast.error(
@@ -108,16 +86,15 @@ const TaskSubmit = ({
 				toast.error(
 					'This task cannot be submitted because it has already been created for this advert.'
 				);
-
+				return;
 			}
-			
 
 			// Ensure that at least one image is uploaded
 			if (!imageArray.length) {
 				toast.error(
 					'Please upload a screenshot to prove you performed the task.'
 				);
-
+				return;
 			}
 
 			// Proceed with the task submission
@@ -131,6 +108,7 @@ const TaskSubmit = ({
 				const responseMessage = await submitTask(formData);
 				if (responseMessage.data.message) {
 					toast.success(responseMessage.data.message);
+					setIsSucOpen(true);  // Show success modal
 					console.log(responseMessage.data.message);
 				} 
 			} catch (error) {
@@ -147,36 +125,43 @@ const TaskSubmit = ({
 			onClose();
 			router.push('/dashboard/tasks');
 	
-	} catch (error) {
-		toast.error('Error submitting task');
-	} finally {
-		setIsLoading(false);
-	}
-};
+		} catch (error) {
+			toast.error('Error submitting task');
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
+	return (
+		<>
+			<Loader open={isLoading} />
+			<TaskPerform
+				task={task}
+				onClose={onClose}
+				ad={ad!}
+				isLoading={isLoading}
+				icons={icons}
+				taskSubmitted={taskSubmitted}
+				userSocialName={userSocialName}
+				selectedImages={selectedImages}
+				handleOnSubmit={handleOnSubmit}
+				handleInputChange={(e) => setUserSocialName(e.target.value)}
+				handleImageChange={(e) => handleImageChange(e)}
+				handleImageRemove={handleImageRemove}
+			/>
 
-
-return (
-	<>
-		<Loader open={isLoading} />
-		<TaskPerform
-			task={task}
-			onClose={onClose}
-			ad={ad!}
-			isLoading={isLoading}
-			icons={icons}
-			taskSubmitted={taskSubmitted}
-			userSocialName={userSocialName}
-			selectedImages={selectedImages}
-			handleOnSubmit={handleOnSubmit}
-			handleInputChange={handleInputChange}
-			handleImageChange={(e) => {
-				handleImageChange(e)
-			}}
-			handleImageRemove={handleImageRemove}
-		/>
-	</>
-)
+			{/* Success Modal */}
+			{isSucOpen && (
+				<div className="modal-overlay">
+					<div className="modal-content">
+						<h2>Task Submitted Successfully!</h2>
+						<p>Your task has been successfully submitted. Thank you!</p>
+						<button onClick={closeModal}>Close</button>
+					</div>
+				</div>
+			)}
+		</>
+	)
 }
 
 export default TaskSubmit
