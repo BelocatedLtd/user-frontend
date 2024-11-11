@@ -63,6 +63,31 @@ const TaskSubmit = ({
 		loadTask()
 	}, [taskId, dispatch])
 
+	// Handle input change
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setUserSocialName(e.target.value)
+	}
+
+	// Handle image upload and preview
+	const handleImageChange = (files: FileList) => {
+		const newFiles = Array.from(files)
+		setImageArray((prev) => [...prev, ...newFiles])
+		setSelectedImages((prev) => [
+			...prev,
+			...newFiles.map((file) => URL.createObjectURL(file)),
+		])
+	}
+
+	// Remove uploaded images
+	const handleImageRemove = (imagePreview: string) => {
+		const updatedImages = selectedImages.filter(
+			(preview) => preview !== imagePreview,
+		)
+		setSelectedImages(updatedImages)
+		URL.revokeObjectURL(imagePreview)
+		toast.success('Image discarded successfully')
+		console.log('Image discarded successfully')
+	}
 	// Handle form submission
 	const handleOnSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -123,7 +148,7 @@ const TaskSubmit = ({
 				action: `@${user?.username} just performed a task on ${task?.platform}`,
 			});
 			onClose();
-			router.push('/dashboard/tasks');
+			router.push(`/dashboard/${task.platform}`);
 	
 		} catch (error) {
 			toast.error('Error submitting task');
