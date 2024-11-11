@@ -150,9 +150,9 @@ const TaskSubmit = ({
 				action: `@${user?.username} just performed a task on ${task?.platform}`,
 			});
 			onClose();
-		
-			router.replace(`/dashboard/taskearn/${task.platform}`, undefined, { shallow: true });
-	
+			router.replace(`/dashboard/taskearn/${task.platform}`);
+window.location.reload();
+
 		} catch (error) {
 			toast.error('Error submitting task');
 		} finally {
