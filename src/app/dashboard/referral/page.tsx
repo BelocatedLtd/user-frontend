@@ -151,11 +151,11 @@ const Referral = () => {
 						</div>
 					</div>
 					<div className="border border-yellow-500 p-4" style={{ marginTop: '20px', fontSize: '14px', color: '#555' }}>
-      <h4>Referral Points System:</h4>
+      <h4><b>Referral Points System:</b></h4>
       <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
         <li>1 successful referral = 10 points</li>
         <li>10 points = ₦100</li>
-        <li>Your points will automatically convert to Naira when you reach 100 points.</li>
+        <li>The Withdrawal Button will be active when you have <b>100 points = ₦1,000 and above</b></li>
       </ul>
     </div>
 
