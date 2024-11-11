@@ -63,12 +63,14 @@ const Jumbotron = () => {
 
 	useEffect(() => {
 		if (referralToken) {
-			showRegModal()
 			router.push(`/?action=register`)
+			
+			
 		}
 		else if (referralUsername) {
-			showRegModal()
 			router.push(`/?action=register`)
+			
+			
 		} 
 		else if (action === 'register') {
 			showRegModal()
