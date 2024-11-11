@@ -152,6 +152,7 @@ const TaskSubmit = ({
 			onClose();
 			setIsLoading(true);
 			router.push(`/dashboard/taskearn/${task.platform}`);
+			router.reload();
 	
 		} catch (error) {
 			toast.error('Error submitting task');
@@ -179,7 +180,7 @@ const TaskSubmit = ({
 			/>
 
 			{/* Success Modal */}
-			{isSucOpen && (
+			
   <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
     <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full text-center">
       <h2 className="text-2xl font-semibold mb-4">Task Submitted Successfully!</h2>
@@ -194,7 +195,7 @@ const TaskSubmit = ({
       </button>
     </div>
   </div>
-)}
+
 		</>
 	)
 }
