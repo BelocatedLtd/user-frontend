@@ -133,7 +133,7 @@ const TaskSubmit = ({
 				const responseMessage = await submitTask(formData);
 				if (responseMessage.data.message) {
 					toast.success(responseMessage.data.message);
-					setIsSucOpen(true);  // Show success modal
+					  // Show success modal
 					console.log(responseMessage.data.message);
 				} 
 			} catch (error) {
@@ -148,6 +148,7 @@ const TaskSubmit = ({
 				action: `@${user?.username} just performed a task on ${task?.platform}`,
 			});
 			onClose();
+			setIsSucOpen(true);
 			router.push(`/dashboard/taskearn/${task.platform}`);
 	
 		} catch (error) {
