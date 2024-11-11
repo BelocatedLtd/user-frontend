@@ -180,14 +180,21 @@ const TaskSubmit = ({
 
 			{/* Success Modal */}
 			{isSucOpen && (
-				<div className="modal-overlay">
-					<div className="modal-content">
-						<h2>Task Submitted Successfully!</h2>
-						<p>Your task has been successfully submitted. Thank you!</p>
-						<button onClick={closeModal}>Close</button>
-					</div>
-				</div>
-			)}
+  <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full text-center">
+      <h2 className="text-2xl font-semibold mb-4">Task Submitted Successfully!</h2>
+      <p className="text-gray-700 mb-6">
+        Your task has been successfully submitted. Thank you!
+      </p>
+      <button
+        onClick={closeModal}
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
 		</>
 	)
 }
