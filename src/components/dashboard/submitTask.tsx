@@ -131,10 +131,12 @@ const TaskSubmit = ({
 
 			try {
 				const responseMessage = await submitTask(formData);
-				if (responseMessage.data.message) {
-					toast.success(responseMessage.data.message);
+				setIsSucOpen(true);
+				console.log(responseMessage);
+				if (responseMessage.message) {
+					toast.success(responseMessage.message);
 					  // Show success modal
-					console.log(responseMessage.data.message);
+					console.log(responseMessage.message);
 				} 
 			} catch (error) {
 				console.error('Task submission error:', error);
@@ -148,7 +150,7 @@ const TaskSubmit = ({
 				action: `@${user?.username} just performed a task on ${task?.platform}`,
 			});
 			onClose();
-			setIsSucOpen(true);
+			setIsLoading(true);
 			router.push(`/dashboard/taskearn/${task.platform}`);
 	
 		} catch (error) {
