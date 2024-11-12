@@ -294,7 +294,7 @@ const remainTask = totalTasks - tasksCompleted;
 					{/* Perform Task and Earn Button */}
 					<button style={{fontFamily:"'Merriweather', serif"}}
 						onClick={() => router.push('/dashboard/earn')}
-						className='text-lg font-bold bg-blue-500 text-white px-4 py-3 rounded-lg w-full'>Click Here To
+						className='shadow-lg text-center text-lg font-bold bg-blue-500 text-white px-4 py-3 rounded-full w-full'>Click Here To
 						Perform Task and Earn
 					</button>
 
@@ -302,17 +302,17 @@ const remainTask = totalTasks - tasksCompleted;
 					<div className='flex space-x-2'>
 						<button style={{fontFamily:"'Merriweather', serif"}}
 							onClick={handleAdvertise}
-							 className='text-lg font-bold bg-tertiary text-white px-4 py-2 rounded-lg'>
+							 className='w-32 h-10 text-center text-lg font-bold bg-tertiary text-white px-4 py-2 rounded-full'>
 							Advertise
 						</button>
 						<button style={{fontFamily:"'Merriweather', serif"}}
 							onClick={() => router.push('/dashboard/wallet')}
-							className='text-lg font-bold bg-green-600 text-white px-4 py-2 rounded-lg'>
+							className='w-32 h-10 text-center text-lg font-bold bg-green-600 text-white px-4 py-2 rounded-full'>
 							My Wallet
 						</button>
 						<button style={{fontFamily:"'Merriweather', serif", fontSize:"15px"}}
 							onClick={() => router.push('/dashboard/referral')}
-							className='text-lg font-bold bg-gray-600 text-white px-4 py-2 rounded-lg'>
+							className='w-32 h-10 text-center text-lg font-bold bg-gray-600 text-white px-4 py-2 rounded-full'>
 							Referral Program
 						</button>
 					</div>
