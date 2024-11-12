@@ -312,7 +312,7 @@ const remainTask = totalTasks - tasksCompleted;
 						</button>
 						<button style={{fontFamily:"'Merriweather', serif", boxShadow: "8px 8px 12px rgba(128, 128, 128, 0.3)",}}
 							onClick={() => router.push('/dashboard/referral')}
-							className='w-32 h-10 text-center text-sm font-bold bg-gray-600 text-white px-4 py-2 rounded-full'>
+							className='w-32 h-10 text-center text-xs font-bold bg-gray-600 text-white px-4 py-2 rounded-full'>
 							Referral Program
 						</button>
 					</div>
