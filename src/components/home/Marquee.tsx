@@ -62,7 +62,7 @@ export default function Marqueez() {
           </div>
           <div className='flex flex-col'>
             <small>{formatDistanceToNow(new Date(item?.createdAt))}</small>
-            <p className='text-gray-600 text-[14px]'>{item.action}</p>
+            <p className='text-gray-600 text-[9px]'>{item.action}</p>
           </div>
         </div>
       ))}
