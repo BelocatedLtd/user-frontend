@@ -14,9 +14,8 @@ import { selectIsError} from '../../../redux/slices/advertSlice'
 import { setTotalTasks } from '../../../redux/slices/advertSlice'
 import { selectUser } from '../../../redux/slices/authSlice'
 import Loading from '../loading'
-
 interface PlatformTasks {
-	[key: string]: { totalTasks: number }
+	[key: string]: { totalTasks: number, remainingTasks:number }
   }
   
 // Import necessary dependencies and interfaces here
@@ -34,27 +33,30 @@ const Earn = () => {
 	useEffect(() => {
 		async function getTasks() {
 			try {
-				setIsLoading(true)
-				const res: PlatformTasks = await getTotalTasksByAllPlatforms()
-				setPlatformTasks(res)
-
-				// Calculate total tasks across all platforms
-				const totalTasksAcrossAllPlatforms = Object.values(res).reduce(
-					(acc, platform) => acc + platform.totalTasks,
+				setIsLoading(true);
+				const res: PlatformTasks = await getTotalTasksByAllPlatforms();
+				setPlatformTasks(res);
+	
+				// Calculate remaining tasks across all platforms
+				const remainingTasksAcrossAllPlatforms = Object.values(res).reduce(
+					(acc, platform) => acc + platform.remainingTasks,
 					0
-				)
-
-				// Dispatch the total tasks to Redux store
-				dispatch(setTotalTasks(totalTasksAcrossAllPlatforms))
-
-				setIsLoading(false)
+				);
+	
+				// Dispatch the remaining tasks to Redux store
+				dispatch(setTotalTasks(remainingTasksAcrossAllPlatforms));
+	
+				setIsLoading(false);
 			} catch (error) {
-				console.error('Failed to retrieve tasks', error)
+				console.error('Failed to retrieve tasks', error);
+				setIsLoading(false);
 			}
 		}
+	
+		getTasks();
+	}, [dispatch]);
+	
 
-		getTasks()
-	}, [dispatch])
 
 	// Create a sorted version of socialMenu based on totalTasks from platformTasks
 	const sortedMenu = [...socialMenu].sort((a, b) => {
