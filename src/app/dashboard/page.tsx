@@ -300,7 +300,7 @@ const remainTask = totalTasks - tasksCompleted;
 
 					{/* Remaining Buttons */}
 					<div className='flex space-x-2'>
-						<button style={{fontFamily:"'Merriweather', serif", boxShadow: "8px 8px 12px rgba(255, 0, 0, 0.3)",}}
+						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "8px 8px 12px rgba(255, 0, 0, 0.3)",}}
 							onClick={handleAdvertise}
 							 className='w-32 h-10 text-center text-sm font-bold bg-tertiary text-white px-4 py-2 rounded-full'>
 							Advertise
