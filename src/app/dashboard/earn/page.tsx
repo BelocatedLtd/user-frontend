@@ -60,8 +60,8 @@ const Earn = () => {
 
 	// Create a sorted version of socialMenu based on totalTasks from platformTasks
 	const sortedMenu = [...socialMenu].sort((a, b) => {
-		const tasksA = platformTasks[a.value]?.totalTasks || 0
-		const tasksB = platformTasks[b.value]?.totalTasks || 0
+		const tasksA = platformTasks[a.value]?.remainingTasks || 0
+		const tasksB = platformTasks[b.value]?.remainingTasks || 0
 		return tasksB - tasksA // Sort in descending order
 	})
 
@@ -119,13 +119,13 @@ const Earn = () => {
 											<div className='w-full'>
 												<small
 													className={`py-2 px-5 ${
-														!platformTasks[menu.value]?.totalTasks ||
-														platformTasks[menu.value]?.totalTasks == 0
+														!platformTasks[menu.value]?.remainingTasks ||
+														platformTasks[menu.value]?.remainingTasks == 0
 															? 'bg-gray-500'
 															: 'bg-secondary'
 													} text-primary rounded-2xl`}>
 													<span className={cn('mr-1')}>
-														{platformTasks[menu.value]?.totalTasks || 0}
+														{platformTasks[menu.value]?.remainingTasks || 0}
 													</span>
 													Tasks Available
 												</small>
