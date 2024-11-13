@@ -41,76 +41,73 @@ const Register = ({ showLoginModal, closeModal}: any) => {
 	const dispatch = useDispatch()
 
 	const { username, email, password, password2 } = values
+const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	e.preventDefault();
+	const { name, value } = e.target;
+	setValues((prevValues) => ({ ...prevValues, [name]: value }));
+};
 
-	const handleInputChange = (e: any) => {
-		e.preventDefault()
-		const { name, value } = e.target
-		setValues({ ...values, [name]: value })
+const toggleEmailVerifyModal = async (e: React.FormEvent<HTMLFormElement>) => {
+	e.preventDefault();
+
+	if (!username || !email || !password || !password2) {
+		return toast.error('All fields are required');
 	}
 
-	const toggleEmailVerifyModal = async (e: any) => {
-		e.preventDefault()
+	if (password.length < 6) {
+		return toast.error('Password must be at least 6 characters');
+	}
 
-		if (!username || !email || !password || !password2) {
-			return toast.error('All fields are required')
+	if (password !== password2) {
+		return toast.error('Passwords do not match');
+	}
+
+	const formData = {
+		username: username?.toLowerCase(),
+		email: email?.toLowerCase(),
+		password,
+		referralToken,
+		referralUsername,
+	};
+
+	setIsLoading(true);
+
+	try {
+		// Create new user
+		const response = await createNewUser(formData);
+		if (!response) {
+			toast.error('Error registering user');
+			setIsLoading(false);
+			return;
 		}
 
-		if (password.length < 6) {
-			return toast.error('Password must be upto 6 characters')
-		}
+		// Emit socket event
+		const emitData = {
+			userId: response._id,
+			action: `@${response.username} just registered`,
+		};
+		socket.emit('sendActivity', emitData);
 
-		if (password !== password2) {
-			return toast.error('Passwords do not match')
-		}
+		// Sending email verification link
+		const emailResponse = resendVerificationEmail(email);
+		toast.promise(emailResponse, {
+			loading: 'Sending verification email...',
+			success: <b>Email sent</b>,
+			error: <b>Failed to send email</b>,
+		});
 
-		const formData = {
-			username: username?.toLowerCase(),
-			email: email?.toLowerCase(),
-			password,
-			referralToken,
-			referralUsername,
-		}
+		// Await email response and then redirect
+		await emailResponse;
+		router.push(`/verify-email/${formData.email}`);
+		closeModal();
+	} catch (error: any) {
+		toast.error(error.message || 'An error occurred');
+	} finally {
+		// Ensure loading is set to false after all operations
+		setIsLoading(false);
+	}
+};
 
-		setIsLoading(true)
-
-		try {
-			const response = await createNewUser(formData)
-			setIsLoading(false)
-			if (!response) {
-				toast.error('Error trying to register user')
-				return
-			}
-			const emitData = {
-				userId: response?._id,
-				action: `@${response?.username} just registered`,
-			}
-
-			//Emit Socket event to update activity feed
-			socket.emit('sendActivity', emitData)
-
-			// Start sending email verification link
-			const emailResponse = resendVerificationEmail(email)
-				.catch((error) => {
-					toast.error('Failed to send verification email')
-					setIsLoading(false)
-				})
-				.then((res) => {
-					router.push(`/verify-email/${formData.email}`)
-					setIsLoading(false)
-				})
-
-			toast.promise(emailResponse, {
-				loading: 'Sending verification email...',
-				success: <b>Email sent</b>,
-				error: <b>Failed to send email</b>,
-			})
-			closeModal()
-
-
-		} catch (error: any) {
-			toast.error(error)
-		}
-		}
 	
 
 	return (
