@@ -45,15 +45,22 @@ export default function Marqueez() {
 	return (
 		<div className='bg-primary-light w-full text-gray-500'>
   <Marquee pauseOnHover gradient gradientColor='#EBF4FF'>
-    <div className='grid sm:grid-cols-2 gap-4 items-center py-5'>
+    <div className='flex space-x-6'>
       {getCurrentPageData().map((item: any, index: number) => (
         <div
           key={index}
-          className='flex items-center border-gray-100 px-4 py-3'>
-          <div className=''>
-            {/* Image element can be added back here if needed */}
+          className='flex items-center border-gray-100 py-5 w-[50vw]'>
+          <div className='mr-3'>
+            {/* Uncomment if needed:
+              <img
+                src={speaker}
+                alt='announcement'
+                width={24}
+                className='bg-secondary rounded-full p-[1px]'
+              />
+            */}
           </div>
-          <div className='flex flex-col ml-4'>
+          <div className='flex flex-col'>
             <small>{formatDistanceToNow(new Date(item?.createdAt))}</small>
             <p className='text-gray-600 text-[14px]'>{item.action}</p>
           </div>
@@ -62,6 +69,7 @@ export default function Marqueez() {
     </div>
   </Marquee>
 </div>
+
 
 	)
 }
