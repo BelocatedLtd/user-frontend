@@ -385,7 +385,7 @@ const remainTask = totalTasks - tasksCompleted;
 					<Image
 						src={banner}
 						alt=''
-						className='w-full  md:col-span-full  rounded-lg object-contain mb-10'
+						className='w-full rounded-lg object-contain mb-10'
 					/>
 					{/* </div> */}
 				</div>
