@@ -63,11 +63,11 @@ const ActivityFeed = () => {
 			</div>
 
 			<div className='flex flex-col w-full px-5 pb-3 gap-3 py-5'>
-				<div className='flex flex-col gap-[0.8rem] divide-y text-gray-600 text-[14px]'>
+				<div className='grid grid-cols-2 gap-4 p-4 border-gray-100'>
 					{getCurrentPageData().map((item: any, index: number) => (
 						<div
 							key={index}
-							className='grid grid-cols-6   p-4 border-gray-100 '>
+							className='flex p-2 border-b border-gray-200'>
 							<div className=''>
 								<Image
 									src={speaker}
@@ -75,7 +75,7 @@ const ActivityFeed = () => {
 									className='bg-secondary rounded-full w-10 h-10'
 								/>
 							</div>
-							<div className='flex ml-3 col-span-5  flex-col'>
+							<div className='ml-3 flex flex-col'>
 								<small>{formatDistanceToNow(new Date(item?.createdAt))}</small>
 								<p className='text-gray-600 text-[14px]'>{item.action}</p>
 							</div>
