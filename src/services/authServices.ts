@@ -50,13 +50,21 @@ export const createNewUser = async (
 		}
 		return response.data
 	} catch (error: any) {
-		const message =
-			(error.response && error.response.data && error.response.data.message) ||
-			error.message ||
-			error.toString()
-		toast.error(message)
-		throw new Error(message)
-	}
+		if (error.response) {
+            if (error.response.status === 409) {
+                // Handle duplicate username/email error
+                throw new Error(error.response.data.message);
+            } else if (error.response.status === 500) {
+                // Handle server errors
+                throw new Error('A server error occurred. Please try again later.');
+            } else {
+                // Handle other errors
+                throw new Error(error.response.data.message || 'An unknown error occurred.');
+            }
+        } else {
+            throw new Error('Unable to reach the server. Please check your network.');
+        }
+    }
 }
 
 // Create New User Ref
