@@ -73,31 +73,13 @@ const Register = ({ showLoginModal, closeModal}: any) => {
 
 		setIsLoading(true)
 
-		const response = await createNewUser(formData)
-		setIsLoading(false)
-
-		if (!response) {
-			toast.error('Error trying to register user')
-			return
-		}
-
-		if (
-			response.message === 'Email has already been registered, please login'
-		) {
-			toast.error('Email has already been registered, please login')
-			closeModal()
-		}
-
-		if (!response._id) {
-			toast.error('Error registering user')
-		}
-
-		if (response._id) {
-			toast.success(
-				'User Profile Created Successfully, proceeding to verification...',
-			)
-
-			//Emit socket io event to the backend
+		try {
+			const response = await createNewUser(formData)
+			setIsLoading(false)
+			if (!response) {
+				toast.error('Error trying to register user')
+				return
+			}
 			const emitData = {
 				userId: response?._id,
 				action: `@${response?.username} just registered`,
@@ -123,8 +105,13 @@ const Register = ({ showLoginModal, closeModal}: any) => {
 				error: <b>Failed to send email</b>,
 			})
 			closeModal()
+
+
+		} catch (error: any) {
+			toast.error(error)
 		}
-	}
+		}
+	
 
 	return (
 		<>
