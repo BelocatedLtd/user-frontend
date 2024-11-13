@@ -89,17 +89,22 @@ const toggleEmailVerifyModal = async (e: React.FormEvent<HTMLFormElement>) => {
 			socket.emit('sendActivity', emitData);
 	
 			// Sending email verification link
-			const emailResponse = resendVerificationEmail(email);
-			toast.promise(emailResponse, {
-				loading: 'Sending verification email...',
-				success: <b>Email sent</b>,
-				error: <b>Failed to send email</b>,
-			});
-	
-			// Await email response, then redirect
-			await emailResponse;
-			router.push(`/verify-email/${formData.email}`); // Redirect to email verification page
-			closeModal();
+			const emailResponse = resendVerificationEmail(email)
+			.catch((error) => {
+				toast.error('Failed to send verification email')
+				setIsLoading(false)
+			})
+			.then((res) => {
+				router.push(`/verify-email/${formData.email}`)
+				setIsLoading(false)
+			})
+
+		toast.promise(emailResponse, {
+			loading: 'Sending verification email...',
+			success: <b>Email sent</b>,
+			error: <b>Failed to send email</b>,
+		})
+		closeModal()
 		} catch (error: any) {
 			toast.error(error.message || 'An error occurred');
 		} finally {
