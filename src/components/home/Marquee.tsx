@@ -57,7 +57,7 @@ export default function Marqueez() {
 								className='bg-secondary rounded-full p-[1px] mr-3'
 							/> */}
 						</div>
-						<div className='flex flex-col'>
+						<div className='flex flex-col col-span-3'>
 							<small>{formatDistanceToNow(new Date(item?.createdAt))}</small>
 							<p className='text-gray-600 text-[14px]'>{item.action}</p>
 						</div>
