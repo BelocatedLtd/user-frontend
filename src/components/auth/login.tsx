@@ -108,7 +108,7 @@ const Login = ({ showRegModal, closeModal }: any) => {
 					}
 
 					//Emit Socket event to update activity feed
-					socket.emit('sendActivity', emitData)
+					// socket.emit('sendActivity', emitData)
 
 					router.push(`/dashboard`)
 					toast.success(`Welcome back @${username}!`)
