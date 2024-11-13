@@ -260,7 +260,7 @@ const remainTask = totalTasks - tasksCompleted;
 		// 			</div>
 		// 		</div>
 
-		<div className='container w-full min-h-screen pb-50'>
+		<div className='container w-full min-h-screen pb-20'>
 			<div className='justify-between mx-auto md:mr-3'>
 				<div className='md:flex mb-10 px-3 items-center justify-between'>
 					<div className="p-4 bg-white rounded-lg shadow-md">
@@ -292,7 +292,7 @@ const remainTask = totalTasks - tasksCompleted;
 
 
 					{/* Perform Task and Earn Button */}
-					<button style={{fontFamily:"'Merriweather', serif", boxShadow: "8px 8px 12px rgba(0, 0, 255, 0.3)",}}
+					<button style={{fontFamily:"'Merriweather', serif", boxShadow: "8px 8px 20px rgba(0, 0, 255, 0.6)",}}
 						onClick={() => router.push('/dashboard/earn')}
 						className='shadow-lg text-center text-sm font-bold bg-blue-500 text-white px-4 py-3 rounded-full w-full'>Click Here To
 						Perform Task and Earn
@@ -300,17 +300,17 @@ const remainTask = totalTasks - tasksCompleted;
 
 					{/* Remaining Buttons */}
 					<div className='flex space-x-2'>
-						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "8px 8px 12px rgba(255, 0, 0, 0.3)",}}
+						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "8px 8px 20px rgba(255, 0, 0, 0.6)",}}
 							onClick={handleAdvertise}
 							 className='w-32 h-10 text-center text-sm font-bold bg-tertiary text-white px-4 py-2 rounded-full'>
 							Advertise
 						</button>
-						<button style={{fontFamily:"'Merriweather', serif", boxShadow: "8px 8px 12px rgba(0, 128, 0, 0.3)",}}
+						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "8px 8px 20px rgba(0, 128, 0, 0.6)",}}
 							onClick={() => router.push('/dashboard/wallet')}
 							className='w-32 h-10 text-center text-sm font-bold bg-green-600 text-white px-4 py-2 rounded-full'>
 							My Wallet
 						</button>
-						<button style={{fontFamily:"'Merriweather', serif", boxShadow: "8px 8px 12px rgba(128, 128, 128, 0.3)",}}
+						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "8px 8px 20px rgba(128, 128, 128, 0.6)",}}
 							onClick={() => router.push('/dashboard/referral')}
 							className='w-32 h-10 text-center text-xs font-bold bg-gray-600 text-white px-4 py-2 rounded-full'>
 							Referral Program
@@ -383,10 +383,10 @@ const remainTask = totalTasks - tasksCompleted;
 					</div>
 					{/* <div className='border bg-red-200 md:col-span-3 col-span-2 border-gray-200 rounded-lg flex'> */}
 					<Image
-  src={banner}
-  alt=''
-  className='w-full md:col-span-full rounded-lg object-contain'
-/>
+						src={banner}
+						alt=''
+						className='w-full  md:col-span-3  rounded-lg object-contain'
+					/>
 					{/* </div> */}
 				</div>
 			</div>
