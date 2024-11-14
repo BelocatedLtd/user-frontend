@@ -382,11 +382,17 @@ const remainTask = totalTasks - tasksCompleted;
 						<ActivityFeed />
 					</div>
 					{/* <div className='border bg-red-200 md:col-span-3 col-span-2 border-gray-200 rounded-lg flex'> */}
-					<Image
-						src={banner}
-						alt=''
-						className='w-full rounded-lg object-contain mb-10'
-					/>
+					<div className="relative w-full h-auto">
+  <Image 
+    src={banner} 
+    alt="Banner" 
+    layout="responsive" 
+    width={1200} // Set the base width as per the original image's aspect ratio
+    height={500} // Adjust height as needed
+    className="object-cover"
+  />
+</div>
+
 					{/* </div> */}
 				</div>
 			</div>
