@@ -9,7 +9,7 @@ import {
 } from '@/redux/slices/referrals'
 import { getUser, sendInviteEmail } from '@/services/authServices'
 import { getOngoingRefChallenge } from '@/services/refService'
-import { getRefDashboardData } from '@/services/referrals'
+import { getRefDashboardData, withdrawReferralEarnings } from '@/services/referrals'
 import { handleRefLinkCopy } from '@/utils'
 import { toNaira } from '@/utils/payment'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
@@ -39,6 +39,8 @@ const Referral = () => {
 	const [rankedContestants, setRankedContestants] = useState([])
 	const [refLink, setRefLink] = useState('')
 	const [daysRemaining, setDaysRemaining] = useState()
+	const [isWithdrawing, setIsWithdrawing] = useState(false);
+	
 
 	const [dashboardData, setDasboardData] = useState<{
 		totalPoints: string
@@ -114,6 +116,27 @@ const Referral = () => {
 		}
 	}
 
+	const handleWithdraw = async () => {
+		setIsWithdrawing(true);
+		try {
+		  const response = await withdrawReferralEarnings();// Adjust URL as needed
+		  if (response) {
+			// Update wallet balance and reset totalEarning to zero after withdrawal
+			
+			toast.success("Widthdrawal Successful"); // Display success message
+		  }
+		  setIsWithdrawing(false);
+		} catch (error) {
+			if (error instanceof Error) {
+			  alert(error.message || 'An error occurred during withdrawal');
+			} else {
+			  console.error('Unexpected error:', error);
+			  alert('An unexpected error occurred');
+			}
+		  } finally {
+			setIsWithdrawing(false);
+		  }
+		}
 	const frontEndUrl = typeof window !== 'undefined' && window.location.hostname
 
 	return (
@@ -151,13 +174,13 @@ const Referral = () => {
 						</div>
 					</div>
 					<div className="border border-yellow-500 p-4" style={{ marginTop: '20px', fontSize: '14px', color: '#555' }}>
-      <h4><b>Referral Points System:</b></h4>
-      <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
-        <li>1 successful referral = 10 points</li>
-        <li>10 points = ₦100</li>
-        <li>The Withdrawal Button will be active when you have <b>100 points = ₦1,000 and above</b></li>
-      </ul>
-    </div>
+						<h4><b>Referral Points System:</b></h4>
+						<ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
+							<li>1 successful referral = 10 points</li>
+							<li>10 points = ₦100</li>
+							<li>The Withdrawal Button will be active when you have <b>100 points = ₦1,000 and above</b></li>
+						</ul>
+					</div>
 
 					<div className='border w-full row-span-2 px-8 py-4 space-y-4 rounded-lg border-gray-200'>
 						<div className=' gap-4'>
@@ -246,6 +269,20 @@ const Referral = () => {
 								{dashboardData?.referredUsers ?? 0}
 							</strong>
 						</div>
+						<div className="border p-6 border-gray-200 rounded-lg mt-4">
+							<h3 className="mb-4">Withdraw Referral Earnings</h3>
+							<button
+  onClick={handleWithdraw}
+  disabled={parseFloat(dashboardData?.totalEarning ?? '0') < 1000 || isWithdrawing} // Convert to number
+  className={`${
+    parseFloat(dashboardData?.totalEarning ?? '0') >= 1000 // Convert to number
+      ? 'bg-green-500 hover:bg-green-600'
+      : 'bg-gray-300'
+  } text-white py-2 px-4 rounded mt-4`}
+>
+  {isWithdrawing ? 'Processing...' : 'Withdraw Earnings'}
+</button>
+						</div>
 						<div className='border w-full flex-row justify-between px-8 py-4 space-y-4 rounded-lg border-gray-200'>
 							<p className='text-xs text-secondary'>Challenges won</p>
 							<strong className='flex justify-self-end'>
@@ -253,6 +290,7 @@ const Referral = () => {
 							</strong>
 						</div>
 					</div>
+
 
 					<div className='border p-6 border-gray-200 rounded-lg '>
 						<h3 className='mb-6'>Referral</h3>
