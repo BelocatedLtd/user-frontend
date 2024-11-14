@@ -37,7 +37,11 @@ export const getRefDashboardData = async () => {
 	const response = await axios.get(`${BACKEND_URL}/api/ref/dashboard`, headers)
 	return response.data
 }
-
+export const withdrawReferralEarnings = async () => {
+	const headers = getAuthHeaders()
+	const response = await axios.post(`${BACKEND_URL}/api/ref/widthdraw`, headers)
+	return response.data
+}
 // Ref Bonus
 
 // Convert Ref bonus pts to wallet funds
