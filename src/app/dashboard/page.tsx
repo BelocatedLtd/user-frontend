@@ -382,7 +382,7 @@ const remainTask = totalTasks - tasksCompleted;
 						<ActivityFeed />
 					</div>
 					{/* <div className='border bg-red-200 md:col-span-3 col-span-2 border-gray-200 rounded-lg flex'> */}
-					<div className="relative w-full h-auto">
+					<div className="relative w-full">
   <Image
     src={banner} 
     alt="Banner" 
