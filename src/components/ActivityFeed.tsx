@@ -20,7 +20,7 @@ const ActivityFeed = () => {
 	const dispatch = useDispatch()
 	const [currentPage, setCurrentPage] = useState(1)
 
-	const itemsPerPage = 4
+	const itemsPerPage = 10
 
 	const totalPage = Math.ceil(newsFeed.length / itemsPerPage)
 
