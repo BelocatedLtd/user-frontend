@@ -288,29 +288,29 @@ const remainTask = totalTasks - tasksCompleted;
 				</div>
 </div>
 				{/* Buttons Section */}
-				<div className='space-y-4 mt-2 mb-5'>
+				<div className='space-y-4 mt-2 mb-10'>
 
 
 					{/* Perform Task and Earn Button */}
-					<button style={{fontFamily:"'Merriweather', serif", boxShadow: "8px 8px 20px rgba(0, 0, 255, 0.6)",}}
+					<button style={{fontFamily:"'Merriweather', serif", boxShadow: "0px 8px 20px 5px rgba(0, 0, 255, 0.6)",}}
 						onClick={() => router.push('/dashboard/earn')}
 						className='shadow-lg text-center text-sm font-bold bg-blue-500 text-white px-4 py-3 rounded-full w-full'>Click Here To
 						Perform Task and Earn
 					</button>
 
 					{/* Remaining Buttons */}
-					<div className='flex space-x-2'>
-						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "8px 8px 20px rgba(255, 0, 0, 0.6)",}}
+					<div className='flex space-x-2 mb-5'>
+						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "0px 8px 20px 5px rgba(255, 0, 0, 0.6)",}}
 							onClick={handleAdvertise}
 							 className='w-32 h-10 text-center text-sm font-bold bg-tertiary text-white px-4 py-2 rounded-full'>
 							Advertise
 						</button>
-						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "8px 8px 20px rgba(0, 128, 0, 0.6)",}}
+						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "8px 8px 20px 5px rgba(0, 128, 0, 0.6)",}}
 							onClick={() => router.push('/dashboard/wallet')}
 							className='w-32 h-10 text-center text-sm font-bold bg-green-600 text-white px-4 py-2 rounded-full'>
 							My Wallet
 						</button>
-						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "8px 8px 20px rgba(128, 128, 128, 0.6)",}}
+						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "8px 8px 20px 5px rgba(128, 128, 128, 0.6)",}}
 							onClick={() => router.push('/dashboard/referral')}
 							className='w-32 h-10 text-center text-xs font-bold bg-gray-600 text-white px-4 py-2 rounded-full'>
 							Referral Program
