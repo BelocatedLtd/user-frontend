@@ -134,7 +134,7 @@ const Advertise = () => {
 								<div className='absolute bg-white space-y-4 border   max-h-72  overflow-scroll'>
 									{selectedPlatformObject?.assetplatform === menu.value &&
 									toggleServices ? (
-										<ul className=' mt-2 overflow-scroll rounded-sm absolute z-100 pb-2'>
+										<ul className=' mt-2 overflow-scroll rounded-sm relative z-100 pb-2'>
 											{selectedPlatformObject?.assets?.map(
 												(service: Asset, index: number) => (
 													<li
