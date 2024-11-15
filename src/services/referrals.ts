@@ -38,11 +38,20 @@ export const getRefDashboardData = async () => {
 	return response.data
 }
 export const withdrawReferralEarnings = async () => {
-	const headers = getAuthHeaders()
-	const response = await axios.post(`${BACKEND_URL}/api/ref/withdraw`, headers)
-	console.log(response)
-	return response.data
-}
+	try {
+		const headers = getAuthHeaders();
+		const response = await axios.post(
+			`${BACKEND_URL}/api/ref/withdraw`,
+			{}, // Empty body for the POST request
+			{ headers } // Pass headers here
+		);
+		console.log(response.data);
+		return response.data;
+	} catch (error) {
+		console.error('Error during withdrawal:', error.response?.data || error.message);
+		throw error;
+	}
+};
 // Ref Bonus
 
 // Convert Ref bonus pts to wallet funds
