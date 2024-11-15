@@ -288,7 +288,7 @@ const remainTask = totalTasks - tasksCompleted;
 				</div>
 </div>
 				{/* Buttons Section */}
-				<div className='space-y-4 mt-2 mb-10'>
+				<div className='space-y-4 mt-2 mb-15'>
 
 
 					{/* Perform Task and Earn Button */}
@@ -299,7 +299,7 @@ const remainTask = totalTasks - tasksCompleted;
 					</button>
 
 					{/* Remaining Buttons */}
-					<div className='flex space-x-2 mb-5'>
+					<div className='flex space-x-2 mt-5 mb-10'>
 						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "0px 8px 8px 0px rgba(255, 0, 0, 0.8)",}}
 							onClick={handleAdvertise}
 							 className='w-32 h-10 text-center text-sm font-bold bg-tertiary text-white px-4 py-2 rounded-full'>
@@ -383,12 +383,12 @@ const remainTask = totalTasks - tasksCompleted;
 					</div>
 					{/* <div className='border bg-red-200 md:col-span-3 col-span-2 border-gray-200 rounded-lg flex'> */}
 					<div className="relative w-full h-auto">
-  <img
+  <image
     src={banner} 
     alt="Banner" 
-    layout="responsive" 
-    width={400} // Set the base width as per the original image's aspect ratio
-    height={500} // Adjust height as needed
+    layout="fill" 
+     // Set the base width as per the original image's aspect ratio
+    // Adjust height as needed
     className="object-cover"
   />
 </div>
