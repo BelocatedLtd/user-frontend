@@ -67,15 +67,15 @@ const ActivityFeed = () => {
 					{getCurrentPageData().map((item: any, index: number) => (
 						<div
 							key={index}
-							className='grid grid-cols-6   p-4 border-gray-100 '>
+							className='grid grid-cols-4 p-2 border-gray-100 '>
 							<div className=''>
 								<Image
 									src={speaker}
 									alt='announcement'
-									className='bg-secondary rounded-full w-10 h-10'
+									className='bg-secondary rounded-full w-5 h-5'
 								/>
 							</div>
-							<div className='flex ml-3 col-span-5  flex-col'>
+							<div className='flex ml-2 col-span-3 flex-col'>
 								<small>{formatDistanceToNow(new Date(item?.createdAt))}</small>
 								<p className='text-gray-600 text-[14px]'>{item.action}</p>
 							</div>
