@@ -288,7 +288,7 @@ const remainTask = totalTasks - tasksCompleted;
 				</div>
 </div>
 				{/* Buttons Section */}
-				<div className='space-y-4 mt-2'>
+				<div className='space-y-4 mt-2 mb-5'>
 
 
 					{/* Perform Task and Earn Button */}
