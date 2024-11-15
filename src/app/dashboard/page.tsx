@@ -299,7 +299,7 @@ const remainTask = totalTasks - tasksCompleted;
 					</button>
 
 					{/* Remaining Buttons */}
-					<div className='flex space-x-2 mt-5 mb-10'>
+					<div className='flex space-x-2 mt-5 mb-15'>
 						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "0px 8px 8px 0px rgba(255, 0, 0, 0.8)",}}
 							onClick={handleAdvertise}
 							 className='w-32 h-10 text-center text-sm font-bold bg-tertiary text-white px-4 py-2 rounded-full'>
@@ -382,8 +382,9 @@ const remainTask = totalTasks - tasksCompleted;
 						<ActivityFeed />
 					</div>
 					{/* <div className='border bg-red-200 md:col-span-3 col-span-2 border-gray-200 rounded-lg flex'> */}
-					<div className="relative w-full">
+					<div className="relative w-full pb-5" style={{width:'380px'}}>
   <Image
+    style={{position:'relative', height:'auto'}}
     src={banner} 
     alt="Banner" 
     layout="fill" 
