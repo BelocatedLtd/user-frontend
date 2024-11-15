@@ -38,20 +38,32 @@ export const getRefDashboardData = async () => {
 	return response.data
 }
 export const withdrawReferralEarnings = async () => {
-	try {
-		const headers = getAuthHeaders();
-		const response = await axios.post(
-			`${BACKEND_URL}/api/ref/withdraw`,
-			{}, // Empty body for the POST request
-			{ headers } // Pass headers here
-		);
-		console.log(response.data);
-		return response.data;
-	} catch (error) {
-		console.error('Error during withdrawal:', error.response?.data || error.message);
-		throw error;
-	}
+  try {
+    const headers = getAuthHeaders();
+
+    if (!headers) {
+      throw new Error("Authorization headers not found");
+    }
+
+    const response = await axios.post(`${BACKEND_URL}/api/ref/withdraw`, null, headers);
+    console.log("Response:", response.data);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      // Axios-specific error handling
+      console.error("Axios error:", error.response?.data || error.message);
+      throw new Error(error.response?.data?.message || "Something went wrong with the request");
+    } else if (error instanceof Error) {
+      // Generic error handling
+      console.error("Error:", error.message);
+      throw new Error(error.message);
+    } else {
+      console.error("Unexpected error:", error);
+      throw new Error("An unexpected error occurred");
+    }
+  }
 };
+
 // Ref Bonus
 
 // Convert Ref bonus pts to wallet funds
