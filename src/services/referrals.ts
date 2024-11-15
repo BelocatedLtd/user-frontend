@@ -40,6 +40,7 @@ export const getRefDashboardData = async () => {
 export const withdrawReferralEarnings = async () => {
 	const headers = getAuthHeaders()
 	const response = await axios.post(`${BACKEND_URL}/api/ref/withdraw`, headers)
+	console.log(response)
 	return response.data
 }
 // Ref Bonus
