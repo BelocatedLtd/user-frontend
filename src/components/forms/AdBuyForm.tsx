@@ -15,6 +15,7 @@ interface AdBuyFormProps {
 	advert: any
 	service: string
 	adTitle: string
+	TD:string
 	platform: string
 	selectedFiles: any[]
 	fileArray: any[]
@@ -36,6 +37,7 @@ const AdBuyForm = ({
 	advert,
 	service,
 	adTitle,
+	TD, 
 	platform,
 	selectedFiles,
 	fileArray,
