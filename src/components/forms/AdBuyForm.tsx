@@ -232,6 +232,7 @@ const AdBuyForm = ({
 									/>
 									<input
 										value={TD}
+										hidden
 										disabled
 										className='w-full mt-2 shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'
 									/>
