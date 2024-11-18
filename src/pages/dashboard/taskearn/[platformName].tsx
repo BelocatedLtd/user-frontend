@@ -188,7 +188,7 @@ const TaskEarn = () => {
             // Optimize this by executing in parallel if needed
             const assetresult = await getSocialPlatformAsset(taskToPerform.platform, taskToPerform.service);
 		setTd(assetresult.SC)
-		console.log(td)
+		console.log('what is thidsssssssssssssssss',td)
 
             const taskData = {
                 advertId: taskToPerform._id,
