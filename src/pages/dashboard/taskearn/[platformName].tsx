@@ -68,6 +68,7 @@ const TaskEarn = () => {
 
 	const tasks = useSelector(selectTasks)
 	const [finalFilteredTasks, setFinalFilteredTasks] = useState([])
+	const [td,setTd] = useState<string | null>(null)
 	const [isaLoading, setIsLoading] = useState(false);
 	const getAllTasks = async () => {
 		dispatch(handleGetUserTasks() as any)
@@ -186,6 +187,7 @@ const TaskEarn = () => {
         if (taskToPerform) {
             // Optimize this by executing in parallel if needed
             const assetresult = await getSocialPlatformAsset(taskToPerform.platform, taskToPerform.service);
+		setTd(assetresult.TD)
 
             const taskData = {
                 advertId: taskToPerform._id,
@@ -288,7 +290,7 @@ const TaskEarn = () => {
 											</small>
 
 											<h4 className='text-gray-600 flex text-[15px] md:text-[18px] font-bold p-0  border-gray-200 pb-2'>
-												<p className='w-1/8'>{task?.adTitle}</p>
+												<p className='w-1/8'>{td}</p>
 
 												<span>{toIntlCurrency(task?.earnPerTask)}</span>
 											</h4>
