@@ -291,7 +291,7 @@ const TaskEarn = () => {
 											</small>
 
 											<h4 className='text-gray-600 flex text-[15px] md:text-[18px] font-bold p-0  border-gray-200 pb-2'>
-												<p className='w-1/8'>{task.TD}</p>
+												<p className='w-1/8'>{task.TD ?? task.adTitle}</p>
 
 												<span>{toIntlCurrency(task?.earnPerTask)}</span>
 											</h4>
