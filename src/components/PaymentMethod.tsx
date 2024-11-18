@@ -110,6 +110,7 @@ const PaymentMethod = ({
 			paymentFormData.append('paymentMethod', 'wallet')
 
 			setIsLoading(true)
+			console.log('payy',paymentFormData)
 			const response = await createAdvert(paymentFormData)
 			console.log(response)
 			setIsLoading(false)
