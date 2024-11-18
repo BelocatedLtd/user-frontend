@@ -1,3 +1,4 @@
+
 'use client' // Corrected 'use client' to 'use strict' or similar if intended
 import BackButton from '@/components/Button/BackButton'
 import socialPlatforms from '@/components/data/assets'
@@ -36,7 +37,8 @@ const AdBuy = () => {
 	const [selectedPlatformObject, setSelectedPlatformObject] =
 		useState<any>(null) // Adjusted type
 
-	const [socialService, setSocialService] = useState<any>(null) // Adjusted type
+	const [socialService, setSocialService] = useState<any>(null) 
+	const [TD,setTD] = useState<any>(null)// Adjusted type
 	const [comments, setComments] = useState<string>('') // Added type annotation
 	const [captionArray, setCaptionArray] = useState<string[]>([]) // Added type annotation
 
@@ -114,6 +116,7 @@ const AdBuy = () => {
 		)
 
 		setEarnPerTask(selectedService?.amountForTask || 0)
+		setTD(selectedService?.TD) 
 		setExpBudget(
 			(selectedService?.CostToOrder || 0) *
 				(parseFloat(advert.desiredROI) || 0),
@@ -140,6 +143,7 @@ const AdBuy = () => {
 					platform={platformName!}
 					service={service}
 					adTitle={adTitle}
+					TD={TD}
 					advert={advert}
 					handleImageRemove={handleImageRemove}
 					selectedFiles={selectedFiles}
