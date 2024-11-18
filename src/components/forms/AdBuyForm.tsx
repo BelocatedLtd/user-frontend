@@ -143,6 +143,7 @@ const AdBuyForm = ({
 		platform,
 		service: service,
 		adTitle,
+		TD,
 		desiredROI: advert.desiredROI,
 		gender: advert.gender,
 		state: selectedState,
@@ -227,6 +228,14 @@ const AdBuyForm = ({
 									<input
 										value={service}
 										disabled
+										className='w-full mt-2 shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'
+									/>
+									<input
+										type='text'
+										value={TD}
+									         name='TD'
+										 onChange={handleInputChange}
+										 
 										className='w-full mt-2 shadow-inner p-3 bg-transparent border border-gray-200 rounded-xl'
 									/>
 									<small className='text-left'>
