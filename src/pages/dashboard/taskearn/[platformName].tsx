@@ -64,11 +64,11 @@ const TaskEarn = () => {
 	const [icon, setIcon] = useState<StaticImageData>()
 
 	const [selectedAdvertId, setSelectedAdvertId] = useState<string | null>(null)
-	const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
+	const [selectedTaskId, setSelectedTaskId] = useState<string>()
 
 	const tasks = useSelector(selectTasks)
 	const [finalFilteredTasks, setFinalFilteredTasks] = useState([])
-	const [td,setTd] = useState<string | null>(null)
+	const [td, setTd] = useState<string | null>(null)
 	const [isaLoading, setIsLoading] = useState(false);
 	const getAllTasks = async () => {
 		dispatch(handleGetUserTasks() as any)
@@ -187,7 +187,8 @@ const TaskEarn = () => {
         if (taskToPerform) {
             // Optimize this by executing in parallel if needed
             const assetresult = await getSocialPlatformAsset(taskToPerform.platform, taskToPerform.service);
-		setTd(assetresult.TD)
+		setTd(assetresult.SC)
+		console.log(td)
 
             const taskData = {
                 advertId: taskToPerform._id,
