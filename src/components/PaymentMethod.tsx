@@ -80,6 +80,7 @@ const PaymentMethod = ({
 	paymentFormData.append('platform', platform)
 	paymentFormData.append('service', service)
 	paymentFormData.append('adTitle', adTitle)
+	paymentFormData.append('TD', TD)
 	paymentFormData.append('desiredROI', desiredROI)
 	paymentFormData.append('gender', gender)
 	paymentFormData.append('state', state)
