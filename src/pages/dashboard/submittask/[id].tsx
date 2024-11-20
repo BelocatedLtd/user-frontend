@@ -116,7 +116,7 @@ const TaskSubmit = () => {
 				action: `@${user?.username} just performed a task on ${task?.platform}`,
 			})
 
-			router.push('/dashboard/tasks')
+			router.push(`/dashboard/success?platform=${task.platform}`);
 		} else {
 			toast.error('Error submitting task')
 		}
