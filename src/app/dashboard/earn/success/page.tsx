@@ -39,6 +39,7 @@ const TaskSuccess: React.FC = () => {
         <h1 className="text-sm font-bold text-green-600 mb-4">
           Task Created Successfully!
         </h1>
+        <p className="mt-2 text-sm text-gray-600">While you await Approval from Admin you can perform other available Task</p>
         <p className="text-sm text-gray-700 mb-6">
           Redirecting to <span className="font-semibold">{platform}</span> page in:
         </p>
