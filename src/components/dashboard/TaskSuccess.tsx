@@ -1,26 +1,28 @@
-import React, { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+"use client";
+
+import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const TaskSuccess: React.FC = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const platform = searchParams.get("platform"); // Extract 'platform'
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Get the platform from the query string
+  const platform = searchParams.get("platform");
 
   useEffect(() => {
     if (platform) {
-      // If platform exists, redirect after 3 seconds
+      // Redirect after 3 seconds
       const timer = setTimeout(() => {
-        navigate(`/dashboard/taskearn/${platform}`, { replace: true });
+        router.replace(`/dashboard/taskearn/${platform}`);
         window.location.reload();
       }, 3000);
 
-      return () => clearTimeout(timer);
+      return () => clearTimeout(timer); // Cleanup timer
     } else {
-      // Handle missing platform gracefully
-      console.error("Platform query parameter is missing!");
+      console.error("Platform parameter is missing!");
     }
-  }, [platform, navigate]);
+  }, [platform, router]);
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
