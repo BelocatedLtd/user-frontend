@@ -14,8 +14,8 @@ const TaskSuccess: React.FC = () => {
     if (platform !== "unknown") {
       // Redirect after 3 seconds
       const timer = setTimeout(() => {
-        router.replace(`/dashboard/taskearn/${platform}`);
-        window.location.reload();
+      router.push(`/dashboard/taskearn/${task.platform}`);
+
       }, 3000);
 
       return () => clearTimeout(timer); // Cleanup timer
