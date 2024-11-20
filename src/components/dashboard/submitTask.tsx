@@ -154,7 +154,7 @@ const TaskSubmit = ({
 // 			router.replace(`/dashboard/taskearn/${task.platform}`);
 // window.location.reload();
 
-			router.push(`/dashboard/earn/success?platform=${task.platform}`);
+			router.push(`/dashboard/success?platform=${task.platform}`);
 
 		} catch (error) {
 			toast.error('Error submitting task');
