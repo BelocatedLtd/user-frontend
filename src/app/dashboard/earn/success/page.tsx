@@ -27,7 +27,7 @@ const TaskSuccess: React.FC = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       {platform !== "unknown" ? (
-        <h1 className="text-3xl font-bold text-green-600">
+        <h1 className="text-sm font-bold text-green-600">
           Task Created Successfully on {platform}!
         </h1>
       ) : (
