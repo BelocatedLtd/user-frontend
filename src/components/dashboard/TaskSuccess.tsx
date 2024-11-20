@@ -7,11 +7,11 @@ const TaskSuccess: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Get the platform from the query string
-  const platform = searchParams.get("platform");
+  // Safely extract the 'platform' parameter
+  const platform = searchParams?.get("platform") || "unknown";
 
   useEffect(() => {
-    if (platform) {
+    if (platform !== "unknown") {
       // Redirect after 3 seconds
       const timer = setTimeout(() => {
         router.replace(`/dashboard/taskearn/${platform}`);
@@ -26,7 +26,7 @@ const TaskSuccess: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
-      {platform ? (
+      {platform !== "unknown" ? (
         <h1 className="text-3xl font-bold text-green-600">
           Task Created Successfully on {platform}!
         </h1>
