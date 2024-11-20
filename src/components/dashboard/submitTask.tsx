@@ -67,6 +67,7 @@ const TaskSubmit = ({
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUserSocialName(e.target.value)
 	}
+	
 
 	// Handle image upload and preview
 	const handleImageChange = (files: FileList) => {
@@ -150,8 +151,10 @@ const TaskSubmit = ({
 				action: `@${user?.username} just performed a task on ${task?.platform}`,
 			});
 			onClose();
-			router.replace(`/dashboard/taskearn/${task.platform}`);
-window.location.reload();
+// 			router.replace(`/dashboard/taskearn/${task.platform}`);
+// window.location.reload();
+
+			router.push(`/dashboard/TaskSuccess?platform=${task.platform}`);
 
 		} catch (error) {
 			toast.error('Error submitting task');
