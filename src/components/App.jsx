@@ -64,7 +64,7 @@ import About from './app/About'
 import FAQ from './app/FAQ'
 import CampaignStats from './app/dashboard/userPages/CampaignStats'
 import TaskSubmit from './app/dashboard/userPages/TaskSubmit'
-import TaskSuccess from './dashboard/TaskSuccess'
+import TaskSuccess from '../components/dashboard/TaskSuccess'
 
 axios.defaults.withCredentials = true
 
