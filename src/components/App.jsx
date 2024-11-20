@@ -64,6 +64,7 @@ import About from './app/About'
 import FAQ from './app/FAQ'
 import CampaignStats from './app/dashboard/userPages/CampaignStats'
 import TaskSubmit from './app/dashboard/userPages/TaskSubmit'
+import TaskSuccess from '../components/dashboard/TaskSuccess'
 
 axios.defaults.withCredentials = true
 
@@ -228,6 +229,17 @@ function App() {
 						<SidebarLeft>
 							<DashLayout>
 								<TaskList />
+								<SidebarRight />
+							</DashLayout>
+						</SidebarLeft>
+					}
+				/>
+				<Route
+					path='/dashboard/earn/success'
+					element={
+						<SidebarLeft>
+							<DashLayout>
+								<TaskSuccess />
 								<SidebarRight />
 							</DashLayout>
 						</SidebarLeft>
