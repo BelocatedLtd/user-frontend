@@ -235,7 +235,7 @@ function App() {
 					}
 				/>
 				<Route
-					path='/dashboard/earn/success'
+					path='/dashboard/success'
 					element={
 						<SidebarLeft>
 							<DashLayout>
