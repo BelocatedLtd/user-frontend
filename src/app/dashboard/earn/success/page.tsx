@@ -36,14 +36,14 @@ const TaskSuccess: React.FC = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gradient-to-br from-blue-100 via-blue-300 to-blue-500">
       <div className="text-center bg-white rounded-lg shadow-lg p-8">
-        <h1 className="text-4xl font-bold text-blue-600 mb-4">
+        <h1 className="text-sm font-bold text-green-600 mb-4">
           Task Created Successfully!
         </h1>
-        <p className="text-xl text-gray-700 mb-6">
+        <p className="text-sm text-gray-700 mb-6">
           Redirecting to <span className="font-semibold">{platform}</span> page in:
         </p>
         <div
-          className="text-5xl font-extrabold text-blue-800 bg-blue-200 px-6 py-4 rounded-lg shadow-md animate-bounce"
+          className="text-sm font-extrabold text-white-800 bg-red-200 px-6 py-4 rounded-lg shadow-md animate-bounce"
         >
           {countdown}
         </div>
