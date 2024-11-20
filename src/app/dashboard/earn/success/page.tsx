@@ -34,7 +34,7 @@ const TaskSuccess: React.FC = () => {
   }, [platform, router]);
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gradient-to-br from-blue-100 via-blue-300 to-blue-500">
+    <div className="container w-full min-h-screen pb-20 bg-gray-100">
       <div className="text-center bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-sm font-bold text-green-600 mb-4">
           Task Created Successfully!
