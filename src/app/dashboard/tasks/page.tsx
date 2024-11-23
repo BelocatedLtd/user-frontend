@@ -216,7 +216,7 @@ const TaskList = () => {
 																getStatusBgColor(task.status),
 															)}>
 															
-  Status: {task.status} {task.status === "rejected" ? `, Message: ${task.message}` : ""}
+  Status: {task.status} {task.status === "Rejected" ? `, Message: ${task.message}` : ""}
 
 
 														</span>
