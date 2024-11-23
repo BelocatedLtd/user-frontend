@@ -20,7 +20,7 @@ const TaskSuccess: React.FC = () => {
       
       const timeout = setTimeout(() => {
         clearInterval(interval); 
-      router.push('/dashboard/taskearn/');
+      router.push('/dashboard/earn/');
 
       }, 10000);
 
