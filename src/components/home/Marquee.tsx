@@ -18,7 +18,7 @@ export default function Marqueez() {
 	const newsFeed = useSelector(selectActivities)
 
 	const dispatch = useDispatch()
-	const itemsPerPage = 4
+	const itemsPerPage = 6
 	const [currentPage, setCurrentPage] = useState(1)
 
 	const getCurrentPageData = () => {
