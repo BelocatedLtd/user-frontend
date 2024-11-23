@@ -9,7 +9,7 @@ const TaskSuccess: React.FC = () => {
 
 
   const platform = searchParams?.get("platform") || "unknown";
-  const [countdown, setCountdown] = useState(5);
+  const [countdown, setCountdown] = useState(10);
 
   useEffect(() => {
     if (platform !== "unknown") {
@@ -22,7 +22,7 @@ const TaskSuccess: React.FC = () => {
         clearInterval(interval); 
       router.push(`/dashboard/taskearn/${platform}`);
 
-      }, 5000);
+      }, 10000);
 
       return () => {
         clearInterval(interval); 
@@ -37,11 +37,11 @@ const TaskSuccess: React.FC = () => {
     <div className="container w-full min-h-screen pb-20 bg-gray-100">
       <div className="text-center bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-sm font-bold text-green-600 mb-4">
-          Task Created Successfully!
+          Task Submitted Successfully!
         </h1>
         <p className="mt-2 text-sm text-gray-600">While you await Approval from Admin you can perform other available Task</p>
         <p className="text-sm text-gray-700 mb-6">
-          Redirecting to <span className="font-semibold">{platform}</span> page in:
+          Redirecting to <span className="font-semibold">Available task</span> page in:
         </p>
         <div
           className="text-sm font-extrabold text-white-800 bg-red-200 px-6 py-4 rounded-lg shadow-md animate-bounce"
