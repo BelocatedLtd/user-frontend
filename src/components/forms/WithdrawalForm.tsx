@@ -147,7 +147,7 @@ const WithdrawalForm = ({
 				}
 
 				if (isSuccess) {
-					handleWithdrawFunds()
+					// handleWithdrawFunds()
 					// navigate(`/dashboard/${user.username}`)
 				}
 			}
