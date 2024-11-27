@@ -445,7 +445,7 @@ const TaskPerform = ({
 										</p>
 									) : (
 										<p className='text-center text-gray-500'>
-											Drag & drop some files here, or click to select files
+											Click to Select File or Files to upload
 										</p>
 									)}
 								</div>
