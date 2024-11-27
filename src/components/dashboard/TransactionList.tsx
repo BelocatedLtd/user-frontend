@@ -42,7 +42,7 @@ const TransactionList = () => {
 		},
 		{
 			name: 'Date',
-			selector: (row: { date: any }) => new Date(row.date).toLocaleString() ,
+			selector: (row: { date: any }) => row.date ? new Date(parseInt(row.date)).toLocaleString() : 'N/A',
 		},
 		{
 			name: 'Status',
