@@ -121,7 +121,7 @@ const PaymentMethod = ({
 				//Emit socket io event to the backend
 				const emitData = {
 					userId: user?.id,
-					action: `@${user?.username} just created an Ad for ${platform}`,
+					action: `@${user?.username} just paid ${costPerTask} for a task on ${platform}`,
 				}
 
 				//Emit Socket event to update activity feed
