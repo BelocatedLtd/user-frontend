@@ -113,7 +113,7 @@ const TaskSubmit = () => {
 			setTaskSubmitted(true)
 			socket.emit('sendActivity', {
 				userId: user?.id,
-				action: `@${user?.username} just performed a task on ${task?.platform}`,
+				action: `@${user?.username} just performed a task on ${task?.platform} to earn ${task.toEarn}`,
 			})
 
 			router.push(`/dashboard/success?platform=${task.platform}`);
