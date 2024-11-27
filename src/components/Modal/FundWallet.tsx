@@ -10,6 +10,10 @@ import {
 	handleInitializeUserTransaction,
 	selectUserWallet,
 } from '../../redux/slices/walletSlice'
+import io from 'socket.io-client';
+import { BACKEND_URL } from '../../utils/globalConfig';
+
+const socket = io(`${BACKEND_URL}`)
 
 const FundWallet = ({
 	toggleFLWFunding,
@@ -131,6 +135,12 @@ const FundWallet = ({
 										handleFlutterPayment({
 											callback: (response) => {
 												console.log(response)
+												if(response.status==='success'){
+  socket.emit('sendActivity', {
+            userId: user.id,
+            action: `@${user?.username} just funded wallet with ₦${fundingAmount}`,
+        });
+												}
 												closePaymentModal()
 												toggleFLWFunding()
 											},
