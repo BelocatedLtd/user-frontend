@@ -4,7 +4,7 @@ import DataTable from 'react-data-table-component'
 import { toast } from 'react-hot-toast'
 import { MdArrowDownward } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
-import { format } from 'date-fns';
+//import { format } from 'date-fns';
 import {
 	handleGetUserTransactions,
 	selectIsError,
@@ -42,7 +42,7 @@ const TransactionList = () => {
 		},
 		{
 			name: 'Date',
-			selector: (row: { date: any }) => format(new Date(row.date), 'yyyy-MM-dd HH:mm:ss'),
+			selector: (row: { date: any }) => new Date(row.date).toLocaleString() ,
 		},
 		{
 			name: 'Status',
