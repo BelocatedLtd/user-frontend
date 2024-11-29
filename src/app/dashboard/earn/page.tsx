@@ -33,12 +33,12 @@ const Earn = () => {
 
 	useRedirectLoggedOutUser('/login')
 
-	useEffect(() => {
+	
   if (user && user.canAccessEarn === false) {
 	  console.log("checking for can access",user)
     router.push('/dashboard/earn/deposit-it');
   }
-}, [user, router]);
+
 
 
 	useEffect(() => {
@@ -47,7 +47,7 @@ const Earn = () => {
 				setIsLoading(true);
 				const res: PlatformTasks = await getTotalTasksByAllPlatforms();
 				setPlatformTasks(res);
-	
+	console.log("checking for can access",user)
 				// Calculate remaining tasks across all platforms
 				const remainingTasksAcrossAllPlatforms = Object.values(res).reduce(
 					(acc, platform) => acc + platform.remainingTasks,
