@@ -25,6 +25,12 @@ const Earn = () => {
 	const dispatch = useDispatch()
 	const isError: boolean = useSelector(selectIsError)
 	const user = useSelector(selectUser)
+
+
+	 if (!user || user.canAccessEarn === false) {
+    router.push('/dashboard/earn/deposit-it/'); // Redirect to deposit page or another page if user can't access earn
+    return null; // Optionally, return null to prevent the page from rendering
+  }
 	const [platformTasks, setPlatformTasks] = useState<PlatformTasks>({})
 	const [isLoading, setIsLoading] = useState(false)
 
