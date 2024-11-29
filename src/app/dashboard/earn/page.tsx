@@ -35,6 +35,7 @@ const Earn = () => {
 
 	useEffect(() => {
   if (user && user.canAccessEarn === false) {
+	  console.log("checking for can access",user)
     router.push('/dashboard/earn/deposit-it');
   }
 }, [user, router]);
