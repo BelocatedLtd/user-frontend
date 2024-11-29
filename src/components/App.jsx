@@ -67,6 +67,7 @@ import TaskSubmit from './app/dashboard/userPages/TaskSubmit'
 // import  from '../components/dashboard/TaskSuccess'
 // import TaskSuccess from '../app/dashboard/TaskSuccess'
 import TaskSuccess from '../app/dashboard/earn/success'
+import ActivateWalletPage from '../app/dashboard/earn/deposit-it'
 
 axios.defaults.withCredentials = true
 
@@ -243,6 +244,17 @@ function App() {
 						<SidebarLeft>
 							<DashLayout>
 								<TaskSuccess />
+								<SidebarRight />
+							</DashLayout>
+						</SidebarLeft>
+					}
+				/>
+				<Route
+					path='/dashboard/earn/deposit-it'
+					element={
+						<SidebarLeft>
+							<DashLayout>
+								<ActivateWalletPage />
 								<SidebarRight />
 							</DashLayout>
 						</SidebarLeft>
