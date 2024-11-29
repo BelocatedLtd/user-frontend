@@ -34,6 +34,13 @@ const Earn = () => {
 	useRedirectLoggedOutUser('/login')
 
 	useEffect(() => {
+  if (user && user.canAccessEarn === false) {
+    router.push('/dashboard/earn/deposit-it');
+  }
+}, [user, router]);
+
+
+	useEffect(() => {
 		async function getTasks() {
 			try {
 				setIsLoading(true);
