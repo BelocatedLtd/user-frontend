@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect} from "react";
+import { useRouter } from "next/navigation";
+import { IoClose } from 'react-icons/io5'; 
 const ActivateWalletPage = () => {
   const router = useRouter();
 
@@ -25,29 +26,46 @@ const ActivateWalletPage = () => {
     router.push('/dashboard/wallet'); // Redirect to the deposit page when the user clicks "Fund Wallet"
   };
 
+  const handleClose = () => {
+    router.push('/dashboard'); // Redirect to the dashboard on close
+  };
   return (
-   <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-xl w-4/5 sm:w-1/3 shadow-lg">
-        <h2 className="text-xl font-semibold text-center text-gray-800 mb-4">
-          To Start Earning
-        </h2>
-        <p className="text-center text-gray-600 mb-6">
-          Kindly activate your wallet by making a deposit of 200 Naira and above.
-        </p>
-        <div className="flex justify-center mb-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="relative w-full max-w-md bg-white rounded-lg shadow-lg p-6">
+        {/* Close Icon */}
+        <button
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+          onClick={handleClose}
+        >
+          <IoClose size={24} />
+        </button>
+
+        {/* Modal Content */}
+        <div className="text-center">
+          <h2 className="text-xl font-semibold text-gray-800">
+            Activate Your Wallet
+          </h2>
+          <p className="mt-4 text-gray-600">
+            To start earning, kindly activate your wallet by making a deposit
+            of <strong>₦200</strong> or more.
+          </p>
+          <p className="mt-2 text-sm text-gray-500">
+            Note: This money remains yours and can be withdrawn at any time.
+          </p>
+
+          {/* Fund Wallet Button */}
           <button
             onClick={handleFundWalletClick}
-            className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+            className="mt-6 px-6 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-blue-700"
           >
             Fund Wallet
           </button>
         </div>
-        <p className="text-center text-sm text-gray-500">
-          The money is yours once deposited. You can withdraw or use it as you like.
-        </p>
       </div>
     </div>
   );
 };
+
+
 
 export default ActivateWalletPage;
