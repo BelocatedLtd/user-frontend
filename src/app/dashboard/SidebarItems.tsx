@@ -20,13 +20,16 @@ const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 
 	return (
 		<Link href={item.path}>
-			<div className={cn(isActive && 'active')}>
-				<div className='sidebar-item flex flex-col items-center'>
-					<div className='icon'>{item.icon}</div>
-					{/* Title displayed below the icon */}
-					<div className={`title text-sm mt-1 ${!isMobile && !isOpen ? 'hidden' : ''}`}>
-						{item.title}
-					</div>
+			<div className={cn('sidebar-item flex flex-col items-center', { active: isActive })}>
+				{/* Icon */}
+				<div className="icon text-2xl text-gray-700">{item.icon}</div>
+				{/* Title */}
+				<div
+					className={`title text-xs text-gray-500 mt-1 text-center ${
+						!isMobile && !isOpen ? 'hidden' : ''
+					}`}
+				>
+					{item.title}
 				</div>
 			</div>
 		</Link>
