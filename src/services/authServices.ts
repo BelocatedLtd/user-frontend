@@ -463,3 +463,19 @@ export const handleManageUser = async (
 		throw new Error(message)
 	}
 }
+export const checkCanAccessEarn = async (): Promise<boolean> => {
+	try {
+	  const response: ApiResponse<{ canAccessEarn: boolean }> = await api.get(
+		`${BACKEND_URL}/api/user/can-access-earn`,
+		
+	  );
+	  return response.data.canAccessEarn;
+	} catch (error: any) {
+	  const message =
+		(error.response && error.response.data && error.response.data.message) ||
+		error.message ||
+		error.toString();
+	  toast.error(message);
+	  throw new Error(message);
+	}
+  };
