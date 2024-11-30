@@ -14,6 +14,7 @@ import { selectIsError} from '../../../redux/slices/advertSlice'
 import { setTotalTasks } from '../../../redux/slices/advertSlice'
 import { selectUser } from '../../../redux/slices/authSlice'
 import Loading from '../loading'
+import { checkCanAccessEarn } from '@/services/authServices';
 interface PlatformTasks {
 	[key: string]: { totalTasks: number, remainingTasks:number }
   }
@@ -33,12 +34,23 @@ const Earn = () => {
 
 	useRedirectLoggedOutUser('/login')
 
-	
-  if (user && user.canAccessEarn === false) {
-	  console.log("checking for can access",user)
-    router.push('/dashboard/earn/deposit-it');
-  }
-
+useEffect(() => {
+		const fetchAccessStatus = async () => {
+		  try {
+			const accessStatus = await checkCanAccessEarn();
+			setCanAccessEarn(accessStatus);
+	  
+			if (!accessStatus) {
+			  router.push('/dashboard/earn/deposit-it'); // Redirect if access not allowed
+			}
+		  } catch (error) {
+			console.error('Failed to fetch access status');
+			router.push('/dashboard/earn/deposit-it');
+		  }
+		};
+	  
+		fetchAccessStatus();
+	  }, [router]);
 
 
 	useEffect(() => {
@@ -75,6 +87,9 @@ const Earn = () => {
 		const tasksB = platformTasks[b.value]?.remainingTasks || 0
 		return tasksB - tasksA // Sort in descending order
 	})
+	if (canAccessEarn === null) {
+		return <Loading />; // Show a loading spinner while checking
+	  }
 
 	return (
 		<Suspense>
