@@ -43,7 +43,7 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 			path: '/dashboard/campaign-stats',
 		},
 		{
-			title: 'Ongoing Tasks',
+			title: 'Tasks',
 			icon: <SiTodoist className='text-[15px] md:text-[24px] md:mr-2 ' />,
 			path: `/dashboard/tasks`,
 		},
@@ -60,7 +60,7 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 			path: `/dashboard/referral`,
 		},
 		{
-			title: 'Contact Support',
+			title: 'Contact',
 			icon: (
 				<MdOutlineSupportAgent className='md:mr-2 text-[15px] md:text-[30px]' />
 			),
