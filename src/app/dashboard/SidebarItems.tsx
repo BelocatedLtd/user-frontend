@@ -22,7 +22,7 @@ const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 		<Link href={item.path}>
 			<div className={cn('sidebar-item flex flex-col items-center', { active: isActive })}>
 				{/* Icon */}
-				<div className="icon text-2xl text-gray-700">{item.icon}</div>
+				<div className="icon text-2xl text-gray-700 text-center items-center">{item.icon}</div>
 				{/* Title */}
 				<div
 					className={`title text-xs text-gray-500 mt-1 text-center ${
