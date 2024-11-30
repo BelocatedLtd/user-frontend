@@ -20,7 +20,10 @@ const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 
 	return (
 		<Link href={item.path}>
-			<div className={cn('sidebar-item flex flex-col items-center', { active: isActive })}>
+			<div className={cn('sidebar-item flex flex-col items-center', { active: isActive })}
+				style={{
+					padding:'16px 6px'
+				}}>
 				{/* Centered Icon */}
 				<div className="flex justify-center items-center text-2xl text-gray-700">
 					{item.icon}
