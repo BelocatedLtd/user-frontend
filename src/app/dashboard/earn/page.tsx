@@ -31,6 +31,7 @@ const Earn = () => {
 	
 	const [platformTasks, setPlatformTasks] = useState<PlatformTasks>({})
 	const [isLoading, setIsLoading] = useState(false)
+	const [canAccessEarn, setCanAccessEarn] = useState<boolean | null>(null);
 
 	useRedirectLoggedOutUser('/login')
 
