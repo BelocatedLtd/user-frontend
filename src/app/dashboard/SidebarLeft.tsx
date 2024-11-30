@@ -38,12 +38,12 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 			path: `/dashboard`,
 		},
 		{
-			title: 'My Campaigns',
+			title: 'Campaigns',
 			icon: <SiGoogleads className='md:mr-2 text-[15px] md:text-[24px]' />,
 			path: '/dashboard/campaign-stats',
 		},
 		{
-			title: 'My Ongoing Tasks',
+			title: 'Ongoing Tasks',
 			icon: <SiTodoist className='text-[15px] md:text-[24px] md:mr-2 ' />,
 			path: `/dashboard/tasks`,
 		},
