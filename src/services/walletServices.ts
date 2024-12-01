@@ -67,20 +67,29 @@ export const getSingleUserWallet = async (id: string): Promise<any> => {
 
 // Fund User Wallet
 export const fundWallet = async (trxData: TransactionData): Promise<any> => {
-	try {
-		const response: ApiResponse<any> = await api.patch(
-			`${BACKEND_URL}/api/transactions/fund`,
-			trxData,
-		)
-		return response.data
-	} catch (error: any) {
-		const message =
-			(error.response && error.response.data && error.response.data.message) ||
-			error.message ||
-			error.toString()
-		toast.error(message)
-	}
-}
+  try {
+    console.log("Sending transaction data to server:", trxData);
+    
+    // Ensure you're using the correct HTTP method
+    const response: ApiResponse<any> = await api.patch(
+      `${BACKEND_URL}/api/transactions/fund`,
+      trxData
+    );
+
+    console.log("Transaction fund response:", response.data);
+    return response.data;
+  } catch (error: any) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      "An error occurred while funding the wallet.";
+      
+    console.error("Fund Wallet Error:", error.response?.data || error);
+    toast.error(message);
+    throw new Error(message); // Re-throw the error if needed
+  }
+};
+
 
 // Initialize User Transaction
 export const initTransaction = async (
