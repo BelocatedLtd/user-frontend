@@ -90,7 +90,7 @@ const FundWallet = ({
             },
             callback: async (response: any) => {
                 console.log(response)
-                if (response.status === 'success') {
+                if (response.status === 'completed') {
                     const fundBody = {
                         userId: user.id,
                         email: response?.customer?.email,
