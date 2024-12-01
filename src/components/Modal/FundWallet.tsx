@@ -89,6 +89,7 @@ const FundWallet = ({
                 description: `Funding user wallet for user: ${user.id}`,
             },
             callback: async (response: any) => {
+                console.log(response)
                 if (response.status === 'success') {
                     const fundBody = {
                         userId: user.id,
