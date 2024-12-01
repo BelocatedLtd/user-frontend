@@ -126,7 +126,7 @@ const FundWallet = ({
             },
         }
 
-        const handleFlutterPayment = useFlutterwave(config)
+        const handleFlutterPayment = useFlutterwave(config as any)
         handleFlutterPayment({
             callback: config.callback,
             onClose: config.onClose,
