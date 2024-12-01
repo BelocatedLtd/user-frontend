@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectUser } from '../../redux/slices/authSlice'
 import {
 	handleInitializeUserTransaction,
+	fundUserWallet,
 	selectUserWallet,
 } from '../../redux/slices/walletSlice'
 import io from 'socket.io-client';
@@ -134,8 +135,21 @@ const FundWallet = ({
 									if (res)
 										handleFlutterPayment({
 											callback: (response) => {
+												const fundBody ={
+													userId: user.id,
+													email: response?.customer?.email,
+													chargedAmount: fundingAmount,
+													paymentRef: response.flw_ref,
+													trxId: response.transaction_id,
+													date: Date.now().toString(),
+													paymentMethod: 'flutterwave',
+													paymentType: 'wallet_funding',
+												}
+												
 												console.log(response)
 												if(response.status==='success'){
+													fundUserWallet(fundBody) as any,
+
   socket.emit('sendActivity', {
             userId: user.id,
             action: `@${user?.username} just funded wallet with ₦${fundingAmount}`,
