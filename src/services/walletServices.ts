@@ -71,7 +71,7 @@ export const fundWallet = async (trxData: TransactionData): Promise<any> => {
     console.log("Sending transaction data to server:", trxData);
     
     // Ensure you're using the correct HTTP method
-    const response: ApiResponse<any> = await api.patch(
+    const response: ApiResponse<any> = await api.post(
       `${BACKEND_URL}/api/transactions/fund`,
       trxData
     );
