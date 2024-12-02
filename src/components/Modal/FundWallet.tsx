@@ -95,7 +95,7 @@ const FundWallet = ({
                         userId: user.id,
                         email: response?.customer?.email,
                         chargedAmount: fundingAmount,
-                        paymentRef: response.flw_ref,
+                        paymentRef: reference,
                         trxId: response.transaction_id,
                         date: Date.now().toString(),
                         paymentMethod: 'flutterwave',
