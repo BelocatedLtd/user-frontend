@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import TaskNotificationBadge from '../../component/TaskNotificationBadge';
+import TaskNotificationBadge from '../../../component/TaskNotificationBadge';
 import { cn } from '../../../helpers';
 
 type TSidebarItems = {
