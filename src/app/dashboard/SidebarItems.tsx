@@ -1,32 +1,38 @@
-import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { cn } from '../../../helpers'
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import TaskNotificationBadge from './TaskNotificationBadge';
+import { cn } from '../../../helpers';
 
 type TSidebarItems = {
 	item: {
-		path: string
-		title: string
-		icon?: React.ReactNode
-	}
-	isOpen: boolean
-	isMobile?: boolean
-}
+		path: string;
+		title: string;
+		icon?: React.ReactNode;
+		showBadge?: boolean; // Flag to indicate whether to show the notification badge
+	};
+	isOpen: boolean;
+	isMobile?: boolean;
+};
 
 const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
-	const router = useRouter()
-
-	const pathname = usePathname()
-	const isActive = pathname === item.path
+	const pathname = usePathname();
+	const isActive = pathname === item.path;
 
 	return (
 		<Link href={item.path}>
-			<div className={cn('sidebar-item flex flex-col items-center', { active: isActive })}
+			<div
+				className={cn('sidebar-item flex flex-col items-center relative', {
+					active: isActive,
+				})}
 				style={{
-					padding:'16px 6px'
-				}}>
+					padding: '16px 6px',
+				}}
+			>
 				{/* Centered Icon */}
-				<div className="flex justify-center items-center text-2xl text-gray-700">
+				<div className="flex justify-center items-center text-2xl text-gray-700 relative">
 					{item.icon}
+					{/* TaskNotificationBadge for items with showBadge flag */}
+					{item.showBadge && <TaskNotificationBadge />}
 				</div>
 				{/* Title */}
 				<div
@@ -38,7 +44,7 @@ const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 				</div>
 			</div>
 		</Link>
-	)
-}
+	);
+};
 
-export default SidebarItems
+export default SidebarItems;
