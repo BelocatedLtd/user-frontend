@@ -32,8 +32,4 @@ const OngoingTaskNotification = () => {
 	);
 };
 
-export default TaskNotificationBadge;
-
-
-
 export default OngoingTaskNotification;
