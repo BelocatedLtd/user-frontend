@@ -148,7 +148,7 @@ const TaskSubmit = ({
 			// Notify via WebSocket
 			socket.emit('sendActivity', {
 				userId: user?.id,
-				action: `@${user?.username} just performed a task on ${task?.platform} to earn ${task.toEarn}`,
+				action: `@${user?.username} just performed a task on ${task?.platform} to earn ₦${task.toEarn}`,
 			});
 			onClose();
 				router.push(`/dashboard/earn/success?platform=${task.platform}`);
