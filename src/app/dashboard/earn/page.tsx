@@ -35,7 +35,7 @@ const Earn = () => {
 
 	useRedirectLoggedOutUser('/login')
 
-useEffect(() => {
+/*useEffect(() => {
 		const fetchAccessStatus = async () => {
 		  try {
 			const accessStatus = await checkCanAccessEarn();
@@ -53,7 +53,7 @@ useEffect(() => {
 		fetchAccessStatus();
 	  }, [router]);
 
-
+*/
 	useEffect(() => {
 		async function getTasks() {
 			try {
@@ -88,9 +88,9 @@ useEffect(() => {
 		const tasksB = platformTasks[b.value]?.remainingTasks || 0
 		return tasksB - tasksA // Sort in descending order
 	})
-	if (canAccessEarn === null) {
+	/*if (canAccessEarn === null) {
 		return <Loading />; // Show a loading spinner while checking
-	  }
+	  }*/
 
 	return (
 		<Suspense>
