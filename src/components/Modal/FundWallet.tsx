@@ -115,7 +115,7 @@ const FundWallet = ({
                 console.log(response)
                 if (response.status === 'completed') {
                     try {
-                       
+
                         socket.emit('sendActivity', {
                             userId: user.id,
                             action: `@${user.username} just funded wallet with ₦${fundingAmount}`,
@@ -161,7 +161,7 @@ const FundWallet = ({
 
         if (typeof window !== "undefined" && window.Korapay) {
             window.Korapay.initialize({
-                key:publicKey, // Replace with your Korapay public key
+                key: publicKey, // Replace with your Korapay public key
                 reference: reference, // Ensure a unique reference
                 amount: fundingAmount, // Amount in kobo (3000 NGN = 300000 kobo)
                 currency: "NGN",
@@ -170,6 +170,8 @@ const FundWallet = ({
                     email: user.email, // Replace with the actual user email
                 },
                 onClose: () => {
+                    toggleFLWFunding()
+                    setIsLoading(false)
                     console.log("Payment modal closed");
                 },
                 onSuccess: (data) => {
@@ -178,6 +180,8 @@ const FundWallet = ({
                         userId: user.id,
                         action: `@${user.username} just funded wallet with ₦${fundingAmount}`,
                     })
+                    toggleFLWFunding()
+                    setIsLoading(false)
                     // Handle success (e.g., send a confirmation to your server)
                 },
                 onFailed: (data) => {
@@ -189,86 +193,86 @@ const FundWallet = ({
             console.error("Korapay script not loaded");
         }
 
-  
 
-    return (
-        <div className='flex flex-col h-full justify-center items-center'>
-            <div className='relative w-[85%] md:w-[600px] h-fit bg-primary'>
-                <Image
-                    src={close}
-                    alt='close'
-                    onClick={toggleFLWFunding}
-                    height={40}
-                    width={40}
-                    className='absolute cursor-pointer top-[-1rem] right-[-1rem] text-tertiary'
-                />
-                <div className='w-full px-[2rem] py-[2rem] md:px-[3rem] md:py-[4rem]'>
-                    <h1 className='font-bold mb-3 text-xl'>Hello Payment Method</h1>
-                    <div className='mb-5 border-b border-gray-200 pb-6'>
-                        <h3 className='font-bold mb-2 text-lg text-gray-700'>
-                            100% Secure, Reliable & Fast Payment{' '}
-                        </h3>
-                        <small className='text-gray-700 text-[12px]'>
-                            Pay through our highly secured online payment partner using your
-                            masterCard/VISA/Verve card. Bank transfer via USSD or internet
-                            bank transfer. You can select your preferred online payment method
-                            on the payment checkout page that comes up.
-                        </small>
-                    </div>
+    }
+        return (
+            <div className='flex flex-col h-full justify-center items-center'>
+                <div className='relative w-[85%] md:w-[600px] h-fit bg-primary'>
+                    <Image
+                        src={close}
+                        alt='close'
+                        onClick={toggleFLWFunding}
+                        height={40}
+                        width={40}
+                        className='absolute cursor-pointer top-[-1rem] right-[-1rem] text-tertiary'
+                    />
+                    <div className='w-full px-[2rem] py-[2rem] md:px-[3rem] md:py-[4rem]'>
+                        <h1 className='font-bold mb-3 text-xl'>Hello Payment Method</h1>
+                        <div className='mb-5 border-b border-gray-200 pb-6'>
+                            <h3 className='font-bold mb-2 text-lg text-gray-700'>
+                                100% Secure, Reliable & Fast Payment{' '}
+                            </h3>
+                            <small className='text-gray-700 text-[12px]'>
+                                Pay through our highly secured online payment partner using your
+                                masterCard/VISA/Verve card. Bank transfer via USSD or internet
+                                bank transfer. You can select your preferred online payment method
+                                on the payment checkout page that comes up.
+                            </small>
+                        </div>
 
-                    <div className='flex flex-col'>
-                        <h3 className='font-bold text-lg text-gray-700'>Fund Your Wallet</h3>
-                        <small className='mt-2'>
-                            <span className='font-bold text-gray-900'>
-                                Current Wallet Balance:{' '}
-                            </span>
-                            {toIntlCurrency(wallet.value?.toString() || '0')}
-                            <span className='font-bold ml-3 text-gray-900'>
-                                Funding Amount:{' '}
-                            </span>
-                            {toIntlCurrency(fundingAmount.toString())}
-                        </small>
+                        <div className='flex flex-col'>
+                            <h3 className='font-bold text-lg text-gray-700'>Fund Your Wallet</h3>
+                            <small className='mt-2'>
+                                <span className='font-bold text-gray-900'>
+                                    Current Wallet Balance:{' '}
+                                </span>
+                                {toIntlCurrency(wallet.value?.toString() || '0')}
+                                <span className='font-bold ml-3 text-gray-900'>
+                                    Funding Amount:{' '}
+                                </span>
+                                {toIntlCurrency(fundingAmount.toString())}
+                            </small>
 
-                        {errorMessage && (
-                            <p className='text-red-500 text-sm my-2'>{errorMessage}</p>
-                        )}
+                            {errorMessage && (
+                                <p className='text-red-500 text-sm my-2'>{errorMessage}</p>
+                            )}
 
-<div className="flex flex-col justify-center">
-            <p className="bg-red-400 text-primary p-5 my-3 text-[12px]">
-                Click the button below to fund your wallet now. On completion,
-                funds get added to your wallet immediately.
-            </p>
+                            <div className="flex flex-col justify-center">
+                                <p className="bg-red-400 text-primary p-5 my-3 text-[12px]">
+                                    Click the button below to fund your wallet now. On completion,
+                                    funds get added to your wallet immediately.
+                                </p>
 
-            {/* Flutterwave Payment Button */}
-            <button
-                onClick={handlePayment}
-                className="px-6 py-2 bg-yellow-500 text-primary
+                                {/* Flutterwave Payment Button */}
+                                <button
+                                    onClick={handlePayment}
+                                    className="px-6 py-2 bg-yellow-500 text-primary
                 hover:bg-yellow-800 disabled:bg-gray-400 my-2"
-            >
-                Pay with Flutterwave
-            </button>
+                                >
+                                    Pay with Flutterwave
+                                </button>
 
-            {/* KorraPay Payment Button */}
-            <Script
-                src="https://korablobstorage.blob.core.windows.net/modal-bucket/korapay-collections.min.js"
-                strategy="lazyOnload"
-                onLoad={() => console.log("Korapay script loaded")}
-            />
-            <button
-                onClick={payKorapay}
-                className="px-6 py-2 bg-green-500 text-primary
+                                {/* KorraPay Payment Button */}
+                                <Script
+                                    src="https://korablobstorage.blob.core.windows.net/modal-bucket/korapay-collections.min.js"
+                                    strategy="lazyOnload"
+                                    onLoad={() => console.log("Korapay script loaded")}
+                                />
+                                <button
+                                    onClick={payKorapay}
+                                    className="px-6 py-2 bg-green-500 text-primary
                 hover:bg-green-800 disabled:bg-gray-400 my-2"
-            >
-                Pay with KorraPay
-            </button>
-        </div>
+                                >
+                                    Pay with KorraPay
+                                </button>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    )
-}
-}
+        )
+    }
 
-export default FundWallet;
+
+export default FundWallet
