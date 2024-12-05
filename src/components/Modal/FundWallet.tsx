@@ -163,19 +163,19 @@ const FundWallet = ({
                 callback: async (data: any) => {
                     console.log("Payment successful:", data);
                     if (data.status === 'completed') {
-                        const fundBody = {
-                            userId: user.id,
-                            email: data?.customer?.email,
-                            chargedAmount: fundingAmount,
-                            paymentRef: data.flw_ref,
-                            trxId: data.transaction_id,
-                            date: Date.now().toString(),
-                            paymentMethod: 'flutterwave',
-                            paymentType: 'wallet_funding',
-                        }
+                        // const fundBody = {
+                        //     userId: user.id,
+                        //     email: data?.customer?.email,
+                        //     chargedAmount: fundingAmount,
+                        //     paymentRef: data.flw_ref,
+                        //     trxId: data.transaction_id,
+                        //     date: Date.now().toString(),
+                        //     paymentMethod: 'flutterwave',
+                        //     paymentType: 'wallet_funding',
+                        // }
     
                         try {
-                            await dispatch(fundUserWallet(fundBody) as any)
+                           // await dispatch(fundUserWallet(fundBody) as any)
                             socket.emit('sendActivity', {
                                 userId: user.id,
                                 action: `@${user.username} just funded wallet with ₦${fundingAmount}`,
