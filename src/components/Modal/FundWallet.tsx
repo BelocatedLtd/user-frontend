@@ -146,7 +146,7 @@ const FundWallet = ({
     }
     const payKorapay = async () => {
 
-        const publicKey = process.env.KORA_PAY_PUBKEY;
+        const publicKey = process.env.NEXT_PUBLIC_KORAPAY_PUBLIC_KEY;
 
         if (!publicKey) {
             throw new Error("KoraPay public key is not set");
