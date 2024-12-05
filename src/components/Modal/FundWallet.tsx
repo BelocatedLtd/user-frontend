@@ -95,7 +95,7 @@ const FundWallet = ({
             setIsLoading(false)
             return
         }
-
+ console.log('Value:', fundingAmount, 'Type:', typeof fundingAmount);
         const config = {
             public_key: process.env.NEXT_PUBLIC_FLUTTER_PUBLIC_KEY,
             tx_ref: reference,
