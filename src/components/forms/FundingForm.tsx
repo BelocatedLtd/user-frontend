@@ -15,7 +15,12 @@ const FundingForm = ({ onClose }: { onClose: () => void }) => {
 
 	const handleInputChange = (e: any) => {
 		const { value } = e.target
-		setFundingAmount(value)
+		const numericValue = parseFloat(value); // Convert string to number
+    if (!isNaN(numericValue)) {
+      setFundingAmount(numericValue); // Update state only if valid number
+    } else {
+      setFundingAmount(0); // Reset to 0 if input is invalid
+    }
 	}
 
 	const toggleFLWFunding = async (e: any) => {
