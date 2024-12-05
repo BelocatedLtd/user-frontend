@@ -258,7 +258,6 @@ const FundWallet = ({
                                 onError={() => console.error('Failed to load Flutterwave script')}
                             />
                             <button 
-                                diasbled
                                 onClick={makePayment}
                                 className="px-6 py-2 bg-yellow-500 text-primary hover:bg-yellow-800 disabled:bg-gray-400 my-2"
                             >
