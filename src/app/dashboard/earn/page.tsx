@@ -46,7 +46,7 @@ useEffect(() => {
 			}
 		  } catch (error) {
 			console.error('Failed to fetch access status');
-			router.push('/dashboard/earn/deposit-it');
+			router.push('/dashboard');
 		  }
 		};
 	  
