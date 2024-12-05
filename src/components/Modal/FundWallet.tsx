@@ -29,6 +29,7 @@ const FundWallet = ({
     const [reference, setReference] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+     const [isScriptLoaded, setIsScriptLoaded] = useState(false);
 
     useEffect(() => {
         setReference(Date.now().toString())
@@ -117,6 +118,11 @@ const FundWallet = ({
     }
 
     const makePayment = async () => {
+         if (!isScriptLoaded) {
+             alert('Flutterwave script not loaded');
+      console.error("Flutterwave script not loaded");
+      return;
+    }
         setIsLoading(true)
         const transactionInitialized = await initializeTransaction()
         if (!transactionInitialized) {
@@ -252,17 +258,27 @@ const FundWallet = ({
                                 Click the button below to fund your wallet now. On completion,
                                 funds get added to your wallet immediately.
                             </p>
-                            <Script
-                                src="https://checkout.flutterwave.com/v3.js"
-                                strategy="lazyOnload"
-                                onError={() => console.error('Failed to load Flutterwave script')}
-                            />
-                            <button 
-                                onClick={makePayment}
-                                className="px-6 py-2 bg-yellow-500 text-primary hover:bg-yellow-800 disabled:bg-gray-400 my-2"
-                            >
-                                Pay with Flutterwave
-                            </button>
+                                 <Script
+        src="https://checkout.flutterwave.com/v3.js"
+        strategy="lazyOnload"
+        onLoad={() => {
+          setIsScriptLoaded(true);
+          console.log("Flutterwave script loaded successfully");
+        }}
+        onError={() => console.error("Failed to load Flutterwave script")}
+      />
+      <button
+        onClick={makePayment}
+        disabled={!isScriptLoaded}
+        className={`px-6 py-2 text-primary my-2 ${
+          isScriptLoaded
+            ? "bg-yellow-500 hover:bg-yellow-800"
+            : "bg-gray-400 cursor-not-allowed"
+        }`}
+      >
+        {isScriptLoaded ? "Pay with Flutterwave" : "Loading..."}
+      </button>
+
 
                             <Script
                                 src="https://korablobstorage.blob.core.windows.net/modal-bucket/korapay-collections.min.js"
