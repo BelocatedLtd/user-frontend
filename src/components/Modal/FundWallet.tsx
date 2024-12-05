@@ -40,6 +40,8 @@ const FundWallet = ({
         }
     }, [])
 
+  
+
     const initializeTransaction = async () => {
         setErrorMessage(null)
 
@@ -152,9 +154,34 @@ const FundWallet = ({
                     session_duration: 10, //Session timeout in minutes (maxValue: 1440 minutes)      
                     max_retry_attempt: 5, //Max retry (int)
                 },
-                callback: function (data: any) {
+                callback: async (data: any) => {
                     console.log("Payment successful:", data);
-                    if (data.status === 'successful') {
+                    if (data.status === 'completed') {
+                        const fundBody = {
+                            userId: user.id,
+                            email: data?.customer?.email,
+                            chargedAmount: fundingAmount,
+                            paymentRef: data.flw_ref,
+                            trxId: data.transaction_id,
+                            date: Date.now().toString(),
+                            paymentMethod: 'flutterwave',
+                            paymentType: 'wallet_funding',
+                        }
+    
+                        try {
+                            await dispatch(fundUserWallet(fundBody) as any)
+                            socket.emit('sendActivity', {
+                                userId: user.id,
+                                action: `@${user.username} just funded wallet with ₦${fundingAmount}`,
+                            })
+                        } catch (error) {
+                            setErrorMessage('Failed to update wallet. Please try again.')
+                            console.error(error)
+                        }
+                    } else {
+                        setErrorMessage('Payment was not successful. Please try again.')
+                    }
+
 
                         socket.emit('sendActivity', {
                             userId: user.id,
@@ -164,8 +191,8 @@ const FundWallet = ({
                         setIsLoading(false)
                         // Handle success (e.g., send a confirmation to your server)
                         console.log('payment callback:', data);
-                    }
-                },
+                    },
+               
                 onclose: function () {
                     toggleFLWFunding()
                     setIsLoading(false)
