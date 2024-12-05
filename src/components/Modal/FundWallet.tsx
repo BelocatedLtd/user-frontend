@@ -254,7 +254,7 @@ const FundWallet = ({
                             </p>
                             <Script
                                 src="https://checkout.flutterwave.com/v3.js"
-                                strategy="beforeInteractive"
+                                strategy="lazyOnload"
                                 onError={() => console.error('Failed to load Flutterwave script')}
                             />
                             <button
