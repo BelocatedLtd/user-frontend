@@ -40,7 +40,7 @@ const TaskList = () => {
 			setTasks(response?.tasks)
 
 			setTotalTasks(response.totalTasks)
-		  // dispatch(setTotal(Number(response.totalTasks)));
+			// dispatch(setTotal(Number(response.totalTasks)));
 			// setIsLoading(false)
 		} catch (error) {
 			toast.error('Failed to retrieve tasks, please reload page')
@@ -179,26 +179,26 @@ const TaskList = () => {
 													alt={task.platform}
 													className='hidden md:flex w-10 h-10 rounded-lg'
 												/>
-												 <div>
-            <small>
-              <TimeAgo datetime={task.createdAt} />
-            </small>
-            {/* Task Title with 2-line break or adjusted size */}
-            <h4 className='text-[10px] md:text-[12px] font-bold break-words'>
-              {task?.title?.length > 25 ? (
-                <span className='text-[10px] md:text-[14px]'>
-                  {task?.title}
-                </span>
-              ) : (
-                task?.title
-              )}
-            </h4>
-            <h1 className='text-[15px] md:text-[18px] font-bold truncate'>
-              {task?._id}
-		   advertId : {task?.advertId}
-            </h1>
-          </div>
-        </div>	<small className='font-bold text-right'>
+												<div>
+													<small>
+														<TimeAgo datetime={task.createdAt} />
+													</small>
+													{/* Task Title with 2-line break or adjusted size */}
+													<h4 className='text-[10px] md:text-[12px] font-bold break-words'>
+														{task?.title?.length > 25 ? (
+															<span className='text-[10px] md:text-[14px]'>
+																{task?.title}
+															</span>
+														) : (
+															task?.title
+														)}
+													</h4>
+													<h1 className='text-[15px] md:text-[18px] font-bold truncate'>
+														{task?._id}
+														advertId : {task?.advertId}
+													</h1>
+												</div>
+											</div>	<small className='font-bold text-right'>
 												{toIntlCurrency(task?.toEarn)}/task
 											</small>
 										</div>
@@ -209,18 +209,23 @@ const TaskList = () => {
 												<li>State: {task.state}</li>
 												<li>LGA: {task.lga}</li>
 												<li>
-														Status:{' '}
-														<span
-															className={cn(
-																' text-xs ml-1 text-white rounded-full',
-																getStatusBgColor(task.status),
-															)}>
-															
-   {task.status} {task.status === "Rejected" ? `, Message: ${task.message}` : ""}
+													Status:{' '}
+													<span
+														className={cn(
+															'text-xs ml-1 text-white rounded-full',
+															getStatusBgColor(task.status)
+														)}
+													>
+														{task.status}
+														{task.status === "Rejected" ? (
+															<>
+																,
+																<span className="ml-1 text-blue-400">{task.message}</span>
+															</>
+														) : ""}
+													</span>
+												</li>
 
-
-														</span>
-													</li>
 											</ul>
 											{task.socialPageLink && (
 												<p className='mt-2 text-sm truncate'>
