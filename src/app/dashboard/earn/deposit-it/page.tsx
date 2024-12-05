@@ -56,7 +56,7 @@ const ActivateWalletPage = () => {
           {/* Fund Wallet Button */}
           <button
             onClick={handleFundWalletClick}
-            className="mt-6 px-6 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-blue-700"
+            className="mt-6 px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-blue-700"
           >
             Fund Wallet
           </button>
