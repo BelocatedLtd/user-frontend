@@ -62,7 +62,7 @@ export const getStatusBgColor = (taskStatus: string) => {
 		case 'Submitted':
 			return 'text-yellow-600'
 		case 'Rejected':
-			return 'text-tertiary'
+			return 'bg-blue-500'
 		case 'Approved':
 			return 'text-secondary'
 		case 'Partial Approval':
