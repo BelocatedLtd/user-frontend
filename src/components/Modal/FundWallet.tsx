@@ -13,6 +13,7 @@ import {
 } from '../../redux/slices/walletSlice'
 import io from 'socket.io-client'
 import { BACKEND_URL } from '../../utils/globalConfig'
+import { useRouter } from 'next/navigation'
 
 const socket = io(BACKEND_URL)
 
@@ -24,6 +25,7 @@ const FundWallet = ({
     fundingAmount: number
 }) => {
     const dispatch = useDispatch()
+    const router = useRouter() 
     const user = useSelector(selectUser)
     const wallet = useSelector(selectUserWallet)
     const [reference, setReference] = useState('')
@@ -105,6 +107,7 @@ const FundWallet = ({
                     })
                     toggleFLWFunding()
                     setIsLoading(false)
+                    router.replace('/dashboard/wallet')
                     // Handle success (e.g., send a confirmation to your server)
                 },
                 onFailed: (data) => {
@@ -180,6 +183,7 @@ const FundWallet = ({
                                 userId: user.id,
                                 action: `@${user.username} just funded wallet with ₦${fundingAmount}`,
                             })
+                            router.replace('/dashboard/wallet')
                         } catch (error) {
                             setErrorMessage('Failed to update wallet. Please try again.')
                             console.error(error)
