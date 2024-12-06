@@ -5,8 +5,10 @@ import { io } from 'socket.io-client'
 
 const socket = io(`${BACKEND_URL}`)
 // Adjust the import path based on your file structure.
-
-const OngoingTaskNotification = () => {
+type TaskNotificationBadgeProps = {
+	onClick: () => void;
+};
+const OngoingTaskNotification = ({ onClick }: TaskNotificationBadgeProps) => {
     const [hasNotification, setHasNotification] = useState(false);
 	const [newTasks, setNewTasks] = useState(false);
 
@@ -24,10 +26,10 @@ const OngoingTaskNotification = () => {
 			socket.disconnect();
 		};
 	}, []);
-
+if (!newTasks) return null
 	return (
 		newTasks && (
-			<span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+			<span onClick={onClick} className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
 		)
 	);
 };
