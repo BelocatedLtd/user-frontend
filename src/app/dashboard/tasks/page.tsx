@@ -208,6 +208,7 @@ const TaskList = () => {
 											<ul className='flex flex-wrap gap-3 text-[13px]'>
 												<li>State: {task.state}</li>
 												<li>LGA: {task.lga}</li>
+												<br />
 												<li>
 													Status:{' '}
 													<span
@@ -220,7 +221,7 @@ const TaskList = () => {
 														{task.status === "Rejected" ? (
 															<>
 																,
-																<span className="ml-1 text-blue-400">{task.message}</span>
+																<span>Message: <\span><span className="ml-1 text-blue-400">M{task.message}</span>
 															</>
 														) : ""}
 													</span>
@@ -230,7 +231,7 @@ const TaskList = () => {
 											{task.socialPageLink && (
 												<p className='mt-2 text-sm truncate'>
 													Link:{' '}
-													<a href={task.socialPageLink} className='text-blue-600'>
+													<a href={task.socialPageLink} className='text-blue-700'>
 														{task.socialPageLink}
 													</a>
 												</p>
