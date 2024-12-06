@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { LoaderIcon } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectUser } from '../../redux/slices/authSlice'
+import { toast } from 'react-hot-toast'
 import {
     handleInitializeUserTransaction,
     fundUserWallet,
