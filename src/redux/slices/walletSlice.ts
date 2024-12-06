@@ -103,6 +103,7 @@ export const handleInitializeUserTransaction = createAsyncThunk<
 		console.log('🚀 ~ > handleInitializeUserTransaction~ message:', message)
 
 		return thunkAPI.rejectWithValue(message)
+		toast.error(message)
 	}
 })
 
