@@ -65,7 +65,7 @@ const FundWallet = ({
         } catch (error) {
             setErrorMessage('Failed to initialize transaction. Please try again.')
             console.error(error)
-            toast.error(error);
+            toast.error(error as any);
         }
 
         return false
