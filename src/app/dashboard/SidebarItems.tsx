@@ -18,6 +18,13 @@ const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 	const pathname = usePathname();
 	const isActive = pathname === item.path;
 
+	const [showBadge, setShowBadge] = useState(item.showBadge);
+
+	// Handle click to clear badge
+	const handleBadgeClick = () => {
+		setShowBadge(false); // Clear the badge
+	};
+
 	return (
 		<Link href={item.path}>
 			<div
@@ -32,7 +39,9 @@ const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 				<div className="flex justify-center items-center text-2xl text-gray-700 relative">
 					{item.icon}
 					{/* TaskNotificationBadge for items with showBadge flag */}
-					{item.showBadge && <TaskNotificationBadge />}
+					{showBadge && item.showBadge && (
+						<TaskNotificationBadge onClick={handleBadgeClick} />
+					)}
 				</div>
 				{/* Title */}
 				<div
