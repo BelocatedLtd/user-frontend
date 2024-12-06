@@ -220,8 +220,8 @@ const TaskList = () => {
 														{task.status}
 														{task.status === "Rejected" ? (
 															<>
-																,
-																<span>Message: </span><span className="ml-1 text-blue-400">M{task.message}</span>
+																, <br/>
+																<span style={{ color:'black'}}>Message: </span><span className="ml-1 text-blue-400">{task.message}</span>
 															</>
 														) : ""}
 													</span>
