@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const CountdownPage = () => {
   const [count, setCount] = useState(5); // Countdown duration in seconds
