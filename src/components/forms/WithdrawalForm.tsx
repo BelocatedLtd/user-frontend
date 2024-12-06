@@ -147,7 +147,7 @@ const WithdrawalForm = ({
 				}
 
 				if (isSuccess) {
-					router.replace(`/dashboard/wallet`);
+					router.replace(`/dashboard/wallet/countdown`);
 					// handleWithdrawFunds()
 					// navigate(`/dashboard/${user.username}`)
 				}
