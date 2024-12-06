@@ -145,17 +145,16 @@ const WithdrawalForm = ({
 				if (isError) {
 					toast.error('Error sending withdrawal request')
 				}
+				if (isSuccess) {
+    handleWithdrawFunds();
+    router.replace('/dashboard/wallet/countdown'); // Navigate to the new route without adding to the history stack
+    window.location.reload(); // Perform a full page reload
+		}
 			}
 		}
 	}
 
-	useEffect(() => {
-  if (isSuccess) {
-    handleWithdrawFunds();
-    router.replace('/dashboard/wallet/countdown'); // Navigate to the new route without adding to the history stack
-    window.location.reload(); // Perform a full page reload
-  }
-}, [isSuccess]);
+	
 
 
 	return (
