@@ -64,6 +64,7 @@ const FundWallet = ({
         } catch (error) {
             setErrorMessage('Failed to initialize transaction. Please try again.')
             console.error(error)
+            toast.error(error);
         }
 
         return false
@@ -107,7 +108,7 @@ const FundWallet = ({
                     })
                     toggleFLWFunding()
                     setIsLoading(false)
-                    router.replace('/dashboard/wallet')
+                    router.push('/dashboard/wallet')
                     // Handle success (e.g., send a confirmation to your server)
                 },
                 onFailed: (data) => {
@@ -183,7 +184,7 @@ const FundWallet = ({
                                 userId: user.id,
                                 action: `@${user.username} just funded wallet with ₦${fundingAmount}`,
                             })
-                            router.replace('/dashboard/wallet')
+                            router.push('/dashboard/wallet')
                         } catch (error) {
                             setErrorMessage('Failed to update wallet. Please try again.')
                             console.error(error)
@@ -191,14 +192,9 @@ const FundWallet = ({
                     } else {
                         setErrorMessage('Payment was not successful. Please try again.')
                     }
-
-
-                        socket.emit('sendActivity', {
-                            userId: user.id,
-                            action: `@${user.username} just funded wallet with ₦${fundingAmount}`,
-                        })
                         toggleFLWFunding()
                         setIsLoading(false)
+                      
                         // Handle success (e.g., send a confirmation to your server)
                         console.log('payment callback:', data);
                     },
