@@ -1,36 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import { BACKEND_URL } from '@/utils/globalConfig'
+import { BACKEND_URL } from '@/utils/globalConfig';
+import { io } from 'socket.io-client';
 
-import { io } from 'socket.io-client'
+const socket = io(`${BACKEND_URL}`);
 
-const socket = io(`${BACKEND_URL}`)
-// Adjust the import path based on your file structure.
 type TaskNotificationBadgeProps = {
 	onClick: () => void;
 };
+
 const OngoingTaskNotification = ({ onClick }: TaskNotificationBadgeProps) => {
-    const [hasNotification, setHasNotification] = useState(false);
-	const [newTasks, setNewTasks] = useState(false);
+	const [hasNotification, setHasNotification] = useState(false);
 
 	useEffect(() => {
-		// Connect to the WebSocket server
-		const socket = io(`${BACKEND_URL}`)
-
 		// Listen for task approval events
 		socket.on('taskApproved', () => {
-			setNewTasks(true);
+			setHasNotification(true);
+		});
+
+		// Listen for task rejection events
+		socket.on('taskRejected', () => {
+			setHasNotification(true);
 		});
 
 		// Cleanup connection on component unmount
 		return () => {
-			socket.disconnect();
+			socket.off('taskApproved');
+			socket.off('taskRejected');
 		};
 	}, []);
-if (!newTasks) return null
+
+	if (!hasNotification) return null;
+
 	return (
-		newTasks && (
-			<span onClick={onClick} className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-		)
+		<span
+			onClick={() => {
+				setHasNotification(false);
+				onClick();
+			}}
+			className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"
+			title="New task update"
+		></span>
 	);
 };
 
