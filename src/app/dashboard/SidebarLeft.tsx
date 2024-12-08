@@ -46,6 +46,7 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 			title: 'Tasks',
 			icon: <SiTodoist className='text-[15px] md:text-[24px] md:mr-2 ' />,
 			path: `/dashboard/tasks`,
+			showBadge: true,
 		},
 		{
 			title: 'Wallet',
