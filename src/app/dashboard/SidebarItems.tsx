@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import OngoingTaskNotification from './OngoingTaskNotification';
+import { io } from 'socket.io-client';
+import { BACKEND_URL } from '@/utils/globalConfig';
 import { cn } from '../../../helpers';
 
 type TSidebarItems = {
@@ -8,14 +10,34 @@ type TSidebarItems = {
 		path: string;
 		title: string;
 		icon?: React.ReactNode;
+		showBadge?: boolean; // Flag to enable badge
 	};
 	isOpen: boolean;
 	isMobile?: boolean;
 };
 
+const socket = io(`${BACKEND_URL}`);
+
 const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 	const pathname = usePathname();
 	const isActive = pathname === item.path;
+
+	const [showBadge, setShowBadge] = useState(item.showBadge || false);
+
+	useEffect(() => {
+		// Listen for WebSocket events and enable the badge when received
+		socket.on('taskNotification', () => {
+			setShowBadge(true);
+		});
+
+		return () => {
+			socket.off('taskNotification');
+		};
+	}, []);
+
+	const handleBadgeClick = () => {
+		setShowBadge(false); // Clear badge when clicked
+	};
 
 	return (
 		<Link href={item.path}>
@@ -27,16 +49,17 @@ const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 					padding: '16px 6px',
 				}}
 			>
-				{/* Icon with Notification Badge */}
-				<div className="flex justify-center items-center text-2xl text-gray-700 relative">
+				{/* Icon */}
+				<div
+					className="flex justify-center items-center text-2xl text-gray-700 relative"
+					onClick={handleBadgeClick}
+				>
 					{item.icon}
-					<OngoingTaskNotification
-						onClick={() => {
-							// You can also trigger additional logic here if needed
-						}}
-					/>
+					{/* Show badge if enabled */}
+					{showBadge && (
+						<span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+					)}
 				</div>
-
 				{/* Title */}
 				<div
 					className={`text-xs text-gray-500 mt-1 text-center ${
