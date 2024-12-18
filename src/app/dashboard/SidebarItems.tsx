@@ -21,26 +21,33 @@ const socket = io(`${BACKEND_URL}`);
 const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 	const pathname = usePathname();
 	const isActive = pathname === item.path;
+const notificationKey = 'taskBadgeAcknowledged';
 
 	 const [showBadge, setShowBadge] = useState(false);
 
-	 useEffect(() => {
-       
-        socket.on('taskNotification', (data) => {
-            // Logic to decide if badge should be shown based on the notification
+	useEffect(() => {
+    const isAcknowledged = localStorage.getItem(notificationKey);
+    setShowBadge(!isAcknowledged);
+
+    socket.on('taskNotification', (data) => {
+        if (!showBadge) {
             setShowBadge(true);
-        });
+            localStorage.removeItem(notificationKey); // Reset acknowledgment status
+        }
+    });
 
-        // Cleanup on unmount
-        return () => {
-            socket.disconnect();
-        };
-    }, [])
+    // Cleanup on unmount
+    return () => {
+        socket.off('taskNotification');
+        // If you manage socket lifecycle here, uncomment:
+        // socket.disconnect();
+    };
+}, []);
 
-	const handleBadgeClick = () => {
-		setShowBadge(false); // Clear badge when clicked
-	};
-
+const handleBadgeClick = () => {
+    setShowBadge(false);
+    localStorage.setItem(notificationKey, 'true'); // Mark as acknowledged
+};
 	return (
 		<Link href={item.path}>
 			<div
@@ -58,9 +65,9 @@ const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 				>
 					{item.icon}
 					{/* Show badge if enabled */}
-					{showBadge && (
-						<span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-					)}
+					{item.showBadge && showBadge && (
+  <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+)}
 				</div>
 				{/* Title */}
 				<div
