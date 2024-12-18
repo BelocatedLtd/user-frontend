@@ -22,18 +22,20 @@ const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 	const pathname = usePathname();
 	const isActive = pathname === item.path;
 
-	const [showBadge, setShowBadge] = useState(item.showBadge || false);
+	 const [showBadge, setShowBadge] = useState(false);
 
-	useEffect(() => {
-		// Listen for WebSocket events and enable the badge when received
-		socket.on('taskNotification', () => {
-			setShowBadge(true);
-		});
+	 useEffect(() => {
+       
+        socket.on('taskNotification', (data) => {
+            // Logic to decide if badge should be shown based on the notification
+            setShowBadge(true);
+        });
 
-		return () => {
-			socket.off('taskNotification');
-		};
-	}, []);
+        // Cleanup on unmount
+        return () => {
+            socket.disconnect();
+        };
+    }, [])
 
 	const handleBadgeClick = () => {
 		setShowBadge(false); // Clear badge when clicked
