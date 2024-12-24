@@ -1,3 +1,4 @@
+// Import necessary dependencies
 'use client'
 import banner from '@/assets/homebanner.png'
 import ActivityFeed from '@/components/ActivityFeed'
@@ -27,7 +28,7 @@ interface PlatformTasks {
   }
 
 const Dashboard = () => {
-	const inputRef = useRef<HTMLInputElement>(null)
+    const inputRef = useRef<HTMLInputElement>(null)
 	const router = useRouter()
 	const dispatch = useDispatch()
 	const [profile, setProfile] = useState(null)
@@ -226,119 +227,64 @@ const remainTask = totalTasks - tasksCompleted;
 		if (user.phone && user.location && user.community && user.gender)
 			router.push('/dashboard/advertise')
 	}
-	return (
-		// <div className='container w-full h-fit'>
-		// 	<div className='justify-between mx-auto md:mr-3'>
-		// 		<div className='md:flex mb-10 px-3 items-center justify-between'>
-		// 			<div>
-		// 				<h2 className='mt-1 font-medium text-lg'>
-		// 					Welcome, {user?.fullname ? user?.fullname : user?.username}
-		// 				</h2>
-		// 			</div>
 
-		// 			<div className='space-x-2 mt-2'>
-		// 				<button
-		// 					onClick={() => router.push('/dashboard/earn')}
-		// 					className='text-sm bg-secondary text-white px-4 py-2 rounded-lg'>
-		// 					Earn
-		// 				</button>
-		// 				<button
-		// 					onClick={handleAdvertise}
-		// 					className='text-sm bg-tertiary text-white px-4 py-2 rounded-lg'>
-		// 					Advertise
-		// 				</button>
-		// 				<button
-		// 					onClick={() => router.push('/dashboard/wallet')}
-		// 					className='text-sm bg-green-600 text-white px-4 py-2 rounded-lg'>
-		// 					My Wallet
-		// 				</button>
-		// 				<button
-		// 					onClick={() => router.push('/dashboard/referral')}
-		// 					className='text-sm bg-gray-600 text-white px-4 py-2 rounded-lg'>
-		// 					Refer
-		// 				</button>
-		// 			</div>
-		// 		</div>
+  return (
+    <div className="bg-gray-100 min-h-screen p-4 font-[Montserrat]">
+      {/* Header Section */}
+      <div className="bg-white p-6 rounded-md shadow-md">
+        <div className="flex flex-col sm:flex-row items-center justify-between">
+          <h1 className="text-[43px] font-semibold">Welcome, {user?.fullname ? user?.fullname : user?.username}!</h1>
+          <p className="text-[35px] font-[Product Sans]">{user?.username}</p>
+        </div>
+      </div>
 
-		<div className='container w-full min-h-screen pb-20'>
-			<div className='justify-between mx-auto md:mr-3'>
-				<div className='md:flex mb-10 px-3 items-center justify-between'>
-					<div className="p-4 bg-white rounded-lg shadow-md">
-  {/* Welcome message */}
-  <h2 className="mt-1 font-medium text-lg text-gray-800">
-    Welcome, {user?.fullname ? user?.fullname : user?.username}!
-  </h2>
-
-  {/* Task completion message */}
-  <p className="mt-2 text-sm text-gray-600">
-    You have <strong> {totalTasks} </strong> available tasks to complete.
-  </p>
-  
-  <div className="mt-2 bg-gray-100 p-3 rounded-md">
-    <p>
-      <strong> {approvedTasks} </strong> Approved of <strong> {completedTasks + approvedTasks} </strong> Completed Tasks
-    </p>
-    <p className="text-gray-700 mt-2">
-      Remaining Tasks to Perform: <strong> {remainingTasksToComplete} </strong>
-    </p>
-    <p className="text-gray-700 mt-2 mb-2">
-      <strong> {remainingTasksToApprove} </strong> Tasks waiting Approval
-    </p>
-  </div>
-				</div>
-</div>
-				{/* Buttons Section */}
-				<div className='space-y-4 mt-2 mb-15'>
-
-
-					{/* Perform Task and Earn Button */}
-					<button style={{fontFamily:"'Merriweather', serif", boxShadow: "0px 8px 8px 0px rgba(0, 0, 255, 0.8)",}}
-						onClick={() => router.push('/dashboard/earn')}
-						className='shadow-lg text-center text-sm font-bold bg-blue-500 text-white px-4 py-3 rounded-full w-full'>Click Here To
-						Perform Task and Earn
-					</button>
-
-					{/* Remaining Buttons */}
-					<div className='flex space-x-2 mt-5 mb-15'>
-						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "0px 8px 8px 0px rgba(255, 0, 0, 0.8)",}}
+      {/* Task Summary */}
+      <div className="mt-6 bg-white p-6 rounded-md shadow-md">
+        <p className="text-xl">You have <span className="font-semibold"> {totalTasks} </span> available tasks to complete.</p>
+        <div className="mt-4 bg-blue-100 p-4 rounded-md">
+          <p className="text-lg">{approvedTasks} Approved of {completedTasks + approvedTasks} Completed Tasks</p>
+          <p className="text-lg">Remaining Tasks to Perform: <span className="font-semibold">{remainingTasksToComplete}</span></p>
+          <p className="text-lg">{remainingTasksToApprove} Tasks waiting Approval</p>
+        </div>
+        <button onClick={() => router.push('/dashboard/earn')}   className="mt-4 bg-blue-500 text-white py-3 px-6 rounded-md w-full sm:w-auto hover:bg-blue-600">
+          Click Here To Perform Task and Earn
+        </button>
+      </div>
+      <div className='flex space-x-2 mt-5 mb-15'>
+						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "0px 8px 8px 0px azure",}}
 							onClick={handleAdvertise}
-							 className='w-32 h-10 text-center text-sm font-bold bg-tertiary text-white px-4 py-2 rounded-full'>
+							 className='w-32 h-10 text-center text-sm font-bold bg-blue-500 text-white px-4 py-2 rounded-full'>
 							Advertise
 						</button>
-						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "0px 8px 8px 0px rgba(0, 128, 0, 0.8)",}}
+						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "0px 8px 8px 0px rgba(113, 199, 239, 0.8)",}}
 							onClick={() => router.push('/dashboard/wallet')}
-							className='w-32 h-10 text-center text-sm font-bold bg-green-600 text-white px-4 py-2 rounded-full'>
+							className='w-32 h-10 text-center text-sm font-bold bg-blue-500 text-white px-4 py-2 rounded-full'>
 							My Wallet
 						</button>
-						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "0px 8px 8px 0px rgba(128, 128, 128, 0.8)",}}
+						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "0px 8px 8px 0px rgba(113, 199, 239, 0.8)",}}
 							onClick={() => router.push('/dashboard/referral')}
-							className='w-32 h-10 text-center text-xs font-bold bg-gray-600 text-white px-4 py-2 rounded-full'>
+							className='w-32 h-10 text-center text-xs font-bold bg-blue-500 text-white px-4 py-2 rounded-full'>
 							Referral Program
 						</button>
 					</div>
-				</div>
-
-
-
-				<div
-					className={`flex-1 grid grid-cols-2  md:grid-cols-4 gap-8  h-fit  justify-evenly md:flex-row mt-4`}>
-					<div className='border w-full  flex-col text-center items-center justify-center py-8 space-y-2 rounded-lg border-gray-200'>
-						<span>Total Earnings</span>
-						<div>
-							<strong className='text-xl md:text-3xl'>
-								{toNaira(dashboardData?.totalEarnings.value ?? 0)}
-							</strong>
-						</div>
-					</div>
-					<div className='border w-full flex-col text-center items-center justify-center py-8 space-y-2 rounded-lg border-gray-200'>
-						<p>My Balance</p>
-						<div>
-							<strong className='text-xl md:text-3xl'>
-								{toNaira(dashboardData?.myBalance.value ?? 0)}
-							</strong>
-						</div>
-					</div>
-					<div className='border w-full flex-col text-center items-center justify-center py-8 space-y-2 rounded-lg border-gray-200'>
+			
+      {/* Wallet and Referral */}
+      <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {/* Wallet Section */}
+        <div className="bg-white p-6 rounded-md shadow-md">
+          <h2 className="text-xl font-semibold">My Wallet</h2>
+          <div className="mt-4 flex justify-between items-center">
+            <div>
+              <p>Total Earnings</p>
+              <p className="text-2xl font-bold">{toNaira(dashboardData?.totalEarnings.value ?? 0)}</p>
+            </div>
+            <div>
+              <p>My Balance</p>
+              <p className="text-2xl font-bold">{toNaira(dashboardData?.myBalance.value ?? 0)}</p>
+            </div>
+          </div>
+        </div>
+        <div className='border w-full flex-col text-center items-center justify-center py-8 space-y-2 rounded-lg border-gray-200'>
 						<p>Adverts Created</p>
 						<div>
 							<strong className='text-xl md:text-3xl'>
@@ -355,35 +301,36 @@ const remainTask = totalTasks - tasksCompleted;
 						</div>
 					</div>
 
-					<div className='border p-6 col-span-2 border-gray-200 rounded-lg '>
-						<h3 className='mb-6'>Referral</h3>
-						<ReferralsTable />
-					</div>
-					<div className='rounded-lg p-6 col-span-2 md:col-span-1 border border-gray-300 flex flex-col gap-2   md:gap-0'>
-						<label className=''>Referral Link:</label>
-						<div className='flex items-center gap-2 mt-2  w-full'>
-							<input
-								type='link'
-								value={refLink}
-								readOnly
-								ref={inputRef}
-								className='p-3 w-full border border-gray-200 rounded-lg items-center'
-							/>
-							<FaCopy
+        {/* Referral Section */}
+        <div className="bg-white p-6 rounded-md shadow-md">
+          <h2 className="text-xl font-semibold">Referral Program</h2>
+          <ReferralsTable />
+          <p className="mt-2">Referral Link:</p>
+          <div className="relative mt-2">
+            <input
+              type='link'
+              value={refLink}
+              readOnly
+              ref={inputRef}
+              className="w-full border rounded-md p-3 bg-gray-100 text-gray-700"
+            />
+          <FaCopy
 								className='cursor-pointer text-xl text-secondary'
 								onClick={() =>
 									handleRefLinkCopy(inputRef?.current?.value as string)
 								}
 							/>
-						</div>
-					</div>
-					{/* </ProfileComplete> */}
-					<div className='border md:row-span-2 col-span-2 md:col-span-1 border-gray-200 rounded-lg flex'>
-						<ActivityFeed />
-					</div>
-					{/* <div className='border bg-red-200 md:col-span-3 col-span-2 border-gray-200 rounded-lg flex'> */}
-					<div className="relative w-full pb-5" style={{width:'380px'}}>
-  <Image
+          </div>
+        </div>
+      </div>
+
+      {/* Recent Activities */}
+      <div className="mt-6 bg-white p-6 rounded-md shadow-md">
+        <h2 className="text-xl font-semibold">Recent Activities</h2>
+        <ActivityFeed />
+      
+
+        <Image
     style={{position:'relative', height:'auto'}}
     src={banner} 
     alt="Banner" 
@@ -392,13 +339,13 @@ const remainTask = totalTasks - tasksCompleted;
     // Adjust height as needed
     className="object-cover"
   />
-</div>
 
-				{/* </div> */}
-				</div>
-			</div>
-		</div>
-	)
-}
+      {/* Footer Navigation */}
+      
+    </div>
+    </div>
+    
+  );
+};
 
 export default Dashboard;
