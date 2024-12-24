@@ -233,8 +233,8 @@ const remainTask = totalTasks - tasksCompleted;
       {/* Header Section */}
       <div className="bg-white p-6 rounded-md shadow-md">
         <div className="flex flex-col sm:flex-row items-center justify-between">
-          <h1 className="text-[43px] font-semibold">Welcome, {user?.fullname ? user?.fullname : user?.username}!</h1>
-          <p className="text-[35px] font-[Product Sans]">{user?.username}</p>
+          <h1 className="text-[15px] font-semibold">Welcome, {user?.fullname ? user?.fullname : user?.username}!</h1>
+          <p className="text-[15px] font-[Product Sans]">{user?.username}</p>
         </div>
       </div>
 
