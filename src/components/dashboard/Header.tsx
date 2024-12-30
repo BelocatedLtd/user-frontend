@@ -74,8 +74,7 @@ const Header = () => {
 				{/* Less-Than Symbol */}
 				{/* Welcome Tag */}
 				<div style={{backgroundColor:"rgb(71, 71, 209)" }} className="text-white font-bold py-2 px-4 pt-2 text-[13px] sm:text-[12px]">
-					<span className="text-white-500 text-[18px] mr-2"><FaAngleLeft style={{color:'white'}} /></span>
-					Welcome, {user?.fullname ? user?.fullname : user?.username}
+					<FaAngleLeft style={{color:'white'}} /> Welcome, {user?.fullname ? user?.fullname : user?.username}
 				</div>
 			</div>
 			{/* Username */}
