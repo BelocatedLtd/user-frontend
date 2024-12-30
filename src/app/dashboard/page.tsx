@@ -24,7 +24,7 @@ import { getUserTaskById } from '@/services/taskServices'
 
 interface PlatformTasks {
 	[key: string]: { totalTasks: number }
-  }
+}
 
 const Dashboard = () => {
 	const inputRef = useRef<HTMLInputElement>(null)
@@ -33,12 +33,12 @@ const Dashboard = () => {
 	const [profile, setProfile] = useState(null)
 	const wallet = useSelector(selectUserWallet)
 	const adverts = useSelector(selectAdverts)
-      const [totalTasks, setTotalTasks] = useState(0)
-	  const [completedTasks, setCompletedTasks] = useState<number>(0);
-	  const [approvedTasks, setApprovedTasks] = useState<number>(0);
-	  const [remainingTasksToComplete, setRemainingTasksToComplete] = useState<number>(0);
-	  const [remainingTasksToApprove, setRemainingTasksToApprove] = useState<number>(0);
-	 
+	const [totalTasks, setTotalTasks] = useState(0)
+	const [completedTasks, setCompletedTasks] = useState<number>(0);
+	const [approvedTasks, setApprovedTasks] = useState<number>(0);
+	const [remainingTasksToComplete, setRemainingTasksToComplete] = useState<number>(0);
+	const [remainingTasksToApprove, setRemainingTasksToApprove] = useState<number>(0);
+
 	const [isLoading, setIsLoading] = useState(false)
 	const user = useSelector(selectUser)
 	const userId = user?.id
@@ -62,36 +62,36 @@ const Dashboard = () => {
 	}>()
 	const [refLink, setRefLink] = useState('')
 	useRedirectLoggedOutUser('/')
-useEffect(() => {
-    async function fetchTotalTasks() {
-      try {
-        setIsLoading(true)
+	useEffect(() => {
+		async function fetchTotalTasks() {
+			try {
+				setIsLoading(true)
 
-        // Fetch the tasks by platform
-        const res: PlatformTasks = await getTotalTasksByAllPlatforms()
+				// Fetch the tasks by platform
+				const res: PlatformTasks = await getTotalTasksByAllPlatforms()
 
-        // Calculate the total tasks across all platforms
-        const total = Object.values(res).reduce((acc, platform) => acc + platform.totalTasks, 0)
+				// Calculate the total tasks across all platforms
+				const total = Object.values(res).reduce((acc, platform) => acc + platform.totalTasks, 0)
 
-        // Set the total tasks in state
-        
-        setIsLoading(false)
-      } catch (error) {
-        console.error('Failed to retrieve tasks', error)
-        setIsLoading(false)
-      }
-    }
+				// Set the total tasks in state
 
-    fetchTotalTasks()
-  }, [])
+				setIsLoading(false)
+			} catch (error) {
+				console.error('Failed to retrieve tasks', error)
+				setIsLoading(false)
+			}
+		}
 
-	
+		fetchTotalTasks()
+	}, [])
+
+
 	useEffect(() => {
 		async function getUserData() {
 			const data = await getUser()
 			const dashboard = await getDashboardData()
 			setDasboardData(dashboard)
-console.log("useEffect triggered, userId:", user?.id); 
+			console.log("useEffect triggered, userId:", user?.id);
 			// if (!data || data === undefined) {
 			// 	// toast.error('Unable to retrieve user data, session will be terminated')
 			// 	await dispatch(SET_LOGOUT())
@@ -109,85 +109,85 @@ console.log("useEffect triggered, userId:", user?.id);
 		setRefLink(`https://${frontEndUrl}?ref=${user?.username}`)
 	}, [dispatch])
 
-	
+
 	const fetchApprovedTasks = async () => {
-		 console.log("Fetching approved tasks for user:", userId);
-		
-		
-    if (!userId) return;
-       // Ensure userId is defined
-        setIsLoading(true); // Show loading state
-        try {
-			
-            const data = await getApprovedTasks(userId);
-            if (data) {
-                setTotalTasks(data.totalTasks);
-                setApprovedTasks(data.approvedTasks);
-                setRemainingTasksToApprove(data.remainingTaskstoApprove);
-            }
-        } catch (error) {
-            console.error('Error fetching remaining tasks:', error);
-        } finally {
-            setIsLoading(false); // Hide loading state
-        }
-    };
+		console.log("Fetching approved tasks for user:", userId);
+
+
+		if (!userId) return;
+		// Ensure userId is defined
+		setIsLoading(true); // Show loading state
+		try {
+
+			const data = await getApprovedTasks(userId);
+			if (data) {
+				setTotalTasks(data.totalTasks);
+				setApprovedTasks(data.approvedTasks);
+				setRemainingTasksToApprove(data.remainingTaskstoApprove);
+			}
+		} catch (error) {
+			console.error('Error fetching remaining tasks:', error);
+		} finally {
+			setIsLoading(false); // Hide loading state
+		}
+	};
 	const fetchCompletedTasks = async () => {
-        if (!userId) return; // Ensure userId is defined
-        setIsLoading(true); // Show loading state
-        try {
-            const data = await getCompletedTasks(userId);
-            if (data) {
-               
-                setCompletedTasks(data.completedTasks);
-                setRemainingTasksToComplete(data.remainingTaskToComplete);
-            }
-        } catch (error) {
-            console.error('Error fetching remaining tasks:', error);
-        } finally {
-            setIsLoading(false); // Hide loading state
-        }
-    };
-	
-    useEffect(() => {
-        fetchApprovedTasks();
-    }, [userId]);
-	
-	
-	
-    useEffect(() => {
-        fetchCompletedTasks();
-    }, [userId]);
+		if (!userId) return; // Ensure userId is defined
+		setIsLoading(true); // Show loading state
+		try {
+			const data = await getCompletedTasks(userId);
+			if (data) {
+
+				setCompletedTasks(data.completedTasks);
+				setRemainingTasksToComplete(data.remainingTaskToComplete);
+			}
+		} catch (error) {
+			console.error('Error fetching remaining tasks:', error);
+		} finally {
+			setIsLoading(false); // Hide loading state
+		}
+	};
+
+	useEffect(() => {
+		fetchApprovedTasks();
+	}, [userId]);
+
+
+
+	useEffect(() => {
+		fetchCompletedTasks();
+	}, [userId]);
 
 
 	const fetchAllTasks = async () => {
-        if (!userId) return; // Ensure userId is defined
-        setIsLoading(true); // Show loading state
-        try {
-            const data = await getUserTaskById(userId);
-            if (data) {
-                
-                setRemainingTasksToComplete(data.totalTasks);
-				
-            }
-        } catch (error) {
-            console.error('Error fetching remaining tasks:', error);
-        } finally {
-            setIsLoading(false); // Hide loading state
-        }
-    };
+		if (!userId) return; // Ensure userId is defined
+		setIsLoading(true); // Show loading state
+		try {
+			const data = await getUserTaskById(userId);
+			if (data) {
 
-    useEffect(() => {
-        fetchAllTasks();
-    }, [userId]);
+				setRemainingTasksToComplete(data.totalTasks);
+
+			}
+		} catch (error) {
+			console.error('Error fetching remaining tasks:', error);
+		} finally {
+			setIsLoading(false); // Hide loading state
+		}
+	};
+
+	useEffect(() => {
+		fetchAllTasks();
+	}, [userId]);
 
 	const tasksCompleted = Number(dashboardData?.tasksCompleted?.value) || 0;
 
 
-// Perform arithmetic operation
-const remainTask = totalTasks - tasksCompleted;
+	// Perform arithmetic operation
+	const remainTask = totalTasks - tasksCompleted;
 	if (isLoading) {
-        return <div>Loading...</div>; // Loading state
-    }
+		return <div>Loading...</div>; // Loading state
+	}
 
 
 
@@ -227,178 +227,123 @@ const remainTask = totalTasks - tasksCompleted;
 			router.push('/dashboard/advertise')
 	}
 	return (
-		// <div className='container w-full h-fit'>
-		// 	<div className='justify-between mx-auto md:mr-3'>
-		// 		<div className='md:flex mb-10 px-3 items-center justify-between'>
-		// 			<div>
-		// 				<h2 className='mt-1 font-medium text-lg'>
-		// 					Welcome, {user?.fullname ? user?.fullname : user?.username}
-		// 				</h2>
-		// 			</div>
-
-		// 			<div className='space-x-2 mt-2'>
-		// 				<button
-		// 					onClick={() => router.push('/dashboard/earn')}
-		// 					className='text-sm bg-secondary text-white px-4 py-2 rounded-lg'>
-		// 					Earn
-		// 				</button>
-		// 				<button
-		// 					onClick={handleAdvertise}
-		// 					className='text-sm bg-tertiary text-white px-4 py-2 rounded-lg'>
-		// 					Advertise
-		// 				</button>
-		// 				<button
-		// 					onClick={() => router.push('/dashboard/wallet')}
-		// 					className='text-sm bg-green-600 text-white px-4 py-2 rounded-lg'>
-		// 					My Wallet
-		// 				</button>
-		// 				<button
-		// 					onClick={() => router.push('/dashboard/referral')}
-		// 					className='text-sm bg-gray-600 text-white px-4 py-2 rounded-lg'>
-		// 					Refer
-		// 				</button>
-		// 			</div>
-		// 		</div>
-
-		<div className='container w-full min-h-screen pb-20'>
-			<div className='justify-between mx-auto md:mr-3'>
-				<div className='md:flex mb-10 px-3 items-center justify-between'>
-					<div className="p-4 bg-white rounded-lg shadow-md">
-  {/* Welcome message */}
-  <h2 className="mt-1 font-medium text-lg text-gray-800">
-    Welcome, {user?.fullname ? user?.fullname : user?.username}!
-  </h2>
-
-  {/* Task completion message */}
-  <p className="mt-2 text-sm text-gray-600">
-    You have <strong> {totalTasks} </strong> available tasks to complete.
-  </p>
-  
-  <div className="mt-2 bg-gray-100 p-3 rounded-md">
-    <p>
-      <strong> {approvedTasks} </strong> Approved of <strong> {completedTasks + approvedTasks} </strong> Completed Tasks
-    </p>
-    <p className="text-gray-700 mt-2">
-      Remaining Tasks to Perform: <strong> {remainingTasksToComplete} </strong>
-    </p>
-    <p className="text-gray-700 mt-2 mb-2">
-      <strong> {remainingTasksToApprove} </strong> Tasks waiting Approval
-    </p>
-  </div>
+		<div style={{borderBottomRightRadius:"50px"}} className="container w-full min-h-screen pb-20">
+		{/* Welcome Section with Wave Shadow */}
+		<div className="relative">
+			<div className="flex items-center">
+				{/* Less-Than Symbol */}
+				{/* Welcome Tag */}
+				<div style={{backgroundColor:"rgb(71, 71, 209)" }} className="text-white font-bold py-2 px-4 rounded text-[18px] sm:text-[12px] text-[13px]">
+					<span className="text-white-500 text-[18px] mr-2">&lt;</span>
+					Welcome, {user?.fullname ? user?.fullname : user?.username}!
 				</div>
-</div>
-				{/* Buttons Section */}
-				<div className='space-y-4 mt-2 mb-15'>
-
-
-					{/* Perform Task and Earn Button */}
-					<button style={{fontFamily:"'Merriweather', serif", boxShadow: "0px 8px 8px 0px rgba(0, 0, 255, 0.8)",}}
-						onClick={() => router.push('/dashboard/earn')}
-						className='shadow-lg text-center text-sm font-bold bg-blue-500 text-white px-4 py-3 rounded-full w-full'>Click Here To
-						Perform Task and Earn
-					</button>
-
-					{/* Remaining Buttons */}
-					<div className='flex space-x-2 mt-5 mb-15'>
-						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "0px 8px 8px 0px rgba(255, 0, 0, 0.8)",}}
-							onClick={handleAdvertise}
-							 className='w-32 h-10 text-center text-sm font-bold bg-tertiary text-white px-4 py-2 rounded-full'>
-							Advertise
-						</button>
-						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "0px 8px 8px 0px rgba(0, 128, 0, 0.8)",}}
-							onClick={() => router.push('/dashboard/wallet')}
-							className='w-32 h-10 text-center text-sm font-bold bg-green-600 text-white px-4 py-2 rounded-full'>
-							My Wallet
-						</button>
-						<button style={{fontFamily:"'Libre Baskerville', serif", boxShadow: "0px 8px 8px 0px rgba(128, 128, 128, 0.8)",}}
-							onClick={() => router.push('/dashboard/referral')}
-							className='w-32 h-10 text-center text-xs font-bold bg-gray-600 text-white px-4 py-2 rounded-full'>
-							Referral Program
-						</button>
-					</div>
+			</div>
+			{/* Username */}
+			<div className="text-gray-500 text-[12px] sm:text-[24px] font-medium mt-2">
+				@{user?.username}
+			</div>
+		</div>
+	
+		{/* Task Section */}
+		<div style={{borderBottomLeftRadius:"50px", boxShadow:"5px 5px 5px rgb(153, 153, 153) inset", padding: '0 10px' }} className="text-center">
+			{/* Task Count */}
+			<div className="text-[16px] sm:text-[12px] font-semibold text-gray-700">
+				You have {totalTasks} available tasks to complete.
+			</div>
+	
+			{/* Task Summary Box */}
+			<div className="bg-white rounded-md p-6 mt-4" style={{backgroundColor:"rgb(204, 230, 255)", margin: '0 10px'}}>
+				{/* Approved and Completed Tasks */}
+				<div className="text-[20px] sm:text-[24px] font-normal text-gray-700">
+					<strong> {approvedTasks} </strong> Approved of <strong> {completedTasks + approvedTasks} </strong> Completed Tasks
 				</div>
-
-
-
-				<div
-					className={`flex-1 grid grid-cols-2  md:grid-cols-4 gap-8  h-fit  justify-evenly md:flex-row mt-4`}>
-					<div className='border w-full  flex-col text-center items-center justify-center py-8 space-y-2 rounded-lg border-gray-200'>
-						<span>Total Earnings</span>
-						<div>
-							<strong className='text-xl md:text-3xl'>
-								{toNaira(dashboardData?.totalEarnings.value ?? 0)}
-							</strong>
-						</div>
-					</div>
-					<div className='border w-full flex-col text-center items-center justify-center py-8 space-y-2 rounded-lg border-gray-200'>
-						<p>My Balance</p>
-						<div>
-							<strong className='text-xl md:text-3xl'>
-								{toNaira(dashboardData?.myBalance.value ?? 0)}
-							</strong>
-						</div>
-					</div>
-					<div className='border w-full flex-col text-center items-center justify-center py-8 space-y-2 rounded-lg border-gray-200'>
-						<p>Adverts Created</p>
-						<div>
-							<strong className='text-xl md:text-3xl'>
-								{dashboardData?.advertsCreated.value ?? 0}
-							</strong>
-						</div>
-					</div>
-					<div className='border w-full flex-col text-center items-center justify-center py-8 space-y-2 rounded-lg border-gray-200'>
-						<p>Tasks Completed</p>
-						<div>
-							<strong className='text-xl md:text-3xl'>
-								{completedTasks + approvedTasks}
-							</strong>
-						</div>
-					</div>
-
-					<div className='border p-6 col-span-2 border-gray-200 rounded-lg '>
-						<h3 className='mb-6'>Referral</h3>
-						<ReferralsTable />
-					</div>
-					<div className='rounded-lg p-6 col-span-2 md:col-span-1 border border-gray-300 flex flex-col gap-2   md:gap-0'>
-						<label className=''>Referral Link:</label>
-						<div className='flex items-center gap-2 mt-2  w-full'>
-							<input
-								type='link'
-								value={refLink}
-								readOnly
-								ref={inputRef}
-								className='p-3 w-full border border-gray-200 rounded-lg items-center'
-							/>
-							<FaCopy
-								className='cursor-pointer text-xl text-secondary'
-								onClick={() =>
-									handleRefLinkCopy(inputRef?.current?.value as string)
-								}
-							/>
-						</div>
-					</div>
-					{/* </ProfileComplete> */}
-					<div className='border md:row-span-2 col-span-2 md:col-span-1 border-gray-200 rounded-lg flex'>
-						<ActivityFeed />
-					</div>
-					{/* <div className='border bg-red-200 md:col-span-3 col-span-2 border-gray-200 rounded-lg flex'> */}
-					<div className="relative w-full pb-5" style={{width:'380px'}}>
-  <Image
-    style={{position:'relative', height:'auto'}}
-    src={banner} 
-    alt="Banner" 
-    layout="fill" 
-     // Set the base width as per the original image's aspect ratio
-    // Adjust height as needed
-    className="object-cover"
-  />
-</div>
-
-				{/* </div> */}
+				{/* Remaining Tasks */}
+				<div className="text-[18px] sm:text-[20px] font-normal text-gray-600 mt-2">
+					Remaining Task to Perform:  <strong> {remainingTasksToComplete} </strong>
+				</div>
+				{/* Tasks Waiting Approval */}
+				<div className="text-[18px] sm:text-[20px] font-normal text-gray-600 mt-2">
+					<strong> {remainingTasksToApprove} </strong> Tasks waiting Approval
 				</div>
 			</div>
 		</div>
-	)
-}
+	
+		{/* Click Here Button (Full Width) */}
+		<div className="w-full">
+			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)"}} onClick={() => router.push('/dashboard/earn')} className="w-full bg-blue-500 text-white py-3 font-semibold text-lg rounded-md hover:bg-blue-600 transition duration-300">
+				Click Here To
+				Perform Task and Earn
+			</button>
+		</div>
+	
+		{/* Three Buttons Side by Side */}
+		<div className="flex space-x-4 mt-6">
+			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)"}} className="w-1/3 text-black py-2 font-normal text-lg rounded-md transition duration-300" onClick={handleAdvertise}>
+				Advertise
+			</button>
+			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)"}} className="w-1/3 text-black py-2 font-normal text-lg rounded-md transition duration-300" onClick={() => router.push('/dashboard/wallet')}>
+				My Wallet
+			</button>
+			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)"}} className="w-1/3 text-black py-2 font-normal text-lg rounded-md transition duration-300" onClick={() => router.push('/dashboard/referral')}>
+				Referral Program
+			</button>
+		</div>
+	
+		{/* Four Small Cards (2 rows of 2) */}
+		<div className="grid grid-cols-2 gap-4 mt-6">
+			{/* Card 1 */}
+			<div className="border border-[rgb(71,71,209)] bg-white rounded-md p-6 text-center">
+				<h3 className="font-normal text-sm text-black-700">Total Earnings</h3>
+				<p className="text-gray-500 mt-2"><strong className='text-xl md:text-3xl'>
+					{toNaira(dashboardData?.totalEarnings.value ?? 0)}
+				</strong></p>
+			</div>
+			{/* Card 2 */}
+			<div className="border border-[rgb(71,71,209)] bg-white rounded-md p-6 text-center">
+				<h3 className="font-normal text-sm text-black-700">My Balance</h3>
+				<p className="text-black-500 mt-2">{toNaira(dashboardData?.myBalance.value ?? 0)}</p>
+			</div>
+			{/* Card 3 */}
+			<div className="border border-[rgb(71,71,209)] bg-white rounded-md p-6 text-center">
+				<h3 className="font-normal text-sm text-black-700">Adverts Created</h3>
+				<p className="text-black-500 mt-2"><strong className='text-xl md:text-3xl'>
+					{dashboardData?.advertsCreated.value ?? 0}
+				</strong></p>
+			</div>
+			{/* Card 4 */}
+			<div className="border border-[rgb(71,71,209)] bg-white rounded-md p-6 text-center">
+				<h3 className="font-normal text-xl text-gray-700">Tasks Completed</h3>
+				<p className="text-gray-500 mt-2">{completedTasks + approvedTasks}</p>
+			</div>
+		</div>
+	
+		<div className='border p-6 col-span-2 border-gray-200 rounded-lg '>
+			<h3 className='mb-6'>Referral</h3>
+			<ReferralsTable />
+		</div>
+	
+		<div className='rounded-lg p-6 col-span-2 md:col-span-1 border border-gray-300 flex flex-col gap-2 md:gap-0'>
+			<label className=''>Referral Link:</label>
+			<div className='flex items-center gap-2 mt-2 w-full'>
+				<input
+					type='link'
+					value={refLink}
+					readOnly
+					ref={inputRef}
+					className='p-3 w-full border border-gray-200 rounded-lg items-center'
+				/>
+				<FaCopy className='cursor-pointer text-xl text-secondary' onClick={() => handleRefLinkCopy(inputRef?.current?.value as string)} />
+			</div>
+		</div>
+		<div className='border md:row-span-2 col-span-2 md:col-span-1 border-gray-200 rounded-lg flex'>
+			<ActivityFeed />
+		</div>
+		<div className="relative w-full pb-5" style={{ width: '380px' }}>
+			<Image style={{ position: 'relative', height: 'auto' }} src={banner} alt="Banner" layout="fill" className="object-cover" />
+		</div>
+	</div>
+	
+	);
+};
 
 export default Dashboard;
