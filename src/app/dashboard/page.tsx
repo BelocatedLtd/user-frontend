@@ -227,24 +227,24 @@ const Dashboard = () => {
 			router.push('/dashboard/advertise')
 	}
 	return (
-		<div className="container w-full min-h-screen pb-20">
+		<div style={{borderBottomRightRadius:"50px"}} className="container w-full min-h-screen pb-20">
 			{/* Welcome Section with Wave Shadow */}
 			<div className="relative">
 				<div className="flex items-center">
 					{/* Less-Than Symbol */}
 					
 					{/* Welcome Tag */}
-					<div className="bg-purple-500 text-white font-bold py-2 px-4 rounded text-[16px] sm:text-[12px] text-[13px]">
-					<span className="text-purple-500 text-[16px] mr-2">&lt;</span>
+					<div style={{backgroundColor:"rgb(71, 71, 209)" }} className="text-white font-bold py-2 px-4 rounded text-[18px] sm:text-[12px] text-[13px]">
+					<span className="text-white-500 text-[18px] mr-2">&lt;</span>
 						Welcome, {user?.fullname ? user?.fullname : user?.username}!
 					</div>
 				</div>
 				{/* Username */}
-				<div className="text-gray-500 text-[20px] sm:text-[24px] font-medium mt-2">
+				<div className="text-gray-500 text-[12px] sm:text-[24px] font-medium mt-2">
 					@{user?.username}
 				</div>
 				{/* Wavy Shadow */}
-				<div className="absolute left-0 bottom-[-10px] w-full">
+				{/* <div className="absolute left-0 bottom-[-10px] w-full">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						viewBox="0 0 1440 100"
@@ -255,18 +255,18 @@ const Dashboard = () => {
 							d="M0,96L48,80C96,64,192,32,288,32C384,32,480,64,576,64C672,64,768,32,864,21.3C960,11,1056,21,1152,37.3C1248,53,1344,75,1392,85.3L1440,96V0H1392C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0H0Z"
 						></path>
 					</svg>
-				</div>
+				</div> */}
 			</div>
 
 			{/* Task Section */}
-			<div className="text-center">
+			<div style={{borderBottomLeftRadius:"50px", boxShadow:"5px 5px 5px rgb(153, 153, 153) inset"} } className="text-center">
 				{/* Task Count */}
 				<div className="text-[16px] sm:text-[12px] font-semibold text-gray-700">
 					You have {totalTasks} available tasks to complete.
 				</div>
 
 				{/* Task Summary Box */}
-				<div className="bg-white shadow-2xl shadow-blue-600/50 rounded-md p-6 mt-4">
+				<div className="bg-white rounded-md p-6 mt-4" style={{backgroundColor:"rgb(204, 230, 255)"}}>
 					{/* Approved and Completed Tasks */}
 					<div className="text-[20px] sm:text-[24px] font-medium text-gray-700">
 						<strong> {approvedTasks} </strong> Approved of <strong> {completedTasks + approvedTasks} </strong> Completed Tasks
