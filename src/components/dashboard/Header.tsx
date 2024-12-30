@@ -39,7 +39,8 @@ const Header = () => {
 	}
 
 	return (
-		<header className='container w-full px-3 border-b border-gray-200'>
+		<header className='container w-full px-3 border-gray-200' style={{boxShadow:'rgb(153, 153, 153) -0px 0px 5px inset',
+			borderBottomRightRadius:'60px'}}>
 			<div className='md:ml-5 pt-2 w-full flex justify-between items-center mx-auto md:px-2'>
 				<div className='cursor-pointer w-full text-secondary'>
 					<div className='flex  w-full justify-between items-center'>
