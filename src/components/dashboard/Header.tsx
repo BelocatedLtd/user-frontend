@@ -69,19 +69,26 @@ const Header = () => {
 					</div>
 
 					{/* <span className='text-tertiary'>Be</span>located */}
-					<div style={{borderBottomRightRadius:"50px"}} className="relative">
-			<div className="flex items-center">
-				{/* Less-Than Symbol */}
-				{/* Welcome Tag */}
-				<div style={{backgroundColor:"rgb(71, 71, 209)" }} className="text-white font-bold py-2 px-4 pt-2 text-[13px] sm:text-[12px]">
-					<FaAngleLeft style={{color:'white'}} /> Welcome, {user?.fullname ? user?.fullname : user?.username}
-				</div>
-			</div>
-			{/* Username */}
-			<div style={{padding:"0px 20px 30px 20px"}} className="text-black-500 text-[12px] sm:text-[24px] font-medium">
-				@{user?.username}
-			</div>
-		</div>
+					<div style={{ borderBottomRightRadius: "50px" }} className="relative">
+  <div className="flex items-center">
+    {/* Welcome Tag */}
+    <div
+      style={{ backgroundColor: "rgb(71, 71, 209)" }}
+      className="text-white font-bold py-2 px-4 pt-2 text-[13px] sm:text-[12px] flex items-center gap-2"
+    >
+      <FaAngleLeft style={{ color: "white" }} />
+      Welcome, {user?.fullname ? user?.fullname : user?.username}
+    </div>
+  </div>
+  {/* Username */}
+  <div
+    style={{ padding: "0px 20px 30px 20px" }}
+    className="text-black-500 text-[12px] sm:text-[24px] font-medium"
+  >
+    @{user?.username}
+  </div>
+</div>
+
 
 					{/* <form className='hidden md:flex'>
 						<input
