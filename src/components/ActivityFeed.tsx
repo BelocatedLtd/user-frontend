@@ -55,7 +55,7 @@ const ActivityFeed = () => {
 	return (
 		<div className='right-0 w-[400px] md:flex md:flex-col'>
 			<div className='w-full border-b border-gray-200 px-5 pb-3 my-3'>
-				<h1 className='text-xl font-semibold text-gray-600 px-4 border-red-400'>
+				<h1 className='text-xl font-semibold text-rgb(71, 71, 209) px-4 border-red-400'>
 					Recent Activities
 				</h1>
 				<p className='text-sm mt-2 text-gray-500 font-medium'>
@@ -70,7 +70,7 @@ const ActivityFeed = () => {
 							key={index}
 							className='grid grid-cols-6   p-4 border-gray-100 '>
 							<div className=''>
-							<RiMegaphoneFill style={{backgroundColor:"rgb(25, 130, 228)" }}/>
+							<RiMegaphoneFill style={{color:"rgb(25, 130, 228)" }}/>
 							</div>
 							<div className='flex ml-3 col-span-5  flex-col'>
 								<small>{formatDistanceToNow(new Date(item?.createdAt))}</small>
