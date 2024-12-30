@@ -12,6 +12,7 @@ import speaker from '../assets/animated icons/speaker.gif'
 import { formatDistanceToNow } from 'date-fns'
 import Image from 'next/image'
 import { io } from 'socket.io-client'
+import { RiMegaphoneFill } from "react-icons/ri";
 
 const socket = io(`${BACKEND_URL}`)
 
@@ -20,7 +21,7 @@ const ActivityFeed = () => {
 	const dispatch = useDispatch()
 	const [currentPage, setCurrentPage] = useState(1)
 
-	const itemsPerPage = 10
+	const itemsPerPage = 4
 
 	const totalPage = Math.ceil(newsFeed.length / itemsPerPage)
 
@@ -67,21 +68,18 @@ const ActivityFeed = () => {
 					{getCurrentPageData().map((item: any, index: number) => (
 						<div
 							key={index}
-							className='grid grid-cols-4 p-2 border-gray-100 '>
+							className='grid grid-cols-6   p-4 border-gray-100 '>
 							<div className=''>
-								<Image
-									src={speaker}
-									alt='announcement'
-									className='bg-secondary rounded-full w-5 h-5'
-								/>
+							<RiMegaphoneFill style={{backgroundColor:"rgb(25, 130, 228)" }}/>
 							</div>
-							<div className='flex ml-2 col-span-3 flex-col'>
+							<div className='flex ml-3 col-span-5  flex-col'>
 								<small>{formatDistanceToNow(new Date(item?.createdAt))}</small>
 								<p className='text-gray-600 text-[14px]'>{item.action}</p>
 							</div>
 						</div>
 					))}
 				</div>
+
 				{/* {currentPage < totalPage && (
                     <div onClick={() => handlePageChange(currentPage + 1)} className='flex items-center justify-center  gap-2 p-6 '>
                         <p className='font-bold text-gray-500'>View More</p>
