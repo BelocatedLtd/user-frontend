@@ -246,9 +246,9 @@ const Dashboard = () => {
 		</div> */}
 	
 		{/* Task Section */}
-		<div style={{borderTopLeftRadius:"50px", boxShadow:"5px 5px 5px rgb(153, 153, 153) inset", padding: '0 10px', marginLeft:'-10px' }} className="text-center pb-4">
+		<div style={{borderTopLeftRadius:"50px", boxShadow:"5px 5px 5px rgb(153, 153, 153) inset", padding: '0 10px', marginLeft:'-10px'}} className="text-center pb-4">
 			{/* Task Count */}
-			<div className="text-[12px] sm:text-[12px] font-semibold text-gray-700 p-[30px] ">
+			<div className="text-[12px] sm:text-[12px] font-semibold text-gray-700 p-[40px] ">
 				You have {totalTasks} available tasks to complete.
 			</div>
 	
@@ -271,21 +271,21 @@ const Dashboard = () => {
 	
 		{/* Click Here Button (Full Width) */}
 		<div className="w-[95%] pt-5 ml-0" style={{ marginLeft: "2%" }}>
-			<button onClick={() => router.push('/dashboard/earn')} className="w-[95%] bg-blue-500 text-white py-3 font-semibold text-lg rounded-md hover:bg-blue-600 transition duration-300" style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", borderRadius:'100px', marginLeft: "2%"}}>
+			<button onClick={() => router.push('/dashboard/earn')} className="w-[95%] bg-blue-500 text-white py-3 font-normal text-sm rounded-md hover:bg-blue-600 transition duration-300" style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", borderRadius:'100px', marginLeft: "2%"}}>
 				Click Here To
 				Perform Task and Earn
 			</button>
 		</div>
 	
 		{/* Three Buttons Side by Side */}
-		<div className="flex space-x-4 mt-6">
-			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(to bottom, #528EF3 0%, #FFFFFF 100%)', width:'35%'}} className="text-black px-6 py-2 font-normal text-[12px] rounded-full transition duration-300 shadow-md" onClick={handleAdvertise}>
+		<div className="flex space-x-4 mt-6" style={{ marginLeft: "2%", marginRight:"2%" }}>
+			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(to bottom, #528EF3 0%, #FFFFFF 100%)', width:'35%'}} className="text-black px-6 py-2 font-semibold text-[12px] rounded-full transition duration-300 shadow-md" onClick={handleAdvertise}>
 				Advertise
 			</button>
-			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(to bottom, #528EF3 0%, #FFFFFF 100%)',width:'35%'}} className="text-black px-6 py-2 font-normal text-[12px] rounded-full transition duration-300 shadow-md" onClick={() => router.push('/dashboard/wallet')}>
+			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(to bottom, #528EF3 0%, #FFFFFF 100%)',width:'35%'}} className="text-black px-6 py-2 font-semibold text-[12px] rounded-full transition duration-300 shadow-md" onClick={() => router.push('/dashboard/wallet')}>
 				My Wallet
 			</button>
-			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(to bottom, #528EF3 0%, #FFFFFF 100%)',width:'35%'}} className="text-black px-6 py-2 font-normal text-[12px] rounded-full transition duration-300 shadow-md" onClick={() => router.push('/dashboard/referral')}>
+			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(to bottom, #528EF3 0%, #FFFFFF 100%)',width:'35%'}} className="text-black px-6 py-2 font-semibold text-[12px] rounded-full transition duration-300 shadow-md" onClick={() => router.push('/dashboard/referral')}>
 				Referral Program
 			</button>
 		</div>
@@ -293,33 +293,33 @@ const Dashboard = () => {
 		{/* Four Small Cards (2 rows of 2) */}
 		<div className="grid grid-cols-2 gap-4 mt-6 p-7">
 			{/* Card 1 */}
-			<div className="border border-[rgb(71,71,209)] bg-white  p-6 text-center" style={{borderRadius:'30px'}}>
+			<div className="border border-[rgb(146, 146, 244)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
 				<h3 className="font-normal text-sm text-black-700">Total Earnings</h3>
 				<p className="text-black-500 mt-2"><strong className='text-lg md:text-2xl'>
 					{toNaira(dashboardData?.totalEarnings.value ?? 0)}
 				</strong></p>
 			</div>
 			{/* Card 2 */}
-			<div className="border border-[rgb(128, 128, 247)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
+			<div className="border border-[rgb(146, 146, 244)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
 				<h3 className="font-normal text-sm text-black-700">My Balance</h3>
 				<p className="text-black-500 mt-2"><strong className='text-lg md:text-2xl'>{toNaira(dashboardData?.myBalance.value ?? 0)}</strong></p>
 			</div>
 			{/* Card 3 */}
-			<div className="border border-[rgb(128, 128, 247)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
+			<div className="border border-[rgb(146, 146, 244)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
 				<h3 className="font-normal text-sm text-black-700">Adverts Created</h3>
 				<p className="text-black-500 mt-2"><strong className='text-lg md:text-2xl'>
 					{dashboardData?.advertsCreated.value ?? 0}
 				</strong></p>
 			</div>
 			{/* Card 4 */}
-			<div className="border border-[rgb(128, 128, 247)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
+			<div className="border border-[rgb(146, 146, 244)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
 				<h3 className="font-normal text-sm text-gray-700">Tasks Completed</h3>
 				<p className="text-black-500 mt-2"><strong className='text-lg md:text-2xl'>{completedTasks + approvedTasks}</strong></p>
 			</div>
 		</div>
 	
 		<div className='border p-6 col-span-2 border-gray-200 rounded-lg '>
-		<div className="text-black font-bold py-2 px-4 pt-4 rounded text-[18px] sm:text-[12px] text-[13px]">Referral</div>
+		<div className="text-[rgb(71, 71, 209)] font-bold py-2 px-4 pt-4 rounded text-[18px] sm:text-[12px] text-[13px]">Referral</div>
 			<ReferralsTable />
 		</div>
 	
