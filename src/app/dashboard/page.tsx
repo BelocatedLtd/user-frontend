@@ -21,6 +21,7 @@ import { getTotalTasksByAllPlatforms } from '@/services/advertService'
 import { getApprovedTasks } from '@/services/taskServices';
 import { getCompletedTasks } from '@/services/taskServices';
 import { getUserTaskById } from '@/services/taskServices'
+import { IoCopySharp } from "react-icons/io5";
 
 interface PlatformTasks {
 	[key: string]: { totalTasks: number }
@@ -270,7 +271,7 @@ const Dashboard = () => {
 	
 		{/* Click Here Button (Full Width) */}
 		<div className="w-[95%] pt-5 ml-0" style={{ marginLeft: "2%" }}>
-			<button onClick={() => router.push('/dashboard/earn')} className="w-[95%] bg-blue-500 text-white py-3 font-semibold text-lg rounded-md hover:bg-blue-600 transition duration-300" style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", borderRadius:'100%', marginLeft: "2%"}}>
+			<button onClick={() => router.push('/dashboard/earn')} className="w-[95%] bg-blue-500 text-white py-3 font-semibold text-lg rounded-md hover:bg-blue-600 transition duration-300" style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", borderRadius:'100px', marginLeft: "2%"}}>
 				Click Here To
 				Perform Task and Earn
 			</button>
@@ -332,7 +333,7 @@ const Dashboard = () => {
 					ref={inputRef}
 					className='p-3 w-full border border-gray-200 rounded-lg items-center'
 				/>
-				<FaCopy className='cursor-pointer text-xl text-secondary' onClick={() => handleRefLinkCopy(inputRef?.current?.value as string)} />
+				<IoCopySharp className='cursor-pointer text-xl text-secondary' style={{backgroundColor:"rgb(71, 71, 209)" }} onClick={() => handleRefLinkCopy(inputRef?.current?.value as string)} />
 			</div>
 		</div>
 		<div className='border md:row-span-2 col-span-2 md:col-span-1 border-gray-200 rounded-lg flex'>
@@ -347,5 +348,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-
