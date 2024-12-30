@@ -247,22 +247,22 @@ const Dashboard = () => {
 		{/* Task Section */}
 		<div style={{borderTopLeftRadius:"50px", boxShadow:"5px 5px 5px rgb(153, 153, 153) inset", padding: '0 10px', marginLeft:'-10px' }} className="text-center pb-4">
 			{/* Task Count */}
-			<div className="text-[16px] sm:text-[12px] font-semibold text-gray-700 p-[30px] ">
+			<div className="text-[12px] sm:text-[12px] font-semibold text-gray-700 p-[30px] ">
 				You have {totalTasks} available tasks to complete.
 			</div>
 	
 			{/* Task Summary Box */}
 			<div className="bg-white rounded-md p-6 mt-4 font-bold" style={{backgroundColor:"rgb(212, 231, 248)", margin: '0 30px 10px 30px', textAlign:"left"}}>
 				{/* Approved and Completed Tasks */}
-				<div className="text-[15px] sm:text-[15px] font-normal text-gray-700">
+				<div className="text-[13px] sm:text-[13px] font-normal text-gray-700">
 					<strong> {approvedTasks} </strong> Approved of <strong> {completedTasks + approvedTasks} </strong> Completed Tasks
 				</div>
 				{/* Remaining Tasks */}
-				<div className="text-[15px] sm:text-[15px] font-normal text-gray-600 mt-2">
+				<div className="text-[13px] sm:text-[13px] font-normal text-gray-600 mt-2">
 					Remaining Task to Perform:  <strong> {remainingTasksToComplete} </strong>
 				</div>
 				{/* Tasks Waiting Approval */}
-				<div className="text-[15px] sm:text-[15px] font-normal text-gray-600 mt-2">
+				<div className="text-[13px] sm:text-[13px] font-normal text-gray-600 mt-2">
 					<strong> {remainingTasksToApprove} </strong> Tasks waiting Approval
 				</div>
 			</div>
@@ -270,7 +270,7 @@ const Dashboard = () => {
 	
 		{/* Click Here Button (Full Width) */}
 		<div className="w-[95%] pt-5 ml-0" style={{ marginLeft: "2%" }}>
-			<button onClick={() => router.push('/dashboard/earn')} className="w-[95%] bg-blue-500 text-white py-3 font-semibold text-lg rounded-md hover:bg-blue-600 transition duration-300" style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)"}}>
+			<button onClick={() => router.push('/dashboard/earn')} className="w-[95%] bg-blue-500 text-white py-3 font-semibold text-lg rounded-md hover:bg-blue-600 transition duration-300" style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", borderRadius:'100%', marginLeft: "2%"}}>
 				Click Here To
 				Perform Task and Earn
 			</button>
@@ -278,13 +278,13 @@ const Dashboard = () => {
 	
 		{/* Three Buttons Side by Side */}
 		<div className="flex space-x-4 mt-6">
-			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(to bottom, #528EF3 0%, #FFFFFF 100%)', width:'40%'}} className="text-black px-6 py-2 font-normal text-[14px] rounded-full transition duration-300 shadow-md" onClick={handleAdvertise}>
+			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(to bottom, #528EF3 0%, #FFFFFF 100%)', width:'35%'}} className="text-black px-6 py-2 font-normal text-[12px] rounded-full transition duration-300 shadow-md" onClick={handleAdvertise}>
 				Advertise
 			</button>
-			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(to bottom, #528EF3 0%, #FFFFFF 100%)',width:'40%'}} className="text-black px-6 py-2 font-normal text-[14px] rounded-full transition duration-300 shadow-md" onClick={() => router.push('/dashboard/wallet')}>
+			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(to bottom, #528EF3 0%, #FFFFFF 100%)',width:'35%'}} className="text-black px-6 py-2 font-normal text-[12px] rounded-full transition duration-300 shadow-md" onClick={() => router.push('/dashboard/wallet')}>
 				My Wallet
 			</button>
-			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(to bottom, #528EF3 0%, #FFFFFF 100%)',width:'40%'}} className="text-black px-6 py-2 font-normal text-[14px] rounded-full transition duration-300 shadow-md" onClick={() => router.push('/dashboard/referral')}>
+			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(to bottom, #528EF3 0%, #FFFFFF 100%)',width:'35%'}} className="text-black px-6 py-2 font-normal text-[12px] rounded-full transition duration-300 shadow-md" onClick={() => router.push('/dashboard/referral')}>
 				Referral Program
 			</button>
 		</div>
@@ -299,26 +299,26 @@ const Dashboard = () => {
 				</strong></p>
 			</div>
 			{/* Card 2 */}
-			<div className="border border-[rgb(71,71,209)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
+			<div className="border border-[rgb(128, 128, 247)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
 				<h3 className="font-normal text-sm text-black-700">My Balance</h3>
 				<p className="text-black-500 mt-2"><strong className='text-lg md:text-2xl'>{toNaira(dashboardData?.myBalance.value ?? 0)}</strong></p>
 			</div>
 			{/* Card 3 */}
-			<div className="border border-[rgb(71,71,209)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
+			<div className="border border-[rgb(128, 128, 247)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
 				<h3 className="font-normal text-sm text-black-700">Adverts Created</h3>
 				<p className="text-black-500 mt-2"><strong className='text-lg md:text-2xl'>
 					{dashboardData?.advertsCreated.value ?? 0}
 				</strong></p>
 			</div>
 			{/* Card 4 */}
-			<div className="border border-[rgb(71,71,209)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
+			<div className="border border-[rgb(128, 128, 247)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
 				<h3 className="font-normal text-sm text-gray-700">Tasks Completed</h3>
 				<p className="text-black-500 mt-2"><strong className='text-lg md:text-2xl'>{completedTasks + approvedTasks}</strong></p>
 			</div>
 		</div>
 	
 		<div className='border p-6 col-span-2 border-gray-200 rounded-lg '>
-		<div className="text-white font-bold py-2 px-4 pt-4 rounded text-[18px] sm:text-[12px] text-[13px]">Referral</div>
+		<div className="text-black font-bold py-2 px-4 pt-4 rounded text-[18px] sm:text-[12px] text-[13px]">Referral</div>
 			<ReferralsTable />
 		</div>
 	
@@ -347,3 +347,5 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+
