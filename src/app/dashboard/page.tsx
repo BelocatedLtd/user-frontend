@@ -230,20 +230,20 @@ const Dashboard = () => {
 	return (
 		<div style={{borderBottomRightRadius:"50px"}} className="container w-full min-h-screen pb-20">
 		{/* Welcome Section with Wave Shadow */}
-		<div style={{borderBottomRightRadius:"50px"}} className="relative">
+{/* 		<div style={{borderBottomRightRadius:"50px"}} className="relative">
 			<div className="flex items-center">
-				{/* Less-Than Symbol */}
-				{/* Welcome Tag */}
+				{/* Less-Than Symbol 
+				 Welcome Tag 
 				<div style={{backgroundColor:"rgb(71, 71, 209)" }} className="text-white font-bold py-2 px-4 rounded text-[18px] sm:text-[12px] text-[13px]">
 					<span className="text-white-500 text-[18px] mr-2">&lt;</span>
 					Welcome, {user?.fullname ? user?.fullname : user?.username}!
 				</div>
 			</div>
-			{/* Username */}
+			{/* Username 
 			<div style={{padding:"0px 20px 30px 20px"}} className="text-black-500 text-[12px] sm:text-[24px] font-medium">
 				@{user?.username}
 			</div>
-		</div>
+		</div> */}
 	
 		{/* Task Section */}
 		<div style={{borderTopLeftRadius:"50px", boxShadow:"5px 5px 5px rgb(153, 153, 153) inset", padding: '0 10px', marginLeft:'-10px' }} className="text-center pb-4">
