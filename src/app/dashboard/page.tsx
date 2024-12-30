@@ -232,9 +232,10 @@ const Dashboard = () => {
 			<div className="relative">
 				<div className="flex items-center">
 					{/* Less-Than Symbol */}
-					<span className="text-purple-500 text-[57px] mr-2">&lt;</span>
+					
 					{/* Welcome Tag */}
-					<div className="bg-purple-500 text-white font-bold py-2 px-4 rounded text-[57px] sm:text-[57px] text-[36px]">
+					<div className="bg-purple-500 text-white font-bold py-2 px-4 rounded text-[16px] sm:text-[12px] text-[13px]">
+					<span className="text-purple-500 text-[16px] mr-2">&lt;</span>
 						Welcome, {user?.fullname ? user?.fullname : user?.username}!
 					</div>
 				</div>
@@ -260,7 +261,7 @@ const Dashboard = () => {
 			{/* Task Section */}
 			<div className="text-center">
 				{/* Task Count */}
-				<div className="text-[28px] sm:text-[32px] font-semibold text-gray-700">
+				<div className="text-[16px] sm:text-[12px] font-semibold text-gray-700">
 					You have {totalTasks} available tasks to complete.
 				</div>
 
