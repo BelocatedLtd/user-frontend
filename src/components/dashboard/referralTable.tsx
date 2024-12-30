@@ -28,10 +28,10 @@ const ReferralsTable = () => {
 			<Table sx={{ minWidth: 350 }} aria-label='simple table'>
 				<TableHead style={{backgroundColor:"rgb(71, 71, 209)" }}>
 					<TableRow>
-						<TableCell >Email</TableCell>
-						<TableCell align='right'>Date</TableCell>
-						<TableCell align='right'>Status</TableCell>
-						<TableCell align='right'></TableCell>
+						<TableCell style={{color:"white"}}>Email</TableCell>
+						<TableCell style={{color:"white"}} align='right'>Date</TableCell>
+						<TableCell style={{color:"white"}} align='right'>Status</TableCell>
+						<TableCell style={{color:"white"}} align='right'></TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
