@@ -40,7 +40,7 @@ const Header = () => {
 
 	return (
 		<header className='container w-full px-3 border-b border-gray-200'>
-			<div className='md:ml-5 py-6 w-full flex justify-between items-center mx-auto md:px-2'>
+			<div className='md:ml-5 pt-2 w-full flex justify-between items-center mx-auto md:px-2'>
 				<div className='cursor-pointer w-full text-secondary'>
 					<div className='flex  w-full justify-between items-center'>
 						<Image
