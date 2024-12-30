@@ -10,6 +10,7 @@ import { MdMenu, MdOutlineCancel } from 'react-icons/md'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/slices/authSlice'
 import { ShowOnLogin } from '../protect/hiddenLinks'
+import { FaAngleLeft } from "react-icons/fa6";
 
 const Header = () => {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -72,9 +73,9 @@ const Header = () => {
 			<div className="flex items-center">
 				{/* Less-Than Symbol */}
 				{/* Welcome Tag */}
-				<div style={{backgroundColor:"rgb(71, 71, 209)" }} className="text-white font-bold py-2 px-4 rounded text-[18px] sm:text-[12px] text-[13px]">
-					<span className="text-white-500 text-[18px] mr-2">&lt;</span>
-					Welcome, {user?.fullname ? user?.fullname : user?.username}!
+				<div style={{backgroundColor:"rgb(71, 71, 209)" }} className="text-white font-bold py-2 px-4 pt-2 text-[13px] sm:text-[12px]">
+					<span className="text-white-500 text-[18px] mr-2"><FaAngleLeft style={{color:'white'}} /></span>
+					Welcome, {user?.fullname ? user?.fullname : user?.username}
 				</div>
 			</div>
 			{/* Username */}
