@@ -32,7 +32,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 				<Header />
 				<div
 					style={{ minHeight: '80vh' }}
-					className='flex p-1 md:p-6 mt-8 w-full'>
+					className='flex p-1 md:p-6 w-full'>
 					{children}
 				</div>
 			</SidebarLeft>
