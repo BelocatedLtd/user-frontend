@@ -68,17 +68,20 @@ const Header = () => {
 					</div>
 
 					{/* <span className='text-tertiary'>Be</span>located */}
-					<div className='flex flex-col justify-start md:hidden'>
-						<div className='flex items-center gap-1'>
-							<h1 className='md:text-lg text-gray-600 font-bold'>Welcome, </h1>
-							<h4 className='md:text-lg text-sm text-gray-600 font-medium'>
-								{user?.fullname ? user?.fullname : user?.username}
-							</h4>
-						</div>
-						<p className='text-gray-500 font-light text-sm'>
-							@{user?.username}
-						</p>
-					</div>
+					<div style={{borderBottomRightRadius:"50px"}} className="relative">
+			<div className="flex items-center">
+				{/* Less-Than Symbol */}
+				{/* Welcome Tag */}
+				<div style={{backgroundColor:"rgb(71, 71, 209)" }} className="text-white font-bold py-2 px-4 rounded text-[18px] sm:text-[12px] text-[13px]">
+					<span className="text-white-500 text-[18px] mr-2">&lt;</span>
+					Welcome, {user?.fullname ? user?.fullname : user?.username}!
+				</div>
+			</div>
+			{/* Username */}
+			<div style={{padding:"0px 20px 30px 20px"}} className="text-black-500 text-[12px] sm:text-[24px] font-medium">
+				@{user?.username}
+			</div>
+		</div>
 
 					{/* <form className='hidden md:flex'>
 						<input
