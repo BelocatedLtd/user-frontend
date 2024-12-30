@@ -333,7 +333,7 @@ const Dashboard = () => {
 					ref={inputRef}
 					className='p-3 w-full border border-gray-200 rounded-lg items-center'
 				/>
-				<IoCopySharp className='cursor-pointer text-xl text-secondary' style={{backgroundColor:"rgb(71, 71, 209)" }} onClick={() => handleRefLinkCopy(inputRef?.current?.value as string)} />
+				<IoCopySharp className='cursor-pointer text-xl text-secondary' style={{color:"rgb(71, 71, 209)" }} onClick={() => handleRefLinkCopy(inputRef?.current?.value as string)} />
 			</div>
 		</div>
 		<div className='border md:row-span-2 col-span-2 md:col-span-1 border-gray-200 rounded-lg flex'>
