@@ -239,30 +239,30 @@ const Dashboard = () => {
 				</div>
 			</div>
 			{/* Username */}
-			<div className="text-gray-500 text-[12px] sm:text-[24px] font-medium mt-2">
+			<div style={{padding:"0px 20px 30px 20px"}} className="text-black-500 text-[12px] sm:text-[24px] font-medium">
 				@{user?.username}
 			</div>
 		</div>
 	
 		{/* Task Section */}
-		<div style={{borderTopLeftRadius:"50px", boxShadow:"5px 5px 5px rgb(153, 153, 153) inset", padding: '0 10px' }} className="text-center pb-4">
+		<div style={{borderTopLeftRadius:"50px", boxShadow:"5px 5px 5px rgb(153, 153, 153) inset", padding: '0 10px', marginLeft:'-10px' }} className="text-center pb-4">
 			{/* Task Count */}
-			<div className="text-[16px] sm:text-[12px] font-semibold text-gray-700 pb-4">
+			<div className="text-[16px] sm:text-[12px] font-semibold text-gray-700 pb-[30px] ">
 				You have {totalTasks} available tasks to complete.
 			</div>
 	
 			{/* Task Summary Box */}
-			<div className="bg-white rounded-md p-6 mt-4" style={{backgroundColor:"rgb(204, 230, 255)", margin: '0 10px'}}>
+			<div className="bg-white rounded-md p-6 mt-4 font-bold" style={{backgroundColor:"rgb(212, 231, 248)", margin: '0 30px 10px 30px', textAlign:"left"}}>
 				{/* Approved and Completed Tasks */}
-				<div className="text-[20px] sm:text-[24px] font-normal text-gray-700">
+				<div className="text-[20px] sm:text-[15px] font-normal text-gray-700">
 					<strong> {approvedTasks} </strong> Approved of <strong> {completedTasks + approvedTasks} </strong> Completed Tasks
 				</div>
 				{/* Remaining Tasks */}
-				<div className="text-[18px] sm:text-[20px] font-normal text-gray-600 mt-2">
+				<div className="text-[18px] sm:text-[15px] font-normal text-gray-600 mt-2">
 					Remaining Task to Perform:  <strong> {remainingTasksToComplete} </strong>
 				</div>
 				{/* Tasks Waiting Approval */}
-				<div className="text-[18px] sm:text-[20px] font-normal text-gray-600 mt-2">
+				<div className="text-[18px] sm:text-[15px] font-normal text-gray-600 mt-2">
 					<strong> {remainingTasksToApprove} </strong> Tasks waiting Approval
 				</div>
 			</div>
@@ -270,7 +270,7 @@ const Dashboard = () => {
 	
 		{/* Click Here Button (Full Width) */}
 		<div className="w-full pt-5">
-			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)"}} onClick={() => router.push('/dashboard/earn')} className="w-full bg-blue-500 text-white py-3 font-semibold text-lg rounded-md hover:bg-blue-600 transition duration-300">
+			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", borderRadius:"100px"}} onClick={() => router.push('/dashboard/earn')} className="w-full bg-blue-500 text-white py-3 font-semibold text-lg rounded-md hover:bg-blue-600 transition duration-300">
 				Click Here To
 				Perform Task and Earn
 			</button>
