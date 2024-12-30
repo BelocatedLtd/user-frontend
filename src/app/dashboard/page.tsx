@@ -227,7 +227,7 @@ const Dashboard = () => {
 			router.push('/dashboard/advertise')
 	}
 	return (
-		<div className="p-4 space-y-6">
+		<div className="container w-full min-h-screen pb-20">
 			{/* Welcome Section with Wave Shadow */}
 			<div className="relative">
 				<div className="flex items-center">
@@ -266,7 +266,7 @@ const Dashboard = () => {
 				</div>
 
 				{/* Task Summary Box */}
-				<div className="bg-white shadow-lg shadow-blue-500/50 rounded-md p-6 mt-4">
+				<div className="bg-white shadow-2xl shadow-blue-600/50 rounded-md p-6 mt-4">
 					{/* Approved and Completed Tasks */}
 					<div className="text-[20px] sm:text-[24px] font-medium text-gray-700">
 						<strong> {approvedTasks} </strong> Approved of <strong> {completedTasks + approvedTasks} </strong> Completed Tasks
@@ -284,7 +284,7 @@ const Dashboard = () => {
 
 			{/* Click Here Button (Full Width) */}
 			<div className="w-full">
-				<button
+				<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)"}}
 					onClick={() => router.push('/dashboard/earn')} className="w-full bg-blue-500 text-white py-3 font-semibold text-lg rounded-md hover:bg-blue-600 transition duration-300">
 					Click Here To
 					Perform Task and Earn
@@ -293,15 +293,15 @@ const Dashboard = () => {
 
 			{/* Three Buttons Side by Side */}
 			<div className="flex space-x-4 mt-6">
-				<button className="w-1/3 bg-green-500 text-white py-3 font-semibold text-lg rounded-md hover:bg-green-600 transition duration-300"
+				<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)"}} className="w-1/3 text-white py-3 font-semibold text-lg rounded-md transition duration-300"
 					onClick={handleAdvertise}>
-					Button 1
+					Advertise
 				</button>
-				<button className="w-1/3 bg-yellow-500 text-white py-3 font-semibold text-lg rounded-md hover:bg-yellow-600 transition duration-300"
+				<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)"}} className="w-1/3 text-white py-3 font-semibold text-lg rounded-md transition duration-300"
 					onClick={() => router.push('/dashboard/wallet')}>
 					My Wallet
 				</button>
-				<button className="w-1/3 bg-red-500 text-white py-3 font-semibold text-lg rounded-md hover:bg-red-600 transition duration-300"
+				<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)"}} className="w-1/3 text-white py-3 font-semibold text-lg rounded-md transition duration-300"
 					onClick={() => router.push('/dashboard/referral')}>
 					Referral Program
 				</button>
