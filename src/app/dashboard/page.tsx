@@ -246,14 +246,14 @@ const Dashboard = () => {
 		</div> */}
 	
 		{/* Task Section */}
-		<div style={{padding: '0 10px', marginLeft:'-10px'}} className="text-center pb-4">
+		<div style={{padding: '0 10px', marginLeft:'-10px'}} className="text-center pb-2">
 			{/* Task Count */}
 			<div className="text-[12px] sm:text-[12px] font-semibold text-gray-700 p-[40px] ">
 				You have {totalTasks} available tasks to complete.
 			</div>
 	
 			{/* Task Summary Box */}
-			<div className="bg-white rounded-md p-6 mt-4 font-bold" style={{backgroundColor:"rgb(212, 231, 248)", margin: '0 30px 10px 30px', textAlign:"left"}}>
+			<div className="bg-white rounded-md p-6 mt-2 font-bold" style={{backgroundColor:"rgb(212, 231, 248)", margin: '0 30px 10px 30px', textAlign:"left"}}>
 				{/* Approved and Completed Tasks */}
 				<div className="text-[13px] sm:text-[13px] font-normal text-gray-700">
 					<strong> {approvedTasks} </strong> Approved of <strong> {completedTasks + approvedTasks} </strong> Completed Tasks
