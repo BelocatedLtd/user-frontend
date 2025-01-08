@@ -253,7 +253,7 @@ const Dashboard = () => {
 			</div>
 	
 			{/* Task Summary Box */}
-			<div className="bg-white rounded-md p-6 mt-2 font-bold" style={{backgroundColor:"rgb(212, 231, 248)", margin: '0 30px 10px 30px', textAlign:"left"}}>
+			<div className="bg-white rounded-md p-6 mt-2 font-bold" style={{backgroundColor:"#e2ecf8", margin: '0 30px 10px 30px', textAlign:"left"}}>
 				{/* Approved and Completed Tasks */}
 				<div className="text-[13px] sm:text-[13px] font-normal text-gray-700">
 					<strong> {approvedTasks} </strong> Approved of <strong> {completedTasks + approvedTasks} </strong> Completed Tasks
@@ -271,7 +271,7 @@ const Dashboard = () => {
 	
 		{/* Click Here Button (Full Width) */}
 		<div className="w-[95%] pt-5 ml-0" style={{ marginLeft: "2%" }}>
-			<button onClick={() => router.push('/dashboard/earn')} className="w-[95%] bg-blue-500 text-white py-3 font-normal text-sm rounded-md hover:bg-blue-600 transition duration-300" style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", borderRadius:'100px', marginLeft: "2%"}}>
+			<button onClick={() => router.push('/dashboard/earn')} className="w-[95%] bg-[#4b99c1] text-white py-3 font-normal text-sm rounded-md hover:bg-blue-600 transition duration-300" style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", borderRadius:'100px', marginLeft: "2%"}}>
 				Click Here To
 				Perform Task and Earn
 			</button>
@@ -293,7 +293,7 @@ const Dashboard = () => {
 		{/* Four Small Cards (2 rows of 2) */}
 		<div className="grid grid-cols-2 gap-4 mt-6 p-7">
 			{/* Card 1 */}
-			<div className="border border-[rgb(146, 146, 244)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
+			<div className="border border-[#1ea1db] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
 				<h3 className="font-normal text-sm text-black-700">Total Earnings</h3>
 				<p className="text-black-500 mt-2"><strong className='text-lg md:text-2xl'>
 					{toNaira(dashboardData?.totalEarnings.value ?? 0)}
@@ -319,7 +319,7 @@ const Dashboard = () => {
 		</div>
 	
 		<div className='border p-6 col-span-2 border-gray-200 rounded-lg '>
-		<div className="text-[rgb(71, 71, 209)] font-bold py-2 px-4 pt-4 rounded text-[18px] sm:text-[12px] text-[13px]">Referral</div>
+		<div className="text-[#4b55c1] font-bold py-2 px-4 pt-4 rounded text-[18px] sm:text-[12px] text-[13px]">Referral</div>
 			<ReferralsTable />
 		</div>
 	
@@ -331,7 +331,7 @@ const Dashboard = () => {
 					value={refLink}
 					readOnly
 					ref={inputRef}
-					className='p-3 w-full border border-gray-200 rounded-lg items-center'
+					className='p-3 w-full border bg-[#e2ecf8] rounded-lg items-center'
 				/>
 				<IoCopySharp className='cursor-pointer text-xl text-secondary' style={{color:"rgb(71, 71, 209)" }} onClick={() => handleRefLinkCopy(inputRef?.current?.value as string)} />
 			</div>
