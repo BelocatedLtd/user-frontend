@@ -248,7 +248,7 @@ const Dashboard = () => {
 		{/* Task Section */}
 		<div style={{padding: '0 10px', marginLeft:'-10px'}} className="text-center pb-2">
 			{/* Task Count */}
-			<div className="text-[12px] sm:text-[12px] font-semibold text-gray-700 p-[40px] ">
+			<div className="text-[12px] sm:text-[12px] font-semibold text-gray-700 p-[20px] ">
 				You have {totalTasks} available tasks to complete.
 			</div>
 	
