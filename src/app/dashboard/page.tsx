@@ -318,12 +318,12 @@ const Dashboard = () => {
 			</div>
 		</div>
 	
-		<div className='border p-6 col-span-2 border-gray-200 rounded-lg '>
+		<div className='p-6 col-span-2 border-gray-200 rounded-lg '>
 		<div className="text-[#4b55c1] font-bold py-2 px-4 pt-4 rounded text-[18px] sm:text-[12px] text-[13px]">Referral</div>
 			<ReferralsTable />
 		</div>
 	
-		<div className='rounded-lg p-6 col-span-2 md:col-span-1 border border-gray-300 flex flex-col gap-2 md:gap-0'>
+		<div className='rounded-lg p-6 col-span-2 md:col-span-1 border-gray-300 flex flex-col gap-2 md:gap-0'>
 			<label className=''>Referral Link:</label>
 			<div className='flex items-center gap-2 mt-2 w-full'>
 				<input
