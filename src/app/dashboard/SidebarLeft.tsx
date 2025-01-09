@@ -10,6 +10,8 @@ import { RiHome5Fill, RiMoneyDollarBoxFill } from 'react-icons/ri'
 import { SiGoogleads, SiTodoist } from 'react-icons/si'
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_USER, selectUser } from '../../redux/slices/authSlice'
+import spotify from '@/assets/animated icons/spotify.svg'
+import Image, { StaticImageData } from 'next/image'
 import { getUser } from '../../services/authServices'
 import SidebarItems from './SidebarItems'
 
@@ -19,6 +21,8 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 	const user = useSelector(selectUser)
 	const [isOpen, setIsOpen] = useState(true)
 	const toggleSidebar = () => setIsOpen(!isOpen)
+	const [icon, setIcon] = useState<StaticImageData>()
+	
 
 	async function getUserData() {
 		if (!user?.email) {
@@ -34,7 +38,7 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 	const menu = [
 		{
 			title: 'Dashboard',
-			icon: <RiHome5Fill className='md:mr-2 text-[15px] md:text-[24px]' />,
+			icon: setIcon(spotify),
 			path: `/dashboard`,
 		},
 		{
