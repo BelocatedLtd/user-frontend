@@ -91,11 +91,11 @@ export default function RootLayout({
               onClick={openChat}
               style={{
                 position: 'fixed',
-                bottom: '50px',
+                bottom: '70px',
                 right: '20px',
                 padding: '10px 20px',
-                backgroundColor: '#1F9FDA',
-                color: 'white',
+                backgroundColor: 'white',
+                color: 'blue',
                 border: 'none',
                 borderRadius: '50px',
                 cursor: 'pointer',
