@@ -11,6 +11,10 @@ import { SiGoogleads, SiTodoist } from 'react-icons/si'
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_USER, selectUser } from '../../redux/slices/authSlice'
 import spotify from '@/assets/animated icons/spotify.svg'
+import { FcTodoList } from "react-icons/fc";
+import { RiMegaphoneFill } from "react-icons/ri";
+import { IoSettingsSharp } from "react-icons/io5";
+import { FaUser } from "react-icons/fa";
 import Image, { StaticImageData } from 'next/image'
 import { getUser } from '../../services/authServices'
 import SidebarItems from './SidebarItems'
@@ -38,17 +42,17 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 	const menu = [
 		{
 			title: 'Dashboard',
-			icon: setIcon(spotify),
+			icon: <RiHome5Fill className='md:mr-2 text-[15px] md:text-[24px]' />,
 			path: `/dashboard`,
 		},
 		{
 			title: 'Campaigns',
-			icon: <SiGoogleads className='md:mr-2 text-[15px] md:text-[24px]' />,
+			icon: <RiMegaphoneFill className='md:mr-2 text-[15px] md:text-[24px]' />,
 			path: '/dashboard/campaign-stats',
 		},
 		{
 			title: 'Tasks',
-			icon: <SiTodoist className='text-[15px] md:text-[24px] md:mr-2 ' />,
+			icon: <FcTodoList className='text-[15px] md:text-[24px] md:mr-2 ' />,
 			path: `/dashboard/tasks`,
 			showBadge: true,
 		},
@@ -67,13 +71,13 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 		{
 			title: 'Contact',
 			icon: (
-				<MdOutlineSupportAgent className='md:mr-2 text-[15px] md:text-[30px]' />
+				<FaUser className='md:mr-2 text-[15px] md:text-[30px]' />
 			),
 			path: '/dashboard/contact-support',
 		},
 		{
 			title: 'Settings',
-			icon: <IoMdSettings className='md:mr-2 text-[15px] md:text-[30px]' />,
+			icon: <IoSettingsSharp className='md:mr-2 text-[15px] md:text-[30px]' />,
 			path: '/dashboard/settings/edit-profile',
 		},
 	]
