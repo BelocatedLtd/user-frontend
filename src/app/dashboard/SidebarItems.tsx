@@ -77,7 +77,7 @@ const handleBadgeClick = () => {
 				</div>
 				{/* Title */}
 				<div
-					className={`text-xs text-gray-500 mt-1 text-center ${
+					className={`text-xs text-white-500 mt-1 text-center ${
 						!isMobile && !isOpen ? 'hidden' : ''
 					}`}
 				>
