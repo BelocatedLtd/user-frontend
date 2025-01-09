@@ -65,7 +65,31 @@ export default function RootLayout({
 
   return (
     <html lang='en' className={`font-sans`}>
-      <head>{/* Add your head content here */}</head>
+      <head>{/* Add your head content here */}
+
+	       <meta name="title" content="BeLocated.ng - Earn Money by Completing Social Media Tasks" />
+  <meta name="description" content="BeLocated.ng offers an easy way to earn money by completing social media tasks such as following, posting, and commenting. Start earning today!" />
+  <meta name="keywords" content="earn money, social media tasks, follow, post, comment, BeLocated.ng, paid tasks, advertising, influencer marketing" />
+  
+  <!-- Open Graph Meta Tags for Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="BeLocated.ng - Earn Money by Completing Social Media Tasks" />
+  <meta property="og:description" content="BeLocated.ng offers an easy way to earn money by completing social media tasks such as following, posting, and commenting. Start earning today!" />
+  <meta property="og:image" content="/path/to/your/image.jpg" /> <!-- Provide a link to an image for social media sharing -->
+  <meta property="og:url" content="https://www.belocated.ng" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BeLocated.ng - Earn Money by Completing Social Media Tasks" />
+  <meta name="twitter:description" content="BeLocated.ng offers an easy way to earn money by completing social media tasks such as following, posting, and commenting. Start earning today!" />
+  <meta name="twitter:image" content="/path/to/your/image.jpg" />
+
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+      </head>
+
 
       <body>
         <Suspense>
