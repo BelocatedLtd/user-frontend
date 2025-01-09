@@ -271,7 +271,7 @@ const Dashboard = () => {
 	
 		{/* Click Here Button (Full Width) */}
 		<div className="w-[91%] pt-3 ml-0" style={{ marginLeft: "7%" }}>
-			<button onClick={() => router.push('/dashboard/earn')} className="w-[95%] text-white py-3 font-normal text-sm rounded-md hover:bg-blue-600 transition duration-300" style={{background:'linear-gradient(#4b99c1, #4b55c1)' borderRadius:'100px', marginLeft: "2%"}}>
+			<button onClick={() => router.push('/dashboard/earn')} className="w-[95%] text-white py-3 font-normal text-sm rounded-md hover:bg-blue-600 transition duration-300" style={{background:'linear-gradient(#4b99c1, #4b55c1)' , borderRadius:'100px', marginLeft: "2%"}}>
 				Click Here To
 				Perform Task and Earn
 			</button>
