@@ -246,7 +246,7 @@ const Dashboard = () => {
 		</div> */}
 	
 		{/* Task Section */}
-		<div style={{padding: '0 10px', marginLeft:'-10px'}} className="text-center pb-2">
+		<div style={{padding: '0 10px'}} className="text-center pb-2">
 			{/* Task Count */}
 			<div className="text-[12px] sm:text-[12px] font-semibold text-gray-700 p-[20px] ">
 				You have {totalTasks} available tasks to complete.
@@ -270,28 +270,28 @@ const Dashboard = () => {
 		</div>
 	
 		{/* Click Here Button (Full Width) */}
-		<div className="w-[95%] pt-5 ml-0" style={{ marginLeft: "2%" }}>
-			<button onClick={() => router.push('/dashboard/earn')} className="w-[95%] bg-[#4b99c1] text-white py-3 font-normal text-sm rounded-md hover:bg-blue-600 transition duration-300" style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", borderRadius:'100px', marginLeft: "2%"}}>
+		<div className="w-[91%] pt-3 ml-0" style={{ marginLeft: "7%" }}>
+			<button onClick={() => router.push('/dashboard/earn')} className="w-[95%] text-white py-3 font-normal text-sm rounded-md hover:bg-blue-600 transition duration-300" style={{background:'linear-gradient(#4b99c1, #4b55c1)' borderRadius:'100px', marginLeft: "2%"}}>
 				Click Here To
 				Perform Task and Earn
 			</button>
 		</div>
 	
 		{/* Three Buttons Side by Side */}
-		<div className="flex space-x-4 mt-6" style={{ marginLeft: "2%", marginRight:"2%" }}>
-			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(to bottom, #528EF3 0%, #FFFFFF 100%)', width:'35%'}} className="text-black px-6 py-2 font-semibold text-[12px] rounded-full transition duration-300 shadow-md" onClick={handleAdvertise}>
+		<div className="flex space-x-4" style={{ marginLeft: "2%", marginRight:"2%", padding:'20px'}}>
+			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(#1ea1db, #ffff)', width:'35%'}} className="text-black px-6 py-2 font-semibold text-[12px] rounded-full transition duration-300 shadow-md" onClick={handleAdvertise}>
 				Advertise
 			</button>
-			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(to bottom, #528EF3 0%, #FFFFFF 100%)',width:'35%'}} className="text-black px-6 py-2 font-semibold text-[12px] rounded-full transition duration-300 shadow-md" onClick={() => router.push('/dashboard/wallet')}>
+			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(#1ea1db, #ffff)',width:'35%'}} className="text-black px-6 py-2 font-semibold text-[12px] rounded-full transition duration-300 shadow-md" onClick={() => router.push('/dashboard/wallet')}>
 				My Wallet
 			</button>
-			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(to bottom, #528EF3 0%, #FFFFFF 100%)',width:'35%'}} className="text-black px-6 py-2 font-semibold text-[12px] rounded-full transition duration-300 shadow-md" onClick={() => router.push('/dashboard/referral')}>
+			<button style={{boxShadow:"0px 8px 8px 0px rgba(113, 199, 239, 0.8)", background:'linear-gradient(#1ea1db, #ffff)',width:'35%'}} className="text-black px-6 py-2 font-semibold text-[12px] rounded-full transition duration-300 shadow-md" onClick={() => router.push('/dashboard/referral')}>
 				Referral Program
 			</button>
 		</div>
 	
 		{/* Four Small Cards (2 rows of 2) */}
-		<div className="grid grid-cols-2 gap-4 mt-6 p-7">
+		<div className="grid grid-cols-2 gap-4" style={{paddingLeft:'30px', paddingRight:'30px', paddingTop:'10px'}}>
 			{/* Card 1 */}
 			<div className="border border-[#1ea1db] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
 				<h3 className="font-normal text-sm text-black-700">Total Earnings</h3>
@@ -300,19 +300,19 @@ const Dashboard = () => {
 				</strong></p>
 			</div>
 			{/* Card 2 */}
-			<div className="border border-[rgb(146, 146, 244)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
+			<div className="border border-[#1ea1db] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
 				<h3 className="font-normal text-sm text-black-700">My Balance</h3>
 				<p className="text-black-500 mt-2"><strong className='text-lg md:text-2xl'>{toNaira(dashboardData?.myBalance.value ?? 0)}</strong></p>
 			</div>
 			{/* Card 3 */}
-			<div className="border border-[rgb(146, 146, 244)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
+			<div className="border border-[#1ea1db] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
 				<h3 className="font-normal text-sm text-black-700">Adverts Created</h3>
 				<p className="text-black-500 mt-2"><strong className='text-lg md:text-2xl'>
 					{dashboardData?.advertsCreated.value ?? 0}
 				</strong></p>
 			</div>
 			{/* Card 4 */}
-			<div className="border border-[rgb(146, 146, 244)] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
+			<div className="border border-[#1ea1db] bg-white p-6 text-center" style={{borderRadius:'30px'}}>
 				<h3 className="font-normal text-sm text-gray-700">Tasks Completed</h3>
 				<p className="text-black-500 mt-2"><strong className='text-lg md:text-2xl'>{completedTasks + approvedTasks}</strong></p>
 			</div>
