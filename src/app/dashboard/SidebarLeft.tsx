@@ -11,7 +11,7 @@ import { SiGoogleads, SiTodoist } from 'react-icons/si'
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_USER, selectUser } from '../../redux/slices/authSlice'
 import spotify from '@/assets/animated icons/spotify.svg'
-import { FcTodoList } from "react-icons/fc";
+import { FaTasks } from "react-icons/fa";
 import { RiMegaphoneFill } from "react-icons/ri";
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
@@ -52,7 +52,7 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 		},
 		{
 			title: 'Tasks',
-			icon: <FcTodoList className='text-[15px] md:text-[24px] md:mr-2' style={{color:'white'}} />,
+			icon: <FaTasks className='text-[15px] md:text-[24px] md:mr-2' style={{color:'white'}} />,
 			path: `/dashboard/tasks`,
 			showBadge: true,
 		},
