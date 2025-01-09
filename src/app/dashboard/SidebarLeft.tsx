@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation'
 import { ReactNode, useEffect, useState } from 'react'
 import { BiMenuAltRight } from 'react-icons/bi'
-import { FaAdversal, FaHome, FaTasks, FaTrophy, FaUsers } from 'react-icons/fa'
+import { FaAdversal, FaHome, FaTrophy, FaUsers } from 'react-icons/fa'
 import { GrSettingsOption, GrTransaction } from 'react-icons/gr'
 import { IoMdSettings } from 'react-icons/io'
 import { IoTrophyOutline } from 'react-icons/io5'
