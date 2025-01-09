@@ -115,13 +115,13 @@ button {
 }
 
 .nav__items a:hover {
-	color: #1f9fda;
+	color: #0474a87d;
 	padding: 0.3rem 1rem;
 	transition: 1s;
 }
 
 .nav__items a:active {
-	border-color: #1f9fda;
+	border-color:#0474a87d;
 	padding: 0.3rem 1rem;
 	transition: 1s;
 }
