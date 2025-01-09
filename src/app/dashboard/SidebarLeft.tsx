@@ -179,7 +179,11 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 
 			{/* Mobile footer menu */}
 			{/* Mobile footer menu */}
-<div className='fixed bottom-0 sm:bottom-5 sm:shadow-lg sm:shadow-neutral-500/30 hover:shadow-md left-0 duration-300 border-t sm:border z-10 w-full h-16 sm:max-w-md sm:rounded-xl inset-x-0 mx-auto bg-white'>
+<div className='fixed bottom-0 sm:bottom-5 sm:shadow-lg sm:shadow-neutral-500/30 hover:shadow-md left-0 duration-300 border-t sm:border z-10 w-full h-16 sm:max-w-md sm:rounded-xl inset-x-0 mx-auto bg-white' style={{boxShadow: 'rgb(153, 153, 153) 0px 0px 5px inset',
+    paddingTop: '10px',
+    height: '90px',
+    borderTopLeftRadius: '100px',
+    backgroundColor: '#13a2df' }}>
   <div className='flex justify-around items-center h-full'>
     {user?.accountType === 'User' && (
       <>
