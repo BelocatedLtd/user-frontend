@@ -65,75 +65,71 @@ export default function RootLayout({
 
   return (
     <html lang='en' className={`font-sans`}>
-      <head>{/* Add your head content here */}
+      <head>{/* Add your head content here */}   <meta name="title" content="BeLocated.ng - Earn Money by Completing Social Media Tasks" />
+        <meta name="description" content="BeLocated.ng offers an easy way to earn money by completing social media tasks such as following, posting, and commenting. Start earning today!" />
+        <meta name="keywords" content="earn money, social media tasks, follow, post, comment, BeLocated.ng, paid tasks, advertising, influencer marketing" />
 
-	       <meta name="title" content="BeLocated.ng - Earn Money by Completing Social Media Tasks" />
-  <meta name="description" content="BeLocated.ng offers an easy way to earn money by completing social media tasks such as following, posting, and commenting. Start earning today!" />
-  <meta name="keywords" content="earn money, social media tasks, follow, post, comment, BeLocated.ng, paid tasks, advertising, influencer marketing" />
-  
-  <!-- Open Graph Meta Tags for Social Media -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="BeLocated.ng - Earn Money by Completing Social Media Tasks" />
-  <meta property="og:description" content="BeLocated.ng offers an easy way to earn money by completing social media tasks such as following, posting, and commenting. Start earning today!" />
-  <meta property="og:image" content="/path/to/your/image.jpg" /> <!-- Provide a link to an image for social media sharing -->
-  <meta property="og:url" content="https://www.belocated.ng" />
+      
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="BeLocated.ng - Earn Money by Completing Social Media Tasks" />
+        <meta property="og:description" content="BeLocated.ng offers an easy way to earn money by completing social media tasks such as following, posting, and commenting. Start earning today!" />
+        <meta property="og:image" content="/path/to/your/image.jpg" /> 
+        <meta property="og:url" content="https://www.belocated.ng" />
 
-  <!-- Twitter Card Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="BeLocated.ng - Earn Money by Completing Social Media Tasks" />
-  <meta name="twitter:description" content="BeLocated.ng offers an easy way to earn money by completing social media tasks such as following, posting, and commenting. Start earning today!" />
-  <meta name="twitter:image" content="/path/to/your/image.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="BeLocated.ng - Earn Money by Completing Social Media Tasks" />
+        <meta name="twitter:description" content="BeLocated.ng offers an easy way to earn money by completing social media tasks such as following, posting, and commenting. Start earning today!" />
+        <meta name="twitter:image" content="/path/to/your/image.jpg" />
 
-      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-      </head>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+            <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+              <link rel="manifest" href="/site.webmanifest"></link></head>
 
 
-      <body>
-        <Suspense>
-          <ReduxProvider>
-            {shouldRender && <Header />}
-            {children}
-            {shouldRender && <CallToAction />}
-            {shouldRender && <SubFooter />}
-            {shouldRender && <Footer />}
-          </ReduxProvider>
+              <body>
+                <Suspense>
+                  <ReduxProvider>
+                    {shouldRender && <Header />}
+                    {children}
+                    {shouldRender && <CallToAction />}
+                    {shouldRender && <SubFooter />}
+                    {shouldRender && <Footer />}
+                  </ReduxProvider>
 
-          <ProgressBar
-            height='4px'
-            color='#1F9FDA'
-            options={{ showSpinner: true }}
-            shallowRouting
-          />
-          <Analytics />
-          <SpeedInsights />
+                  <ProgressBar
+                    height='4px'
+                    color='#1F9FDA'
+                    options={{ showSpinner: true }}
+                    shallowRouting
+                  />
+                  <Analytics />
+                  <SpeedInsights />
 
-          {tawkLoaded && (
-            <div
-              onClick={openChat}
-              style={{
-                position: 'fixed',
-                bottom: '70px',
-                right: '20px',
-                padding: '10px 20px',
-                backgroundColor: 'white',
-                color: 'blue',
-                border: 'none',
-                borderRadius: '50px',
-                cursor: 'pointer',
-              }}
-            >
-               <FiMessageCircle className='text-2xl' />
-            </div>
-          )}
+                  {tawkLoaded && (
+                    <div
+                      onClick={openChat}
+                      style={{
+                        position: 'fixed',
+                        bottom: '70px',
+                        right: '20px',
+                        padding: '10px 20px',
+                        backgroundColor: 'white',
+                        color: 'blue',
+                        border: 'none',
+                        borderRadius: '50px',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <FiMessageCircle className='text-2xl' />
+                    </div>
+                  )}
 
-          <Script
-            id="tawk-script"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `
+                  <Script
+                    id="tawk-script"
+                    strategy="afterInteractive"
+                    dangerouslySetInnerHTML={{
+                      __html: `
                 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
                 Tawk_API.customStyle = {
         visibility : {
@@ -165,12 +161,12 @@ export default function RootLayout({
                   s0.parentNode.insertBefore(s1,s0);
                 })();
               `,
-            }}
-          />
+                    }}
+                  />
 
-          <Toaster />
-        </Suspense>
-      </body>
-    </html>
-  )
+                  <Toaster />
+                </Suspense>
+              </body>
+            </html>
+            )
 }
