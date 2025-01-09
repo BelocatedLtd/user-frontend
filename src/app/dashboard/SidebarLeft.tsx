@@ -42,42 +42,42 @@ const SidebarLeft = ({ children }: { children: ReactNode }) => {
 	const menu = [
 		{
 			title: 'Dashboard',
-			icon: <RiHome5Fill className='md:mr-2 text-[15px] md:text-[24px]' />,
+			icon: <RiHome5Fill className='md:mr-2 text-[15px] md:text-[24px]' style={{color:'white'}} />,
 			path: `/dashboard`,
 		},
 		{
 			title: 'Campaigns',
-			icon: <RiMegaphoneFill className='md:mr-2 text-[15px] md:text-[24px]' />,
+			icon: <RiMegaphoneFill className='md:mr-2 text-[15px] md:text-[24px]' style={{color:'white'}} />,
 			path: '/dashboard/campaign-stats',
 		},
 		{
 			title: 'Tasks',
-			icon: <FcTodoList className='text-[15px] md:text-[24px] md:mr-2 ' />,
+			icon: <FcTodoList className='text-[15px] md:text-[24px] md:mr-2' style={{color:'white'}} />,
 			path: `/dashboard/tasks`,
 			showBadge: true,
 		},
 		{
 			title: 'Wallet',
 			icon: (
-				<RiMoneyDollarBoxFill className='text-[15px] md:text-[28px] md:mr-2 ' />
+				<RiMoneyDollarBoxFill className='text-[15px] md:text-[28px] md:mr-2' style={{color:'white'}} />
 			),
 			path: '/dashboard/wallet',
 		},
 		{
 			title: 'Referral',
-			icon: <FaTrophy className='md:mr-2 text-[15px] md:text-[30px]' />,
+			icon: <FaTrophy className='md:mr-2 text-[15px] md:text-[30px]' style={{color:'white'}}/>,
 			path: `/dashboard/referral`,
 		},
 		{
 			title: 'Contact',
 			icon: (
-				<FaUser className='md:mr-2 text-[15px] md:text-[30px]' />
+				<FaUser className='md:mr-2 text-[15px] md:text-[30px]' style={{color:'white'}} />
 			),
 			path: '/dashboard/contact-support',
 		},
 		{
 			title: 'Settings',
-			icon: <IoSettingsSharp className='md:mr-2 text-[15px] md:text-[30px]' />,
+			icon: <IoSettingsSharp className='md:mr-2 text-[15px] md:text-[30px]' style={{color:'white'}} />,
 			path: '/dashboard/settings/edit-profile',
 		},
 	]
