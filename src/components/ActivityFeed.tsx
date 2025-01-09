@@ -70,7 +70,7 @@ const ActivityFeed = () => {
 							key={index}
 							className='grid grid-cols-6 p-4 border-gray-100 '>
 							<div className=''>
-							<RiMegaphoneFill style={{color:"#13a2df", fontSize:"40px"}}/>
+							<RiMegaphoneFill style={{color:"#13a2df", fontSize:"40px", width:"50px"}}/>
 							</div>
 							<div className='flex ml-3 col-span-5  flex-col'>
 								<small>{formatDistanceToNow(new Date(item?.createdAt))}</small>
