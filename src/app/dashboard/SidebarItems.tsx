@@ -56,6 +56,7 @@ const handleBadgeClick = () => {
 				})}
 				style={{
 					padding: '16px 6px',
+					
 				}}
 			>
 				{/* Icon */}
