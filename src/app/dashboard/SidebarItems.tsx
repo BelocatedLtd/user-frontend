@@ -3,13 +3,17 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { io } from 'socket.io-client';
 import { BACKEND_URL } from '@/utils/globalConfig';
+import Image, { StaticImageData } from 'next/image'
+
 import { cn } from '../../../helpers';
+
+const [icon, setIcon] = useState<StaticImageData>()
 
 type TSidebarItems = {
 	item: {
 		path: string;
 		title: string;
-		icon?: React.ReactNode;
+		icon?: React.ReactNode | ReturnType<typeof setIcon>; 
 		showBadge?: boolean; // Flag to enable badge
 	};
 	isOpen: boolean;
