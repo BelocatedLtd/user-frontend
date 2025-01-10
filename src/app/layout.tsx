@@ -65,7 +65,9 @@ export default function RootLayout({
 
   return (
     <html lang='en' className={`font-sans`}>
-      <head>{/* Add your head content here */}   <meta name="title" content="BeLocated.ng - Earn Money by Completing Social Media Tasks" />
+      <head>{/* Add your head content here */}   
+	      <title>BELOCATED</title>
+	      <meta name="title" content="BeLocated.ng - Earn Money by Completing Social Media Tasks" />
         <meta name="description" content="BeLocated.ng offers an easy way to earn money by completing social media tasks such as following, posting, and commenting. Start earning today!" />
         <meta name="keywords" content="earn money, social media tasks, follow, post, comment, BeLocated.ng, paid tasks, advertising, influencer marketing" />
 
@@ -85,7 +87,7 @@ export default function RootLayout({
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
             <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
               <link rel="manifest" href="/site.webmanifest" />
-	       <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	       <link rel="shortcut icon" sizes="180x180" href="/favicon.ico" type="image/x-icon" />
       </head>
 
 
