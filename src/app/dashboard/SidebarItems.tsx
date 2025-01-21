@@ -4,6 +4,11 @@ import { usePathname } from 'next/navigation';
 import { io } from 'socket.io-client';
 import { BACKEND_URL } from '@/utils/globalConfig';
 
+
+import { useSelector } from 'react-redux';
+import { selectUser} from '@/redux/slices/authSlice';
+
+
 import { cn } from '../../../helpers';
 
 type TSidebarItems = {
@@ -21,13 +26,16 @@ const socket = io(`${BACKEND_URL}`);
 
 const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 	const pathname = usePathname();
+
+	const user = useSelector(selectUser)
+	const userId = user?.id
 	const isActive = pathname === item.path;
 
 	const notificationKey = `taskBadgeAcknowledged_${item.path}`; // Unique key per item path
 	const [showBadge, setShowBadge] = useState(false);
 
 	// Fetch user ID (assuming it is stored in localStorage after login)
-	const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
+	//const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
 	
 
 	useEffect(() => {
