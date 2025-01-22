@@ -48,31 +48,30 @@ const TransactionList = () => {
 			name: 'Status',
 			selector: (row: { status: any }) => row.status,
 			sortable: true,
-		},
-		{
-			name: 'View Proof',
-			cell: (row: { trxType: any, proofOfWorkMediaURL?: { secure_url: string }[] }) =>
-				row.trxType === 'bank transfer' ? (
-					<div className="mt-2">
-						<label>Proof:</label>{' '}
-						{row.proofOfWorkMediaURL && row.proofOfWorkMediaURL.length > 0 ? (
-							<span
-								onClick={() =>
-									handleProofClick(row.proofOfWorkMediaURL[0].secure_url)
-								}
-								className="text-blue-500 hover:text-red-500 cursor-pointer"
-							>
-								View Proof
-							</span>
-						) : (
-							'N/A'
-						)}
-					</div>
-				) : (
-					'N/A'
-				),
-		},
-	]
+		}, 
+  {
+    name: 'View Proof',
+    cell: (row: { trxType: string, proofOfWorkMediaURL?: { secure_url: string }[] }) =>
+      row.trxType === 'bank transfer' ? (
+        <div className="mt-2">
+          <label>Proof:</label>{' '}
+          {row.proofOfWorkMediaURL && row.proofOfWorkMediaURL[0]?.secure_url ? (
+            <span
+              onClick={() => handleProofClick(row.proofOfWorkMediaURL[0].secure_url)}
+              className="text-blue-500 hover:text-red-500 cursor-pointer"
+            >
+              View Proof
+            </span>
+          ) : (
+            'N/A'
+          )}
+        </div>
+      ) : (
+        'N/A'
+      ),
+  },
+];
+
 
 	const customStyles = {
 		headCells: {
