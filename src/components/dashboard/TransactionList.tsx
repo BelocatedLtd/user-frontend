@@ -55,9 +55,9 @@ const TransactionList = () => {
       row.trxType === 'bank transfer' ? (
         <div className="mt-2">
           <label>Proof:</label>{' '}
-          {row.proofOfWorkMediaURL && row.proofOfWorkMediaURL[0]?.secure_url ? (
+          {row?.proofOfWorkMediaURL && row?.proofOfWorkMediaURL[0]?.secure_url ? (
             <span
-              onClick={() => handleProofClick(row.proofOfWorkMediaURL[0].secure_url)}
+              onClick={() => handleProofClick(row?.proofOfWorkMediaURL[0]?.secure_url)}
               className="text-blue-500 hover:text-red-500 cursor-pointer"
             >
               View Proof
