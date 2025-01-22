@@ -8,7 +8,6 @@ import { BACKEND_URL } from '@/utils/globalConfig';
 import { useSelector } from 'react-redux';
 import { selectUser} from '@/redux/slices/authSlice';
 
-
 import { cn } from '../../../helpers';
 
 type TSidebarItems = {
