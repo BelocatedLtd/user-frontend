@@ -25,9 +25,6 @@ const TransactionList = () => {
 	const [transactions, setTransactions] = useState([])
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [modalContent, setModalContent] = useState('')
-  
- 
-
 
 	const columns = [
 		{
@@ -52,14 +49,13 @@ const TransactionList = () => {
 			selector: (row: { status: any }) => row.status,
 			sortable: true,
 		},
-
 		{
 			name: 'View Proof',
-			cell: (row: {proofOfWorkMediaURL?.[0]?.secure_url: any) =>
+			cell: (row: { proofOfWorkMediaURL?: { secure_url: string }[] }) =>
 				row.trxType === 'bank transfer' ? (
 					<div className="mt-2">
 						<label>Proof:</label>{' '}
-						{row.proofOfWorkMediaURL?.[0]?.secure_url ? (
+						{row.proofOfWorkMediaURL && row.proofOfWorkMediaURL.length > 0 ? (
 							<span
 								onClick={() =>
 									handleProofClick(row.proofOfWorkMediaURL[0].secure_url)
