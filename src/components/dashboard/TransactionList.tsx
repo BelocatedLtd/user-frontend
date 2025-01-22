@@ -51,7 +51,7 @@ const TransactionList = () => {
 		},
 		{
 			name: 'View Proof',
-			cell: (row: { proofOfWorkMediaURL?: { secure_url: string }[] }) =>
+			cell: (row: { trxType: any, proofOfWorkMediaURL?: { secure_url: string }[] }) =>
 				row.trxType === 'bank transfer' ? (
 					<div className="mt-2">
 						<label>Proof:</label>{' '}
