@@ -49,7 +49,7 @@ const TransactionList = () => {
       selector: (row: { status: any }) => row.status,
       sortable: true,
     },
-    {
+    {/*  {
       name: 'View Proof',
       cell: (row: { trxType: string; proofOfWorkMediaURL?: { secure_url: string }[] }) =>
         row.trxType === 'bank transfer' ? (
@@ -69,7 +69,7 @@ const TransactionList = () => {
         ) : (
           'N/A'
         ),
-    },
+    },*/}
   ]
 
   const customStyles = {
