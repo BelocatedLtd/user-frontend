@@ -32,30 +32,30 @@ const TransactionList = () => {
 	const columns = [
 		{
 			name: 'S/N',
-			selector: (row) => row.trxId,
+			selector: (row: { trxId: any }) => row.trxId,
 		},
 		{
 			name: 'Transaction Type',
-			selector: (row) => row.trxType,
+			selector: (row: { trxType: any }) => row.trxType,
 		},
 		{
 			name: 'Amount',
-			selector: (row) => row.chargedAmount,
+			selector: (row: { chargedAmount: any }) => row.chargedAmount,
 			sortable: true,
 		},
 		{
 			name: 'Date',
-			selector: (row) =>
-				row.date ? new Date(parseInt(row.date)).toLocaleString() : 'N/A',
+			selector: (row: { date: any }) => row.date ? new Date(parseInt(row.date)).toLocaleString() : 'N/A',
 		},
 		{
 			name: 'Status',
-			selector: (row) => row.status,
+			selector: (row: { status: any }) => row.status,
 			sortable: true,
 		},
+
 		{
 			name: 'View Proof',
-			cell: (row) =>
+			cell: (row: {proofOfWorkMediaURL?.[0]?.secure_url: any) =>
 				row.trxType === 'bank transfer' ? (
 					<div className="mt-2">
 						<label>Proof:</label>{' '}
@@ -129,7 +129,7 @@ const TransactionList = () => {
 	return (
 		<>
 			<DataTable
-				columns={columns}
+				columns={columns as any}
 				data={transactions}
 				progressPending={isLoading}
 				pagination
