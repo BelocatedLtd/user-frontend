@@ -26,6 +26,16 @@ const TransactionList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modalContent, setModalContent] = useState('')
 
+const handleProofClick = (url: string | undefined) => {
+  if (url) {
+    setModalContent(url);
+    setIsModalOpen(true);
+  } else {
+    toast.error('Proof of work URL is not available.');
+  }
+};
+
+  
   const columns = [
     {
       name: 'S/N',
@@ -51,25 +61,25 @@ const TransactionList = () => {
     },
     {
       name: 'View Proof',
-      cell: (row: { trxType: string, proofOfWorkMediaURL?: { secure_url: string }[] }) => 
-        row.trxType === 'bank transfer' ? (
-          <div className="mt-2">
-            <label>Proof:</label>{' '}
-            {row.proofOfWorkMediaURL && row.proofOfWorkMediaURL[0]?.secure_url ? (
-              <span
-                onClick={() => handleProofClick(row.proofOfWorkMediaURL[0].secure_url)}
-                className="text-blue-500 hover:text-red-500 cursor-pointer"
-              >
-                View Proof
-              </span>
-            ) : (
-              'N/A'
-            )}
-          </div>
+  cell: (row: { trxType: any, proofOfWorkMediaURL?: { secure_url: any }[] }) => 
+    row.trxType === 'bank transfer' ? (
+      <div className="mt-2">
+        <label>Proof:</label>{' '}
+        {Array.isArray(row.proofOfWorkMediaURL) && row.proofOfWorkMediaURL.length > 0 && row.proofOfWorkMediaURL[0]?.secure_url ? (
+          <span
+            onClick={() => handleProofClick(row.proofOfWorkMediaURL[0].secure_url)}
+            className="text-blue-500 hover:text-red-500 cursor-pointer"
+          >
+            View Proof
+          </span>
         ) : (
           'N/A'
-        ),
-    },
+        )}
+      </div>
+    ) : (
+      'N/A'
+    ),
+},
   ]
 
   const customStyles = {
@@ -108,10 +118,8 @@ const TransactionList = () => {
     fetchTransactions(currentPage, rowsPerPage)
   }
 
-  const handleProofClick = (url) => {
-    setModalContent(url)
-    setIsModalOpen(true)
-  }
+  
+
 
   const closeModal = () => {
     setIsModalOpen(false)
