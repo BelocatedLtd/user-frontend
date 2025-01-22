@@ -26,15 +26,7 @@ const TransactionList = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [modalContent, setModalContent] = useState('')
   
-  const handleProofClick = (url) => {
-		setModalContent(url);
-		setIsModalOpen(true);
-	  };
-  
-  const closeModal = () => {
-  setIsModalOpen(false);
-  setModalContent('');
-};
+ 
 
 
 	const columns = [
