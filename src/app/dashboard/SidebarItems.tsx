@@ -31,24 +31,18 @@ const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 	const userId = user?.id
 	const isActive = pathname === item.path;
 
-	const notificationKey = `taskBadgeAcknowledged_${item.path}`; // Unique key per item path
+	const notificationKey = `taskBadgeAcknowledged_${item.path}`;
 	const [showBadge, setShowBadge] = useState(false);
 
-	// Fetch user ID (assuming it is stored in localStorage after login)
-	//const userId = typeof window !== 'undefined' ? localStorage.getItem('userId') : null;
-	
-
 	useEffect(() => {
-		// Ensure socket connection and join the room for the specific user
+		console.log(userId);
 		if (userId) {
 			socket.emit('joinRoom', userId);
 		}
 
-		// Check if the badge was acknowledged
 		const isAcknowledged = localStorage.getItem(notificationKey);
 		setShowBadge(!isAcknowledged);
 
-		// Listen for task notifications specific to the user
 		socket.on('taskNotification', (data) => {
 			if (data.userId === userId && !showBadge) {
 				setShowBadge(true);
@@ -56,7 +50,6 @@ const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 			}
 		});
 
-		// Cleanup on component unmount
 		return () => {
 			socket.off('taskNotification');
 		};
@@ -78,18 +71,15 @@ const SidebarItems = ({ item, isOpen, isMobile }: TSidebarItems) => {
 					borderTopLeftRadius: '100px',
 				}}
 			>
-				{/* Icon */}
 				<div
 					className="flex justify-center items-center text-2xl text-gray-700 relative"
 					onClick={handleBadgeClick}
 				>
 					{item.icon}
-					{/* Show badge if enabled */}
 					{item.showBadge && showBadge && (
 						<span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
 					)}
 				</div>
-				{/* Title */}
 				<div
 					className={`text-xs text-white mt-1 text-center ${
 						!isMobile && !isOpen ? 'hidden' : ''
