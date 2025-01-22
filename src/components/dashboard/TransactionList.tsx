@@ -26,16 +26,6 @@ const TransactionList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modalContent, setModalContent] = useState('')
 
-const handleProofClick = (url: string | undefined) => {
-  if (url) {
-    setModalContent(url);
-    setIsModalOpen(true);
-  } else {
-    toast.error('Proof of work URL is not available.');
-  }
-};
-
-  
   const columns = [
     {
       name: 'S/N',
@@ -59,27 +49,27 @@ const handleProofClick = (url: string | undefined) => {
       selector: (row: { status: any }) => row.status,
       sortable: true,
     },
-    {/* {
+    {
       name: 'View Proof',
-  cell: (row: { trxType: any, proofOfWorkMediaURL?: { secure_url: any }[] }) => 
-    row.trxType === 'bank transfer' ? (
-      <div className="mt-2">
-        <label>Proof:</label>{' '}
-        {Array.isArray(row.proofOfWorkMediaURL) && row.proofOfWorkMediaURL.length > 0 && row.proofOfWorkMediaURL[0]?.secure_url ? (
-          <span
-            onClick={() => handleProofClick(row.proofOfWorkMediaURL[0].secure_url)}
-            className="text-blue-500 hover:text-red-500 cursor-pointer"
-          >
-            View Proof
-          </span>
+      cell: (row: { trxType: string; proofOfWorkMediaURL?: { secure_url: string }[] }) =>
+        row.trxType === 'bank transfer' ? (
+          <div className="mt-2">
+            <label>Proof:</label>{' '}
+            {Array.isArray(row.proofOfWorkMediaURL) && row.proofOfWorkMediaURL.length > 0 && row.proofOfWorkMediaURL[0]?.secure_url ? (
+              <span
+                onClick={() => handleProofClick(row.proofOfWorkMediaURL[0].secure_url)}
+                className="text-blue-500 hover:text-red-500 cursor-pointer"
+              >
+                View Proof
+              </span>
+            ) : (
+              'N/A'
+            )}
+          </div>
         ) : (
           'N/A'
-        )}
-      </div>
-    ) : (
-      'N/A'
-    ),
-},*/}
+        ),
+    },
   ]
 
   const customStyles = {
@@ -92,11 +82,13 @@ const handleProofClick = (url: string | undefined) => {
     },
   }
 
-  const fetchTransactions = async (page, rows) => {
-    const response = await dispatch(handleGetUserTransactions({ page, limit: rows }))
+  const fetchTransactions = async (page: number, rows: number) => {
+    const response = await dispatch(
+      handleGetUserTransactions({ page, limit: rows }) as any,
+    )
     if (response.payload) {
       setTotalRows(response.payload.totalTransactions)
-      setTransactions(response.payload.transactions || [])
+      setTransactions(response.payload.transactions)
     }
   }
 
@@ -108,18 +100,24 @@ const handleProofClick = (url: string | undefined) => {
     }
   }, [isError, dispatch])
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (page: number) => {
     setCurrentPage(page)
     fetchTransactions(page, rowsPerPage)
   }
 
-  const handleChangeRowsPerPage = (rowsPerPage) => {
+  const handleChangeRowsPerPage = (rowsPerPage: number) => {
     setRowsPerPage(rowsPerPage)
     fetchTransactions(currentPage, rowsPerPage)
   }
 
-  
-
+  const handleProofClick = (url: string | undefined) => {
+    if (url) {
+      setModalContent(url)
+      setIsModalOpen(true)
+    } else {
+      toast.error('Proof of work URL is not available.')
+    }
+  }
 
   const closeModal = () => {
     setIsModalOpen(false)
