@@ -59,7 +59,7 @@ const handleProofClick = (url: string | undefined) => {
       selector: (row: { status: any }) => row.status,
       sortable: true,
     },
-    {
+    {/* {
       name: 'View Proof',
   cell: (row: { trxType: any, proofOfWorkMediaURL?: { secure_url: any }[] }) => 
     row.trxType === 'bank transfer' ? (
@@ -79,7 +79,7 @@ const handleProofClick = (url: string | undefined) => {
     ) : (
       'N/A'
     ),
-},
+},*/}
   ]
 
   const customStyles = {
